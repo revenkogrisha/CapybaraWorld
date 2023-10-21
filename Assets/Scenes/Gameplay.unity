@@ -274,14 +274,14 @@ SpringJoint2D:
   m_ConnectedRigidBody: {fileID: 0}
   m_BreakForce: Infinity
   m_BreakTorque: Infinity
-  m_BreakAction: 3
+  m_BreakAction: 0
   m_AutoConfigureConnectedAnchor: 0
   m_Anchor: {x: 0, y: 0}
   m_ConnectedAnchor: {x: 0.03, y: 4.08}
   m_AutoConfigureDistance: 0
   m_Distance: 4
   m_DampingRatio: 1
-  m_Frequency: 3
+  m_Frequency: 0.8
 --- !u!50 &414152348
 Rigidbody2D:
   serializedVersion: 4
@@ -635,8 +635,8 @@ MonoBehaviour:
   m_ShowCameraFrustum: 1
   m_IgnoreTimeScale: 0
   m_WorldUpOverride: {fileID: 0}
-  m_UpdateMethod: 2
-  m_BlendUpdateMethod: 1
+  m_UpdateMethod: 0
+  m_BlendUpdateMethod: 0
   m_DefaultBlend:
     m_Style: 1
     m_Time: 2
@@ -740,9 +740,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _cinemachine: {fileID: 880517166}
   _focusObject: {fileID: 1416999748}
+  _defaultFollowObject: {fileID: 414152345}
   _toFocus1: {fileID: 414152345}
   _toFocus2: {fileID: 316037489}
-  _fovMargin: 0
+  _fovMargin: -5
 --- !u!1 &1321539877
 GameObject:
   m_ObjectHideFlags: 0
