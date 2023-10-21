@@ -3,15 +3,19 @@ using UnityEngine;
 public class PlayerTest : MonoBehaviour
 {
     [SerializeField] private FocusCamera _focusCamera;
+    [SerializeField] private MiddleObject _middleObject;
     [SerializeField] private SpringJoint2D _springJoint2D;
     [SerializeField] private LineRenderer _lineRenderer;
     [SerializeField] private Rigidbody2D _rigidbody2D;
     [SerializeField] private GameObject _jointObject;
 
+    private Transform _thisTransform;
+
     private void Awake()
     {
         _springJoint2D.enabled = false;
         _lineRenderer.enabled = false;
+        _thisTransform = transform;
     }
 
     private void Update()
@@ -23,6 +27,8 @@ public class PlayerTest : MonoBehaviour
 
         if (_springJoint2D.enabled == true)
             _lineRenderer.SetPosition(1, transform.position);
+
+        _middleObject.SetPosition(_thisTransform.position, _jointObject.transform.position);
     }
 
     private void GrappleJoint()
@@ -34,7 +40,7 @@ public class PlayerTest : MonoBehaviour
 
         _lineRenderer.enabled = true;
         _lineRenderer.SetPosition(0, jointPosition);
-        _focusCamera.StartFocus();
+        _focusCamera.StartFocus(_middleObject.transform);
     }
 
     private void ReleaseJoint()

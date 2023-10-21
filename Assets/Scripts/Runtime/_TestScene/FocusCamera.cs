@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using Cinemachine;
 using UnityEngine;
 
@@ -7,68 +8,57 @@ public class FocusCamera : MonoBehaviour
 
     [Header("Components")]
     [SerializeField] private CinemachineVirtualCamera _cinemachine;
-    [SerializeField] private MiddleObject _focusObject;
-    [SerializeField] private Transform _defaultFollowObject;
+    [SerializeField] private Transform _followObject;
 
     [Header("Configuration")]
-    [SerializeField] private Transform _toFocus1;
-    [SerializeField] private Transform _toFocus2;
-    [SerializeField] private float _fovMargin = 0f;
+    [SerializeField, Min(0f)] private float _regularFov = 10f;
+    [SerializeField, Min(0f)] private float _focusFov = 5f;
+    [SerializeField, Range(0f, 1f)] private float _fovChangeDuration = 0.3f;
 
-    private float _aspectRatio;
-    public bool _focusing = false;
+    private bool _focusing = false;
 
-    #region MonoBehaviour
+    private float Fov
+    {
+        get => _cinemachine.m_Lens.OrthographicSize;
+        set => _cinemachine.m_Lens.OrthographicSize = value;
+    }
 
     private void Awake()
     {
-        _aspectRatio = Screen.width / Screen.height;
+        _cinemachine.Follow = _followObject;
     }
 
-    private void Update()
+    public void StartFocus(Transform toFocus)
     {
         if (_focusing == true)
-            FocusBentween(_toFocus1.position, _toFocus2.position);
-    }
+            return;
 
-    #endregion
-
-    public void StartFocus()
-    {
         _focusing = true;
-        _cinemachine.Follow = _focusObject.transform;
+        _cinemachine.Follow = toFocus;
+        StartCoroutine(ChangeFov(_focusFov, _fovChangeDuration));
     }
 
     public void StopFocus()
     {
+        if (_focusing == false)
+            return;
+
         _focusing = false;
-        _cinemachine.Follow = _defaultFollowObject;
+        _cinemachine.Follow = _followObject;
+        StartCoroutine(ChangeFov(_regularFov, _fovChangeDuration));
     }
 
-    public void SetFocuses(Transform focus1, Transform focus2)
+    private IEnumerator ChangeFov(float targetFov, float duration)
     {
-        if (focus1 == null || focus2 == null)
-            throw new ArgumentNullException(
-                "Objects to focus cannot be null! 1: {focus1}, 2: {focus2}");
+        float elapsedTime = 0f;
+        float currentFov = Fov;
+        while (elapsedTime < duration)
+        {
+            float delta = elapsedTime / duration;
+            Fov = Mathf.Lerp(currentFov, targetFov, delta);
 
-        _toFocus1 = focus1;
-        _toFocus2 = focus2;
-    }
-
-    private void FocusBentween(Vector2 position1, Vector2 position2)
-    {
-        _focusObject.SetPosition(position1, position2);
-
-        float fov = CalcualteFovBetween(position1, position2);
-        _cinemachine.m_Lens.OrthographicSize = fov;
-    }
-
-    private float CalcualteFovBetween(Vector2 position1, Vector2 position2, float margin = 0f)
-    {
-        Vector3 middlePoint = _focusObject.transform.position;
-        float distanceBetweenPlayers = (position2 - position1).magnitude;
-        float distanceFromMiddlePoint = (_cinemachine.transform.position - middlePoint).magnitude;
-
-        return (2.0f * Mathf.Rad2Deg * Mathf.Atan(0.5f * distanceBetweenPlayers / (distanceFromMiddlePoint * _aspectRatio))) + margin;
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
     }
 }
