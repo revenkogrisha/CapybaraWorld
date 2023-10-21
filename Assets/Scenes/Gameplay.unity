@@ -280,9 +280,9 @@ SpringJoint2D:
   m_Anchor: {x: 0, y: 0}
   m_ConnectedAnchor: {x: 0.03, y: 4.08}
   m_AutoConfigureDistance: 0
-  m_Distance: 4
+  m_Distance: 2
   m_DampingRatio: 1
-  m_Frequency: 0.8
+  m_Frequency: 0.7
 --- !u!50 &414152348
 Rigidbody2D:
   serializedVersion: 4

@@ -11,8 +11,8 @@ public class FocusCamera : MonoBehaviour
     [SerializeField] private Transform _followObject;
 
     [Header("Configuration")]
-    [SerializeField, Min(0f)] private float _regularFov = 10f;
-    [SerializeField, Min(0f)] private float _focusFov = 5f;
+    [SerializeField, Min(0f)] private float _regularFov = 7f;
+    [SerializeField, Min(0f)] private float _focusFov = 9f;
     [SerializeField, Range(0f, 1f)] private float _fovChangeDuration = 0.3f;
 
     private bool _focusing = false;
