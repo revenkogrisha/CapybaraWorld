@@ -256,6 +256,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d3af6e3919c1f4690b940ad2d89ee165, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _focusCamera: {fileID: 880517168}
   _springJoint2D: {fileID: 414152347}
   _lineRenderer: {fileID: 414152350}
   _rigidbody2D: {fileID: 414152348}
@@ -612,7 +613,7 @@ Transform:
   m_GameObject: {fileID: 519420028}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.0850936, y: 1.9717901, z: -14.833967}
+  m_LocalPosition: {x: 0, y: 0, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -688,8 +689,8 @@ MonoBehaviour:
   m_StreamingVersion: 20170927
   m_Priority: 10
   m_StandbyUpdate: 2
-  m_LookAt: {fileID: 0}
-  m_Follow: {fileID: 0}
+  m_LookAt: {fileID: 1416999747}
+  m_Follow: {fileID: 1416999747}
   m_Lens:
     FieldOfView: 60
     OrthographicSize: 6.29
@@ -718,7 +719,7 @@ Transform:
   m_GameObject: {fileID: 880517165}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.0850936, y: 1.9717901, z: -14.833967}
+  m_LocalPosition: {x: 0, y: 0, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -737,6 +738,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63b79695b29584d4491f130746826fcc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _cinemachine: {fileID: 880517166}
+  _focusObject: {fileID: 1416999748}
+  _toFocus1: {fileID: 414152345}
+  _toFocus2: {fileID: 316037489}
+  _fovMargin: 0
 --- !u!1 &1321539877
 GameObject:
   m_ObjectHideFlags: 0
@@ -821,6 +827,50 @@ Transform:
   m_Children: []
   m_Father: {fileID: 414152345}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1416999746
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1416999747}
+  - component: {fileID: 1416999748}
+  m_Layer: 0
+  m_Name: Focus Object
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1416999747
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1416999746}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1416999748
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1416999746}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ee3ca9aeec02342c6affbbdcbb414505, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2141529483
 GameObject:
   m_ObjectHideFlags: 3
@@ -915,5 +965,6 @@ SceneRoots:
   m_Roots:
   - {fileID: 519420032}
   - {fileID: 880517167}
+  - {fileID: 1416999747}
   - {fileID: 414152345}
   - {fileID: 316037489}
