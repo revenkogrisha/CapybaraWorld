@@ -7,6 +7,13 @@
       "dependencies": {},
       "hash": "cfe509a55602ba5be6df7fa0468b10298b8a053d"
     },
+    "com.nighttraincode.nightpool": {
+      "version": "https://github.com/MeeXaSiK/NightPool.git",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "fb0218774b66a8e3d99505c5eefda3ff8b41ba2d"
+    },
     "com.unity.2d.animation": {
       "version": "9.0.4",
       "depth": 1,
