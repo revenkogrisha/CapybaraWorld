@@ -3,62 +3,65 @@ using System.Collections;
 using Cinemachine;
 using UnityEngine;
 
-public class FocusCamera : MonoBehaviour
+namespace Core.Player
 {
-
-    [Header("Components")]
-    [SerializeField] private CinemachineVirtualCamera _cinemachine;
-    [SerializeField] private Transform _followObject;
-
-    [Header("Configuration")]
-    [SerializeField, Min(0f)] private float _regularFov = 7f;
-    [SerializeField, Min(0f)] private float _focusFov = 9f;
-    [SerializeField, Range(0f, 1f)] private float _fovChangeDuration = 0.3f;
-
-    private bool _focusing = false;
-
-    private float Fov
+    public class FocusCamera : MonoBehaviour
     {
-        get => _cinemachine.m_Lens.OrthographicSize;
-        set => _cinemachine.m_Lens.OrthographicSize = value;
-    }
 
-    private void Awake()
-    {
-        _cinemachine.Follow = _followObject;
-    }
+        [Header("Components")]
+        [SerializeField] private CinemachineVirtualCamera _cinemachine;
+        [SerializeField] private Transform _followObject;
 
-    public void StartFocus(Transform toFocus)
-    {
-        if (_focusing == true)
-            return;
+        [Header("Configuration")]
+        [SerializeField, Min(0f)] private float _regularFov = 7f;
+        [SerializeField, Min(0f)] private float _focusFov = 9f;
+        [SerializeField, Range(0f, 1f)] private float _fovChangeDuration = 0.3f;
 
-        _focusing = true;
-        _cinemachine.Follow = toFocus;
-        StartCoroutine(ChangeFov(_focusFov, _fovChangeDuration));
-    }
+        private bool _focusing = false;
 
-    public void StopFocus()
-    {
-        if (_focusing == false)
-            return;
-
-        _focusing = false;
-        _cinemachine.Follow = _followObject;
-        StartCoroutine(ChangeFov(_regularFov, _fovChangeDuration));
-    }
-
-    private IEnumerator ChangeFov(float targetFov, float duration)
-    {
-        float elapsedTime = 0f;
-        float currentFov = Fov;
-        while (elapsedTime < duration)
+        private float Fov
         {
-            float delta = elapsedTime / duration;
-            Fov = Mathf.Lerp(currentFov, targetFov, delta);
+            get => _cinemachine.m_Lens.OrthographicSize;
+            set => _cinemachine.m_Lens.OrthographicSize = value;
+        }
 
-            elapsedTime += Time.deltaTime;
-            yield return null;
+        private void Awake()
+        {
+            _cinemachine.Follow = _followObject;
+        }
+
+        public void StartFocus(Transform toFocus)
+        {
+            if (_focusing == true)
+                return;
+
+            _focusing = true;
+            _cinemachine.Follow = toFocus;
+            StartCoroutine(ChangeFov(_focusFov, _fovChangeDuration));
+        }
+
+        public void StopFocus()
+        {
+            if (_focusing == false)
+                return;
+
+            _focusing = false;
+            _cinemachine.Follow = _followObject;
+            StartCoroutine(ChangeFov(_regularFov, _fovChangeDuration));
+        }
+
+        private IEnumerator ChangeFov(float targetFov, float duration)
+        {
+            float elapsedTime = 0f;
+            float currentFov = Fov;
+            while (elapsedTime < duration)
+            {
+                float delta = elapsedTime / duration;
+                Fov = Mathf.Lerp(currentFov, targetFov, delta);
+
+                elapsedTime += Time.deltaTime;
+                yield return null;
+            }
         }
     }
 }

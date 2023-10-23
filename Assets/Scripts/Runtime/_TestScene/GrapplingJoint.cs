@@ -1,3 +1,6 @@
 using UnityEngine;
 
-public class GrapplingJoint : MonoBehaviour {  }
+namespace Core.Level
+{
+    public class GrapplingJoint : MonoBehaviour {  }
+}
