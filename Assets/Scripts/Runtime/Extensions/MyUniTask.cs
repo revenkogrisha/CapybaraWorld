@@ -2,7 +2,7 @@ using System;
 using System.Threading;
 using Cysharp.Threading.Tasks;
 
-namespace CapybaraAdventure.Other
+namespace Core.Other
 {
     public static class MyUniTask
     {

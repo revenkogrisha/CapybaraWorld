@@ -1,17 +1,20 @@
 using UnityEngine;
 
-public class MiddleObject : MonoBehaviour
+namespace Core.Player
 {
-    private Transform _thisTransform;
-
-    private void Awake()
+    public class MiddleObject : MonoBehaviour
     {
-        _thisTransform = transform;
-    }
+        private Transform _thisTransform;
 
-    public void SetPosition(Vector2 position1, Vector2 position2)
-    {
-        Vector2 middlePoint = position1 + 0.5f * (position2 - position1);
-        _thisTransform.position = middlePoint;
+        private void Awake()
+        {
+            _thisTransform = transform;
+        }
+
+        public void SetPosition(Vector2 position1, Vector2 position2)
+        {
+            Vector2 middlePoint = position1 + 0.5f * (position2 - position1);
+            _thisTransform.position = middlePoint;
+        }
     }
 }
