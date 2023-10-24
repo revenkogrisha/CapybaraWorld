@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 36f87208082ce48eea468122e8169e14, type: 3}
+  m_Name: LevelGeneratorConfig
+  m_EditorClassIdentifier: 
+  <PlatformsAmountToGenerate>k__BackingField: 5
+  <XStartPoint>k__BackingField: 0
+  <PlatformsY>k__BackingField: -2
+  <StartPlatform>k__BackingField: {fileID: 0}
+  <Platforms>k__BackingField: []
