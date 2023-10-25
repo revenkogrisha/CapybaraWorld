@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace Core.Level
 {
-    [CreateAssetMenu(fileName = "LevelGeneratorConfig", menuName = "Configs/Level Generator Config")]
+    [CreateAssetMenu(fileName = "Level Generator Config", menuName = "Configs/Level Generator Config")]
     public class LevelGeneratorConfig : ScriptableObject
     {
         [field: Header("Platform Generation Settings")]
