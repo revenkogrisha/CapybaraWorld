@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace Core.Level
 {
-    public class Platform : MonoBehaviour
+    public abstract class Platform : MonoBehaviour
     {
         public const float Length = 30f;
 
