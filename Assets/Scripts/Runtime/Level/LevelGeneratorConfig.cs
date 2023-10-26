@@ -5,13 +5,22 @@ namespace Core.Level
     [CreateAssetMenu(fileName = "Level Generator Config", menuName = "Configs/Level Generator Config")]
     public class LevelGeneratorConfig : ScriptableObject
     {
-        [field: Header("Platform Generation Settings")]
-        [field: SerializeField] public int PlatformsAmountToGenerate { get; private set; } = 5;
-        [field: SerializeField] public float XStartPoint { get; private set; } = 0f;
-        [field: SerializeField] public float PlatformsY { get; private set; } = -2f;
+        [Header("Platform Generation Settings")]
+        [SerializeField] private Transform _platformsParent;
+        [SerializeField] private int _platformsAmountToGenerate = 5;
+        [SerializeField] private float _xStartPoint = 0f;
+        [SerializeField] private float _platformsY = -2f;
 
-        [field: Header("Platforms")]
-        [field: SerializeField] public Platform StartPlatform { get; private set; }
-        [field: SerializeField] public Platform[] Platforms { get; private set; }
+        [Header("Platforms")]
+        [SerializeField] private SimplePlatform _startPlatform;
+        [SerializeField] private SpecialPlatform _questPlatform;
+        [SerializeField] private Location[] _locations;
+
+        public Transform PlatformsParent => _platformsParent;
+        public int PlatformsAmountToGenerate => _platformsAmountToGenerate;
+        public float XtartPoint => _xStartPoint;
+        public float PlatformsY => _platformsY;
+        public SimplePlatform StartPlatform => _startPlatform;
+        public Location[] Locations => _locations;
     }
 }
