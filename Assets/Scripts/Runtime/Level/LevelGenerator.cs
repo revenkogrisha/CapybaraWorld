@@ -32,7 +32,7 @@ namespace Core.Level
         private string PlatformName => $"Platform №{_platformNumber}";
         private Location CurrentLocation => _config.Locations[_locationNumber];
         private float HeroX => _heroTransform.position.x;
-        
+
         private bool IsNowSpecialPlatformTurn 
         {
             get
@@ -79,10 +79,9 @@ namespace Core.Level
             _defaultBackground = _camera.backgroundColor;
         }
 
-        private void Start()
+        private void Initialize()
         {
             ChangeBackgroundColor();
-
             CheckPlayerPosition().Forget();
         }
 

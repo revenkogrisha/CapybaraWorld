@@ -4,7 +4,7 @@ namespace Core.Level
 {
     public abstract class Platform : MonoBehaviour
     {
-        public const float Length = 30f;
+        public const float Length = 60f;
 
         protected void OnDrawGizmos()
         {
