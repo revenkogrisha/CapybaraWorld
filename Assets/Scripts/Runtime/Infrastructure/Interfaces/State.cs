@@ -9,8 +9,8 @@ namespace Core.Infrastructure
     {
         public FiniteStateMachine FiniteStateMachine { get; set; }
 
-        public abstract void Enter();
-        public abstract void Update();
-        public abstract void Exit();
+        public virtual void Enter() {  }
+        public virtual void Update() {  }
+        public virtual void Exit() {  }
     }
 }
