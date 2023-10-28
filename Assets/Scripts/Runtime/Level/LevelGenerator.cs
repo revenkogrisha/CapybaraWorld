@@ -1,17 +1,16 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
-using Random = UnityEngine.Random;
 using Cysharp.Threading.Tasks;
 using System.Threading;
 using NTC.Pool;
 using Core.Other;
 using Core.Player;
 using UnityTools;
+using Core.Factories;
 
 namespace Core.Level
 {
-    public class LevelGenerator
+    public class LevelGenerator : ILocationsHandler
     {
         private const float HeroPositionCheckFrequency = 1.5f;
         private const int SpecialPlatformSequentialNumber = 4;
@@ -19,7 +18,7 @@ namespace Core.Level
         private const float BackgroundLerpDuration = 3.5f;
 
         private readonly LevelGeneratorConfig _config;
-
+        private readonly IPlatformFactory<Platform> _platformFactory;
         private readonly Queue<Platform> _platformsOnLevel = new();
         private Camera _camera;
         private Transform _heroTransform;
@@ -27,10 +26,8 @@ namespace Core.Level
         private float _lastGeneratedPlatformX = 0f;
         private int _locationNumber = 0;
         private Color _defaultBackground;
-        private CancellationToken _cancellationToken;
 
-        private string PlatformName => $"Platform №{_platformNumber}";
-        private Location CurrentLocation => _config.Locations[_locationNumber];
+        public Location CurrentLocation => _config.Locations[_locationNumber];
         private float HeroX => _heroTransform.position.x;
 
         private bool IsNowSpecialPlatformTurn 
@@ -66,30 +63,38 @@ namespace Core.Level
                 }
             }
         }
-
-        public event Action<float> OnHeroXPositionUpdated;
         
-        public LevelGenerator(PlayerTest hero)
+        public LevelGenerator(LevelGeneratorConfig config, PlayerTest hero)
         {
+            _config = config;
+
             _heroTransform = hero.transform;
             _lastGeneratedPlatformX = _config.XtartPoint;
             _camera = Camera.main;
-            //_cancellationToken = this.GetCancellationTokenOnDestroy();
 
             _defaultBackground = _camera.backgroundColor;
+
+            ILocationsHandler locationsHandler = this;
+            Transform parent = _config.PlatformsParent;
+            _platformFactory = new PlatformFactory(locationsHandler, parent);
         }
 
         private void Initialize()
         {
+            //                                                          Probably need to separate
             ChangeBackgroundColor();
             CheckPlayerPosition().Forget();
         }
 
-        public void SpawnStartPlatform()
+        public void GenerateLevel()
         {
-            GeneratePlatform(_config.StartPlatform);
+            SpawnStartPlatform();
+            GenerateDefaultAmount();
         }
-        
+
+        public void SpawnStartPlatform() =>
+            _platformFactory.Create(_config.StartPlatform);
+
         public void GenerateDefaultAmount()
         {
             for (var i = 0; i < _config.PlatformsAmountToGenerate; i++)
@@ -100,8 +105,6 @@ namespace Core.Level
         {
             while (this != null)
             {
-                OnHeroXPositionUpdated?.Invoke(HeroX);
-
                 if (IsLevelMidPointXLessHeroX == true) 
                 {
                     DespawnOldestPlatform();
@@ -119,17 +122,13 @@ namespace Core.Level
                 ChangeLocation();
                 ChangeBackgroundColor();
             }
- 
-            Location currentLocation = CurrentLocation;
-            SimplePlatform[] simplePlatforms = currentLocation.SimplePlatforms;
-            SpecialPlatform[] specialPlatforms = currentLocation.SpecialPlatforms;
 
-            Platform randomPlatform;
-            randomPlatform = IsNowSpecialPlatformTurn
-                ? GetRandomPlatform(specialPlatforms)
-                : GetRandomPlatform(simplePlatforms);
+            Vector2 position = GetPlatformPosition();
+            Platform randomPlatform = IsNowSpecialPlatformTurn == true
+                ? GenerateSpecialPlatform(position)
+                : GenerateSimplePlatform(position);
 
-            GeneratePlatform(randomPlatform);
+            UpdateGenerationData(randomPlatform);
         }
 
         private void ChangeLocation()
@@ -150,10 +149,10 @@ namespace Core.Level
             else
                 newBackground = currentLocation.BackgroundColor;
 
-            LerpBackground(newBackground, _cancellationToken).Forget();
+            LerpBackground(newBackground).Forget();
         }
 
-        private async UniTask LerpBackground(Color newBackground, CancellationToken token)
+        private async UniTask LerpBackground(Color newBackground, CancellationToken token = default)
         {
             float elapsedTime = 0;
             Color currentBackground = _camera.backgroundColor;
@@ -167,33 +166,17 @@ namespace Core.Level
             }
         }
 
-        private T GetRandomPlatform<T>(T[] platformPrefabs)
-            where T : Platform
-        {
-            int random = Random.Range(0, platformPrefabs.Length);
-            return platformPrefabs[random];
-        }
+        private Platform GenerateSimplePlatform(Vector2 position) =>
+            _platformFactory.CreateSimple(position);
 
-        private void GeneratePlatform(Platform platformPrefab)
-        {
-            Platform platform = SpawnPlatform(platformPrefab);
-            platform.transform.SetParent(_config.PlatformsParent);
-            platform.name = PlatformName;
+        private Platform GenerateSpecialPlatform(Vector2 position) =>
+            _platformFactory.CreateSpecial(position);
 
+        private void UpdateGenerationData(Platform platform)
+        {
             _lastGeneratedPlatformX += Platform.Length;
             _platformNumber++;
             _platformsOnLevel.Enqueue(platform);
-        }
-
-        private Platform SpawnPlatform(Platform platformPrefab)
-        {
-            var position = new Vector3(_lastGeneratedPlatformX, _config.PlatformsY);
-            Platform platform = NightPool.Spawn(
-                platformPrefab,
-                position,
-                Quaternion.identity);
-            
-            return platform;
         }
 
         private void DespawnOldestPlatform()
@@ -201,5 +184,8 @@ namespace Core.Level
             Platform oldestPlatformInGame = _platformsOnLevel.Dequeue();
             NightPool.Despawn(oldestPlatformInGame);
         }
+
+        private Vector2 GetPlatformPosition() => 
+            new(_lastGeneratedPlatformX, _config.PlatformsY);
     }
 }
