@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bcced77f8dd4a418998a24a08e26182d, type: 3}
   m_Name: UI Collection
   m_EditorClassIdentifier: 
-  <MainMenuPrefab>k__BackingField: {fileID: 0}
+  <MainMenuPrefab>k__BackingField: {fileID: 5189350940057459233, guid: f1ac2e45936cc4106bd06d5bb20dd7cc, type: 3}
