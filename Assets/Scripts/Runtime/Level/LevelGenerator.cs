@@ -7,10 +7,11 @@ using Core.Other;
 using Core.Player;
 using UnityTools;
 using Core.Factories;
+using System;
 
 namespace Core.Level
 {
-    public class LevelGenerator : ILocationsHandler
+    public class LevelGenerator : ILevelGenerator, ILocationsHandler, IDisposable
     {
         private const float HeroPositionCheckFrequency = 1.5f;
         private const int SpecialPlatformSequentialNumber = 4;
@@ -64,11 +65,10 @@ namespace Core.Level
             }
         }
         
-        public LevelGenerator(LevelGeneratorConfig config, PlayerTest hero)
+        public LevelGenerator(LevelGeneratorConfig config)
         {
             _config = config;
 
-            _heroTransform = hero.transform;
             _lastGeneratedPlatformX = _config.XtartPoint;
             _camera = Camera.main;
 
@@ -79,21 +79,31 @@ namespace Core.Level
             _platformFactory = new PlatformFactory(locationsHandler, parent);
         }
 
-        private void Initialize()
+        public void Dispose()
+        {
+            Debug.Log("Dispose");
+        }
+
+        public void ObservePlayer(PlayerTest hero)
         {
             //                                                          Probably need to separate
+            _heroTransform = hero.transform;
+
             ChangeBackgroundColor();
             CheckPlayerPosition().Forget();
         }
 
-        public void GenerateLevel()
+        public void Generate()
         {
             SpawnStartPlatform();
             GenerateDefaultAmount();
         }
 
-        public void SpawnStartPlatform() =>
-            _platformFactory.Create(_config.StartPlatform);
+        public void SpawnStartPlatform()
+        {
+            Platform platform = _platformFactory.Create(_config.StartPlatform);
+            UpdateGenerationData(platform);
+        }
 
         public void GenerateDefaultAmount()
         {

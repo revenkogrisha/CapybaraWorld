@@ -167,6 +167,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 37222649db8df4b1db8f74ba638fc448, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _hero: {fileID: 414152346}
 --- !u!1 &414152344
 GameObject:
   m_ObjectHideFlags: 0
@@ -886,6 +887,65 @@ MonoBehaviour:
   _regularFov: 7
   _focusFov: 10
   _fovChangeDuration: 0.3
+--- !u!1 &975817455
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 975817456}
+  - component: {fileID: 975817457}
+  m_Layer: 0
+  m_Name: Night Pool
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &975817456
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 975817455}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1732326244}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &975817457
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 975817455}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e5dac5a9786b4db18d8ad4187d7245d1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _updateType: 0
+  preloadPoolsType: 0
+  poolsPreset: {fileID: 0}
+  _behaviourOnCapacityReached: 2
+  _despawnType: 2
+  _callbacksType: 1
+  _capacity: 64
+  _dontDestroyOnLoad: 0
+  _sendWarnings: 1
+  _nightPoolMode: 0
+  _reactionOnRepeatedDelayedDespawn: 1
+  _despawnPersistentClonesOnDestroy: 1
+  _checkClonesForNull: 1
+  _checkForPrefab: 1
+  _clearEventsOnDestroy: 0
 --- !u!1 &1104326267
 GameObject:
   m_ObjectHideFlags: 0
@@ -1081,6 +1141,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1660845590}
   - component: {fileID: 1660845591}
+  - component: {fileID: 1660845592}
   m_Layer: 0
   m_Name: SceneContext
   m_TagString: Untagged
@@ -1116,7 +1177,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _scriptableObjectInstallers: []
-  _monoInstallers: []
+  _monoInstallers:
+  - {fileID: 1660845592}
   _installerPrefabs: []
   _autoRun: 1
   OnPreInstall:
@@ -1134,6 +1196,19 @@ MonoBehaviour:
   _parentNewObjectsUnderSceneContext: 0
   _contractNames: []
   _parentContractNames: []
+--- !u!114 &1660845592
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1660845589}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3061bd94d22e6483590456a3e225f2ae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _levelGeneratorConfig: {fileID: 11400000, guid: 1805d48b1bc4e421abde3eada9f65e5c, type: 2}
 --- !u!1 &1732326243
 GameObject:
   m_ObjectHideFlags: 0
@@ -1165,6 +1240,7 @@ Transform:
   m_Children:
   - {fileID: 364152854}
   - {fileID: 1660845590}
+  - {fileID: 975817456}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2141529483
