@@ -14,5 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _useDefaultBackground: 1
   _backgroundColor: {r: 0, g: 0, b: 0, a: 0}
-  _simplePlatforms: []
-  _specialPlatforms: []
+  _simplePlatforms:
+  - {fileID: 8222899738712285114, guid: 138f329feb51f41fba1b8a43fc3b0155, type: 3}
+  _specialPlatforms:
+  - {fileID: 141280748888546122, guid: 26381f5d3c0344581832034d87dd347d, type: 3}
