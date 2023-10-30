@@ -13,7 +13,6 @@ namespace Core.Level
 
         [Header("Platforms")]
         [SerializeField] private SimplePlatform _startPlatform;
-        [SerializeField] private SpecialPlatform _questPlatform;
         [SerializeField] private Location[] _locations;
 
         public Transform PlatformsParent => _platformsParent;

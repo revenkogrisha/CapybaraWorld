@@ -1,6 +1,4 @@
-using Core.Level;
-
-namespace Core
+namespace Core.Level
 {
     public class SpecialPlatform : Platform {  }
 }
