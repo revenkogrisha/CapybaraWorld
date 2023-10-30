@@ -6,8 +6,6 @@ namespace Core.Player
 {
     public class PlayerTest : MonoBehaviour
     {
-        [SerializeField] private FocusCamera _focusCamera;
-        [SerializeField] private MiddleObject _middleObject;
         [SerializeField] private SpringJoint2D _springJoint2D;
         [SerializeField] private LineRenderer _lineRenderer;
         [SerializeField] private Rigidbody2D _rigidbody2D;
@@ -17,8 +15,12 @@ namespace Core.Player
         [SerializeField] private float _grappleJumpVelocityMultiplier = 1.5f;
         [SerializeField] private LayerMask _jointLayer;
 
+        private MiddleObject _middleObject;
+        private FocusCamera _focusCamera;
         private Transform _thisTransform;
         private GrapplingJoint _jointObject;
+
+        #region MonoBehaviour
 
         private void Awake()
         {
@@ -41,6 +43,14 @@ namespace Core.Player
                 _middleObject.SetPosition(_thisTransform.position, _jointObject.transform.position);
         }
 
+        #endregion
+
+        public void Initialize(FocusCamera focusCamera, MiddleObject middleObject)
+        {
+            _focusCamera = focusCamera;
+            _middleObject = middleObject;
+        }
+
         private void GrappleJoint()
         {
             bool canGrapple = FindNearestJoint();
@@ -54,6 +64,7 @@ namespace Core.Player
 
             _lineRenderer.enabled = true;
             _lineRenderer.SetPosition(0, jointPosition);
+            //          Separate camera logic into Focus Camera or mb another class (think about it)
             _focusCamera.StartFocus(_middleObject.transform);
         }
 
