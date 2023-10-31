@@ -1,6 +1,5 @@
 using UnityEngine;
 using Zenject;
-using Core.Level;
 using Core.Player;
 
 namespace Core.Infrastructure
@@ -10,38 +9,38 @@ namespace Core.Infrastructure
         [SerializeField] private PlayerTest _hero;
 
         private IGlobalStateMachine _stateMachine;
-        private ILevelGenerator _levelGenerator;
+        private GenerationState _generationState;
+        private MainMenuState _mainMenuState;
+        private GameplayState _gameplayState;
+        private GameOverState _gameOverState;
 
         private void Awake()
         {
-            InitializeGlobalStates(_stateMachine, _levelGenerator, _hero);
-
+            AddGlobalStatesToMachine();
             _stateMachine.ChangeState<GenerationState>();
         }
 
         [Inject]
         private void Construct(
             IGlobalStateMachine stateMachine,
-            ILevelGenerator levelGenerator)
+            GenerationState generationState,
+            MainMenuState mainMenuState,
+            GameplayState gameplayState,
+            GameOverState gameOverState)
         {
             _stateMachine = stateMachine;
-            _levelGenerator = levelGenerator;
+            _generationState = generationState;
+            _mainMenuState = mainMenuState;
+            _gameplayState = gameplayState;
+            _gameOverState = gameOverState;
         }
 
-        private void InitializeGlobalStates(
-            IGlobalStateMachine stateMachine,
-            ILevelGenerator levelGenerator,
-            PlayerTest hero)
+        private void AddGlobalStatesToMachine()
         {
-            GenerationState generationState = new(levelGenerator, hero);
-            MainMenuState mainMenuState = new();
-            GameplayState gameplayState = new();
-            GameOverState gameOverState = new();
-
-            stateMachine.AddState<GenerationState>(generationState);
-            stateMachine.AddState<MainMenuState>(mainMenuState);
-            stateMachine.AddState<GameplayState>(gameplayState);
-            stateMachine.AddState<GameOverState>(gameOverState);
+            _stateMachine.AddState<GenerationState>(_generationState);
+            _stateMachine.AddState<MainMenuState>(_mainMenuState);
+            _stateMachine.AddState<GameplayState>(_gameplayState);
+            _stateMachine.AddState<GameOverState>(_gameOverState);
         }
     }
 }
