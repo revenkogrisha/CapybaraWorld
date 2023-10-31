@@ -102,6 +102,11 @@ namespace Core.Level
         public void SpawnStartPlatform()
         {
             Platform platform = _platformFactory.Create(_config.StartPlatform);
+            
+            Vector2 newPosition = platform.transform.position;
+            newPosition.y = _config.PlatformsY;
+            platform.transform.position = newPosition;
+
             UpdateGenerationData(platform);
         }
 
