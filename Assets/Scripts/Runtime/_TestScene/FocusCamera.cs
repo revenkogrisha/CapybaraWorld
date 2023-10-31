@@ -1,23 +1,26 @@
 using System;
-using System.Collections;
+using System.Threading;
 using Cinemachine;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 
 namespace Core.Player
 {
-    public class FocusCamera : MonoBehaviour
+    public class FocusCamera : MonoBehaviour, IPlayerCamera
     {
 
         [Header("Components")]
         [SerializeField] private CinemachineVirtualCamera _cinemachine;
-        [SerializeField] private Transform _followObject;
 
         [Header("Configuration")]
         [SerializeField, Min(0f)] private float _regularFov = 7f;
         [SerializeField, Min(0f)] private float _focusFov = 9f;
         [SerializeField, Range(0f, 1f)] private float _fovChangeDuration = 0.3f;
 
+        private Transform _followObject;
         private bool _focusing = false;
+        private PlayerTest _hero;
+        private CancellationToken _cancellationToken;
 
         private float Fov
         {
@@ -25,9 +28,25 @@ namespace Core.Player
             set => _cinemachine.m_Lens.OrthographicSize = value;
         }
 
-        private void Awake()
+        private void OnDisable()
         {
+            if (_hero != null)
+            {
+                _hero.JointGrappled -= StartFocus;
+                _hero.JointReleased -= StopFocus;
+            }
+        }
+
+        public void Initialize(PlayerTest hero)
+        {
+            _hero = hero;
+            _followObject = hero.transform;
             _cinemachine.Follow = _followObject;
+
+            _cancellationToken = this.GetCancellationTokenOnDestroy();
+            
+            _hero.JointGrappled += StartFocus;
+            _hero.JointReleased += StopFocus;
         }
 
         public void StartFocus(Transform toFocus)
@@ -37,7 +56,7 @@ namespace Core.Player
 
             _focusing = true;
             _cinemachine.Follow = toFocus;
-            StartCoroutine(ChangeFov(_focusFov, _fovChangeDuration));
+            ChangeFov(_focusFov, _fovChangeDuration).Forget();
         }
 
         public void StopFocus()
@@ -47,11 +66,17 @@ namespace Core.Player
 
             _focusing = false;
             _cinemachine.Follow = _followObject;
-            StartCoroutine(ChangeFov(_regularFov, _fovChangeDuration));
+            ChangeFov(_regularFov, _fovChangeDuration).Forget();
         }
 
-        private IEnumerator ChangeFov(float targetFov, float duration)
+        private async UniTask ChangeFov(
+            float targetFov,
+            float duration,
+            CancellationToken token = default)
         {
+            if (token == default)
+                token = _cancellationToken;
+
             float elapsedTime = 0f;
             float currentFov = Fov;
             while (elapsedTime < duration)
@@ -60,7 +85,7 @@ namespace Core.Player
                 Fov = Mathf.Lerp(currentFov, targetFov, delta);
 
                 elapsedTime += Time.deltaTime;
-                yield return null;
+                await UniTask.NextFrame(token);
             }
         }
     }

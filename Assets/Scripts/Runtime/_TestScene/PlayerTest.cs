@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using Core.Level;
 using UnityEngine;
@@ -16,9 +17,11 @@ namespace Core.Player
         [SerializeField] private LayerMask _jointLayer;
 
         private MiddleObject _middleObject;
-        private FocusCamera _focusCamera;
         private Transform _thisTransform;
         private GrapplingJoint _jointObject;
+
+        public event Action<Transform> JointGrappled;
+        public event Action JointReleased;
 
         #region MonoBehaviour
 
@@ -45,9 +48,8 @@ namespace Core.Player
 
         #endregion
 
-        public void Initialize(FocusCamera focusCamera, MiddleObject middleObject)
+        public void Initialize(MiddleObject middleObject)
         {
-            _focusCamera = focusCamera;
             _middleObject = middleObject;
         }
 
@@ -64,8 +66,7 @@ namespace Core.Player
 
             _lineRenderer.enabled = true;
             _lineRenderer.SetPosition(0, jointPosition);
-            //          Separate camera logic into Focus Camera or mb another class (think about it)
-            _focusCamera.StartFocus(_middleObject.transform);
+            JointGrappled?.Invoke(_middleObject.transform);
         }
 
         private void ReleaseJoint()
@@ -75,7 +76,7 @@ namespace Core.Player
                 _rigidbody2D.velocity *= _grappleJumpVelocityMultiplier;
 
             _lineRenderer.enabled = false;
-            _focusCamera.StopFocus();
+            JointReleased?.Invoke();
         }
 
         private bool FindNearestJoint()
