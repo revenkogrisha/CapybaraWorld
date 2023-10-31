@@ -1,23 +1,34 @@
+using Core.Factories;
 using Core.Level;
 using Core.Player;
+using Zenject;
 
 namespace Core.Infrastructure
 {
     public class GenerationState : State
     {
         private readonly ILevelGenerator _levelGenerator;
-        private readonly PlayerTest _hero;
+        private readonly PlayerFactory _playerFactory;
+        private readonly IPlayerCamera _playerCamera;
 
-        public GenerationState(ILevelGenerator levelGenerator, PlayerTest hero)
+        [Inject]
+        public GenerationState(
+            ILevelGenerator levelGenerator,
+            PlayerFactory playerFactory,
+            IPlayerCamera camera)
         {
-            _hero = hero;
             _levelGenerator = levelGenerator;
+            _playerFactory = playerFactory;
+            _playerCamera = camera;
         }
 
         public override void Enter()
         {
             _levelGenerator.Generate();
-            _levelGenerator.ObservePlayer(_hero);
+
+            PlayerTest hero = _playerFactory.Create();
+            _levelGenerator.ObservePlayer(hero);
+            _playerCamera.Initialize(hero);
         }
 
         public override void Exit()
