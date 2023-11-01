@@ -1,23 +1,28 @@
 using Core.UI;
-using UnityEngine;
+using Zenject;
 
 namespace Core.Factories
 {
     public class UIProvider
     {
         private readonly UICollection _collection;
-        private readonly Transform _root;
+        private readonly IUIRoot _root;
+        private readonly DiContainer _diContainer;
 
-        public UIProvider(UICollection collection, Transform root)
+        [Inject]
+        public UIProvider(UICollection collection, IUIRoot uiRoot, DiContainer diContainer)
         {
             _collection = collection;
-            _root = root;
+            _root = uiRoot;
+            _diContainer = diContainer;
         }
 
-        public GameObject CreateMainMenu()
+        public MainMenu CreateMainMenu()
         {
-            GameObject mainMenu = Object.Instantiate(_collection.MainMenuPrefab);
-            mainMenu.transform.SetParent(_root);
+            MainMenu mainMenu = _diContainer
+                .InstantiatePrefabForComponent<MainMenu>(
+                    _collection.MainMenuPrefab,
+                     _root.RectTransform);
             
             return mainMenu;
         }
