@@ -2,6 +2,7 @@ using System;
 using System.Linq;
 using Core.Level;
 using UnityEngine;
+using UnityTools;
 
 namespace Core.Player
 {
@@ -44,6 +45,17 @@ namespace Core.Player
 
             if (_jointObject != null)
                 _middleObject.SetPosition(_thisTransform.position, _jointObject.transform.position);
+        }
+
+        private void OnTriggerEnter2D(Collider2D other)
+        {
+            Tools.InvokeIfNotNull<DeadlyForPlayerObject>(other, () => print("Death :("));
+        }
+
+        private void OnDrawGizmos()
+        {
+            Gizmos.color = Color.red;
+            Gizmos.DrawWireSphere(transform.position, _grappleRadius);
         }
 
         #endregion
@@ -93,12 +105,6 @@ namespace Core.Player
 
             _jointObject = nearest.GetComponent<GrapplingJoint>();
             return _jointObject != null;
-        }
-
-        private void OnDrawGizmos()
-        {
-            Gizmos.color = Color.red;
-            Gizmos.DrawWireSphere(transform.position, _grappleRadius);
         }
     }
 }

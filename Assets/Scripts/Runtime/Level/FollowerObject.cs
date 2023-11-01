@@ -5,9 +5,9 @@ using System;
 
 namespace Core.Level
 {
-    public class FollowerObject : MonoBehaviour
+    public class FollowerObject : MonoBehaviour // Made as Mono Behaviour for simplisity
     {
-        private readonly float _updateIntervalInSeconds = 1f;
+        private float _updateIntervalInSeconds = 1f;
         private Transform _objectToFollow;
         private Transform _transform;
 
@@ -27,7 +27,7 @@ namespace Core.Level
             }
         }
 
-        public FollowerObject(
+        public void Initialize(
             Transform objectToFollow,
             bool ignoreXMovement = false,
             bool ignoreYMovement = true,

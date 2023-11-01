@@ -21,9 +21,6 @@ namespace Core.Factories
 
         public PlayerTest Create()
         {
-            DeadlyForPlayerObject playerDeadline = Object.Instantiate(_config.PlayerDeadlinePrefab);
-            playerDeadline.transform.position = _config.PlayerDeadlinePosition;
-
             MiddleObject middleObject = Object.Instantiate(_config.MiddleObjectPrefab);
 
             PlayerTest hero = _diContainer
@@ -31,6 +28,11 @@ namespace Core.Factories
 
             hero.transform.position = _config.PlayerSpawnPosition;
             hero.Initialize(middleObject);
+
+            FollowerObject playerDeadline = Object.Instantiate(_config.PlayerDeadlinePrefab);
+            playerDeadline.transform.position = _config.PlayerDeadlinePosition;
+            playerDeadline.Initialize(hero.transform);
+            playerDeadline.BeginFollowing();
 
             return hero;
         }

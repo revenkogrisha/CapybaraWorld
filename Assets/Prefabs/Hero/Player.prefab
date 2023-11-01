@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 128724164731175601}
   - component: {fileID: 6659919158317818966}
+  - component: {fileID: 1617937764381349194}
   - component: {fileID: 1970229653114288831}
   - component: {fileID: 9029187548063722839}
   - component: {fileID: 6488886026252433930}
@@ -63,7 +64,42 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
+--- !u!70 &1617937764381349194
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2799920140385219751}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 20, y: -5}
+  m_Size: {x: 1, y: 1}
+  m_Direction: 0
 --- !u!231 &1970229653114288831
 SpringJoint2D:
   m_ObjectHideFlags: 0
@@ -314,8 +350,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d3af6e3919c1f4690b940ad2d89ee165, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _focusCamera: {fileID: 0}
-  _middleObject: {fileID: 0}
   _springJoint2D: {fileID: 1970229653114288831}
   _lineRenderer: {fileID: 9029187548063722839}
   _rigidbody2D: {fileID: 6659919158317818966}
