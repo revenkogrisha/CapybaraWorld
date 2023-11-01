@@ -12,12 +12,23 @@ namespace Core.Installers
         public override void InstallBindings()
         {
             BindPlayerFactory();
+            BindPlayerDeadlineFactory();
         }
 
         private void BindPlayerFactory()
         {
             Container
                 .Bind<PlayerFactory>()
+                .FromNew()
+                .AsSingle()
+                .WithArguments(_playerConfig)
+                .Lazy();
+        }
+
+        private void BindPlayerDeadlineFactory()
+        {
+            Container
+                .Bind<PlayerDeadlineFactory>()
                 .FromNew()
                 .AsSingle()
                 .WithArguments(_playerConfig)

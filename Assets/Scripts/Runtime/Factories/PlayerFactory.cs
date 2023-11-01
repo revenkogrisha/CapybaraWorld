@@ -1,4 +1,3 @@
-using Core.Level;
 using Core.Player;
 using UnityEngine;
 using Zenject;
@@ -28,11 +27,6 @@ namespace Core.Factories
 
             hero.transform.position = _config.PlayerSpawnPosition;
             hero.Initialize(middleObject);
-
-            FollowerObject playerDeadline = Object.Instantiate(_config.PlayerDeadlinePrefab);
-            playerDeadline.transform.position = _config.PlayerDeadlinePosition;
-            playerDeadline.Initialize(hero.transform);
-            playerDeadline.BeginFollowing();
 
             return hero;
         }
