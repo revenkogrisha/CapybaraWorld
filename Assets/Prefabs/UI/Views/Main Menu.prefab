@@ -146,6 +146,7 @@ GameObject:
   - component: {fileID: 5563324333753378309}
   - component: {fileID: 467363618628360372}
   - component: {fileID: 5739335192250988813}
+  - component: {fileID: 7248864585523625520}
   m_Layer: 5
   m_Name: Play Button
   m_TagString: Untagged
@@ -255,6 +256,20 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &7248864585523625520
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2873730657122806721}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ab1f9b4956c6ae4888d0a318be777b6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _button: {fileID: 5739335192250988813}
+  _audio: {fileID: 0}
 --- !u!1 &4584319983560177962
 GameObject:
   m_ObjectHideFlags: 0
@@ -398,6 +413,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4722415054773195112}
+  - component: {fileID: 5603516824122889684}
   m_Layer: 5
   m_Name: Main Menu
   m_TagString: Untagged
@@ -426,3 +442,16 @@ RectTransform:
   m_AnchoredPosition: {x: -0.00061035156, y: 0.059326172}
   m_SizeDelta: {x: -0.39990234, y: 0.16998291}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &5603516824122889684
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5189350940057459233}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62a57db26c62b440db9c0ff58b03451d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _playButton: {fileID: 7248864585523625520}
