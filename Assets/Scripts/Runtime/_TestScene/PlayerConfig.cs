@@ -8,7 +8,7 @@ namespace Core.Player
     {
         [Header("Prefabs")]
         [SerializeField] private PlayerTest _playerPrefab;
-        [SerializeField] private DeadlyForPlayerObject _playerDeadlinePrefab;
+        [SerializeField] private FollowerObject _playerDeadlinePrefab;
         [SerializeField] private MiddleObject _middleObjectPrefab;
 
         [Header("Spawn Settings")]
@@ -16,7 +16,7 @@ namespace Core.Player
         [SerializeField] private Vector2 _playerDeadlinePosition;
 
         public PlayerTest PlayerPrefab => _playerPrefab;
-        public DeadlyForPlayerObject PlayerDeadlinePrefab => _playerDeadlinePrefab;
+        public FollowerObject PlayerDeadlinePrefab => _playerDeadlinePrefab;
         public MiddleObject MiddleObjectPrefab => _middleObjectPrefab;
         public Vector2 PlayerSpawnPosition => _playerSpawnPosition;
         public Vector2 PlayerDeadlinePosition => _playerDeadlinePosition;
