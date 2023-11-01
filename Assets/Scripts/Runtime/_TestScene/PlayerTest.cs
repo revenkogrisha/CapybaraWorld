@@ -33,6 +33,15 @@ namespace Core.Player
             _thisTransform = transform;
         }
 
+        private void OnDisable()
+        {
+            if (_middleObject != null)
+            {
+                _middleObject = null;
+                Destroy(_middleObject);
+            }
+        }
+
         private void Update()
         {
             if (Input.GetKeyDown(KeyCode.Mouse0))
