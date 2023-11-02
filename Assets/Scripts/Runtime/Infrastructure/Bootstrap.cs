@@ -18,6 +18,7 @@ namespace Core.Infrastructure
         {
             AddGlobalStatesToMachine();
             _stateMachine.ChangeState<GenerationState>();
+            _stateMachine.ChangeState<MainMenuState>();
         }
 
         [Inject]

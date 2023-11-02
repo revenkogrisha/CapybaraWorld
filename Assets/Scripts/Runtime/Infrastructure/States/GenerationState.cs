@@ -8,15 +8,10 @@ namespace Core.Infrastructure
         private readonly ILevelGenerator _levelGenerator;
 
         [Inject]
-        public GenerationState(ILevelGenerator levelGenerator)
-        {
+        public GenerationState(ILevelGenerator levelGenerator) => 
             _levelGenerator = levelGenerator;
-        }
 
-        public override void Enter()
-        {
+        public override void Enter() => 
             _levelGenerator.Generate();
-            FiniteStateMachine.ChangeState<MainMenuState>();
-        }
     }
 }
