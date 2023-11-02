@@ -13,3 +13,4 @@ MonoBehaviour:
   m_Name: UI Collection
   m_EditorClassIdentifier: 
   <MainMenuPrefab>k__BackingField: {fileID: 5603516824122889684, guid: f1ac2e45936cc4106bd06d5bb20dd7cc, type: 3}
+  <GameOverMenuPrefab>k__BackingField: {fileID: 2333696530276556720, guid: 9cf5d985f1eef49c18dbf6243afef445, type: 3}

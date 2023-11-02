@@ -23,6 +23,7 @@ namespace Core.Player
 
         public event Action<Transform> JointGrappled;
         public event Action JointReleased;
+        public event Action Died;
 
         #region MonoBehaviour
 
@@ -58,7 +59,7 @@ namespace Core.Player
 
         private void OnTriggerEnter2D(Collider2D other)
         {
-            Tools.InvokeIfNotNull<DeadlyForPlayerObject>(other, () => print("Death :("));
+            Tools.InvokeIfNotNull<DeadlyForPlayerObject>(other, NotifyOnDeath);
         }
 
         private void OnDrawGizmos()
@@ -115,5 +116,8 @@ namespace Core.Player
             _jointObject = nearest.GetComponent<GrapplingJoint>();
             return _jointObject != null;
         }
+
+        private void NotifyOnDeath() => 
+            Died?.Invoke();
     }
 }

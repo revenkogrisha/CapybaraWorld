@@ -6,5 +6,6 @@ namespace Core.UI
     public class UICollection : ScriptableObject
     {
         [field: SerializeField] public MainMenu MainMenuPrefab { get; private set; }
+        [field: SerializeField] public GameOverMenu GameOverMenuPrefab { get; private set; }
     }
 }

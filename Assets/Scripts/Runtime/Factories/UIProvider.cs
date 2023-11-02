@@ -26,5 +26,15 @@ namespace Core.Factories
             
             return mainMenu;
         }
+
+        public GameOverMenu CreateGameOverMenu()
+        {
+            GameOverMenu gameOverMenu = _diContainer
+                .InstantiatePrefabForComponent<GameOverMenu>(
+                    _collection.GameOverMenuPrefab,
+                     _root.RectTransform);
+            
+            return gameOverMenu;
+        }
     }
 }
