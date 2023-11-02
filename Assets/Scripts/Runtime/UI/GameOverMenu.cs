@@ -36,6 +36,7 @@ namespace Core.UI
 
         private void RestartGame()
         {
+            _globalStateMachine.ChangeState<GenerationState>();
             _globalStateMachine.ChangeState<GameplayState>();
         }
 

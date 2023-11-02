@@ -15,15 +15,15 @@ namespace Core.Level
         private const int SpecialPlatformSequentialNumber = 4;
         private const int LocationChangeSequentialNumber = 10;
 
+        private readonly Queue<Platform> _platformsOnLevel;
         private readonly LevelGeneratorConfig _config;
         private readonly IPlatformFactory<Platform> _platformFactory;
-        private readonly Queue<Platform> _platformsOnLevel = new();
         private readonly BackgroundHandler _backgroundHandler;
+        private CancellationTokenSource _cancellationTokenSource;
         private Transform _centerTransform;
         private int _platformNumber = 0;
         private float _lastGeneratedPlatformX = 0f;
         private int _locationNumber = 0;
-        private CancellationTokenSource _cancellationTokenSource;
 
         public Location CurrentLocation => _config.Locations[_locationNumber];
         private float HeroX => _centerTransform.position.x;
@@ -55,6 +55,7 @@ namespace Core.Level
             _config = config;
 
             _lastGeneratedPlatformX = _config.XtartPoint;
+            _platformsOnLevel = new();
 
             ILocationsHandler locationsHandler = this;
             _platformFactory = new PlatformFactory(locationsHandler, platfomrsParent);
@@ -68,6 +69,15 @@ namespace Core.Level
             _cancellationTokenSource?.Cancel();
             _cancellationTokenSource?.Dispose();
             _cancellationTokenSource = null;
+
+            _platformNumber = 0;
+            _lastGeneratedPlatformX = 0f;
+            _locationNumber = 0;
+
+            foreach (Platform platform in _platformsOnLevel)
+                Object.Destroy(platform.gameObject);
+                
+            _platformsOnLevel.Clear();
         }
 
         public void InitializeCenter(Transform transform)
