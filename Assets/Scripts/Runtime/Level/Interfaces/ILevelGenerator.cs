@@ -1,5 +1,6 @@
 using System;
 using Core.Player;
+using UnityEngine;
 
 namespace Core.Level
 {
@@ -7,6 +8,6 @@ namespace Core.Level
     {
         public void Generate();
 
-        public void ObservePlayer(PlayerTest hero);
+        public void InitializeCenter(Transform center);
     }
 }

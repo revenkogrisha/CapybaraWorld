@@ -38,7 +38,7 @@ namespace Core.Infrastructure
 
             _gameOverHandler.SubscribeHeroDeath(_hero);
 
-            _levelGenerator.ObservePlayer(_hero);
+            _levelGenerator.InitializeCenter(_hero.transform);
             _playerCamera.Initialize(_hero);
         }
 
