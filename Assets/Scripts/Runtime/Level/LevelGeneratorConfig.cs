@@ -6,7 +6,6 @@ namespace Core.Level
     public class LevelGeneratorConfig : ScriptableObject
     {
         [Header("Platform Generation Settings")]
-        [SerializeField] private Transform _platformsParent;
         [SerializeField] private int _platformsAmountToGenerate = 5;
         [SerializeField] private float _xStartPoint = 0f;
         [SerializeField] private float _platformsY = -2f;
@@ -15,7 +14,6 @@ namespace Core.Level
         [SerializeField] private SimplePlatform _startPlatform;
         [SerializeField] private Location[] _locations;
 
-        public Transform PlatformsParent => _platformsParent;
         public int PlatformsAmountToGenerate => _platformsAmountToGenerate;
         public float XtartPoint => _xStartPoint;
         public float PlatformsY => _platformsY;
