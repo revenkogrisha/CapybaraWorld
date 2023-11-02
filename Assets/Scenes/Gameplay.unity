@@ -777,6 +777,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _levelGeneratorConfig: {fileID: 11400000, guid: 1805d48b1bc4e421abde3eada9f65e5c, type: 2}
+  _platformsParent: {fileID: 677644214}
 --- !u!114 &1660845593
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -20,12 +20,12 @@ namespace Core.Level
         private readonly LevelGeneratorConfig _config;
         private readonly IPlatformFactory<Platform> _platformFactory;
         private readonly Queue<Platform> _platformsOnLevel = new();
-        private Camera _camera;
+        private readonly Camera _camera;
         private Transform _heroTransform;
         private int _platformNumber = 0;
         private float _lastGeneratedPlatformX = 0f;
         private int _locationNumber = 0;
-        private Color _defaultBackground;
+        private readonly Color _defaultBackground;
         private CancellationTokenSource _cancellationTokenSource;
 
         public Location CurrentLocation => _config.Locations[_locationNumber];
@@ -65,7 +65,7 @@ namespace Core.Level
             }
         }
         
-        public LevelGenerator(LevelGeneratorConfig config)
+        public LevelGenerator(LevelGeneratorConfig config, Transform platfomrsParent)
         {
             _config = config;
 
@@ -75,8 +75,7 @@ namespace Core.Level
             _defaultBackground = _camera.backgroundColor;
 
             ILocationsHandler locationsHandler = this;
-            Transform parent = _config.PlatformsParent;
-            _platformFactory = new PlatformFactory(locationsHandler, parent);
+            _platformFactory = new PlatformFactory(locationsHandler, platfomrsParent);
         }
 
         public void Dispose()
