@@ -1,6 +1,7 @@
 using Core.Factories;
 using Core.UI;
 using UnityEngine;
+using Zenject;
 
 namespace Core.Infrastructure
 {
@@ -9,6 +10,7 @@ namespace Core.Infrastructure
         private readonly UIProvider _uiProvider;
         private MainMenu _mainMenu;
 
+        [Inject]
         public MainMenuState(UIProvider uiProvider)
         {
             _uiProvider = uiProvider;
