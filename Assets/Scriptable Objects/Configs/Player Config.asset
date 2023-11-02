@@ -16,4 +16,4 @@ MonoBehaviour:
   _playerDeadlinePrefab: {fileID: 806504400542084250, guid: bcb1f1afee0654d6e84c9aab5b050a80, type: 3}
   _middleObjectPrefab: {fileID: 5401349206143136987, guid: cfb7c75762c3b4945aaf343901ae2f91, type: 3}
   _playerSpawnPosition: {x: -20, y: 5}
-  _playerDeadlinePosition: {x: 0, y: -10}
+  _playerDeadlinePosition: {x: 0, y: -14}

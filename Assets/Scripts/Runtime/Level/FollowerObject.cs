@@ -31,7 +31,7 @@ namespace Core.Level
             Transform objectToFollow,
             bool ignoreXMovement = false,
             bool ignoreYMovement = true,
-            float updateIntervalInSeconds = 1f)
+            float updateIntervalInSeconds = 0.5f)
         {
             _objectToFollow = objectToFollow;
             IgnoreXMovement = ignoreXMovement;
