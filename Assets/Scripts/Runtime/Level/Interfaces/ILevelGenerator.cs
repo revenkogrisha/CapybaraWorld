@@ -1,8 +1,9 @@
+using System;
 using Core.Player;
 
 namespace Core.Level
 {
-    public interface ILevelGenerator
+    public interface ILevelGenerator : IDisposable
     {
         public void Generate();
 

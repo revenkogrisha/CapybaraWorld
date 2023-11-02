@@ -7,11 +7,10 @@ using Core.Other;
 using Core.Player;
 using UnityTools;
 using Core.Factories;
-using System;
 
 namespace Core.Level
 {
-    public class LevelGenerator : ILevelGenerator, ILocationsHandler, IDisposable
+    public class LevelGenerator : ILevelGenerator, ILocationsHandler
     {
         private const float HeroPositionCheckFrequency = 1.5f;
         private const int SpecialPlatformSequentialNumber = 4;
@@ -27,6 +26,7 @@ namespace Core.Level
         private float _lastGeneratedPlatformX = 0f;
         private int _locationNumber = 0;
         private Color _defaultBackground;
+        private CancellationTokenSource _cancellationTokenSource;
 
         public Location CurrentLocation => _config.Locations[_locationNumber];
         private float HeroX => _heroTransform.position.x;
@@ -81,12 +81,13 @@ namespace Core.Level
 
         public void Dispose()
         {
-            Debug.Log("Dispose");
+            _cancellationTokenSource?.Cancel();
+            _cancellationTokenSource?.Dispose();
+            _cancellationTokenSource = null;
         }
 
         public void ObservePlayer(PlayerTest hero)
         {
-            //                                                          Probably need to separate
             _heroTransform = hero.transform;
 
             ChangeBackgroundColor();
@@ -118,16 +119,27 @@ namespace Core.Level
 
         private async UniTask CheckPlayerPosition()
         {
+            _cancellationTokenSource = new();
+            CancellationToken token = _cancellationTokenSource.Token;
+            
             while (this != null)
             {
+                if (token.IsCancellationRequested == true)
+                    break;
+                
                 if (IsLevelMidPointXLessHeroX == true) 
                 {
                     DespawnOldestPlatform();
                     GenerateRandomPlatform();
                 }
 
-                await MyUniTask.Delay(HeroPositionCheckFrequency);
+                await MyUniTask
+                    .Delay(HeroPositionCheckFrequency, token)
+                    .SuppressCancellationThrow();
             }
+
+            _cancellationTokenSource?.Dispose();
+            _cancellationTokenSource = null;
         }
 
         private void GenerateRandomPlatform()
@@ -158,16 +170,19 @@ namespace Core.Level
         private void ChangeBackgroundColor()
         {
             Location currentLocation = CurrentLocation;
-            Color newBackground;
-            if (currentLocation.UseDefaultBackground == true)
-                newBackground = _defaultBackground;
-            else
-                newBackground = currentLocation.BackgroundColor;
+            Color newBackground = currentLocation.UseDefaultBackground == true  
+                ? _defaultBackground
+                : currentLocation.BackgroundColor;
 
-            LerpBackground(newBackground).Forget();
+            if (_camera.backgroundColor == newBackground)
+                return;
+
+            LerpBackgroundAsync(newBackground).Forget();
         }
 
-        private async UniTask LerpBackground(Color newBackground, CancellationToken token = default)
+        private async UniTask LerpBackgroundAsync(
+            Color newBackground,
+            CancellationToken token = default)
         {
             float elapsedTime = 0;
             Color currentBackground = _camera.backgroundColor;
@@ -177,6 +192,7 @@ namespace Core.Level
                 _camera.backgroundColor = Color.Lerp(currentBackground, newBackground, time);
 
                 elapsedTime += Time.deltaTime;
+
                 await UniTask.NextFrame(token);
             }
         }
