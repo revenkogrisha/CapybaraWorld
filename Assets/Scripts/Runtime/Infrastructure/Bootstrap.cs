@@ -1,13 +1,10 @@
 using UnityEngine;
 using Zenject;
-using Core.Player;
 
 namespace Core.Infrastructure
 {
     public class Bootstrap : MonoBehaviour
     {
-        [SerializeField] private PlayerTest _hero;
-
         private IGlobalStateMachine _stateMachine;
         private GenerationState _generationState;
         private MainMenuState _mainMenuState;
