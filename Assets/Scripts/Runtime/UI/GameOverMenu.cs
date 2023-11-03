@@ -42,6 +42,7 @@ namespace Core.UI
 
         private void ReturnToMenu()
         {
+            _globalStateMachine.ChangeState<GenerationState>();
             _globalStateMachine.ChangeState<MainMenuState>();
         }
     }
