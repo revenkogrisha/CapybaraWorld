@@ -12,8 +12,6 @@ namespace Core.Level
     public class LevelGenerator : ILevelGenerator, ILocationsHandler
     {
         private const float HeroPositionCheckFrequency = 1.5f;
-        private const int SpecialPlatformSequentialNumber = 4;
-        private const int LocationChangeSequentialNumber = 10;
 
         private readonly Queue<Platform> _platformsOnLevel;
         private readonly LevelGeneratorConfig _config;
@@ -29,10 +27,10 @@ namespace Core.Level
         private float HeroX => _centerTransform.position.x;
 
         private bool IsNowSpecialPlatformTurn => 
-            _platformNumber % SpecialPlatformSequentialNumber == 0 && _platformNumber > 0;
+            _platformNumber % _config.SpecialPlatformSequentialNumber == 0 && _platformNumber > 0;
 
         private bool IsNowLocationChangeTurn =>
-             _platformNumber % LocationChangeSequentialNumber == 0 && _platformNumber > 0;
+             _platformNumber % _config.LocationChangeSequentialNumber == 0 && _platformNumber > 0;
 
         private bool IsLevelMidPointXLessHeroX
         {
@@ -116,18 +114,18 @@ namespace Core.Level
             
             while (this != null)
             {
-                if (token.IsCancellationRequested == true)
-                    break;
-                
                 if (IsLevelMidPointXLessHeroX == true) 
                 {
                     DespawnOldestPlatform();
                     GenerateRandomPlatform();
                 }
 
-                await MyUniTask
+                bool canceled = await MyUniTask
                     .Delay(HeroPositionCheckFrequency, token)
                     .SuppressCancellationThrow();
+
+                if (canceled == true)
+                    break;
             }
 
             _cancellationTokenSource?.Dispose();
