@@ -12,7 +12,7 @@ namespace Core.Infrastructure
         private readonly PlayerFactory _playerFactory;
         private readonly PlayerDeadlineFactory _playerDeadlineFactory;
         private readonly IPlayerCamera _playerCamera;
-        private PlayerTest _hero;
+        private Hero _hero;
         private FollowerObject _playerDeadline;
         private GameOverHandler _gameOverHandler;
         

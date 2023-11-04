@@ -4,7 +4,7 @@ using Zenject;
 
 namespace Core.Factories
 {
-    public class PlayerFactory : IFactory<PlayerTest>
+    public class PlayerFactory : IFactory<Hero>
     {
         private readonly PlayerConfig _config;
         private readonly DiContainer _diContainer;
@@ -18,12 +18,12 @@ namespace Core.Factories
             _diContainer = diContainer;
         }
 
-        public PlayerTest Create()
+        public Hero Create()
         {
             MiddleObject middleObject = Object.Instantiate(_config.MiddleObjectPrefab);
 
-            PlayerTest hero = _diContainer
-                .InstantiatePrefabForComponent<PlayerTest>(_config.PlayerPrefab);
+            Hero hero = _diContainer
+                .InstantiatePrefabForComponent<Hero>(_config.PlayerPrefab);
 
             hero.transform.position = _config.PlayerSpawnPosition;
             hero.Initialize(middleObject);

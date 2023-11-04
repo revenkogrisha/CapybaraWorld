@@ -7,12 +7,12 @@ namespace Core.Common
     public class GameOverHandler : IDisposable
     {
         private readonly IGlobalStateMachine _globalStateMachine;
-        private PlayerTest _hero;
+        private Hero _hero;
 
         public GameOverHandler(IGlobalStateMachine globalStateMachine) =>
             _globalStateMachine = globalStateMachine;
 
-        public void SubscribeHeroDeath(PlayerTest hero)
+        public void SubscribeHeroDeath(Hero hero)
         {
             _hero = hero;
             _hero.Died += FinishGame;

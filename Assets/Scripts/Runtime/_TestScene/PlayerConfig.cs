@@ -7,7 +7,7 @@ namespace Core.Player
     public class PlayerConfig : ScriptableObject
     {
         [Header("Prefabs")]
-        [SerializeField] private PlayerTest _playerPrefab;
+        [SerializeField] private Hero _playerPrefab;
         [SerializeField] private FollowerObject _playerDeadlinePrefab;
         [SerializeField] private MiddleObject _middleObjectPrefab;
 
@@ -15,7 +15,7 @@ namespace Core.Player
         [SerializeField] private Vector2 _playerSpawnPosition;
         [SerializeField] private Vector2 _playerDeadlinePosition;
 
-        public PlayerTest PlayerPrefab => _playerPrefab;
+        public Hero PlayerPrefab => _playerPrefab;
         public FollowerObject PlayerDeadlinePrefab => _playerDeadlinePrefab;
         public MiddleObject MiddleObjectPrefab => _middleObjectPrefab;
         public Vector2 PlayerSpawnPosition => _playerSpawnPosition;
