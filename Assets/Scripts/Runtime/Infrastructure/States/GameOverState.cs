@@ -11,19 +11,13 @@ namespace Core.Infrastructure
         private GameOverMenu _gameOverMenu;
 
         [Inject]
-        public GameOverState(UIProvider uiProvider)
-        {
+        public GameOverState(UIProvider uiProvider) => 
             _uiProvider = uiProvider;
-        }
 
-        public override void Enter()
-        {
+        public override void Enter() => 
             _gameOverMenu = _uiProvider.CreateGameOverMenu();
-        }
 
-        public override void Exit()
-        {
+        public override void Exit() => 
             Object.Destroy(_gameOverMenu.gameObject);
-        }
     }
 }

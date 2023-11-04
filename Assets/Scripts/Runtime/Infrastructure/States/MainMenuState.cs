@@ -11,19 +11,13 @@ namespace Core.Infrastructure
         private MainMenu _mainMenu;
 
         [Inject]
-        public MainMenuState(UIProvider uiProvider)
-        {
+        public MainMenuState(UIProvider uiProvider) =>
             _uiProvider = uiProvider;
-        }
 
-        public override void Enter()
-        {
+        public override void Enter() =>
             _mainMenu = _uiProvider.CreateMainMenu();
-        }
 
-        public override void Exit()
-        {
+        public override void Exit() =>
             Object.Destroy(_mainMenu.gameObject);
-        }
     }
 }

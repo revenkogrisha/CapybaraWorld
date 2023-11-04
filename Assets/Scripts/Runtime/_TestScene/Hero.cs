@@ -1,7 +1,6 @@
 using System;
 using System.Linq;
 using Core.Level;
-using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityTools;
 
