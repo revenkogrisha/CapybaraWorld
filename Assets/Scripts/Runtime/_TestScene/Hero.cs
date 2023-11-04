@@ -13,11 +13,7 @@ namespace Core.Player
         [SerializeField] private LineRenderer _lineRenderer;
         [SerializeField] private Rigidbody2D _rigidbody2D;
 
-        [Header("Grappling Settings")]
-        [SerializeField, Range(0f, 100f)] private float _grappleRadius = 10f;
-        [SerializeField] private float _grappleJumpVelocityMultiplier = 1.5f;
-        [SerializeField] private LayerMask _jointLayer;
-
+        private PlayerConfig _config;
         private MiddleObject _middleObject;
         private Transform _thisTransform;
         private GrapplingJoint _jointObject;
@@ -65,13 +61,16 @@ namespace Core.Player
         private void OnDrawGizmos()
         {
             Gizmos.color = Color.red;
-            Gizmos.DrawWireSphere(transform.position, _grappleRadius);
+            Gizmos.DrawWireSphere(transform.position, _config.GrappleRadius);
         }
 
         #endregion
 
-        public void Initialize(MiddleObject middleObject) => 
+        public void Initialize(PlayerConfig config, MiddleObject middleObject)
+        {
+            _config = config;
             _middleObject = middleObject;
+        }
 
         private void GrappleJoint()
         {
@@ -102,7 +101,7 @@ namespace Core.Player
             _springJoint2D.enabled = false;
             Vector2 velocity = _rigidbody2D.velocity;
             if (velocity.x > 0 && velocity.y >= 0)
-                _rigidbody2D.velocity *= _grappleJumpVelocityMultiplier;
+                _rigidbody2D.velocity *= _config.GrappleJumpVelocityMultiplier;
 
             _lineRenderer.enabled = false;
             _isGrappling = false;
@@ -111,7 +110,7 @@ namespace Core.Player
 
         private bool FindNearestJoint()
         {
-            Collider2D[] colliders = Physics2D.OverlapCircleAll(_thisTransform.position, _grappleRadius, _jointLayer);
+            Collider2D[] colliders = Physics2D.OverlapCircleAll(_thisTransform.position, _config.GrappleRadius, _config.JointLayer);
 
             if (colliders == null || colliders.Length == 0)
                 return false;
