@@ -74,10 +74,13 @@ namespace Core.Infrastructure
             return state as TState;
         }
 
-        public TState GetState<TState>() where TState : State => _states[typeof(TState)] as TState;
+        public TState GetState<TState>() where TState : State => 
+            _states[typeof(TState)] as TState;
 
-        public void DoStateUpdate() => _currentState.Update();
+        public void DoStateUpdate() => 
+            _currentState.Update();
 
-        public bool CompareState<TState>() => _currentState.GetType() == typeof(TState);
+        public bool CompareState<TState>() => 
+            _currentState.GetType() == typeof(TState);
     }
 }
