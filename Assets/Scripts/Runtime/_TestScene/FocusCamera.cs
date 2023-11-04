@@ -19,7 +19,7 @@ namespace Core.Player
 
         private Transform _followObject;
         private bool _focusing = false;
-        private PlayerTest _hero;
+        private Hero _hero;
         private CancellationToken _cancellationToken;
 
         private float Fov
@@ -37,7 +37,7 @@ namespace Core.Player
             }
         }
 
-        public void Initialize(PlayerTest hero)
+        public void Initialize(Hero hero)
         {
             _hero = hero;
             _followObject = hero.transform;

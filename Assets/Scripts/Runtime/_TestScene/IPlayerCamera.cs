@@ -4,6 +4,6 @@ namespace Core.Player
 {
     public interface IPlayerCamera
     {
-        public void Initialize(PlayerTest hero);
+        public void Initialize(Hero hero);
     }
 }

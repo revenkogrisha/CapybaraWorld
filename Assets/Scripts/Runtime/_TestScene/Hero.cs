@@ -1,18 +1,20 @@
 using System;
 using System.Linq;
 using Core.Level;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityTools;
 
 namespace Core.Player
 {
-    public class PlayerTest : MonoBehaviour
+    public class Hero : MonoBehaviour
     {
+        [Header("Components")]
         [SerializeField] private SpringJoint2D _springJoint2D;
         [SerializeField] private LineRenderer _lineRenderer;
         [SerializeField] private Rigidbody2D _rigidbody2D;
 
-        [Header("Grapple Settings")]
+        [Header("Grappling Settings")]
         [SerializeField, Range(0f, 100f)] private float _grappleRadius = 10f;
         [SerializeField] private float _grappleJumpVelocityMultiplier = 1.5f;
         [SerializeField] private LayerMask _jointLayer;
@@ -58,10 +60,8 @@ namespace Core.Player
                 _middleObject.SetPosition(_thisTransform.position, _jointObject.transform.position);
         }
 
-        private void OnTriggerEnter2D(Collider2D other)
-        {
+        private void OnTriggerEnter2D(Collider2D other) => 
             Tools.InvokeIfNotNull<DeadlyForPlayerObject>(other, NotifyOnDeath);
-        }
 
         private void OnDrawGizmos()
         {
@@ -71,10 +71,8 @@ namespace Core.Player
 
         #endregion
 
-        public void Initialize(MiddleObject middleObject)
-        {
+        public void Initialize(MiddleObject middleObject) => 
             _middleObject = middleObject;
-        }
 
         private void GrappleJoint()
         {
