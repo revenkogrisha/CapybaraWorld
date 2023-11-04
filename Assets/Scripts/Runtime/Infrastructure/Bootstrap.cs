@@ -14,8 +14,7 @@ namespace Core.Infrastructure
         private void Awake()
         {
             AddGlobalStatesToMachine();
-            _stateMachine.ChangeState<GenerationState>();
-            _stateMachine.ChangeState<MainMenuState>();
+            _stateMachine.ChangeState<GenerationState, State>(_mainMenuState);
         }
 
         [Inject]
