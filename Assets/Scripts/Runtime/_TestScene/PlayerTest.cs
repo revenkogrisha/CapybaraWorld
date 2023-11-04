@@ -20,6 +20,7 @@ namespace Core.Player
         private MiddleObject _middleObject;
         private Transform _thisTransform;
         private GrapplingJoint _jointObject;
+        private bool _isGrappling;
 
         public event Action<Transform> JointGrappled;
         public event Action JointReleased;
@@ -77,6 +78,9 @@ namespace Core.Player
 
         private void GrappleJoint()
         {
+            if (_isGrappling == true)
+                return;
+
             bool canGrapple = FindNearestJoint();
             if (canGrapple == false)
                 return;
@@ -88,16 +92,23 @@ namespace Core.Player
 
             _lineRenderer.enabled = true;
             _lineRenderer.SetPosition(0, jointPosition);
+
+            _isGrappling = true;
             JointGrappled?.Invoke(_middleObject.transform);
         }
 
         private void ReleaseJoint()
         {
+            if (_isGrappling == false)
+                return;
+
             _springJoint2D.enabled = false;
-            if (_rigidbody2D.velocity.x > 0)
+            Vector2 velocity = _rigidbody2D.velocity;
+            if (velocity.x > 0 && velocity.y >= 0)
                 _rigidbody2D.velocity *= _grappleJumpVelocityMultiplier;
 
             _lineRenderer.enabled = false;
+            _isGrappling = false;
             JointReleased?.Invoke();
         }
 
