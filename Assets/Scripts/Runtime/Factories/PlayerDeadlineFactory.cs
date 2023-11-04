@@ -15,14 +15,6 @@ namespace Core.Factories
             _playerDeadlinePosition = playerConfig.PlayerDeadlinePosition;
         }
 
-        public FollowerObject Create(Transform heroTransform)
-        {
-            FollowerObject playerDeadline = Create();
-            playerDeadline.Initialize(heroTransform);
-
-            return playerDeadline;
-        }
-
         public FollowerObject Create()
         {
             FollowerObject playerDeadline = Object.Instantiate(_playerDeadlinePrefab);

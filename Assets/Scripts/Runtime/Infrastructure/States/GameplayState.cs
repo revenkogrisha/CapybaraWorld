@@ -9,8 +9,8 @@ namespace Core.Infrastructure
     public class GameplayState : State
     {
         private readonly ILevelGenerator _levelGenerator;
-        private readonly PlayerFactory _playerFactory;
-        private readonly PlayerDeadlineFactory _playerDeadlineFactory;
+        private readonly IFactory<Hero> _playerFactory;
+        private readonly IFactory<FollowerObject> _playerDeadlineFactory;
         private readonly IPlayerCamera _playerCamera;
         private Hero _hero;
         private FollowerObject _playerDeadline;
@@ -33,7 +33,9 @@ namespace Core.Infrastructure
         public override void Enter()
         {
             _hero = _playerFactory.Create();
-            _playerDeadline = _playerDeadlineFactory.Create(_hero.transform);
+            
+            _playerDeadline = _playerDeadlineFactory.Create();
+            _playerDeadline.Initialize(_hero.transform);
             _playerDeadline.BeginFollowing();
 
             _gameOverHandler.SubscribeHeroDeath(_hero);
