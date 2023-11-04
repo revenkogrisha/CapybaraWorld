@@ -36,14 +36,20 @@ namespace Core.UI
 
         private void RestartGame()
         {
-            _globalStateMachine.ChangeState<GenerationState>();
-            _globalStateMachine.ChangeState<GameplayState>();
+            GameplayState gameplayState = _globalStateMachine.GetState<GameplayState>();
+            GenerationState generationState = _globalStateMachine
+                .GetStateWithArg<GenerationState, State>(gameplayState);
+
+            _globalStateMachine.ChangeState(generationState);
         }
 
         private void ReturnToMenu()
         {
-            _globalStateMachine.ChangeState<GenerationState>();
-            _globalStateMachine.ChangeState<MainMenuState>();
+            MainMenuState mainMenuState = _globalStateMachine.GetState<MainMenuState>();
+            GenerationState generationState = _globalStateMachine
+                .GetStateWithArg<GenerationState, State>(mainMenuState);
+
+            _globalStateMachine.ChangeState(generationState);
         }
     }
 }
