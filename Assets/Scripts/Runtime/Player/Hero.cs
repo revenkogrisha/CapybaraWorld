@@ -1,7 +1,10 @@
 using System;
+using System.Collections.Generic;
+using System.Diagnostics;
 using Core.Infrastructure;
 using Core.Level;
 using UniRx;
+using UniRx.Triggers;
 using UnityEngine;
 using UnityTools;
 
@@ -9,6 +12,8 @@ namespace Core.Player
 {
     public class Hero : MonoBehaviour
     {
+        private const float GrapplingActivationDistance = 5f;
+
         [Header("Components")]
         [SerializeField] private SpringJoint2D _springJoint2D;
         [SerializeField] private LineRenderer _lineRenderer;
@@ -19,6 +24,8 @@ namespace Core.Player
         private MiddleObject _middleObject;
 
         public readonly ReactiveProperty<bool> IsDead = new(false);
+
+        private readonly CompositeDisposable _disposable = new();
         public SpringJoint2D SpringJoint2D => _springJoint2D;
         public LineRenderer LineRenderer => _lineRenderer;
         public Rigidbody2D Rigidbody2D => _rigidbody2D;
@@ -28,18 +35,40 @@ namespace Core.Player
         public event Action<Transform> JointGrappled;
         public event Action JointReleased;
 
+        private bool HaveGroundBelow
+        {
+            get
+            {
+                var hit = Physics2D.Raycast(
+                    transform.position,
+                    Vector2.down,
+                    GrapplingActivationDistance,
+                    _config.GroundLayer);
+
+                return hit;
+            }
+        }
+
+
         #region MonoBehaviour
 
         private void Awake()
         {
             _springJoint2D.enabled = false;
             _lineRenderer.enabled = false;
-            IsDead.Value = false;
             InitialzeStateMachine();
+        }
+
+        private void Start()
+        {
+            SubscribeUpdate();
+            SubscribePhysicsCallbacks();
         }
 
         private void OnDisable()
         {
+            _disposable.Clear();
+
             if (_middleObject != null)
             {
                 _middleObject = null;
@@ -47,14 +76,12 @@ namespace Core.Player
             }
         }
 
-        private void Update() =>
-            _stateMachine.DoStateUpdate();
-
-        private void OnTriggerEnter2D(Collider2D other) => 
-            Tools.InvokeIfNotNull<DeadlyForPlayerObject>(other, PerformDeath);
-
+        [Conditional("UNITY_EDITOR")]
         private void OnDrawGizmos()
         {
+            if (_config == null)
+                return;
+
             Gizmos.color = Color.red;
             Gizmos.DrawWireSphere(transform.position, _config.GrappleRadius);
         }
@@ -65,7 +92,30 @@ namespace Core.Player
         {
             _config = config;
             _middleObject = middleObject;
-            _stateMachine.ChangeState<HeroGrapplingState>();
+        }
+
+        private void SubscribeUpdate()
+        {
+            IObservable<Unit> update = this.UpdateAsObservable();
+            update
+                .Where(_ => HaveGroundBelow == false)
+                .Subscribe(_ => SwitchToGrapplingState())
+                .AddTo(_disposable);
+        }
+
+        private void SubscribePhysicsCallbacks()
+        {
+            IObservable<Collider2D> onTriggerEnter2D = this.OnTriggerEnter2DAsObservable();
+            onTriggerEnter2D
+                .Where(collider => collider.HasComponent<DeadlyForPlayerObject>() == true)
+                .Subscribe(_ => PerformDeath())
+                .AddTo(_disposable);
+
+            IObservable<Collision2D> onCollisionEnter2D = this.OnCollisionEnter2DAsObservable();
+            onCollisionEnter2D
+                .Where(collision => collision.CompareLayers(_config.GroundLayer) == true)
+                .Subscribe(_ => SwitchToRunState())
+                .AddTo(_disposable);
         }
 
         public void NotifyOnJointGrappled() =>
@@ -79,9 +129,17 @@ namespace Core.Player
             _stateMachine = new FiniteStateMachine();
 
             HeroGrapplingState grapplingState = new(this);
+            HeroRunState runState = new(this);
 
             _stateMachine.AddState<HeroGrapplingState>(grapplingState);
+            _stateMachine.AddState<HeroRunState>(runState);
         }
+
+        private void SwitchToGrapplingState() => 
+            _stateMachine.ChangeState<HeroGrapplingState>();
+
+        private void SwitchToRunState() =>
+            _stateMachine.ChangeState<HeroRunState>();
 
         private void PerformDeath() => 
             IsDead.Value = true;

@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using UnityEngine;
 
 namespace Core.Level
@@ -6,6 +7,7 @@ namespace Core.Level
     {
         public const float Length = 60f;
 
+        [Conditional("UNITY_EDITOR")]
         protected void OnDrawGizmos()
         {
             float halfWidth = Length * 0.5f;

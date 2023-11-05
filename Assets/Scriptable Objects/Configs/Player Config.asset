@@ -17,6 +17,11 @@ MonoBehaviour:
   _middleObjectPrefab: {fileID: 5401349206143136987, guid: cfb7c75762c3b4945aaf343901ae2f91, type: 3}
   _grappleRadius: 10
   _grappleJumpVelocityMultiplier: 1.5
+  _runSpeed: 15
+  _accelerationTime: 0.3
+  _groundLayer:
+    serializedVersion: 2
+    m_Bits: 128
   _jointLayer:
     serializedVersion: 2
     m_Bits: 64

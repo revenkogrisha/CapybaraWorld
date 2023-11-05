@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using Core.Infrastructure;
 using Core.Level;
@@ -15,41 +16,53 @@ namespace Core.Player
 
         private GrapplingJoint _jointObject;
         private bool _isGrappling;
+        private CompositeDisposable _disposable;
+
+        private bool IsStateActive => FiniteStateMachine.CompareState<HeroGrapplingState>();
 
         public HeroGrapplingState(Hero hero)
         {
             _hero = hero;
             _heroTransform = hero.transform;
-
-            SubscribeUpdate();
+            _disposable = new();
         }
+
+        public override void Enter() =>
+            SubscribeUpdate();
+
+        public override void Exit() =>
+            _disposable.Clear();
 
         private void SubscribeUpdate()
         {
-            System.IObservable<Unit> update = _hero.UpdateAsObservable();
+            IObservable<Unit> update = _hero.UpdateAsObservable();
             update
                 .Where(_ => Input.GetKeyDown(KeyCode.Mouse0) == true)
-                .Subscribe(_ => GrappleJoint());
+                .Subscribe(_ => GrappleJoint())
+                .AddTo(_disposable);
 
             update
                 .Where(_ => Input.GetKeyUp(KeyCode.Mouse0) == true)
-                .Subscribe(_ => ReleaseJoint());
+                .Subscribe(_ => ReleaseJoint())
+                .AddTo(_disposable);
 
             update
                 .Where(_ => _hero.SpringJoint2D.enabled == true)
                 .Subscribe(_ => 
-                    _hero.LineRenderer.SetPosition(1, _heroTransform.position));
+                    _hero.LineRenderer.SetPosition(1, _heroTransform.position))
+                .AddTo(_disposable);
 
             update
                 .Where(_ => _jointObject != null)
                 .Subscribe(_ =>
                     _hero.MiddleObject
-                        .SetPosition(_heroTransform.position, _jointObject.transform.position));
+                        .SetPosition(_heroTransform.position, _jointObject.transform.position))
+                .AddTo(_disposable);
         }
 
         private void GrappleJoint()
         {
-            if (_isGrappling == true)
+            if (_isGrappling == true || IsStateActive == false)
                 return;
 
             bool canGrapple = TryFindNearestJoint();
@@ -89,7 +102,7 @@ namespace Core.Player
             if (colliders.IsNullOrEmpty() == true)
                 return false;
 
-            System.Func<Collider2D, float> orderFunc = collider => 
+            Func<Collider2D, float> orderFunc = collider => 
                 (_heroTransform.position - collider.transform.position).sqrMagnitude;
 
             Collider2D nearest = colliders
