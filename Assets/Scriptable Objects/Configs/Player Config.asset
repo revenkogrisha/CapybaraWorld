@@ -19,6 +19,9 @@ MonoBehaviour:
   _grappleJumpVelocityMultiplier: 1.5
   _runSpeed: 15
   _accelerationTime: 0.3
+  _dashForce: 30
+  _dashDuration: 0.2
+  _dashCooldown: 2
   _groundLayer:
     serializedVersion: 2
     m_Bits: 128
