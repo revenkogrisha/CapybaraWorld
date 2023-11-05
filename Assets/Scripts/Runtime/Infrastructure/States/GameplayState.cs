@@ -3,6 +3,7 @@ using Core.Common;
 using Core.Level;
 using Core.Player;
 using UnityEngine;
+using Inject = Zenject.InjectAttribute;
 
 namespace Core.Infrastructure
 {
@@ -16,6 +17,7 @@ namespace Core.Infrastructure
         private FollowerObject _playerDeadline;
         private GameOverHandler _gameOverHandler;
         
+        [Inject]
         public GameplayState(
             ILevelGenerator levelGenerator,
             GameOverHandler gameOverHandler,
@@ -35,8 +37,7 @@ namespace Core.Infrastructure
             _hero = _playerFactory.Create();
             
             _playerDeadline = _playerDeadlineFactory.Create();
-            _playerDeadline.Initialize(_hero.transform);
-            _playerDeadline.BeginFollowing();
+            _playerDeadline.BeginFollowing(_hero.transform);
 
             _gameOverHandler.SubscribeHeroDeath(_hero);
 
@@ -47,8 +48,8 @@ namespace Core.Infrastructure
         public override void Exit()
         {
             Object.Destroy(_hero.gameObject);
-            Object.Destroy(_playerDeadline.gameObject);
 
+            _playerDeadline.Dispose();
             _gameOverHandler.Dispose();
             _levelGenerator.Dispose();
         }
