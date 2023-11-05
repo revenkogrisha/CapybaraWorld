@@ -344,7 +344,7 @@ Rigidbody2D:
     m_Bits: 0
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 4
 --- !u!70 &1617937764381349194
 CapsuleCollider2D:
@@ -417,11 +417,6 @@ MonoBehaviour:
   _springJoint2D: {fileID: 1970229653114288831}
   _lineRenderer: {fileID: 4134352496478457413}
   _rigidbody2D: {fileID: 6659919158317818966}
-  _grappleRadius: 10
-  _grappleJumpVelocityMultiplier: 1.5
-  _jointLayer:
-    serializedVersion: 2
-    m_Bits: 64
 --- !u!1 &7740782383837882909
 GameObject:
   m_ObjectHideFlags: 0

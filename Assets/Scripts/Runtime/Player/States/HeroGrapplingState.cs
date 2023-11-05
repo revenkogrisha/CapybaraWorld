@@ -1,7 +1,8 @@
-using System;
 using System.Linq;
 using Core.Infrastructure;
 using Core.Level;
+using UniRx;
+using UniRx.Triggers;
 using UnityEngine;
 using UnityTools;
 
@@ -19,20 +20,31 @@ namespace Core.Player
         {
             _hero = hero;
             _heroTransform = hero.transform;
+
+            SubscribeUpdate();
         }
 
-        public override void Update()
+        private void SubscribeUpdate()
         {
-            if (Input.GetKeyDown(KeyCode.Mouse0))
-                GrappleJoint();
-            else if (Input.GetKeyUp(KeyCode.Mouse0))
-                ReleaseJoint();
+            System.IObservable<Unit> update = _hero.UpdateAsObservable();
+            update
+                .Where(_ => Input.GetKeyDown(KeyCode.Mouse0) == true)
+                .Subscribe(_ => GrappleJoint());
 
-            if (_hero.SpringJoint2D.enabled == true)
-                _hero.LineRenderer.SetPosition(1, _heroTransform.position);
+            update
+                .Where(_ => Input.GetKeyUp(KeyCode.Mouse0) == true)
+                .Subscribe(_ => ReleaseJoint());
 
-            if (_jointObject != null)
-                _hero.MiddleObject.SetPosition(_heroTransform.position, _jointObject.transform.position);
+            update
+                .Where(_ => _hero.SpringJoint2D.enabled == true)
+                .Subscribe(_ => 
+                    _hero.LineRenderer.SetPosition(1, _heroTransform.position));
+
+            update
+                .Where(_ => _jointObject != null)
+                .Subscribe(_ =>
+                    _hero.MiddleObject
+                        .SetPosition(_heroTransform.position, _jointObject.transform.position));
         }
 
         private void GrappleJoint()
@@ -77,7 +89,7 @@ namespace Core.Player
             if (colliders.IsNullOrEmpty() == true)
                 return false;
 
-            Func<Collider2D, float> orderFunc = collider => 
+            System.Func<Collider2D, float> orderFunc = collider => 
                 (_heroTransform.position - collider.transform.position).sqrMagnitude;
 
             Collider2D nearest = colliders

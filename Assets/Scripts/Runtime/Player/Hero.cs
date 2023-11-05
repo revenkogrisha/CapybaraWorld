@@ -1,6 +1,7 @@
 using System;
 using Core.Infrastructure;
 using Core.Level;
+using UniRx;
 using UnityEngine;
 using UnityTools;
 
@@ -17,6 +18,7 @@ namespace Core.Player
         private IFiniteStateMachine _stateMachine;
         private MiddleObject _middleObject;
 
+        public readonly ReactiveProperty<bool> IsDead = new(false);
         public SpringJoint2D SpringJoint2D => _springJoint2D;
         public LineRenderer LineRenderer => _lineRenderer;
         public Rigidbody2D Rigidbody2D => _rigidbody2D;
@@ -25,7 +27,6 @@ namespace Core.Player
 
         public event Action<Transform> JointGrappled;
         public event Action JointReleased;
-        public event Action Died;
 
         #region MonoBehaviour
 
@@ -33,6 +34,7 @@ namespace Core.Player
         {
             _springJoint2D.enabled = false;
             _lineRenderer.enabled = false;
+            IsDead.Value = false;
             InitialzeStateMachine();
         }
 
@@ -49,7 +51,7 @@ namespace Core.Player
             _stateMachine.DoStateUpdate();
 
         private void OnTriggerEnter2D(Collider2D other) => 
-            Tools.InvokeIfNotNull<DeadlyForPlayerObject>(other, NotifyOnDeath);
+            Tools.InvokeIfNotNull<DeadlyForPlayerObject>(other, PerformDeath);
 
         private void OnDrawGizmos()
         {
@@ -81,7 +83,7 @@ namespace Core.Player
             _stateMachine.AddState<HeroGrapplingState>(grapplingState);
         }
 
-        private void NotifyOnDeath() => 
-            Died?.Invoke();
+        private void PerformDeath() => 
+            IsDead.Value = true;
     }
 }

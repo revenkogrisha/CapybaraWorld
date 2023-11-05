@@ -1,33 +1,37 @@
 using System;
 using Core.Infrastructure;
 using Core.Player;
+using Cysharp.Threading.Tasks;
+using UniRx;
 
 namespace Core.Common
 {
     public class GameOverHandler : IDisposable
     {
         private readonly IGlobalStateMachine _globalStateMachine;
-        private Hero _hero;
+        private readonly CompositeDisposable _finishDisposable;
 
-        public GameOverHandler(IGlobalStateMachine globalStateMachine) =>
+        public GameOverHandler(IGlobalStateMachine globalStateMachine)
+        {
+            _finishDisposable = new();
             _globalStateMachine = globalStateMachine;
+        }
 
         public void SubscribeHeroDeath(Hero hero)
         {
-            _hero = hero;
-            _hero.Died += FinishGame;
+            hero.IsDead
+                .Where(isDead => isDead == true)
+                .Subscribe(FinishGame)
+                .AddTo(_finishDisposable);
         }
 
-        public void Dispose()
-        {
-            if (_hero != null)
-                _hero.Died -= FinishGame;
-        }
+        public void Dispose() => 
+            _finishDisposable?.Clear();
 
-        private void FinishGame()
+        private void FinishGame(bool _)
         {
-            _hero.Died -= FinishGame;
             _globalStateMachine.ChangeState<GameOverState>();
+            _finishDisposable?.Clear();
         }
     }
 }
