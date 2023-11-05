@@ -7,7 +7,7 @@ namespace Core.Infrastructure
 
     public abstract class State
     {
-        public FiniteStateMachine FiniteStateMachine { get; set; }
+        public IFiniteStateMachine FiniteStateMachine { get; set; }
 
         public virtual void Enter() {  }
         public virtual void Update() {  }
