@@ -103,6 +103,30 @@ namespace UnityTools
             return isNotComponentNull;
         }
 
+        public static bool HasComponent<T>(this Behaviour container)
+        {
+            var component = container.GetComponent<T>();
+            return component != null;
+        }
+
+        public static bool HasComponent<T>(this Collision container)
+        {
+            var component = container.gameObject.GetComponent<T>();
+            return component != null;
+        }
+
+        public static bool HasComponent<T>(this Collision2D container)
+        {
+            var component = container.gameObject.GetComponent<T>();
+            return component != null;
+        }
+
+        public static bool CompareLayers(this Collision container, LayerMask layerMask) =>
+            container.gameObject.CompareLayers(layerMask);
+
+        public static bool CompareLayers(this Collision2D container, LayerMask layerMask) =>
+            container.gameObject.CompareLayers(layerMask);
+
         /// <summary>
         /// Invokes given methods if Collision container has component requested as generic type.
         /// Component of given generic type is used as argument for methods.

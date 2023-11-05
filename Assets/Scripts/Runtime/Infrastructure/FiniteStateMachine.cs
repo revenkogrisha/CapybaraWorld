@@ -18,6 +18,7 @@ namespace Core.Infrastructure
         {
             Type type = typeof(TState);
             _states[type] = state;
+            state.FiniteStateMachine = this;
         }
 
         public void ChangeState<TState>()
@@ -28,7 +29,6 @@ namespace Core.Infrastructure
                 throw new ArgumentException($"Unable to change to {type.FullName} - it's not added to the state machine! Add it first");
 
             State newState = _states[type];
-            newState.FiniteStateMachine = this;
 
             _currentState?.Exit();
             _currentState = newState;

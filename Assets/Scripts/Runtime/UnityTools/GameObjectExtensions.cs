@@ -17,5 +17,12 @@ namespace UnityTools
 
             return materials.ToArray();
         }
+
+        public static bool HasComponent<T>(this GameObject container) 
+            where T : Object =>
+            container.GetComponent<T>();
+
+        public static bool CompareLayers(this GameObject container, LayerMask layerMask) =>
+            layerMask == (layerMask | (1 << container.layer));
     }
 }
