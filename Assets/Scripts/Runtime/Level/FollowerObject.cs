@@ -2,64 +2,87 @@ using UnityEngine;
 using Cysharp.Threading.Tasks;
 using Core.Other;
 using System;
+using System.Threading;
+using Object = UnityEngine.Object;
 
 namespace Core.Level
 {
-    public class FollowerObject : MonoBehaviour // Made as Mono Behaviour for simplisity
+    public class FollowerObject : IDisposable
     {
         private float _updateIntervalInSeconds = 1f;
-        private Transform _objectToFollow;
-        private Transform _transform;
+        private Transform _transformToFollow;
+        private Transform _thisTransform;
+        private CancellationTokenSource _cancellationTokenSource;
 
         public bool IgnoreXMovement { get; set; }
         public bool IgnoreYMovement { get; set; }
 
         public Transform ObjectToFollow
         {
-            get => _objectToFollow;
+            get => _transformToFollow;
             set
             {
                 if (value == null)
                     throw new ArgumentNullException(
                         $"{value.GetType().FullName} in {GetType().FullName}");
 
-                _objectToFollow = value;
+                _transformToFollow = value;
             }
         }
 
-        public void Initialize(
-            Transform objectToFollow,
+        public FollowerObject(
+            Transform thisTransform,
             bool ignoreXMovement = false,
             bool ignoreYMovement = true,
             float updateIntervalInSeconds = 0.5f)
         {
-            _objectToFollow = objectToFollow;
             IgnoreXMovement = ignoreXMovement;
             IgnoreYMovement = ignoreYMovement;
             _updateIntervalInSeconds = updateIntervalInSeconds;
 
-            _transform = transform;
+            _thisTransform = thisTransform;
         }
 
-        public void BeginFollowing()
+        public void Dispose()
         {
+            Object.Destroy(_thisTransform.gameObject);
+            
+            _cancellationTokenSource?.Cancel();
+            _cancellationTokenSource?.Dispose();
+            _cancellationTokenSource = null;
+        }
+
+        public void BeginFollowing(Transform toFollow)
+        {
+            _transformToFollow = toFollow;
             Follow().Forget();
         }
 
         private async UniTask Follow()
         {
-            while (this != null)
+            _cancellationTokenSource = new();
+            CancellationToken token = _cancellationTokenSource.Token;
+
+            while (true)
             {
                 Vector3 movedPosition = GetMovedPosition();
-                _transform.position = movedPosition;
+                _thisTransform.position = movedPosition;
 
-                await MyUniTask.Delay(_updateIntervalInSeconds);
+                bool canceled = await MyUniTask
+                    .Delay(_updateIntervalInSeconds, token)
+                    .SuppressCancellationThrow();
+
+                if (canceled == true)
+                    break;
             }
+
+            _cancellationTokenSource?.Dispose();
+            _cancellationTokenSource = null;
         }
 
         private Vector3 GetMovedPosition()
         {
-            Vector3 movedPosition = _transform.position;
+            Vector3 movedPosition = _thisTransform.position;
             if (IgnoreXMovement == false)
                 movedPosition = MoveX(movedPosition);
 

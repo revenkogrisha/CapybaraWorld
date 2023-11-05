@@ -47,17 +47,17 @@ namespace Core.Level
             Color currentBackground = _camera.backgroundColor;
             while (elapsedTime < BackgroundLerpDuration)
             {
-                if (token.IsCancellationRequested == true)
-                    break;
-
                 float time = elapsedTime / BackgroundLerpDuration;
                 _camera.backgroundColor = Color.Lerp(currentBackground, newBackground, time);
 
                 elapsedTime += Time.deltaTime;
 
-                await UniTask
+                bool canceled = await UniTask
                     .NextFrame(token)
                     .SuppressCancellationThrow();
+
+                if (canceled == true)
+                    break;
             }
 
             _cancellationTokenSource?.Dispose();

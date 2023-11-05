@@ -8,7 +8,7 @@ namespace Core.Player
     {
         [Header("Prefabs")]
         [SerializeField] private Hero _playerPrefab;
-        [SerializeField] private FollowerObject _playerDeadlinePrefab;
+        [SerializeField] private DeadlyForPlayerObject _playerDeadlinePrefab;
         [SerializeField] private MiddleObject _middleObjectPrefab;
 
         [Header("Hero Settings")]
@@ -21,7 +21,7 @@ namespace Core.Player
         [SerializeField] private Vector2 _playerDeadlinePosition;
 
         public Hero PlayerPrefab => _playerPrefab;
-        public FollowerObject PlayerDeadlinePrefab => _playerDeadlinePrefab;
+        public DeadlyForPlayerObject PlayerDeadlinePrefab => _playerDeadlinePrefab;
         public MiddleObject MiddleObjectPrefab => _middleObjectPrefab;
         public float GrappleRadius => _grappleRadius;
         public float GrappleJumpVelocityMultiplier => _grappleJumpVelocityMultiplier;

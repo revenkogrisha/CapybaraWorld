@@ -6,7 +6,7 @@ namespace Core.Factories
 {
     public class PlayerDeadlineFactory : IFactory<FollowerObject>
     {
-        private readonly FollowerObject _playerDeadlinePrefab;
+        private readonly DeadlyForPlayerObject _playerDeadlinePrefab;
         private readonly Vector2 _playerDeadlinePosition;
 
         public PlayerDeadlineFactory(PlayerConfig playerConfig)
@@ -17,8 +17,9 @@ namespace Core.Factories
 
         public FollowerObject Create()
         {
-            FollowerObject playerDeadline = Object.Instantiate(_playerDeadlinePrefab);
-            playerDeadline.transform.position = _playerDeadlinePosition;
+            DeadlyForPlayerObject deadlineObject = Object.Instantiate(_playerDeadlinePrefab);
+            deadlineObject.transform.position = _playerDeadlinePosition;
+            FollowerObject playerDeadline = new(deadlineObject.transform);
 
             return playerDeadline;
         }

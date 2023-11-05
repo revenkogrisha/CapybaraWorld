@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 1364701668610718414}
   - component: {fileID: 3370558077571939649}
   - component: {fileID: 3414211181807619048}
-  - component: {fileID: 806504400542084250}
   m_Layer: 0
   m_Name: Player Deadline
   m_TagString: Untagged
@@ -89,17 +88,5 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6bb6e8bcecf7f4496bbb8beb6ba4052d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &806504400542084250
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 889732654359069452}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 81e7947fb1f634cd8a5167c0a93f1e34, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 

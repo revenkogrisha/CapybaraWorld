@@ -112,7 +112,7 @@ namespace Core.Level
             _cancellationTokenSource = new();
             CancellationToken token = _cancellationTokenSource.Token;
             
-            while (this != null)
+            while (true)
             {
                 if (IsLevelMidPointXLessHeroX == true) 
                 {
