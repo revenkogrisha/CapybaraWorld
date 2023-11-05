@@ -11,11 +11,18 @@ namespace Core.Player
         [SerializeField] private DeadlyForPlayerObject _playerDeadlinePrefab;
         [SerializeField] private MiddleObject _middleObjectPrefab;
 
-        [Header("Hero Settings")]
+        [Header("Hero Grappling Settings")]
         [SerializeField, Range(0f, 100f)] private float _grappleRadius = 10f;
         [SerializeField] private float _grappleJumpVelocityMultiplier = 1.5f;
-        [SerializeField, Range(0f, 100f)] private float _runSpeed = 30f;
+
+        [Header("Hero Run Settings")]
+        [SerializeField, Range(0f, 100f)] private float _runSpeed = 15f;
         [SerializeField, Range(0f, 1f)] private float _accelerationTime = 0.3f;
+
+        [Header("Hero Dash Settings")]
+        [SerializeField, Min(0f)] private float _dashForce = 30f;
+        [SerializeField, Min(0f)] private float _dashDuration = 0.2f;
+        [SerializeField, Min(0f)] private float _dashCooldown = 2f;
 
         [Header("Hero Collisions")]
         [SerializeField] private LayerMask _groundLayer;
@@ -32,6 +39,9 @@ namespace Core.Player
         public float GrappleJumpVelocityMultiplier => _grappleJumpVelocityMultiplier;
         public float RunSpeed => _runSpeed;
         public float AccelerationTime => _accelerationTime;
+        public float DashForce => _dashForce;
+        public float DashDuration => _dashDuration;
+        public float DashCooldown => _dashCooldown;
         public LayerMask GroundLayer => _groundLayer;
         public LayerMask JointLayer => _jointLayer;
         public Vector2 PlayerSpawnPosition => _playerSpawnPosition;
