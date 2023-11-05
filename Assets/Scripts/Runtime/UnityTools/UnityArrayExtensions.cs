@@ -23,6 +23,9 @@ namespace UnityTools
             Array.Copy(newArray, array, array.Length);
         }
 
+        public static bool IsNullOrEmpty(this Array array) =>
+            array == null || array.Length <= 0;
+
         public static T GetRandomItem<T>(this Array array)
         {
             int random = Random.Range(0, array.Length);
