@@ -26,7 +26,7 @@ namespace Core.Common
         }
 
         public void Dispose() => 
-            _finishDisposable?.Clear();
+            _finishDisposable.Clear();
 
         private void FinishGame(bool _)
         {
