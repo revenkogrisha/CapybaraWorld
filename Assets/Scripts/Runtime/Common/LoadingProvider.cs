@@ -1,7 +1,6 @@
 using Core.Factories;
 using Core.UI;
 using Cysharp.Threading.Tasks;
-using UnityEngine;
 using UnityEngine.SceneManagement;
 using Zenject;
 
@@ -18,7 +17,6 @@ namespace Core.Common
         public async UniTask LoadGameWithScreen()
         {
             LoadingScreen loadingScreen = _uiProvider.CreateLoadingScreenCanvas();
-            //await loadingScreen.RevealAsync();
 
             Scene gameplayScene = await SceneLoader.LoadGameplay(LoadSceneMode.Additive);
 
@@ -26,7 +24,6 @@ namespace Core.Common
             await loadingScreen.ConcealAsync();
 
             await SceneLoader.UnloadCurrentAsync();
-
         }
     }
 }
