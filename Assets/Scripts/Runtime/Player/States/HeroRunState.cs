@@ -40,20 +40,23 @@ namespace Core.Player
 
         private void SubscribeUpdates()
         {
-            const float doubleClickInterval = 0.5f;
+            const float doubleClickInterval = 0.3f;
 
             IObservable<Unit> update = _hero.UpdateAsObservable();
             update
+                .Where(_ => IsStateActive == true)
                 .Where(_ => Input.GetKeyDown(KeyCode.Mouse0))
                 .Subscribe(_ => RaiseAccelerationAsync().Forget())
                 .AddTo(_disposable);
 
             update
+                .Where(_ => IsStateActive == true)
                 .Where(_ => Input.GetKeyUp(KeyCode.Mouse0))
                 .Subscribe(_ => ReduceAccelerationAsync().Forget())
                 .AddTo(_disposable);
 
             update
+                .Where(_ => IsStateActive == true)
                 .Where(_ => Input.GetKeyDown(KeyCode.Mouse0))
                 .Buffer(TimeSpan.FromSeconds(doubleClickInterval))
                 .Where(x => x.Count >= 2)
@@ -131,7 +134,6 @@ namespace Core.Player
 
         private async UniTaskVoid DashAsync()
         {
-            Debug.Log("Dash");
             if (Time.time < _nextDashTime || _dashing == true)
                 return;
 
