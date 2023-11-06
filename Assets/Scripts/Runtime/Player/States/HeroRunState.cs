@@ -40,7 +40,7 @@ namespace Core.Player
 
         private void SubscribeUpdates()
         {
-            const float doubleClickInterval = 0.3f;
+            const float doubleClickInterval = 0.4f;
 
             IObservable<Unit> update = _hero.UpdateAsObservable();
             update
@@ -59,7 +59,7 @@ namespace Core.Player
                 .Where(_ => IsStateActive == true)
                 .Where(_ => Input.GetKeyDown(KeyCode.Mouse0))
                 .Buffer(TimeSpan.FromSeconds(doubleClickInterval))
-                .Where(x => x.Count >= 2)
+                .Where(x => x.Count > 1)
                 .Subscribe(_ => DashAsync().Forget())
                 .AddTo(_disposable);
             

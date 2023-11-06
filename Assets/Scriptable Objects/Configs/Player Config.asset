@@ -15,8 +15,8 @@ MonoBehaviour:
   _playerPrefab: {fileID: 2015353206878069356, guid: 6be9a9688932e4e198a515b64fc69890, type: 3}
   _playerDeadlinePrefab: {fileID: 3414211181807619048, guid: bcb1f1afee0654d6e84c9aab5b050a80, type: 3}
   _middleObjectPrefab: {fileID: 5401349206143136987, guid: cfb7c75762c3b4945aaf343901ae2f91, type: 3}
-  _grappleRadius: 10
-  _grappleJumpVelocityMultiplier: 1.5
+  _grappleRadius: 11
+  _grappleJumpVelocityMultiplier: 1.6
   _runSpeed: 15
   _accelerationTime: 0.15
   _dashForce: 30
