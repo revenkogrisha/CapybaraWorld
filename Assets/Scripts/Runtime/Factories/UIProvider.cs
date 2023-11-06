@@ -36,5 +36,15 @@ namespace Core.Factories
             
             return gameOverMenu;
         }
+
+        public LoadingScreen CreateLoadingScreen()
+        {
+            LoadingScreen loadingScreen = _diContainer
+                .InstantiatePrefabForComponent<LoadingScreen>(
+                    _collection.LoadingScreenPrefab,
+                     _root.RectTransform);
+            
+            return loadingScreen;
+        }
     }
 }
