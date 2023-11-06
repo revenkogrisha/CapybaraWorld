@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using Core.Infrastructure;
 using Core.Level;
@@ -18,6 +17,7 @@ namespace Core.Player
         [SerializeField] private SpringJoint2D _springJoint2D;
         [SerializeField] private LineRenderer _lineRenderer;
         [SerializeField] private Rigidbody2D _rigidbody2D;
+        [SerializeField] private GrapplingRope _rope;
 
         private PlayerConfig _config;
         private IFiniteStateMachine _stateMachine;
@@ -31,6 +31,7 @@ namespace Core.Player
         public Rigidbody2D Rigidbody2D => _rigidbody2D;
         public MiddleObject MiddleObject => _middleObject;
         public PlayerConfig Config => _config;
+        public GrapplingRope Rope => _rope;
 
         public event Action<Transform> JointGrappled;
         public event Action JointReleased;

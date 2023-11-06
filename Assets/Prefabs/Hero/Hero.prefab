@@ -155,6 +155,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2148181318958787321}
   - component: {fileID: 4134352496478457413}
+  - component: {fileID: 2045337421755980934}
   m_Layer: 0
   m_Name: Grappling Hook Renderer
   m_TagString: Untagged
@@ -224,13 +225,13 @@ LineRenderer:
   - {x: 0, y: 0, z: 1}
   m_Parameters:
     serializedVersion: 3
-    widthMultiplier: 1
+    widthMultiplier: 0.25
     widthCurve:
       serializedVersion: 2
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: 0.07766914
+        value: 0.46601868
         inSlope: 0
         outSlope: 0
         tangentMode: 0
@@ -242,8 +243,8 @@ LineRenderer:
       m_RotationOrder: 4
     colorGradient:
       serializedVersion: 2
-      key0: {r: 1, g: 0.8196079, b: 0.61960787, a: 1}
-      key1: {r: 1, g: 1, b: 1, a: 1}
+      key0: {r: 1, g: 1, b: 1, a: 1}
+      key1: {r: 1, g: 0.8196079, b: 0.61960787, a: 1}
       key2: {r: 0, g: 0, b: 0, a: 0}
       key3: {r: 0, g: 0, b: 0, a: 0}
       key4: {r: 0, g: 0, b: 0, a: 0}
@@ -270,8 +271,8 @@ LineRenderer:
       m_ColorSpace: 0
       m_NumColorKeys: 2
       m_NumAlphaKeys: 2
-    numCornerVertices: 0
-    numCapVertices: 0
+    numCornerVertices: 1
+    numCapVertices: 10
     alignment: 0
     textureMode: 0
     textureScale: {x: 1, y: 1}
@@ -281,6 +282,108 @@ LineRenderer:
   m_UseWorldSpace: 1
   m_Loop: 0
   m_ApplyActiveColorSpace: 1
+--- !u!114 &2045337421755980934
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1727403601491240937}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 069915282582d435b8394ca6e45fbc12, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _lineRenderer: {fileID: 4134352496478457413}
+  _percision: 40
+  _straightenLineSpeed: 10
+  _ropeAnimationCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 2
+      outSlope: 2
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 0.033650186
+      value: 0.40313965
+      inSlope: 4.5968747
+      outSlope: 4.5968747
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 1
+      outWeight: 0.2066192
+    - serializedVersion: 3
+      time: 0.35911208
+      value: 0.3359346
+      inSlope: 2.0361521
+      outSlope: 2.0361521
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.5495387
+      value: 0.42225397
+      inSlope: -2.8904362
+      outSlope: -2.8904362
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.8185776
+      value: 0.57127714
+      inSlope: -0.22697404
+      outSlope: -0.22697404
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.46448013
+    - serializedVersion: 3
+      time: 1
+      value: 0.24292374
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  _startWaveSize: 2
+  _ropeProgressionCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  _ropeProgressionSpeed: 5
+  _strightDuration: 0.2
 --- !u!1 &2799920140385219751
 GameObject:
   m_ObjectHideFlags: 0
@@ -417,6 +520,7 @@ MonoBehaviour:
   _springJoint2D: {fileID: 1970229653114288831}
   _lineRenderer: {fileID: 4134352496478457413}
   _rigidbody2D: {fileID: 6659919158317818966}
+  _rope: {fileID: 2045337421755980934}
 --- !u!1 &7740782383837882909
 GameObject:
   m_ObjectHideFlags: 0

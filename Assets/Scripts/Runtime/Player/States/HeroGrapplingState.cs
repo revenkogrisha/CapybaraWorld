@@ -47,9 +47,8 @@ namespace Core.Player
                 .AddTo(_disposable);
 
             update
-                .Where(_ => _hero.SpringJoint2D.enabled == true)
-                .Subscribe(_ => 
-                    _hero.LineRenderer.SetPosition(1, _heroTransform.position))
+                .Where(_ => _isGrappling == true)
+                .Subscribe(_ => _hero.Rope.Draw(_jointObject.transform.position))
                 .AddTo(_disposable);
 
             update
@@ -73,8 +72,6 @@ namespace Core.Player
             _hero.Rigidbody2D.velocity *= Vector2.right * 0.8f;
             Vector2 jointPosition = _jointObject.transform.position;
             _hero.SpringJoint2D.connectedAnchor = jointPosition;
-
-            _hero.LineRenderer.SetPosition(0, jointPosition);
 
             _hero.NotifyOnJointGrappled();
         }
@@ -118,6 +115,8 @@ namespace Core.Player
             _hero.SpringJoint2D.enabled = value;
             _hero.LineRenderer.enabled = value;
             _isGrappling = value;
+            
+            _hero.Rope.enabled = value;
         }
     }
 
