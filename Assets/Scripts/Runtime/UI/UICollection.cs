@@ -8,10 +8,10 @@ namespace Core.UI
         [Header("")]
         [SerializeField] private MainMenu _mainMenuPrefab;
         [SerializeField] private GameOverMenu _gameOverMenuPrefab;
-        [SerializeField] private LoadingScreen _loadingScreenPrefab;
+        [SerializeField] private LoadingScreen _loadingScreenCanvasPrefab;
 
         public MainMenu MainMenuPrefab => _mainMenuPrefab;
         public GameOverMenu GameOverMenuPrefab => _gameOverMenuPrefab;
-        public LoadingScreen LoadingScreenPrefab => _loadingScreenPrefab;
+        public LoadingScreen LoadingScreenCanvasPrefab => _loadingScreenCanvasPrefab;
     }
 }

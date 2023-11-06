@@ -1,6 +1,4 @@
-using UnityEngine;
-
 namespace Core.UI
 {
-    public class LoadingScreen : MonoBehaviour {  }
+    public class LoadingScreen : AnimatedView {  }
 }
