@@ -40,7 +40,7 @@ namespace Core.Player
         {
             get
             {
-                var hit = Physics2D.Raycast(
+                RaycastHit2D hit = Physics2D.Raycast(
                     transform.position,
                     Vector2.down,
                     GrapplingActivationDistance,
@@ -71,8 +71,8 @@ namespace Core.Player
 
             if (_middleObject != null)
             {
+                Destroy(_middleObject.gameObject);
                 _middleObject = null;
-                Destroy(_middleObject);
             }
         }
 
