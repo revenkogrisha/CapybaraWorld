@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 33a52379ffd754d2bb1f34c2c2655158, type: 3}
   m_Name: Player Config
   m_EditorClassIdentifier: 
-  _playerPrefab: {fileID: 2015353206878069356, guid: 6be9a9688932e4e198a515b64fc69890, type: 3}
+  _playerPrefab: {fileID: -3409599701113228269, guid: 0f0d51a41e4d3430485a067170072c57, type: 3}
   _playerDeadlinePrefab: {fileID: 3414211181807619048, guid: bcb1f1afee0654d6e84c9aab5b050a80, type: 3}
   _middleObjectPrefab: {fileID: 5401349206143136987, guid: cfb7c75762c3b4945aaf343901ae2f91, type: 3}
   _grappleRadius: 11
