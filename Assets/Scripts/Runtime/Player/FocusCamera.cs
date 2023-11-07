@@ -1,4 +1,3 @@
-using System;
 using System.Threading;
 using Cinemachine;
 using Cysharp.Threading.Tasks;
@@ -9,13 +8,10 @@ namespace Core.Player
     public class FocusCamera : MonoBehaviour, IPlayerCamera
     {
 
-        [Header("Components")]
         [SerializeField] private CinemachineVirtualCamera _cinemachine;
-
-        [Header("Configuration")]
-        [SerializeField, Min(0f)] private float _regularFov = 7f;
-        [SerializeField, Min(0f)] private float _focusFov = 9f;
-        [SerializeField, Range(0f, 1f)] private float _fovChangeDuration = 0.3f;
+        
+        [Space]
+        [SerializeField] private CameraConfig _config;
 
         private Transform _followObject;
         private bool _focusing = false;
@@ -56,7 +52,7 @@ namespace Core.Player
 
             _focusing = true;
             _cinemachine.Follow = toFocus;
-            ChangeFov(_focusFov, _fovChangeDuration).Forget();
+            ChangeFov(_config.FocusFov, _config.FovChangeDuration).Forget();
         }
 
         public void StopFocus()
@@ -66,7 +62,7 @@ namespace Core.Player
 
             _focusing = false;
             _cinemachine.Follow = _followObject;
-            ChangeFov(_regularFov, _fovChangeDuration).Forget();
+            ChangeFov(_config.RegularFov, _config.FovChangeDuration).Forget();
         }
 
         private async UniTask ChangeFov(
