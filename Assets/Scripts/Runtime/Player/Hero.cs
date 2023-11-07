@@ -50,7 +50,6 @@ namespace Core.Player
             }
         }
 
-
         #region MonoBehaviour
 
         private void Awake()
