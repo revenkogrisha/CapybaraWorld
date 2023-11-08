@@ -2,6 +2,7 @@ using UnityEngine;
 using Cysharp.Threading.Tasks;
 using System.Threading;
 using Core.Other;
+using System;
 
 namespace Core.Common
 {
@@ -13,6 +14,10 @@ namespace Core.Common
 
         [Space]
         [SerializeField] private float _minimumVelocityToFlip = 5f;
+
+        [Space]
+        [SerializeField] private bool _lerpFlipping = true;
+        [SerializeField] private float _lerpDuration = 0.4f;
 
         private Transform _thisTransform;
         private LookingDirection _direction = LookingDirection.Right;
@@ -55,11 +60,41 @@ namespace Core.Common
             Vector2 flipped = _thisTransform.localScale;
             flipped.x *= -1f;
 
-            _thisTransform.localScale = flipped;
+            if (_lerpFlipping == true)
+                LerpFlip(flipped).Forget();
+            else
+                _thisTransform.localScale = flipped;
 
             _direction = FacingLeft == true
                 ? _direction = LookingDirection.Right
                 : _direction = LookingDirection.Left;
+        }
+
+        private async UniTaskVoid LerpFlip(Vector2 flipped)
+        {
+            CancellationToken token = destroyCancellationToken;
+
+            float elapsedTime = 0f;
+            while (elapsedTime < _lerpDuration)
+            {
+                Vector2 newScale = _thisTransform.localScale;
+                newScale.x = flipped.x;
+
+                float delta = elapsedTime / _lerpDuration;
+                _thisTransform.localScale = Vector2.Lerp(
+                    _thisTransform.localScale,
+                    newScale,
+                    delta);
+
+                elapsedTime += Time.deltaTime;
+
+                bool canceled = await UniTask
+                    .NextFrame(token)
+                    .SuppressCancellationThrow();
+
+                if (canceled == true)
+                    break;
+            }
         }
     }
 }
