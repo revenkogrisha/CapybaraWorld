@@ -7,6 +7,7 @@ namespace Core.Player
     {
         [Header("Components")]
         [SerializeField] private LineRenderer _lineRenderer;
+        [SerializeField] private Transform _firePoint;
 
         [Header("General")]
         [SerializeField] private int _percision = 40;
@@ -58,7 +59,7 @@ namespace Core.Player
 
         public bool Draw(Vector2 jointPosition)
         {
-            _firePointPosition = transform.position;
+            _firePointPosition = _firePoint.position;
             _moveTime += Time.deltaTime;
             _jointPosition = jointPosition;
 
