@@ -25,7 +25,7 @@ Transform:
   m_GameObject: {fileID: 359516905957892623}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.144, y: -0.386, z: 0}
+  m_LocalPosition: {x: -0.168, y: -0.386, z: 0}
   m_LocalScale: {x: 1.1679, y: 1.1679, z: 1.1679}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -61,7 +61,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 5912119177469425410}
   - {fileID: 8029394253301282024}
   m_Father: {fileID: 2330286183833923376}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -402,7 +401,7 @@ Transform:
   m_GameObject: {fileID: 2479072418137400367}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.019, y: -0.431, z: 0}
+  m_LocalPosition: {x: -0.005, y: -0.431, z: 0}
   m_LocalScale: {x: 1.1679, y: 1.1679, z: 1.1679}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -910,12 +909,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4368290385768496371}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.38, y: -0.388, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.6286438, y: -0.3655976, z: 0}
+  m_LocalScale: {x: 1.1679, y: 1.1679, z: 1.1679}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 6741928347193269121}
+  m_Father: {fileID: 7266856433574884411}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!120 &3803528850761969816
 LineRenderer:
@@ -1034,6 +1033,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _lineRenderer: {fileID: 3803528850761969816}
+  _firePoint: {fileID: 6488987297150056631}
   _percision: 40
   _straightenLineSpeed: 10
   _ropeAnimationCurve:
@@ -1351,7 +1351,7 @@ Transform:
   m_GameObject: {fileID: 6982669690930095455}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.195, y: -0.405, z: 0}
+  m_LocalPosition: {x: 0.17099999, y: -0.405, z: 0}
   m_LocalScale: {x: 1.1679, y: 1.1679, z: 1.1679}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1373,6 +1373,7 @@ GameObject:
   - component: {fileID: 821845916949743017}
   - component: {fileID: -3409599701113228269}
   - component: {fileID: 7820105816485003033}
+  - component: {fileID: 5395183055495763638}
   m_Layer: 0
   m_Name: Hero
   m_TagString: Untagged
@@ -1393,6 +1394,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 5912119177469425410}
   - {fileID: 1958151402100894485}
   - {fileID: 3899846993888888249}
   - {fileID: 4148465564835750813}
@@ -1492,7 +1494,7 @@ Animator:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7266856433574884410}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: ecbc0d180b59347fc87a9e94e83c605b, type: 2}
   m_CullingMode: 0
@@ -1534,6 +1536,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _rigidbody2D: {fileID: 5037488325551175842}
+--- !u!114 &5395183055495763638
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7266856433574884410}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a2c971783afbb43c2845df2771a4547d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _hero: {fileID: -3409599701113228269}
+  _config: {fileID: 11400000, guid: c3ecdd04e26244fc1aa5d8b79ddb6d13, type: 2}
+  _enabled: 1
+  _armWithHook: {fileID: 6741928347193269121}
 --- !u!1 &7785680583913415663
 GameObject:
   m_ObjectHideFlags: 0
@@ -1985,6 +2003,7 @@ Transform:
   m_LocalScale: {x: 0.43485853, y: 0.43485853, z: 0.43485853}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 6488987297150056631}
   - {fileID: 2712951978221670721}
   m_Father: {fileID: 6741928347193269121}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2040,3 +2059,34 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &9109884422873631423
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6488987297150056631}
+  m_Layer: 0
+  m_Name: Hook Fire Point
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6488987297150056631
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9109884422873631423}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 1.06, y: -1.09, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8029394253301282024}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
