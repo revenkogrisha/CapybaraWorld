@@ -50,13 +50,6 @@ namespace Core.Player
                 .Where(_ => _isGrappling == true)
                 .Subscribe(_ => _hero.Rope.Draw(_jointObject.transform.position))
                 .AddTo(_disposable);
-
-            update
-                .Where(_ => _jointObject != null)
-                .Subscribe(_ =>
-                    _hero.MiddleObject
-                        .SetPosition(_heroTransform.position, _jointObject.transform.position))
-                .AddTo(_disposable);
         }
 
         private void GrappleJoint()
@@ -73,7 +66,7 @@ namespace Core.Player
             Vector2 jointPosition = _jointObject.transform.position;
             _hero.SpringJoint2D.connectedAnchor = jointPosition;
 
-            _hero.NotifyOnJointGrappled();
+            _hero.NotifyOnJointGrappled(_jointObject.transform);
         }
 
         private void ReleaseJoint()

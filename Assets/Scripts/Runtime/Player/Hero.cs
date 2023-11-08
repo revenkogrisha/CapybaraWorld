@@ -21,7 +21,6 @@ namespace Core.Player
 
         private PlayerConfig _config;
         private IFiniteStateMachine _stateMachine;
-        private MiddleObject _middleObject;
 
         public readonly ReactiveProperty<bool> IsDead = new(false);
 
@@ -29,7 +28,6 @@ namespace Core.Player
         public SpringJoint2D SpringJoint2D => _springJoint2D;
         public LineRenderer LineRenderer => _lineRenderer;
         public Rigidbody2D Rigidbody2D => _rigidbody2D;
-        public MiddleObject MiddleObject => _middleObject;
         public PlayerConfig Config => _config;
         public GrapplingRope Rope => _rope;
 
@@ -65,16 +63,8 @@ namespace Core.Player
             SubscribePhysicsCallbacks();
         }
 
-        private void OnDisable()
-        {
+        private void OnDisable() => 
             _disposable.Clear();
-
-            if (_middleObject != null)
-            {
-                Destroy(_middleObject.gameObject);
-                _middleObject = null;
-            }
-        }
 
         [Conditional("UNITY_EDITOR")]
         private void OnDrawGizmos()
@@ -88,11 +78,8 @@ namespace Core.Player
 
         #endregion
 
-        public void Initialize(PlayerConfig config, MiddleObject middleObject)
-        {
+        public void Initialize(PlayerConfig config) => 
             _config = config;
-            _middleObject = middleObject;
-        }
 
         private void SubscribeUpdate()
         {
@@ -118,8 +105,8 @@ namespace Core.Player
                 .AddTo(_disposable);
         }
 
-        public void NotifyOnJointGrappled() =>
-            JointGrappled?.Invoke(_middleObject.transform);
+        public void NotifyOnJointGrappled(Transform target) =>
+            JointGrappled?.Invoke(target);
 
         public void NotifyOnJointReleased() =>
             JointReleased?.Invoke();
