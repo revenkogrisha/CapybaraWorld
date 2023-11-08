@@ -11,14 +11,17 @@ namespace Core.Common
 
         [SerializeField] private Rigidbody2D _rigidbody2D;
 
+        [Space]
+        [SerializeField] private float _minimumVelocityToFlip = 5f;
+
         private Transform _thisTransform;
         private LookingDirection _direction = LookingDirection.Right;
 
         private bool FacingRight => _direction == LookingDirection.Right;
         private bool FacingLeft => _direction == LookingDirection.Left;
         private bool ShouldFlip => ShouldFlipLeft == true || ShouldFlipRight == true;
-        private bool ShouldFlipRight => _rigidbody2D.velocity.x > 0f && FacingLeft == true;
-        private bool ShouldFlipLeft => _rigidbody2D.velocity.x < 0f && FacingRight == true;
+        private bool ShouldFlipRight => _rigidbody2D.velocity.x > _minimumVelocityToFlip && FacingLeft == true;
+        private bool ShouldFlipLeft => _rigidbody2D.velocity.x < -_minimumVelocityToFlip && FacingRight == true;
         
         #region MonoBehaviour
 
