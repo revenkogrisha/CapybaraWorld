@@ -1462,7 +1462,7 @@ Rigidbody2D:
     serializedVersion: 2
     m_Bits: 0
   m_Interpolate: 0
-  m_SleepingMode: 1
+  m_SleepingMode: 0
   m_CollisionDetection: 1
   m_Constraints: 4
 --- !u!231 &-8512325120731556870
@@ -1536,6 +1536,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _rigidbody2D: {fileID: 5037488325551175842}
+  _minimumVelocityToFlip: 5
+  _lerpFlipping: 1
+  _lerpDuration: 0.4
 --- !u!114 &5395183055495763638
 MonoBehaviour:
   m_ObjectHideFlags: 0
