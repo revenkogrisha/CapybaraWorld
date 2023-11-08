@@ -1,5 +1,4 @@
 using Core.Player;
-using UnityEngine;
 using Zenject;
 
 namespace Core.Factories
@@ -20,13 +19,11 @@ namespace Core.Factories
 
         public Hero Create()
         {
-            MiddleObject middleObject = Object.Instantiate(_config.MiddleObjectPrefab);
-
             Hero hero = _diContainer
                 .InstantiatePrefabForComponent<Hero>(_config.PlayerPrefab);
 
             hero.transform.position = _config.PlayerSpawnPosition;
-            hero.Initialize(_config, middleObject);
+            hero.Initialize(_config);
 
             return hero;
         }

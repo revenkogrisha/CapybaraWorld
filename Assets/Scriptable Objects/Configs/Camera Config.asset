@@ -14,4 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _regularFov: 7
   _focusFov: 10
-  _fovChangeDuration: 0.3
+  _fovChangeDuration: 0.2
