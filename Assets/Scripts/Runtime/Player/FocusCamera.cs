@@ -31,7 +31,7 @@ namespace Core.Player
         }
 
         #region MonoBehaviour
-        
+
         private void Start()
         {
             IObservable<Unit> update = this.UpdateAsObservable();
@@ -41,13 +41,15 @@ namespace Core.Player
                 .AddTo(_disposable);
         }
 
-        private void OnDisable()
+        public void Dispose()
         {
             if (_hero != null)
             {
                 _hero.JointGrappled -= StartFocus;
                 _hero.JointReleased -= StopFocus;
             }
+
+            _disposable.Clear();
         }
         
         #endregion

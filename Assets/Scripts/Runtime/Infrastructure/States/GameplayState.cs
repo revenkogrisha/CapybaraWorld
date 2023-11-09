@@ -47,11 +47,12 @@ namespace Core.Infrastructure
 
         public override void Exit()
         {
-            Object.Destroy(_hero.gameObject);
-
+            _playerCamera.Dispose();
             _playerDeadline.Dispose();
             _gameOverHandler.Dispose();
             _levelGenerator.Dispose();
+
+            Object.Destroy(_hero.gameObject);
         }
     }
 }

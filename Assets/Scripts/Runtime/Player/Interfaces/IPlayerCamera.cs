@@ -1,8 +1,8 @@
-using UnityEngine;
+using System;
 
 namespace Core.Player
 {
-    public interface IPlayerCamera
+    public interface IPlayerCamera : IDisposable
     {
         public void Initialize(Hero hero);
     }
