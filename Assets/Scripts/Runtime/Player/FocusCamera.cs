@@ -32,15 +32,6 @@ namespace Core.Player
 
         #region MonoBehaviour
 
-        private void Start()
-        {
-            IObservable<Unit> update = this.UpdateAsObservable();
-            update
-                .Where(_ => _hero != null)
-                .Subscribe(_ => SetHeroMiddleObject())
-                .AddTo(_disposable);
-        }
-
         public void Dispose()
         {
             if (_hero != null)
@@ -64,6 +55,8 @@ namespace Core.Player
             
             _hero.JointGrappled += StartFocus;
             _hero.JointReleased += StopFocus;
+
+            SubscribeUpdate();
         }
 
         public void StartFocus(Transform joint)
@@ -91,6 +84,15 @@ namespace Core.Player
 
             ChangeFov(_config.RegularFov, _config.FovChangeDuration)
                 .Forget();
+        }
+
+        private void SubscribeUpdate()
+        {
+            IObservable<Unit> update = this.UpdateAsObservable();
+            update
+                .Where(_ => _hero != null)
+                .Subscribe(_ => SetHeroMiddleObject())
+                .AddTo(_disposable);
         }
 
         private void SetHeroMiddleObject()
