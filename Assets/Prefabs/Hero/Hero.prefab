@@ -1555,6 +1555,8 @@ MonoBehaviour:
   _hero: {fileID: -3409599701113228269}
   _config: {fileID: 11400000, guid: c3ecdd04e26244fc1aa5d8b79ddb6d13, type: 2}
   _enabled: 1
+  _flipRotation: 1
+  _flipper: {fileID: 7820105816485003033}
   _armWithHook: {fileID: 6741928347193269121}
 --- !u!1 &7785680583913415663
 GameObject:

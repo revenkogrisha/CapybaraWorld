@@ -2,6 +2,7 @@ using UnityEngine;
 using Cysharp.Threading.Tasks;
 using System.Threading;
 using Core.Other;
+using System;
 
 namespace Core.Common
 {
@@ -27,6 +28,8 @@ namespace Core.Common
         private bool ShouldFlip => ShouldFlipLeft == true || ShouldFlipRight == true;
         private bool ShouldFlipRight => _rigidbody2D.velocity.x > _minimumVelocityToFlip && FacingLeft == true;
         private bool ShouldFlipLeft => _rigidbody2D.velocity.x < -_minimumVelocityToFlip && FacingRight == true;
+
+        public event Action StartFlipping;
 
         #region MonoBehaviour
 
@@ -76,6 +79,7 @@ namespace Core.Common
         private async UniTaskVoid LerpFlip(Vector2 flipped)
         {
             CancellationToken token = destroyCancellationToken;
+            StartFlipping?.Invoke();
 
             float elapsedTime = 0f;
             while (elapsedTime < _lerpDuration)
