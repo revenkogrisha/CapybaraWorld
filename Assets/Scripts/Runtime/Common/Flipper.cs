@@ -2,7 +2,6 @@ using UnityEngine;
 using Cysharp.Threading.Tasks;
 using System.Threading;
 using Core.Other;
-using System;
 
 namespace Core.Common
 {
@@ -14,24 +13,28 @@ namespace Core.Common
 
         [Space]
         [SerializeField] private float _minimumVelocityToFlip = 5f;
+        [SerializeField] private LookingDirection _startDirection = LookingDirection.Right;
 
         [Space]
         [SerializeField] private bool _lerpFlipping = true;
         [SerializeField] private float _lerpDuration = 0.4f;
 
         private Transform _thisTransform;
-        private LookingDirection _direction = LookingDirection.Right;
+        private LookingDirection _direction;
 
         private bool FacingRight => _direction == LookingDirection.Right;
         private bool FacingLeft => _direction == LookingDirection.Left;
         private bool ShouldFlip => ShouldFlipLeft == true || ShouldFlipRight == true;
         private bool ShouldFlipRight => _rigidbody2D.velocity.x > _minimumVelocityToFlip && FacingLeft == true;
         private bool ShouldFlipLeft => _rigidbody2D.velocity.x < -_minimumVelocityToFlip && FacingRight == true;
-        
+
         #region MonoBehaviour
 
-        private void Awake() =>
+        private void Awake()
+        {
             _thisTransform = transform;
+            _direction = _startDirection;
+        }
 
         private void Start() => 
             CheckRigidbodyVelocity().Forget();

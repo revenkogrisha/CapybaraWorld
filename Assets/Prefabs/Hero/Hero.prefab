@@ -1536,7 +1536,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _rigidbody2D: {fileID: 5037488325551175842}
-  _minimumVelocityToFlip: 5
+  _minimumVelocityToFlip: 4.5
+  _startDirection: 0
   _lerpFlipping: 1
   _lerpDuration: 0.4
 --- !u!114 &5395183055495763638
@@ -2050,7 +2051,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 576322715
   m_SortingLayer: 2
-  m_SortingOrder: 0
+  m_SortingOrder: -1
   m_Sprite: {fileID: 1787958803, guid: 432073e9bcecf4764b7d700a1e528d87, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
