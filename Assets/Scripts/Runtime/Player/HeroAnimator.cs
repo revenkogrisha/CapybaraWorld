@@ -5,11 +5,13 @@ using UniRx;
 using UniRx.Triggers;
 using System;
 using DG.Tweening;
+using Random = UnityEngine.Random;
 
 namespace Core.Player
 {
     public class HeroAnimator : MonoBehaviour
     {
+
         [Header("Components")]
         [SerializeField] private Hero _hero;
         [SerializeField] private Animator _animator;
@@ -23,6 +25,8 @@ namespace Core.Player
 
         [Header("Legs")]
         [SerializeField] private Transform[] _legs;
+
+        private readonly int FreeFallingHash = Animator.StringToHash("FreeFalling");
 
         private CompositeDisposable _disposable = new();
         private Transform _thisTransform;
@@ -112,6 +116,8 @@ namespace Core.Player
             if (_config.RotateArmWithHook == false)
                 return;
 
+            _animator.enabled = false;
+
             CancellationToken token = destroyCancellationToken;
             _shouldRotateHand = true;
 
@@ -148,6 +154,9 @@ namespace Core.Player
         {
             _shouldRotateHand = false;
             LerpArmToDefaultAsync();
+
+            _animator.enabled = true;
+            _animator.SetBool(FreeFallingHash, true);
         }
 
         private void StopRotatingBody()
@@ -192,7 +201,10 @@ namespace Core.Player
                 return;
 
             foreach (Transform leg in _legs)
-                leg.DORotate(_config.RaisingLegsRotation, _config.LegsRotationDuration);
+            {
+                float offset = Random.Range(0f, 0.5f);
+                leg.DORotate(_config.RaisingLegsRotation, _config.LegsRotationDuration + offset);
+            }
         }
 
         private void RotateLegsFalling()
@@ -201,7 +213,10 @@ namespace Core.Player
                 return;
 
             foreach (Transform leg in _legs)
-                leg.DORotate(_config.FallingLegsRotation, _config.LegsRotationDuration);
+            {
+                float offset = Random.Range(0f, 0.5f);
+                leg.DORotate(_config.FallingLegsRotation, _config.LegsRotationDuration + offset);
+            }
         }
     }
 }
