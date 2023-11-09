@@ -138,7 +138,7 @@ TrailRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Time: 0.4
+  m_Time: 0.2
   m_PreviewTimeScale: 1
   m_Parameters:
     serializedVersion: 3
@@ -169,7 +169,7 @@ TrailRenderer:
       m_RotationOrder: 4
     colorGradient:
       serializedVersion: 2
-      key0: {r: 1, g: 1, b: 1, a: 1}
+      key0: {r: 1, g: 0.654902, b: 0.1137255, a: 1}
       key1: {r: 1, g: 1, b: 1, a: 1}
       key2: {r: 0, g: 0, b: 0, a: 0}
       key3: {r: 0, g: 0, b: 0, a: 0}
@@ -178,7 +178,7 @@ TrailRenderer:
       key6: {r: 0, g: 0, b: 0, a: 0}
       key7: {r: 0, g: 0, b: 0, a: 0}
       ctime0: 0
-      ctime1: 65535
+      ctime1: 47224
       ctime2: 0
       ctime3: 0
       ctime4: 0
@@ -194,7 +194,7 @@ TrailRenderer:
       atime6: 0
       atime7: 0
       m_Mode: 0
-      m_ColorSpace: -1
+      m_ColorSpace: 0
       m_NumColorKeys: 2
       m_NumAlphaKeys: 2
     numCornerVertices: 0
@@ -1553,11 +1553,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _hero: {fileID: -3409599701113228269}
-  _config: {fileID: 11400000, guid: c3ecdd04e26244fc1aa5d8b79ddb6d13, type: 2}
+  _animator: {fileID: 821845916949743017}
   _enabled: 1
-  _flipRotation: 1
-  _flipper: {fileID: 7820105816485003033}
+  _config: {fileID: 11400000, guid: c3ecdd04e26244fc1aa5d8b79ddb6d13, type: 2}
   _armWithHook: {fileID: 6741928347193269121}
+  _legs:
+  - {fileID: 5539980561904371440}
+  - {fileID: 5535790811561811333}
 --- !u!1 &7785680583913415663
 GameObject:
   m_ObjectHideFlags: 0

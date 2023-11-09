@@ -16,5 +16,13 @@ MonoBehaviour:
   _bodyRotationSpeed: 0.2
   _rotateArmWithHook: 1
   _handRotationSpeed: 5
+  _rotateLegs: 1
+  _legsRotationDuration: 0.8
+  _fallingLegsRotation: {x: 0, y: 0, z: -30}
+  _raisingLegsRotation: {x: 0, y: 0, z: 30}
+  _heroFallingVelocityMinimum: -2
+  _heroFallingVelocityMaximum: -4
+  _heroRaisingVelocityMinimum: 0.3
+  _heroRaisingVelocityMaximum: 4
   _defaultRotation: {x: 0, y: 0, z: 0, w: 1}
   _rotateToDefaultDuration: 0.8

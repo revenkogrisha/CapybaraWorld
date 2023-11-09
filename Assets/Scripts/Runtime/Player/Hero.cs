@@ -63,7 +63,7 @@ namespace Core.Player
             SubscribePhysicsCallbacks();
         }
 
-        private void OnDisable() => 
+        private void OnDestroy() => 
             _disposable.Clear();
 
         [Conditional("UNITY_EDITOR")]
