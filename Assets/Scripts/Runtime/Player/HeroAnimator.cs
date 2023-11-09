@@ -1,21 +1,30 @@
 using System.Threading;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
+using UniRx;
+using UniRx.Triggers;
+using System;
+using DG.Tweening;
 
 namespace Core.Player
 {
     public class HeroAnimator : MonoBehaviour
     {
-        [Header("General")]
+        [Header("Components")]
         [SerializeField] private Hero _hero;
-        [SerializeField] private HeroAnimatorConfig _config;
+        [SerializeField] private Animator _animator;
 
-        [Space]
+        [Header("General")]
         [SerializeField] private bool _enabled = true;
+        [SerializeField] private HeroAnimatorConfig _config;
         
         [Header("Arm with Hook")]
         [SerializeField] private Transform _armWithHook;
 
+        [Header("Legs")]
+        [SerializeField] private Transform[] _legs;
+
+        private CompositeDisposable _disposable = new();
         private Transform _thisTransform;
         private bool _shouldRotateHand;
         private bool _shouldRotateBody;
@@ -26,10 +35,19 @@ namespace Core.Player
             set => _enabled = value;
         }
 
+        public bool HeroRaising => 
+            _hero.Rigidbody2D.velocity.y > _config.HeroRaisingVelocityMinimum;
+
+        public bool HeroFalling => 
+            _hero.Rigidbody2D.velocity.y < _config.HeroFallingVelocityMinimum;
+
         #region MonoBehaviour
 
         private void Awake() => 
             _thisTransform = transform;
+
+        private void Start() =>
+            SubscribeUpdate();
 
         private void OnEnable()
         {
@@ -51,8 +69,25 @@ namespace Core.Player
 
         #endregion
 
+        private void SubscribeUpdate()
+        {
+            IObservable<Unit> update = this.UpdateAsObservable();
+            update
+                .Where(_ => HeroRaising == true)
+                .Subscribe(_ => RotateLegsRaising())
+                .AddTo(_disposable);
+
+            update
+                .Where(_ => HeroFalling == true)
+                .Subscribe(_ => RotateLegsFalling())
+                .AddTo(_disposable);
+        }
+
         private async void StartRotatingBody(Transform targetJoint)
         {
+            if (_config.RotateBody == false)
+                return;
+
             CancellationToken token = destroyCancellationToken;
             _shouldRotateBody = true;
 
@@ -74,6 +109,9 @@ namespace Core.Player
 
         private async void StartRotatingHand(Transform targetJoint)
         {
+            if (_config.RotateArmWithHook == false)
+                return;
+
             CancellationToken token = destroyCancellationToken;
             _shouldRotateHand = true;
 
@@ -146,6 +184,24 @@ namespace Core.Player
                 if (canceled == true)
                     break;
             }
+        }
+
+        private void RotateLegsRaising()
+        {
+            if (_config.RotateLegs == false)
+                return;
+
+            foreach (Transform leg in _legs)
+                leg.DORotate(_config.RaisingLegsRotation, _config.LegsRotationDuration);
+        }
+
+        private void RotateLegsFalling()
+        {
+            if (_config.RotateLegs == false)
+                return;
+
+            foreach (Transform leg in _legs)
+                leg.DORotate(_config.FallingLegsRotation, _config.LegsRotationDuration);
         }
     }
 }

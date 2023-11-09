@@ -12,8 +12,17 @@ namespace Core.Player
         [Header("Arm with Hook")]
         [SerializeField] private bool _rotateArmWithHook = true;
         [SerializeField] private float _handRotationSpeed = 5f;
-
         
+        [Header("Legs")]
+        [SerializeField] private bool _rotateLegs = true;
+        [SerializeField] private float _legsRotationDuration = 0.8f;
+        [SerializeField] private Vector3 _fallingLegsRotation = new(0f, 0f, -30f);
+        [SerializeField] private Vector3 _raisingLegsRotation = new(0f, 0f, 30f);
+
+        [Space]
+        [SerializeField] private float _heroFallingVelocityMinimum = -2f;
+        [SerializeField] private float _heroRaisingVelocityMinimum = 0.1f;
+
         [Header("Default State")]
         [SerializeField] private Quaternion _defaultRotation = Quaternion.identity;
         [SerializeField] private float _rotateToDefaultDuration = 0.8f;
@@ -24,5 +33,11 @@ namespace Core.Player
         public float BodyRotationSpeed => _bodyRotationSpeed;
         public Quaternion DefaultRotation => _defaultRotation;
         public float RotateToDefaultDuration => _rotateToDefaultDuration;
+        public bool RotateLegs => _rotateLegs;
+        public float LegsRotationDuration => _legsRotationDuration;
+        public Vector3 FallingLegsRotation => _fallingLegsRotation;
+        public Vector3 RaisingLegsRotation => _raisingLegsRotation;
+        public float HeroFallingVelocityMinimum => _heroFallingVelocityMinimum;
+        public float HeroRaisingVelocityMinimum => _heroRaisingVelocityMinimum;
     }
 }
