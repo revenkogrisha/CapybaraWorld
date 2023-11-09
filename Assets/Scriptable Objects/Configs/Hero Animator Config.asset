@@ -12,8 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa99a6c2a0771426d93d3c6b9891875d, type: 3}
   m_Name: Hero Animator Config
   m_EditorClassIdentifier: 
+  _rotateBody: 1
+  _bodyRotationSpeed: 0.2
   _rotateArmWithHook: 1
-  _armWithHook: {fileID: 0}
-  _rotationSpeed: 5
+  _handRotationSpeed: 5
   _defaultRotation: {x: 0, y: 0, z: 0, w: 1}
   _rotateToDefaultDuration: 0.8
