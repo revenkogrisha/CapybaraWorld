@@ -81,6 +81,6 @@ namespace Core.Infrastructure
             _currentState.Update();
 
         public bool CompareState<TState>() => 
-            _currentState.GetType() == typeof(TState);
+            _currentState?.GetType() == typeof(TState);
     }
 }
