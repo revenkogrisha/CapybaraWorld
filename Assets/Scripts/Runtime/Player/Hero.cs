@@ -33,6 +33,7 @@ namespace Core.Player
 
         public event Action<Transform> JointGrappled;
         public event Action JointReleased;
+        public event Action<Type> StateChanged;
 
         private bool HaveGroundBelow
         {
@@ -122,11 +123,17 @@ namespace Core.Player
             _stateMachine.AddState<HeroRunState>(runState);
         }
 
-        private void SwitchToGrapplingState() => 
+        private void SwitchToGrapplingState()
+        {
             _stateMachine.ChangeState<HeroGrapplingState>();
+            StateChanged?.Invoke(typeof(HeroGrapplingState));
+        }
 
-        private void SwitchToRunState() =>
+        private void SwitchToRunState()
+        {
             _stateMachine.ChangeState<HeroRunState>();
+            StateChanged?.Invoke(typeof(HeroRunState));
+        }
 
         private void PerformDeath() => 
             IsDead.Value = true;
