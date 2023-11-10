@@ -104,7 +104,10 @@ namespace Core.Player
 
         private void OnStateChanged(Type stateType)
         {
-            PerformLanding(stateType);
+            if (stateType == typeof(HeroRunState))
+                PerformLanding();
+            else if (stateType == typeof(HeroGrapplingState))
+                PerformGrappling();
         }
 
         private async void StartRotatingBody(Transform targetJoint)
@@ -213,13 +216,16 @@ namespace Core.Player
                 leg.DORotate(_config.FallingLegsRotation, _config.LegsRotationDuration);
         }
 
-        private void PerformLanding(Type stateType)
+        private void PerformLanding()
         {
-            if (stateType != typeof(HeroRunState))
-                return;
-
             _animator.enabled = true;
             _animator.SetTrigger(LandedHash);
+        }
+
+        private void PerformGrappling()
+        {
+            _animator.enabled = true;
+            _animator.SetTrigger(GrappledHash);
         }
     }
 }
