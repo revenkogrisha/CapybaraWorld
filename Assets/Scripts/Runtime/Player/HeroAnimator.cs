@@ -56,24 +56,16 @@ namespace Core.Player
 
         private void OnEnable()
         {
-            _hero.JointGrappled += StartRotatingBody;
-            _hero.JointGrappled += StartRotatingHand;
-            
-            _hero.JointReleased += StopRotatingBody;
-            _hero.JointReleased += StopRotatingHand;
-
-            _hero.StateChanged += PerformLanding;
+            _hero.JointGrappled += OnJointGrappled;
+            _hero.JointReleased += OnJointReleased;
+            _hero.StateChanged += OnStateChanged;
         }
 
         private void OnDisable()
         {
-            _hero.JointGrappled -= StartRotatingBody;
-            _hero.JointGrappled -= StartRotatingHand;
-
-            _hero.JointReleased -= StopRotatingBody;
-            _hero.JointReleased -= StopRotatingHand;
-
-            _hero.StateChanged -= PerformLanding;
+            _hero.JointGrappled -= OnJointGrappled;
+            _hero.JointReleased -= OnJointReleased;
+            _hero.StateChanged -= OnStateChanged;
         }
 
         #endregion
@@ -91,6 +83,21 @@ namespace Core.Player
                 .Subscribe(_ => RotateLegsFalling())
                 .AddTo(_disposable);
         }
+
+        private void OnJointGrappled(Transform joint)
+        {
+            StartRotatingBody(joint);
+            StartRotatingHand(joint);
+        }
+
+        private void OnJointReleased()
+        {
+            StopRotatingBody();
+            StopRotatingHand();
+        }
+
+        private void OnStateChanged(Type stateType) =>
+            PerformLanding(stateType);
 
         private async void StartRotatingBody(Transform targetJoint)
         {
