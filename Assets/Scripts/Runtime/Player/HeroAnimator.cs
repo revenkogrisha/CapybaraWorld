@@ -5,7 +5,6 @@ using UniRx;
 using UniRx.Triggers;
 using System;
 using DG.Tweening;
-using UnityEngine.AdaptivePerformance;
 
 namespace Core.Player
 {
