@@ -18,8 +18,9 @@ namespace Core.Player
         [SerializeField] private bool _enabled = true;
         [SerializeField] private HeroAnimatorConfig _config;
         
-        [Header("Arm with Hook")]
+        [Header("Arms")]
         [SerializeField] private Transform _armWithHook;
+        [SerializeField] private GameObject _sword;
 
         [Header("Legs")]
         [SerializeField] private Transform[] _legs;
@@ -224,12 +225,16 @@ namespace Core.Player
         private void PerformLanding()
         {
             _animator.enabled = true;
+            _sword.SetActive(true);
             _animator.SetTrigger(LandedHash);
             _animator.SetBool(GrapplingHash, false);
         }
 
-        private void StartGrappling() =>
+        private void StartGrappling()
+        {
+            _sword.SetActive(false);
             _animator.SetBool(GrapplingHash, true);
+        }
 
         private void SetRunning(bool value)
         {
