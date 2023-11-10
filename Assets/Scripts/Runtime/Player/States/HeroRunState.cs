@@ -76,6 +76,8 @@ namespace Core.Player
             _cancellationTokenSource = new();
             CancellationToken token = _cancellationTokenSource.Token;
 
+            _hero.IsRunning.Value = true;
+
             float elapsedTime = 0;
             while (elapsedTime < accelerationTime)
             {
@@ -100,6 +102,8 @@ namespace Core.Player
             float accelerationTime = _hero.Config.AccelerationTime;
             _cancellationTokenSource = new();
             CancellationToken token = _cancellationTokenSource.Token;
+
+            _hero.IsRunning.Value = false;
 
             float elapsedTime = 0;
             while (elapsedTime < accelerationTime)
