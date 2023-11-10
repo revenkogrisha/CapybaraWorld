@@ -2,6 +2,7 @@ using System;
 using System.Diagnostics;
 using Core.Infrastructure;
 using Core.Level;
+using Cysharp.Threading.Tasks;
 using UniRx;
 using UniRx.Triggers;
 using UnityEngine;
@@ -20,6 +21,7 @@ namespace Core.Player
         [SerializeField] private GrapplingRope _rope;
 
         private PlayerConfig _config;
+        private Transform _thisTransform;
         private IFiniteStateMachine _stateMachine;
 
         public readonly ReactiveProperty<bool> IsDead = new(false);
@@ -35,12 +37,15 @@ namespace Core.Player
 
         public event Action<Type> StateChanged;
 
+        private bool ShouldSwitchToGrappling => HaveGroundBelow == false 
+            && _stateMachine.CompareState<HeroGrapplingState>() == false;
+
         private bool HaveGroundBelow
         {
             get
             {
                 RaycastHit2D hit = Physics2D.Raycast(
-                    transform.position,
+                    _thisTransform.position,
                     Vector2.down,
                     GrapplingActivationDistance,
                     _config.GroundLayer);
@@ -55,12 +60,13 @@ namespace Core.Player
         {
             _springJoint2D.enabled = false;
             _lineRenderer.enabled = false;
+            _thisTransform = transform;
             InitialzeStateMachine();
         }
 
         private void Start()
         {
-            SubscribeUpdate();
+            SubscribeProperties();
             SubscribePhysicsCallbacks();
         }
 
@@ -82,11 +88,11 @@ namespace Core.Player
         public void Initialize(PlayerConfig config) => 
             _config = config;
 
-        private void SubscribeUpdate()
+        private void SubscribeProperties()
         {
             IObservable<Unit> update = this.UpdateAsObservable();
             update
-                .Where(_ => HaveGroundBelow == false)
+                .Where(_ => ShouldSwitchToGrappling == true)
                 .Subscribe(_ => SwitchToGrapplingState())
                 .AddTo(_disposable);
         }

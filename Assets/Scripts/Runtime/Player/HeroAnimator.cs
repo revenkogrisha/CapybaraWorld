@@ -5,6 +5,7 @@ using UniRx;
 using UniRx.Triggers;
 using System;
 using DG.Tweening;
+using UnityEngine.AdaptivePerformance;
 
 namespace Core.Player
 {
@@ -26,7 +27,8 @@ namespace Core.Player
 
         private readonly int FreeFallingHash = Animator.StringToHash("FreeFalling");
         private readonly int LandedHash = Animator.StringToHash("Landed");
-        private readonly int GrappledHash = Animator.StringToHash("Grappled");
+        private readonly int GrapplingHash = Animator.StringToHash("Grappling");
+        private readonly int RunningHash = Animator.StringToHash("Running");
 
         private CompositeDisposable _disposable = new();
         private Transform _thisTransform;
@@ -57,12 +59,16 @@ namespace Core.Player
         {
             _hero.GrappledJoint   
                 .Where(joint => joint != null)
-                .Subscribe(joint => OnJointGrappled(joint))
+                .Subscribe(OnJointGrappled)
                 .AddTo(_disposable);
 
             _hero.GrappledJoint
                 .Where(joint => joint == null)
                 .Subscribe(_ => OnJointReleased())
+                .AddTo(_disposable);
+
+            _hero.IsRunning
+                .Subscribe(SetRunning)
                 .AddTo(_disposable);
 
             _hero.StateChanged += OnStateChanged;
@@ -107,7 +113,7 @@ namespace Core.Player
             if (stateType == typeof(HeroRunState))
                 PerformLanding();
             else if (stateType == typeof(HeroGrapplingState))
-                PerformGrappling();
+                StartGrappling();
         }
 
         private async void StartRotatingBody(Transform targetJoint)
@@ -220,12 +226,16 @@ namespace Core.Player
         {
             _animator.enabled = true;
             _animator.SetTrigger(LandedHash);
+            _animator.SetBool(GrapplingHash, false);
         }
 
-        private void PerformGrappling()
+        private void StartGrappling() =>
+            _animator.SetBool(GrapplingHash, true);
+
+        private void SetRunning(bool value)
         {
             _animator.enabled = true;
-            _animator.SetTrigger(GrappledHash);
+            _animator.SetBool(RunningHash, value);
         }
     }
 }
