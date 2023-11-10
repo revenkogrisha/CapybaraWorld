@@ -6,12 +6,12 @@ using UniRx.Triggers;
 using System;
 using DG.Tweening;
 using Random = UnityEngine.Random;
+using UnityEngine.UIElements;
 
 namespace Core.Player
 {
     public class HeroAnimator : MonoBehaviour
     {
-
         [Header("Components")]
         [SerializeField] private Hero _hero;
         [SerializeField] private Animator _animator;
@@ -27,6 +27,7 @@ namespace Core.Player
         [SerializeField] private Transform[] _legs;
 
         private readonly int FreeFallingHash = Animator.StringToHash("FreeFalling");
+        private readonly int LandedHash = Animator.StringToHash("Landed");
 
         private CompositeDisposable _disposable = new();
         private Transform _thisTransform;
@@ -60,6 +61,8 @@ namespace Core.Player
             
             _hero.JointReleased += StopRotatingBody;
             _hero.JointReleased += StopRotatingHand;
+
+            _hero.StateChanged += PerformLanding;
         }
 
         private void OnDisable()
@@ -69,6 +72,8 @@ namespace Core.Player
 
             _hero.JointReleased -= StopRotatingBody;
             _hero.JointReleased -= StopRotatingHand;
+
+            _hero.StateChanged -= PerformLanding;
         }
 
         #endregion
@@ -116,6 +121,7 @@ namespace Core.Player
             if (_config.RotateArmWithHook == false)
                 return;
 
+            _animator.SetBool(FreeFallingHash, false);
             _animator.enabled = false;
 
             CancellationToken token = destroyCancellationToken;
@@ -153,7 +159,7 @@ namespace Core.Player
         private void StopRotatingHand()
         {
             _shouldRotateHand = false;
-            LerpArmToDefaultAsync();
+            LerpArmToDefault();
 
             _animator.enabled = true;
             _animator.SetBool(FreeFallingHash, true);
@@ -162,38 +168,17 @@ namespace Core.Player
         private void StopRotatingBody()
         {
             _shouldRotateBody = false;
-            LerpBodyToDefatultAsync();
+            LerpBodyToDefatult();
         }
 
-        private void LerpArmToDefaultAsync() =>
-            LerpToDefault(_armWithHook).Forget();
+        private void LerpArmToDefault() =>
+            RotateToDefault(_armWithHook);
 
-        private void LerpBodyToDefatultAsync() =>
-            LerpToDefault(_thisTransform).Forget();
+        private void LerpBodyToDefatult() =>
+            RotateToDefault(_thisTransform);
 
-        private async UniTaskVoid LerpToDefault(Transform target)
-        {
-            CancellationToken token = destroyCancellationToken;
-
-            float elapsedTime = 0f;
-            while (elapsedTime < _config.RotateToDefaultDuration)
-            {
-                float delta = elapsedTime / _config.RotateToDefaultDuration;
-                target.rotation = Quaternion.Slerp(
-                    target.rotation,
-                    _config.DefaultRotation,
-                    delta);
-
-                elapsedTime += Time.deltaTime;
-
-                bool canceled = await UniTask
-                    .NextFrame(token)
-                    .SuppressCancellationThrow();
-
-                if (canceled == true)
-                    break;
-            }
-        }
+        private void RotateToDefault(Transform target) =>
+            target.DORotate(_config.DefaultRotation, _config.RotateToDefaultDuration);
 
         private void RotateLegsRaising()
         {
@@ -201,10 +186,7 @@ namespace Core.Player
                 return;
 
             foreach (Transform leg in _legs)
-            {
-                float offset = Random.Range(0f, 0.5f);
-                leg.DORotate(_config.RaisingLegsRotation, _config.LegsRotationDuration + offset);
-            }
+                leg.DORotate(_config.RaisingLegsRotation, _config.LegsRotationDuration);
         }
 
         private void RotateLegsFalling()
@@ -213,10 +195,16 @@ namespace Core.Player
                 return;
 
             foreach (Transform leg in _legs)
-            {
-                float offset = Random.Range(0f, 0.5f);
-                leg.DORotate(_config.FallingLegsRotation, _config.LegsRotationDuration + offset);
-            }
+                leg.DORotate(_config.FallingLegsRotation, _config.LegsRotationDuration);
+        }
+
+        private void PerformLanding(Type stateType)
+        {
+            if (stateType != typeof(HeroRunState))
+                return;
+
+            _animator.enabled = true;
+            _animator.SetTrigger(LandedHash);
         }
     }
 }

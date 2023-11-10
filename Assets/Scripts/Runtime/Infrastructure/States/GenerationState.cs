@@ -20,6 +20,5 @@ namespace Core.Infrastructure
 
         public override void SetArg(State stateToMoveOn) =>
             _stateToMoveOn = stateToMoveOn;
-
     }
 }

@@ -24,14 +24,14 @@ namespace Core.Player
         [SerializeField] private float _heroRaisingVelocityMinimum = 0.1f;
 
         [Header("Default State")]
-        [SerializeField] private Quaternion _defaultRotation = Quaternion.identity;
-        [SerializeField] private float _rotateToDefaultDuration = 0.8f;
+        [SerializeField] private Vector3 _defaultRotation = Vector3.zero;
+        [SerializeField] private float _rotateToDefaultDuration = 1f;
 
         public bool RotateBody => _rotateBody;
         public bool RotateArmWithHook => _rotateArmWithHook;
         public float HandRotationSpeed => _handRotationSpeed;
         public float BodyRotationSpeed => _bodyRotationSpeed;
-        public Quaternion DefaultRotation => _defaultRotation;
+        public Vector3 DefaultRotation => _defaultRotation;
         public float RotateToDefaultDuration => _rotateToDefaultDuration;
         public bool RotateLegs => _rotateLegs;
         public float LegsRotationDuration => _legsRotationDuration;
