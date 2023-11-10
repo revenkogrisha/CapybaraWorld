@@ -1557,6 +1557,7 @@ MonoBehaviour:
   _enabled: 1
   _config: {fileID: 11400000, guid: c3ecdd04e26244fc1aa5d8b79ddb6d13, type: 2}
   _armWithHook: {fileID: 6741928347193269121}
+  _sword: {fileID: 7785680583913415663}
   _legs:
   - {fileID: 5539980561904371440}
   - {fileID: 5535790811561811333}
@@ -1571,12 +1572,12 @@ GameObject:
   - component: {fileID: 5898650631166746761}
   - component: {fileID: 3064719943449707496}
   m_Layer: 0
-  m_Name: Sword_0
+  m_Name: Sword
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &5898650631166746761
 Transform:
   m_ObjectHideFlags: 0
@@ -1632,7 +1633,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 576322715
   m_SortingLayer: 2
-  m_SortingOrder: 3
+  m_SortingOrder: 2
   m_Sprite: {fileID: -1050457108, guid: 432073e9bcecf4764b7d700a1e528d87, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
