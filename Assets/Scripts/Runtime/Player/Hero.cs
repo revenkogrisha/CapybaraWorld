@@ -23,6 +23,8 @@ namespace Core.Player
         private IFiniteStateMachine _stateMachine;
 
         public readonly ReactiveProperty<bool> IsDead = new(false);
+        public readonly ReactiveProperty<Transform> GrappledJoint = new();
+        public readonly ReactiveProperty<bool> IsRunning = new();
 
         private readonly CompositeDisposable _disposable = new();
         public SpringJoint2D SpringJoint2D => _springJoint2D;
@@ -31,8 +33,6 @@ namespace Core.Player
         public PlayerConfig Config => _config;
         public GrapplingRope Rope => _rope;
 
-        public event Action<Transform> JointGrappled;
-        public event Action JointReleased;
         public event Action<Type> StateChanged;
 
         private bool HaveGroundBelow
@@ -105,12 +105,6 @@ namespace Core.Player
                 .Subscribe(_ => SwitchToRunState())
                 .AddTo(_disposable);
         }
-
-        public void NotifyOnJointGrappled(Transform target) =>
-            JointGrappled?.Invoke(target);
-
-        public void NotifyOnJointReleased() =>
-            JointReleased?.Invoke();
 
         private void InitialzeStateMachine()
         {

@@ -5,8 +5,6 @@ using UniRx;
 using UniRx.Triggers;
 using System;
 using DG.Tweening;
-using Random = UnityEngine.Random;
-using UnityEngine.UIElements;
 
 namespace Core.Player
 {
@@ -28,6 +26,7 @@ namespace Core.Player
 
         private readonly int FreeFallingHash = Animator.StringToHash("FreeFalling");
         private readonly int LandedHash = Animator.StringToHash("Landed");
+        private readonly int GrappledHash = Animator.StringToHash("Grappled");
 
         private CompositeDisposable _disposable = new();
         private Transform _thisTransform;
@@ -56,15 +55,22 @@ namespace Core.Player
 
         private void OnEnable()
         {
-            _hero.JointGrappled += OnJointGrappled;
-            _hero.JointReleased += OnJointReleased;
+            _hero.GrappledJoint   
+                .Where(joint => joint != null)
+                .Subscribe(joint => OnJointGrappled(joint))
+                .AddTo(_disposable);
+
+            _hero.GrappledJoint
+                .Where(joint => joint == null)
+                .Subscribe(_ => OnJointReleased())
+                .AddTo(_disposable);
+
             _hero.StateChanged += OnStateChanged;
         }
 
         private void OnDisable()
         {
-            _hero.JointGrappled -= OnJointGrappled;
-            _hero.JointReleased -= OnJointReleased;
+            _disposable.Clear();
             _hero.StateChanged -= OnStateChanged;
         }
 
@@ -96,8 +102,10 @@ namespace Core.Player
             StopRotatingHand();
         }
 
-        private void OnStateChanged(Type stateType) =>
+        private void OnStateChanged(Type stateType)
+        {
             PerformLanding(stateType);
+        }
 
         private async void StartRotatingBody(Transform targetJoint)
         {
