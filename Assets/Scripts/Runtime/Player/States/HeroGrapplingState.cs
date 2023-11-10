@@ -66,7 +66,7 @@ namespace Core.Player
             Vector2 jointPosition = _jointObject.transform.position;
             _hero.SpringJoint2D.connectedAnchor = jointPosition;
 
-            _hero.NotifyOnJointGrappled(_jointObject.transform);
+            _hero.GrappledJoint.Value = _jointObject.transform;
         }
 
         private void ReleaseJoint()
@@ -79,7 +79,7 @@ namespace Core.Player
             if (velocity.x > 0 && velocity.y >= 0)
                 _hero.Rigidbody2D.velocity *= _hero.Config.GrappleJumpVelocityMultiplier;
 
-            _hero.NotifyOnJointReleased();
+            _hero.GrappledJoint.Value = null;
         }
 
         private bool TryFindNearestJoint()

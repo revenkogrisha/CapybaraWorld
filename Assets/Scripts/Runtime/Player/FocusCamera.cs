@@ -32,16 +32,8 @@ namespace Core.Player
 
         #region MonoBehaviour
 
-        public void Dispose()
-        {
-            if (_hero != null)
-            {
-                _hero.JointGrappled -= StartFocus;
-                _hero.JointReleased -= StopFocus;
-            }
-
+        public void Dispose() => 
             _disposable.Clear();
-        }
         
         #endregion
 
@@ -53,9 +45,7 @@ namespace Core.Player
             _followObject = hero.transform;
             _cinemachine.Follow = _followObject;
             
-            _hero.JointGrappled += StartFocus;
-            _hero.JointReleased += StopFocus;
-
+            SubscribeHero();
             SubscribeUpdate();
         }
 
@@ -84,6 +74,19 @@ namespace Core.Player
 
             ChangeFov(_config.RegularFov, _config.FovChangeDuration)
                 .Forget();
+        }
+
+        private void SubscribeHero()
+        {
+            _hero.GrappledJoint
+                .Where(joint => joint != null)
+                .Subscribe(joint => StartFocus(joint))
+                .AddTo(_disposable);
+
+            _hero.GrappledJoint
+                .Where(joint => joint == null)
+                .Subscribe(joint => StopFocus())
+                .AddTo(_disposable);
         }
 
         private void SubscribeUpdate()
@@ -115,7 +118,7 @@ namespace Core.Player
             {
                 float delta = elapsedTime / duration;
                 CinemachineFov = Mathf.Lerp(currentFov, targetFov, delta);
-
+                
                 elapsedTime += Time.deltaTime;
                 bool canceled = await UniTask
                     .NextFrame(token)
