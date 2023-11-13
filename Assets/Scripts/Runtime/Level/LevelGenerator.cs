@@ -73,7 +73,7 @@ namespace Core.Level
             _locationNumber = 0;
 
             foreach (Platform platform in _platformsOnLevel)
-                Object.Destroy(platform.gameObject);
+                NightPool.Despawn(platform);
                 
             _platformsOnLevel.Clear();
         }
@@ -112,7 +112,8 @@ namespace Core.Level
             _cancellationTokenSource = new();
             CancellationToken token = _cancellationTokenSource.Token;
             
-            while (true)
+            bool canceled = false;
+            while (canceled == false)
             {
                 if (IsLevelMidPointXLessHeroX == true) 
                 {
@@ -120,12 +121,9 @@ namespace Core.Level
                     GenerateRandomPlatform();
                 }
 
-                bool canceled = await MyUniTask
+                canceled = await MyUniTask
                     .Delay(HeroPositionCheckFrequency, token)
                     .SuppressCancellationThrow();
-
-                if (canceled == true)
-                    break;
             }
 
             _cancellationTokenSource?.Dispose();

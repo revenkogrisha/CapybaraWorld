@@ -12,7 +12,7 @@ namespace Core.Player
     {
         [SerializeField] private Hero _hero;
         [SerializeField] private Slider _slider;
-        [SerializeField] private AnimatedView _animatedUI;
+        [SerializeField] private AnimatedUI _animatedUI;
         [SerializeField] private PlayerConfig _config;
 
         private CompositeDisposable _disposable = new();
@@ -36,7 +36,7 @@ namespace Core.Player
         private async void Display()
         {
             CancellationToken token = destroyCancellationToken;
-            _animatedUI.RevealAsync().Forget();
+            _animatedUI.Reveal().Forget();
             _displaying = true;
 
             bool dashCanceled = await MyUniTask
@@ -61,7 +61,7 @@ namespace Core.Player
                     .SuppressCancellationThrow();
             }
 
-            _animatedUI.ConcealAsync().Forget();
+            _animatedUI.Conceal().Forget();
             _displaying = false;
         }
     }

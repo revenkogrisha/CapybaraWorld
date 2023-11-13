@@ -1,4 +1,4 @@
 namespace Core.UI
 {
-    public class LoadingScreen : AnimatedView {  }
+    public class LoadingScreen : AnimatedUI {  }
 }

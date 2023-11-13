@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Core.UI
 {
-    public class AnimatedView : MonoBehaviour, IAnimatedView
+    public class AnimatedUI : MonoBehaviour, IAnimatedUI
     {
         [Header("Components")]
         [SerializeField] private CanvasGroup _canvasGroup;
@@ -13,39 +13,35 @@ namespace Core.UI
         [SerializeField] private float _revealSpeed = 0.05f;
         [SerializeField] private float _concealSpeed = 0.05f;
 
-        public async UniTask RevealAsync()
+        public async UniTask Reveal()
         {
             CancellationToken token = destroyCancellationToken;
-
             _canvasGroup.alpha = 0f;
-            while (_canvasGroup.alpha < 1f)
+
+            bool canceled = false;
+            while (canceled == false && _canvasGroup.alpha < 1f)
             {
                 _canvasGroup.alpha += _revealSpeed;
 
-                bool canceled = await UniTask
+                canceled = await UniTask
                     .NextFrame(token)
                     .SuppressCancellationThrow();
-
-                if (canceled == true)
-                    break;
             }
         }
 
-        public async UniTask ConcealAsync()
+        public async UniTask Conceal()
         {
             CancellationToken token = default;
-
             _canvasGroup.alpha = 1f;
-            while (_canvasGroup.alpha > 0f)
+
+            bool canceled = false;
+            while (canceled == false && _canvasGroup.alpha > 0f)
             {
                 _canvasGroup.alpha -= _concealSpeed;
 
-                bool canceled = await UniTask
+                canceled = await UniTask
                     .NextFrame(token)
                     .SuppressCancellationThrow();
-
-                if (canceled == true)
-                    break;
             }
         }
     }

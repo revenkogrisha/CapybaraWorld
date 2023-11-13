@@ -101,11 +101,15 @@ namespace Core.Player
         private void SetHeroMiddleObject()
         {
             if (_jointTransform != null)
+            {
                 _heroJointMiddle.SetPosition(
                     _heroTransform.position,
                     _jointTransform.position);
+            }
             else
+            {
                 _heroJointMiddle.transform.position = _heroTransform.position;
+            }
         }
 
         private async UniTaskVoid ChangeFov(float targetFov, float duration)
@@ -114,18 +118,17 @@ namespace Core.Player
             float currentFov = CinemachineFov;
 
             float elapsedTime = 0f;
-            while (elapsedTime < duration)
+
+            bool canceled = false;
+            while (canceled == false && elapsedTime < duration)
             {
                 float delta = elapsedTime / duration;
                 CinemachineFov = Mathf.Lerp(currentFov, targetFov, delta);
                 
                 elapsedTime += Time.deltaTime;
-                bool canceled = await UniTask
+                canceled = await UniTask
                     .NextFrame(token)
                     .SuppressCancellationThrow();
-
-                if (canceled == true)
-                    break;
             }
         }
     }
