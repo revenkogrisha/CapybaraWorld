@@ -25,18 +25,16 @@ namespace Core.UI
         {
             CancellationToken token = destroyCancellationToken;
 
-            while (_slider.value < _slider.maxValue)
+            bool canceled = false;
+            while (canceled == false && _slider.value < _slider.maxValue)
             {
                 _slider.value += _loadingSpeed;
                 if (_displayPercentage == true)
                     DisplayPercentage();
 
-                bool canceled = await UniTask
+                canceled = await UniTask
                     .NextFrame(token)
                     .SuppressCancellationThrow();
-
-                if (canceled == true)
-                    break;
             }
         }
 

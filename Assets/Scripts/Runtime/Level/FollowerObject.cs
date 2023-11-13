@@ -63,17 +63,15 @@ namespace Core.Level
             _cancellationTokenSource = new();
             CancellationToken token = _cancellationTokenSource.Token;
 
-            while (true)
+            bool canceled = false;
+            while (canceled == false)
             {
                 Vector3 movedPosition = GetMovedPosition();
                 _thisTransform.position = movedPosition;
 
-                bool canceled = await MyUniTask
+                canceled = await MyUniTask
                     .Delay(_updateIntervalInSeconds, token)
                     .SuppressCancellationThrow();
-
-                if (canceled == true)
-                    break;
             }
 
             _cancellationTokenSource?.Dispose();

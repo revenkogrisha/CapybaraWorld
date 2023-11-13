@@ -35,29 +35,28 @@ namespace Core.Level
             if (_camera.backgroundColor == newBackground)
                 return;
 
-            LerpBackgroundAsync(newBackground).Forget();
+            LerpBackground(newBackground).Forget();
         }
 
-        private async UniTask LerpBackgroundAsync(Color newBackground)
+        private async UniTaskVoid LerpBackground(Color newBackground)
         {
             _cancellationTokenSource = new();
             CancellationToken token = _cancellationTokenSource.Token;
 
             float elapsedTime = 0;
             Color currentBackground = _camera.backgroundColor;
-            while (elapsedTime < BackgroundLerpDuration)
+
+            bool canceled = false;
+            while (canceled == false && elapsedTime < BackgroundLerpDuration)
             {
                 float time = elapsedTime / BackgroundLerpDuration;
                 _camera.backgroundColor = Color.Lerp(currentBackground, newBackground, time);
 
                 elapsedTime += Time.deltaTime;
 
-                bool canceled = await UniTask
+                canceled = await UniTask
                     .NextFrame(token)
                     .SuppressCancellationThrow();
-
-                if (canceled == true)
-                    break;
             }
 
             _cancellationTokenSource?.Dispose();

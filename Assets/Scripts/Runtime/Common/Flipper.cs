@@ -47,17 +47,16 @@ namespace Core.Common
         private async UniTaskVoid CheckRigidbodyVelocity()
         {
             CancellationToken token = destroyCancellationToken;
-            while (true)
+            
+            bool canceled = false;
+            while (canceled == false)
             {
                 if (ShouldFlip == true)
                     Flip();
 
-                bool canceled = await MyUniTask
+                canceled = await MyUniTask
                     .Delay(CheckFrequency, token)
                     .SuppressCancellationThrow();
-
-                if (canceled == true)
-                    break;
             }
         }
 
@@ -82,7 +81,8 @@ namespace Core.Common
             StartFlipping?.Invoke();
 
             float elapsedTime = 0f;
-            while (elapsedTime < _lerpDuration)
+            bool canceled = false;
+            while (canceled == false && elapsedTime < _lerpDuration)
             {
                 Vector2 newScale = _thisTransform.localScale;
                 newScale.x = flipped.x;
@@ -95,12 +95,9 @@ namespace Core.Common
 
                 elapsedTime += Time.deltaTime;
 
-                bool canceled = await UniTask
+                canceled = await UniTask
                     .NextFrame(token)
                     .SuppressCancellationThrow();
-
-                if (canceled == true)
-                    break;
             }
         }
     }

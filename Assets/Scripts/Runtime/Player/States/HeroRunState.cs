@@ -85,18 +85,16 @@ namespace Core.Player
             _hero.IsRunning.Value = true;
 
             float elapsedTime = 0;
-            while (elapsedTime < accelerationTime)
+            bool canceled = false;
+            while (canceled == false && elapsedTime < accelerationTime)
             {
                 float delta = elapsedTime / accelerationTime;
                 _acceleration = Mathf.Lerp(0f, _accelerationMaximum, delta);
                 elapsedTime += Time.deltaTime;
 
-                bool canceled = await UniTask
+                canceled = await UniTask
                     .NextFrame(token)
                     .SuppressCancellationThrow();
-
-                if (canceled == true)
-                    break;
             }
 
             _cancellationTokenSource?.Dispose();
@@ -112,18 +110,16 @@ namespace Core.Player
             _hero.IsRunning.Value = false;
 
             float elapsedTime = 0;
-            while (elapsedTime < accelerationTime)
+            bool canceled = false;
+            while (canceled == false && elapsedTime < accelerationTime)
             {
                 float delta = elapsedTime / accelerationTime;
                 _acceleration = Mathf.Lerp(_accelerationMaximum, 0f, delta);
                 elapsedTime += Time.deltaTime;
 
-                bool canceled = await UniTask
+                canceled = await UniTask
                     .NextFrame(token)
                     .SuppressCancellationThrow();
-
-                if (canceled == true)
-                    break;
             }
 
             _cancellationTokenSource?.Dispose();

@@ -21,7 +21,7 @@ namespace Core.Common
             Scene gameplayScene = await SceneLoader.LoadGameplay(LoadSceneMode.Additive);
 
             SceneManager.MoveGameObjectToScene(loadingScreen.gameObject, gameplayScene);
-            await loadingScreen.ConcealAsync();
+            await loadingScreen.Conceal();
 
             await SceneLoader.UnloadCurrentAsync();
         }
