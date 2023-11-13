@@ -163,6 +163,8 @@ namespace Core.Player
 
             rigidbody2D.gravityScale = initialGravityScale;
             _dashing = false;
+            
+            _hero.DashEndedCommand.Execute();
 
             _nextDashTime = Time.time + config.DashCooldown;
         }

@@ -20,15 +20,16 @@ namespace Core.Player
         [SerializeField] private Rigidbody2D _rigidbody2D;
         [SerializeField] private GrapplingRope _rope;
 
+        private readonly CompositeDisposable _disposable = new();
         private PlayerConfig _config;
         private Transform _thisTransform;
         private IFiniteStateMachine _stateMachine;
 
         public readonly ReactiveProperty<Transform> GrappledJoint = new();
         public readonly ReactiveProperty<bool> IsRunning = new();
+        public readonly ReactiveCommand DashEndedCommand = new();
         public ReactiveProperty<bool> IsDead { get; private set; } = new(false);
 
-        private readonly CompositeDisposable _disposable = new();
         public SpringJoint2D SpringJoint2D => _springJoint2D;
         public LineRenderer LineRenderer => _lineRenderer;
         public Rigidbody2D Rigidbody2D => _rigidbody2D;
@@ -36,7 +37,6 @@ namespace Core.Player
         public GrapplingRope Rope => _rope;
 
         public event Action<Type> StateChanged;
-
 
         private bool ShouldSwitchToGrappling => HaveGroundBelow == false 
             && _stateMachine.CompareState<HeroGrapplingState>() == false;
