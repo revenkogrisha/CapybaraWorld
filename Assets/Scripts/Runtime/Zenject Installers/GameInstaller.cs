@@ -3,11 +3,21 @@ using Zenject;
 
 namespace Core.Installers
 {
-    public class CommonInstaller : MonoInstaller
+    public class GameInstaller : MonoInstaller
     {
         public override void InstallBindings()
         {
+            BindScore();
             BindGameOverHandler();
+        }
+
+        private void BindScore()
+        {
+            Container  
+                .Bind<Score>()
+                .FromNew()
+                .AsSingle()
+                .Lazy();
         }
 
         private void BindGameOverHandler()
