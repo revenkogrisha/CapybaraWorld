@@ -5,16 +5,20 @@ using UnityEngine;
 
 namespace Core.Game
 {
-    public class YPositionScoreCounter : IScoreCounter
+    public class XPositionScoreCounter : IScoreCounter
     {
         private const float UpdateFrequency = 1f;
+        private const float ValueMultiplier = 0.3f;
 
         private readonly Transform _targetTransfrom;
         private readonly Score _score;
         private CancellationTokenSource _cancellationSource;
 
-        public YPositionScoreCounter(Transform target, Score score) =>
+        public XPositionScoreCounter(Transform target, Score score)
+        {
             _targetTransfrom = target;
+            _score = score;
+        }
 
         public void Dispose() => 
             StopCount();
@@ -33,12 +37,14 @@ namespace Core.Game
             bool canceled = false;
             while (canceled == false)
             {
-                float targetY = _targetTransfrom.position.y;
-                int playthroughDistance = Mathf.RoundToInt(targetY);
+                float targetX = _targetTransfrom.position.x;
+                int playthroughDistance = Mathf.RoundToInt(targetX * ValueMultiplier);
+                if (playthroughDistance < 0)
+                    playthroughDistance = 0;
 
-                _score.PlaythroughScore = playthroughDistance;
+                _score.PlaythroughScore.Value = playthroughDistance;
 
-                bool isHighestScore = _score.PlaythroughScore > _score.HighestScore;
+                bool isHighestScore = _score.PlaythroughScore.Value > _score.HighestScore;
                 if (isHighestScore == true)
                     _score.CaptureHighestScore();
 
