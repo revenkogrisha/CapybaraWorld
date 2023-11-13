@@ -1,5 +1,5 @@
 using Core.Factories;
-using Core.Common;
+using Core.Game;
 using Core.Level;
 using Core.Player;
 using UnityEngine;
@@ -16,7 +16,8 @@ namespace Core.Infrastructure
         private Hero _hero;
         private FollowerObject _playerDeadline;
         private GameOverHandler _gameOverHandler;
-        
+        private IScoreCounter _scoreCounter;
+
         [Inject]
         public GameplayState(
             ILevelGenerator levelGenerator,
@@ -35,14 +36,20 @@ namespace Core.Infrastructure
         public override void Enter()
         {
             _hero = _playerFactory.Create();
+            Transform heroTransform = _hero.transform;
             
             _playerDeadline = _playerDeadlineFactory.Create();
-            _playerDeadline.BeginFollowing(_hero.transform);
+            _playerDeadline.BeginFollowing(heroTransform);
 
-            _gameOverHandler.SubscribeHeroDeath(_hero);
+            _gameOverHandler.SubscribeHeroDeath(_hero); // as interface
+
+            Score score = new();
+            _scoreCounter = new YPositionScoreCounter(heroTransform, score);
 
             _levelGenerator.InitializeCenter(_hero.transform);
             _playerCamera.Initialize(_hero);
+
+            
         }
 
         public override void Exit()
@@ -51,6 +58,7 @@ namespace Core.Infrastructure
             _playerDeadline.Dispose();
             _gameOverHandler.Dispose();
             _levelGenerator.Dispose();
+            _scoreCounter.Dispose();
 
             Object.Destroy(_hero.gameObject);
         }
