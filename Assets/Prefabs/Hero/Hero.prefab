@@ -1372,8 +1372,8 @@ GameObject:
   - component: {fileID: -8512325120731556870}
   - component: {fileID: 821845916949743017}
   - component: {fileID: -3409599701113228269}
-  - component: {fileID: 7820105816485003033}
   - component: {fileID: 5395183055495763638}
+  - component: {fileID: 3471678057017077053}
   m_Layer: 0
   m_Name: Hero
   m_TagString: Untagged
@@ -1523,23 +1523,6 @@ MonoBehaviour:
   _lineRenderer: {fileID: 3803528850761969816}
   _rigidbody2D: {fileID: 5037488325551175842}
   _rope: {fileID: 5236527769357152947}
---- !u!114 &7820105816485003033
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7266856433574884410}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3921ac795d44c4c1daa5d28d16fad877, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _rigidbody2D: {fileID: 5037488325551175842}
-  _minimumVelocityToFlip: 4.5
-  _startDirection: 0
-  _lerpFlipping: 1
-  _lerpDuration: 0.4
 --- !u!114 &5395183055495763638
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1561,6 +1544,23 @@ MonoBehaviour:
   _legs:
   - {fileID: 5539980561904371440}
   - {fileID: 5535790811561811333}
+--- !u!114 &3471678057017077053
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7266856433574884410}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6fff467f58862455ca8c9b7c79b0372f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _rigidbody2D: {fileID: 5037488325551175842}
+  _minimumVelocityToFlip: 4.5
+  _startDirection: 0
+  _lerpFlipping: 1
+  _lerpDuration: 0.4
 --- !u!1 &7785680583913415663
 GameObject:
   m_ObjectHideFlags: 0
