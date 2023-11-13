@@ -17,7 +17,7 @@ namespace Core.Game
             _globalStateMachine = globalStateMachine;
         }
 
-        public void SubscribeHeroDeath(Hero hero)
+        public void SubscribeHeroDeath(IDieable hero)
         {
             hero.IsDead
                 .Where(isDead => isDead == true)

@@ -10,7 +10,7 @@ using UnityTools;
 
 namespace Core.Player
 {
-    public class Hero : MonoBehaviour
+    public class Hero : MonoBehaviour, IDieable
     {
         private const float GrapplingActivationDistance = 5f;
 
@@ -24,9 +24,9 @@ namespace Core.Player
         private Transform _thisTransform;
         private IFiniteStateMachine _stateMachine;
 
-        public readonly ReactiveProperty<bool> IsDead = new(false);
         public readonly ReactiveProperty<Transform> GrappledJoint = new();
         public readonly ReactiveProperty<bool> IsRunning = new();
+        public ReactiveProperty<bool> IsDead { get; private set; } = new(false);
 
         private readonly CompositeDisposable _disposable = new();
         public SpringJoint2D SpringJoint2D => _springJoint2D;
@@ -37,6 +37,7 @@ namespace Core.Player
 
         public event Action<Type> StateChanged;
 
+
         private bool ShouldSwitchToGrappling => HaveGroundBelow == false 
             && _stateMachine.CompareState<HeroGrapplingState>() == false;
 
@@ -44,13 +45,11 @@ namespace Core.Player
         {
             get
             {
-                RaycastHit2D hit = Physics2D.Raycast(
+                return Physics2D.Raycast(
                     _thisTransform.position,
                     Vector2.down,
                     GrapplingActivationDistance,
                     _config.GroundLayer);
-
-                return hit;
             }
         }
 

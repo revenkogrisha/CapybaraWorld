@@ -46,7 +46,6 @@ namespace Core.Infrastructure
         public override void Enter()
         {
             ClearCacheLists();
-
             AddInjectedDisposables();
 
             Hero hero = CreateHero();            
@@ -54,13 +53,11 @@ namespace Core.Infrastructure
 
             InitializeCamera(hero);
             
+            InitializeScoreCounter(heroTransform);
             InitializePlayerDeadline(heroTransform);
-
             InitializeGameOverHandler(hero);
 
-            InitializeScoreCounter(heroTransform);
-
-            _levelGenerator.InitializeCenter(heroTransform); // 
+            _levelGenerator.InitializeCenter(heroTransform);
 
             DisplayScore();
         }
@@ -108,7 +105,7 @@ namespace Core.Infrastructure
             _disposables.Add(playerDeadline);
         }
 
-        private void InitializeGameOverHandler(Hero hero) =>
+        private void InitializeGameOverHandler(IDieable hero) =>
             _gameOverHandler.SubscribeHeroDeath(hero);
 
         private void InitializeScoreCounter(Transform heroTransform)
