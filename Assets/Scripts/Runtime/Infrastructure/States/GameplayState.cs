@@ -69,6 +69,9 @@ namespace Core.Infrastructure
 
             _levelGenerator.InitializeCenter(heroTransform);
             _playerCamera.Initialize(_hero);
+
+            ScoreDisplay scoreDisplay = _uiProvider.CreateScoreDisplay();
+            _destroyables.Add(scoreDisplay.gameObject);
         }
 
         public override void Exit()
