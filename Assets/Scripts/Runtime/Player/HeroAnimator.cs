@@ -25,10 +25,11 @@ namespace Core.Player
         [Header("Legs")]
         [SerializeField] private Transform[] _legs;
 
-        private readonly int FreeFallingHash = Animator.StringToHash("FreeFalling");
-        private readonly int LandedHash = Animator.StringToHash("Landed");
-        private readonly int GrapplingHash = Animator.StringToHash("Grappling");
-        private readonly int RunningHash = Animator.StringToHash("Running");
+        private readonly int _freeFallingHash = Animator.StringToHash("FreeFalling");
+        private readonly int _landedHash = Animator.StringToHash("Landed");
+        private readonly int _grapplingHash = Animator.StringToHash("Grappling");
+        private readonly int _runningHash = Animator.StringToHash("Running");
+        public readonly int _dashedHash = Animator.StringToHash("Dashed");
 
         private CompositeDisposable _disposable = new();
         private Transform _thisTransform;
@@ -46,6 +47,7 @@ namespace Core.Player
 
         public bool HeroFalling => 
             _hero.Rigidbody2D.velocity.y < _config.HeroFallingVelocityMinimum;
+
 
         #region MonoBehaviour
 
@@ -69,6 +71,10 @@ namespace Core.Player
 
             _hero.IsRunning
                 .Subscribe(SetRunning)
+                .AddTo(_disposable);
+
+            _hero.DashedCommand
+                .Subscribe(_ => PerformDash())
                 .AddTo(_disposable);
 
             _hero.StateChanged += OnStateChanged;
@@ -124,19 +130,17 @@ namespace Core.Player
             CancellationToken token = destroyCancellationToken;
             _shouldRotateBody = true;
 
-            while (_shouldRotateBody == true)
+            bool canceled = false;
+            while (canceled == false && _shouldRotateBody == true)
             {
                 _thisTransform.rotation = LerpRotate(
                     _thisTransform,
                     targetJoint,
                     _config.BodyRotationSpeed);
 
-                bool canceled = await UniTask
+                canceled = await UniTask
                     .NextFrame(token)
                     .SuppressCancellationThrow();
-
-                if (canceled == true)
-                    break;
             }
         }
 
@@ -145,25 +149,23 @@ namespace Core.Player
             if (_config.RotateArmWithHook == false)
                 return;
 
-            _animator.SetBool(FreeFallingHash, false);
+            _animator.SetBool(_freeFallingHash, false);
             _animator.enabled = false;
 
             CancellationToken token = destroyCancellationToken;
             _shouldRotateHand = true;
 
-            while (_shouldRotateHand == true)
+            bool canceled = false;
+            while (canceled == false && _shouldRotateHand == true)
             {
                 _armWithHook.rotation = LerpRotate(
                     _armWithHook,
                     targetJoint,
                     _config.HandRotationSpeed);
 
-                bool canceled = await UniTask
+                canceled = await UniTask
                     .NextFrame(token)
                     .SuppressCancellationThrow();
-
-                if (canceled == true)
-                    break;
             }
         }
 
@@ -186,7 +188,7 @@ namespace Core.Player
             LerpArmToDefault();
 
             _animator.enabled = true;
-            _animator.SetBool(FreeFallingHash, true);
+            _animator.SetBool(_freeFallingHash, true);
         }
 
         private void StopRotatingBody()
@@ -226,20 +228,23 @@ namespace Core.Player
         {
             _animator.enabled = true;
             _sword.SetActive(true);
-            _animator.SetTrigger(LandedHash);
-            _animator.SetBool(GrapplingHash, false);
+            _animator.SetTrigger(_landedHash);
+            _animator.SetBool(_grapplingHash, false);
         }
 
         private void StartGrappling()
         {
             _sword.SetActive(false);
-            _animator.SetBool(GrapplingHash, true);
+            _animator.SetBool(_grapplingHash, true);
         }
 
         private void SetRunning(bool value)
         {
             _animator.enabled = true;
-            _animator.SetBool(RunningHash, value);
+            _animator.SetBool(_runningHash, value);
         }
+
+        private void PerformDash() =>
+            _animator.SetTrigger(_dashedHash);
     }
 }
