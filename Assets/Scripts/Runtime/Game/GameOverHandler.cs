@@ -4,7 +4,7 @@ using Core.Player;
 using Cysharp.Threading.Tasks;
 using UniRx;
 
-namespace Core.Common
+namespace Core.Game
 {
     public class GameOverHandler : IDisposable
     {
