@@ -27,7 +27,7 @@ namespace Core.Player
 
         public readonly ReactiveProperty<Transform> GrappledJoint = new();
         public readonly ReactiveProperty<bool> IsRunning = new();
-        public readonly ReactiveCommand DashEndedCommand = new();
+        public readonly ReactiveCommand DashedCommand = new();
         public ReactiveProperty<bool> IsDead { get; private set; } = new(false);
 
         public SpringJoint2D SpringJoint2D => _springJoint2D;

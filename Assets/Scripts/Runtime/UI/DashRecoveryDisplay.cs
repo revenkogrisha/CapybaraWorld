@@ -1,4 +1,5 @@
 using System.Threading;
+using Core.Other;
 using Core.UI;
 using Cysharp.Threading.Tasks;
 using UniRx;
@@ -21,7 +22,7 @@ namespace Core.Player
 
         private void OnEnable()
         {
-            _hero.DashEndedCommand
+            _hero.DashedCommand
                 .Where(_ => _displaying == false)
                 .Subscribe(_ => Display())
                 .AddTo(_disposable);
@@ -37,6 +38,13 @@ namespace Core.Player
             CancellationToken token = destroyCancellationToken;
             _animatedUI.RevealAsync().Forget();
             _displaying = true;
+
+            bool dashCanceled = await MyUniTask
+                .Delay(_config.DashDuration, token)
+                .SuppressCancellationThrow();
+
+            if (dashCanceled == true)
+                return;
 
             bool canceled = false;
             float duration = _config.DashCooldown;

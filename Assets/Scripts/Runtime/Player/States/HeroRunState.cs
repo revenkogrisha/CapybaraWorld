@@ -52,13 +52,13 @@ namespace Core.Player
             update
                 .Where(_ => IsStateActive == true)
                 .Where(_ => Input.GetKeyDown(KeyCode.Mouse0))
-                .Subscribe(_ => RaiseAccelerationAsync().Forget())
+                .Subscribe(_ => RaiseAcceleration().Forget())
                 .AddTo(_disposable);
 
             update
                 .Where(_ => IsStateActive == true)
                 .Where(_ => Input.GetKeyUp(KeyCode.Mouse0))
-                .Subscribe(_ => ReduceAccelerationAsync().Forget())
+                .Subscribe(_ => ReduceAcceleration().Forget())
                 .AddTo(_disposable);
 
             update
@@ -66,7 +66,7 @@ namespace Core.Player
                 .Where(_ => Input.GetKeyDown(KeyCode.Mouse0))
                 .Buffer(TimeSpan.FromSeconds(doubleClickInterval))
                 .Where(x => x.Count > 1)
-                .Subscribe(_ => DashAsync().Forget())
+                .Subscribe(_ => Dash().Forget())
                 .AddTo(_disposable);
             
             IObservable<Unit> fixedUpdate = _hero.FixedUpdateAsObservable();
@@ -76,7 +76,7 @@ namespace Core.Player
                 .AddTo(_disposable);
         }
 
-        private async UniTaskVoid RaiseAccelerationAsync()
+        private async UniTaskVoid RaiseAcceleration()
         {
             float accelerationTime = _hero.Config.AccelerationTime;
             _cancellationTokenSource = new();
@@ -103,7 +103,7 @@ namespace Core.Player
             _cancellationTokenSource = null;
         }
 
-        private async UniTaskVoid ReduceAccelerationAsync()
+        private async UniTaskVoid ReduceAcceleration()
         {
             float accelerationTime = _hero.Config.AccelerationTime;
             _cancellationTokenSource = new();
@@ -142,11 +142,12 @@ namespace Core.Player
             _hero.Rigidbody2D.velocity = runVelocity;
         }
 
-        private async UniTaskVoid DashAsync()
+        private async UniTaskVoid Dash()
         {
             if (Time.time < _nextDashTime || _dashing == true)
                 return;
 
+            _hero.DashedCommand.Execute();
             PlayerConfig config = _hero.Config;
             Rigidbody2D rigidbody2D = _hero.Rigidbody2D;
 
@@ -163,8 +164,6 @@ namespace Core.Player
 
             rigidbody2D.gravityScale = initialGravityScale;
             _dashing = false;
-            
-            _hero.DashEndedCommand.Execute();
 
             _nextDashTime = Time.time + config.DashCooldown;
         }
