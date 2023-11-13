@@ -27,8 +27,11 @@ namespace Core.Player
             _disposable = new();
         }
 
-        public override void Enter() =>
+        public override void Enter()
+        {
+            _acceleration = 0f;
             SubscribeUpdates();
+        }
 
         public override void Exit()
         {
@@ -36,6 +39,9 @@ namespace Core.Player
             _cancellationTokenSource?.Cancel();
             _cancellationTokenSource?.Dispose();
             _cancellationTokenSource = null;
+
+            _hero.IsRunning.Value = false;
+            _dashing = false;
         }
 
         private void SubscribeUpdates()
