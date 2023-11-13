@@ -21,7 +21,6 @@ namespace Core.Infrastructure
         private readonly IPlayerCamera _playerCamera;
         private readonly Score _score;
         private readonly UIProvider _uiProvider;
-        private Hero _hero;
         private GameOverHandler _gameOverHandler;
 
         [Inject]
@@ -46,32 +45,24 @@ namespace Core.Infrastructure
 
         public override void Enter()
         {
-            _disposables.Clear();
-            _destroyables.Clear();
+            ClearCacheLists();
 
-            _disposables.Add(_playerCamera);
-            _disposables.Add(_gameOverHandler);
-            _disposables.Add(_levelGenerator);
+            AddInjectedDisposables();
 
-            _hero = _playerFactory.Create();
-            Transform heroTransform = _hero.transform;
-            _destroyables.Add(_hero.gameObject);
+            Hero hero = CreateHero();            
+            Transform heroTransform = hero.transform;
+
+            InitializeCamera(hero);
             
-            FollowerObject playerDeadline = _playerDeadlineFactory.Create();
-            playerDeadline.BeginFollowing(heroTransform);
-            _disposables.Add(playerDeadline);
+            InitializePlayerDeadline(heroTransform);
 
-            _gameOverHandler.SubscribeHeroDeath(_hero); // remake as interface
+            InitializeGameOverHandler(hero);
 
-            IScoreCounter scoreCounter = new XPositionScoreCounter(heroTransform, _score);
-            scoreCounter.StartCount();
-            _disposables.Add(scoreCounter);
+            InitializeScoreCounter(heroTransform);
 
-            _levelGenerator.InitializeCenter(heroTransform);
-            _playerCamera.Initialize(_hero);
+            _levelGenerator.InitializeCenter(heroTransform); // 
 
-            ScoreDisplay scoreDisplay = _uiProvider.CreateScoreDisplay();
-            _destroyables.Add(scoreDisplay.gameObject);
+            DisplayScore();
         }
 
         public override void Exit()
@@ -85,6 +76,52 @@ namespace Core.Infrastructure
 
             _disposables.Clear();
             _destroyables.Clear();
+        }
+
+        private void ClearCacheLists()
+        {
+            _disposables.Clear();
+            _destroyables.Clear();
+        }
+
+        private void AddInjectedDisposables()
+        {
+            _disposables.Add(_playerCamera);
+            _disposables.Add(_gameOverHandler);
+            _disposables.Add(_levelGenerator);
+        }
+
+        private Hero CreateHero()
+        {
+            Hero hero = _playerFactory.Create();
+            _destroyables.Add(hero.gameObject);
+            return hero;
+        }
+
+        private void InitializeCamera(Hero hero) =>
+            _playerCamera.Initialize(hero);
+
+        private void InitializePlayerDeadline(Transform heroTransform)
+        {
+            FollowerObject playerDeadline = _playerDeadlineFactory.Create();
+            playerDeadline.BeginFollowing(heroTransform);
+            _disposables.Add(playerDeadline);
+        }
+
+        private void InitializeGameOverHandler(Hero hero) =>
+            _gameOverHandler.SubscribeHeroDeath(hero);
+
+        private void InitializeScoreCounter(Transform heroTransform)
+        {
+            IScoreCounter scoreCounter = new XPositionScoreCounter(heroTransform, _score);
+            scoreCounter.StartCount();
+            _disposables.Add(scoreCounter);
+        }
+
+        private void DisplayScore()
+        {
+            ScoreDisplay scoreDisplay = _uiProvider.CreateScoreDisplay();
+            _destroyables.Add(scoreDisplay.gameObject);
         }
     }
 }
