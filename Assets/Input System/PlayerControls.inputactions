@@ -516,6 +516,74 @@
                     "isPartOfComposite": false
                 }
             ]
+        },
+        {
+            "name": "Touch",
+            "id": "b725f8f6-8355-4cd9-9600-d4039a85f0d1",
+            "actions": [
+                {
+                    "name": "Hold",
+                    "type": "Button",
+                    "id": "62c5d2cf-68fc-4a11-93c7-0be72547377a",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "Press",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "PrimaryPosition",
+                    "type": "Value",
+                    "id": "188d379c-7d85-44aa-8c66-1bb3a6b84422",
+                    "expectedControlType": "Vector3",
+                    "processors": "",
+                    "interactions": "Press",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "DoubleTap",
+                    "type": "Button",
+                    "id": "5fc05c12-e54b-4c64-810d-3d5da6d48a81",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "MultiTap",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "6c74de34-8055-42d6-a41f-5b99aa2a9ef0",
+                    "path": "<Touchscreen>/Press",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Touch",
+                    "action": "Hold",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "3d578037-d359-4c6a-a5a7-b5dd3c9d1fad",
+                    "path": "<Touchscreen>/primaryTouch/startPosition",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Touch",
+                    "action": "PrimaryPosition",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "be1d9bd7-a041-4820-b054-f327ad991dc0",
+                    "path": "<Touchscreen>/primaryTouch/tap",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "DoubleTap",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
         }
     ],
     "controlSchemes": [

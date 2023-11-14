@@ -50,7 +50,7 @@ namespace Core.Player
 
         private void SubscribeInputHandler()
         {
-            _inputHandler.MovedRightCommand
+            _inputHandler.MoveRightCommand
                 .Where(_ => IsStateActive == true)
                 .Subscribe(_ => RaiseAcceleration().Forget())
                 .AddTo(_disposable);
@@ -60,7 +60,7 @@ namespace Core.Player
                 .Subscribe(_ => ReduceAcceleration().Forget())
                 .AddTo(_disposable);
 
-            _inputHandler.DashedCommand
+            _inputHandler.DashCommand
                 .Where(_ => IsStateActive == true)
                 .Subscribe(_ => Dash().Forget())
                 .AddTo(_disposable);

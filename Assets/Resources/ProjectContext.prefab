@@ -74,3 +74,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ad49a34738e994c768fb3a171ceefdef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _touchInputCollection: {fileID: 11400000, guid: 5ed76028779ea48efafdd126612db3d4, type: 2}
