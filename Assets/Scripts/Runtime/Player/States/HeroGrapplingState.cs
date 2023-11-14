@@ -1,5 +1,6 @@
 using System;
 using System.Linq;
+using Core.Game.Input;
 using Core.Infrastructure;
 using Core.Level;
 using UniRx;
@@ -13,39 +14,43 @@ namespace Core.Player
     {
         private readonly Hero _hero;
         private readonly Transform _heroTransform;
-
+        private readonly InputHandler _inputHandler;
+        private readonly CompositeDisposable _disposable = new();
         private GrapplingJoint _jointObject;
         private bool _isGrappling;
-        private CompositeDisposable _disposable;
 
         private bool IsStateActive => FiniteStateMachine.CompareState<HeroGrapplingState>();
 
-        public HeroGrapplingState(Hero hero)
+        public HeroGrapplingState(Hero hero, InputHandler inputHandler)
         {
             _hero = hero;
             _heroTransform = hero.transform;
-            _disposable = new();
+            _inputHandler = inputHandler;
         }
 
-        public override void Enter() =>
+        public override void Enter()
+        {
+            SubscribeInputHandler();
             SubscribeUpdate();
+        }
 
         public override void Exit() =>
             _disposable.Clear();
 
-        private void SubscribeUpdate()
+        private void SubscribeInputHandler()
         {
-            IObservable<Unit> update = _hero.UpdateAsObservable();
-            update
-                .Where(_ => Input.GetKeyDown(KeyCode.Mouse0) == true)
+            _inputHandler.HoldStartedCommand
                 .Subscribe(_ => GrappleJoint())
                 .AddTo(_disposable);
 
-            update
-                .Where(_ => Input.GetKeyUp(KeyCode.Mouse0) == true)
+            _inputHandler.HoldEndedCommand
                 .Subscribe(_ => ReleaseJoint())
                 .AddTo(_disposable);
+        }
 
+        private void SubscribeUpdate()
+        {
+            IObservable<Unit> update = _hero.UpdateAsObservable();
             update
                 .Where(_ => _isGrappling == true)
                 .Subscribe(_ => _hero.Rope.Draw(_jointObject.transform.position))
