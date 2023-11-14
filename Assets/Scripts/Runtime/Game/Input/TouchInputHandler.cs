@@ -17,7 +17,7 @@ namespace Core.Game.Input
             _collection.HoldAction.action.canceled += _ => HoldEndCommand.Execute();
 
             _collection.HoldAction.action.started += _ => OnPositionHoldActionStarted();
-            _collection.HoldAction.action.canceled += _ => OnPositionHoldActionEnded();
+            _collection.HoldAction.action.canceled += _ => StopCommand.Execute();
 
             _collection.DashAction.action.performed += _ => DashCommand.Execute();
         }
@@ -28,7 +28,7 @@ namespace Core.Game.Input
             _collection.HoldAction.action.canceled -= _ => HoldEndCommand.Execute();
 
             _collection.HoldAction.action.started -= _ => OnPositionHoldActionStarted();
-            _collection.HoldAction.action.canceled -= _ => OnPositionHoldActionEnded();
+            _collection.HoldAction.action.canceled -= _ => StopCommand.Execute();
 
             _collection.DashAction.action.performed -= _ => DashCommand.Execute();
         }
@@ -37,18 +37,10 @@ namespace Core.Game.Input
         {
             Vector2 touchPosition = _collection.PositionAction.action.ReadValue<Vector2>();
             bool touchIsOnRight = touchPosition.x > Screen.width * 0.5f;
-            _wasLastTouchOnTheRight = touchIsOnRight;
 
-            _ = _wasLastTouchOnTheRight == true
+            _ = touchIsOnRight == true
                 ? MoveRightCommand.Execute()
                 : MoveLeftCommand.Execute();
-        }
-
-        private void OnPositionHoldActionEnded()
-        {
-            _ = _wasLastTouchOnTheRight == true
-                ? StopRightCommand.Execute()
-                : StopLeftCommand.Execute();
         }
     }
 }
