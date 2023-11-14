@@ -1,5 +1,6 @@
 using System;
 using System.Threading;
+using Core.Game.Input;
 using Core.Infrastructure;
 using Core.Other;
 using Cysharp.Threading.Tasks;
@@ -14,6 +15,7 @@ namespace Core.Player
         private const float AccelerationMaximum = 1f;
 
         private readonly Hero _hero;
+        private readonly InputHandler _inputHandler;
         private readonly CompositeDisposable _disposable = new();
         private CancellationTokenSource _cancellationTokenSource;
         private float _nextDashTime = 0;
@@ -22,13 +24,17 @@ namespace Core.Player
 
         private bool IsStateActive => FiniteStateMachine.CompareState<HeroRunState>();
 
-        public HeroRunState(Hero hero) =>
+        public HeroRunState(Hero hero, InputHandler inputHandler)
+        {
             _hero = hero;
+            _inputHandler = inputHandler;
+        }
 
         public override void Enter()
         {
             _acceleration = 0f;
-            SubscribeUpdates();
+            SubscribeInputHandler();
+            SubscribeFixedUpdate();
         }
 
         public override void Exit()
@@ -42,31 +48,26 @@ namespace Core.Player
             _dashing = false;
         }
 
-        private void SubscribeUpdates()
+        private void SubscribeInputHandler()
         {
-            const float doubleClickInterval = 0.4f;
-
-            IObservable<Unit> update = _hero.UpdateAsObservable();
-            update
+            _inputHandler.MovedRightCommand
                 .Where(_ => IsStateActive == true)
-                .Where(_ => Input.GetKeyDown(KeyCode.Mouse0))
                 .Subscribe(_ => RaiseAcceleration().Forget())
                 .AddTo(_disposable);
 
-            update
+            _inputHandler.StopRightCommand
                 .Where(_ => IsStateActive == true)
-                .Where(_ => Input.GetKeyUp(KeyCode.Mouse0))
                 .Subscribe(_ => ReduceAcceleration().Forget())
                 .AddTo(_disposable);
 
-            update
+            _inputHandler.DashedCommand
                 .Where(_ => IsStateActive == true)
-                .Where(_ => Input.GetKeyDown(KeyCode.Mouse0))
-                .Buffer(TimeSpan.FromSeconds(doubleClickInterval))
-                .Where(x => x.Count > 1)
                 .Subscribe(_ => Dash().Forget())
                 .AddTo(_disposable);
-            
+        }
+
+        private void SubscribeFixedUpdate()
+        {
             IObservable<Unit> fixedUpdate = _hero.FixedUpdateAsObservable();
             fixedUpdate
                 .Where(_ => IsStateActive == true)

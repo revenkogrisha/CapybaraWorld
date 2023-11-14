@@ -1,6 +1,7 @@
 using System;
 using System.Diagnostics;
 using Core.Common;
+using Core.Game.Input;
 using Core.Infrastructure;
 using Core.Level;
 using Cysharp.Threading.Tasks;
@@ -8,6 +9,7 @@ using UniRx;
 using UniRx.Triggers;
 using UnityEngine;
 using UnityTools;
+using Zenject;
 
 namespace Core.Player
 {
@@ -27,6 +29,7 @@ namespace Core.Player
         private readonly CompositeDisposable _disposable = new();
         private IFiniteStateMachine _stateMachine;
         private GroundChecker _groundChecker;
+        private InputHandler _inputHandler;
 
         public readonly ReactiveProperty<Transform> GrappledJoint = new();
         public readonly ReactiveProperty<bool> IsRunning = new();
@@ -72,6 +75,10 @@ namespace Core.Player
 
         #endregion
 
+        [Inject]
+        private void Construct(InputHandler inputHandler) =>
+            _inputHandler = inputHandler;
+
         private void InitializeComponents()
         {
             LayerMask groundLayer = _config.GroundLayer;
@@ -84,8 +91,8 @@ namespace Core.Player
         {
             _stateMachine = new FiniteStateMachine();
 
-            HeroGrapplingState grapplingState = new(this);
-            HeroRunState runState = new(this);
+            HeroGrapplingState grapplingState = new(this, _inputHandler);
+            HeroRunState runState = new(this, _inputHandler);
 
             _stateMachine.AddState<HeroGrapplingState>(grapplingState);
             _stateMachine.AddState<HeroRunState>(runState);
