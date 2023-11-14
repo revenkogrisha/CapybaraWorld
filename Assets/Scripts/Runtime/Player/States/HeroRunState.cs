@@ -1,5 +1,6 @@
 using System;
 using System.Threading;
+using Core.Common;
 using Core.Game.Input;
 using Core.Infrastructure;
 using Core.Other;
@@ -12,7 +13,8 @@ namespace Core.Player
 {
     public class HeroRunState : State
     {
-        private const float AccelerationMaximum = 1f;
+        private const float AccelerationMaximumLeft = -1f;
+        private const float AccelerationMaximumRight = 1f;
 
         private readonly Hero _hero;
         private readonly InputHandler _inputHandler;
@@ -21,6 +23,7 @@ namespace Core.Player
         private float _nextDashTime = 0;
         private bool _dashing;
         private float _acceleration;
+        private LookingDirection _direction;
 
         private bool IsStateActive => FiniteStateMachine.CompareState<HeroRunState>();
 
@@ -52,10 +55,15 @@ namespace Core.Player
         {
             _inputHandler.MoveRightCommand
                 .Where(_ => IsStateActive == true)
-                .Subscribe(_ => RaiseAcceleration().Forget())
+                .Subscribe(_ => AccelerateRight())
                 .AddTo(_disposable);
 
-            _inputHandler.StopRightCommand
+            _inputHandler.MoveLeftCommand
+                .Where(_ => IsStateActive == true)
+                .Subscribe(_ => AccelerateLeft())
+                .AddTo(_disposable);
+
+            _inputHandler.StopCommand
                 .Where(_ => IsStateActive == true)
                 .Subscribe(_ => ReduceAcceleration().Forget())
                 .AddTo(_disposable);
@@ -75,6 +83,18 @@ namespace Core.Player
                 .AddTo(_disposable);
         }
 
+        private void AccelerateRight()
+        {
+            _direction = LookingDirection.Right;
+            RaiseAcceleration().Forget();
+        }
+
+        private void AccelerateLeft()
+        {
+            _direction = LookingDirection.Left;
+            RaiseAcceleration().Forget();
+        }
+
         private async UniTaskVoid RaiseAcceleration()
         {
             float accelerationTime = _hero.Config.AccelerationTime;
@@ -83,12 +103,16 @@ namespace Core.Player
 
             _hero.IsRunning.Value = true;
 
+            float maximum = _direction == LookingDirection.Right
+                ? AccelerationMaximumRight
+                : AccelerationMaximumLeft;
+
             float elapsedTime = 0;
             bool canceled = false;
             while (canceled == false && elapsedTime < accelerationTime)
             {
                 float delta = elapsedTime / accelerationTime;
-                _acceleration = Mathf.Lerp(0f, AccelerationMaximum, delta);
+                _acceleration = Mathf.Lerp(0f, maximum, delta);
                 elapsedTime += Time.deltaTime;
 
                 canceled = await UniTask
@@ -107,13 +131,14 @@ namespace Core.Player
             CancellationToken token = _cancellationTokenSource.Token;
 
             _hero.IsRunning.Value = false;
+            float original = _acceleration;
 
             float elapsedTime = 0;
             bool canceled = false;
             while (canceled == false && elapsedTime < accelerationTime)
             {
                 float delta = elapsedTime / accelerationTime;
-                _acceleration = Mathf.Lerp(AccelerationMaximum, 0f, delta);
+                _acceleration = Mathf.Lerp(original, 0f, delta);
                 elapsedTime += Time.deltaTime;
 
                 canceled = await UniTask
@@ -148,8 +173,12 @@ namespace Core.Player
 
             Vector2 dashVelocity = new(config.DashForce, 0f);
             float initialGravityScale = rigidbody2D.gravityScale;
+            
+            float directionMultiplier = _direction == LookingDirection.Right
+                ? 1f
+                : -1f;
 
-            rigidbody2D.velocity = dashVelocity;
+            rigidbody2D.velocity = dashVelocity * directionMultiplier;
             rigidbody2D.gravityScale = 0f;
             _dashing = true;
             
