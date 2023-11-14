@@ -77,14 +77,13 @@ namespace Core.Player
                 .Subscribe(_ => PerformDash())
                 .AddTo(_disposable);
 
-            _hero.StateChanged += OnStateChanged;
+            _hero.StateChangedCommand
+                .Subscribe(OnStateChanged)
+                .AddTo(_disposable);
         }
 
-        private void OnDisable()
-        {
+        private void OnDisable() => 
             _disposable.Clear();
-            _hero.StateChanged -= OnStateChanged;
-        }
 
         #endregion
 
@@ -124,9 +123,6 @@ namespace Core.Player
 
         private async void StartRotatingBody(Transform targetJoint)
         {
-            if (_config.RotateBody == false)
-                return;
-
             CancellationToken token = destroyCancellationToken;
             _shouldRotateBody = true;
 
@@ -146,9 +142,6 @@ namespace Core.Player
 
         private async void StartRotatingHand(Transform targetJoint)
         {
-            if (_config.RotateArmWithHook == false)
-                return;
-
             _animator.SetBool(_freeFallingHash, false);
             _animator.enabled = false;
 
@@ -208,18 +201,12 @@ namespace Core.Player
 
         private void RotateLegsRaising()
         {
-            if (_config.RotateLegs == false)
-                return;
-
             foreach (Transform leg in _legs)
                 leg.DORotate(_config.RaisingLegsRotation, _config.LegsRotationDuration);
         }
 
         private void RotateLegsFalling()
         {
-            if (_config.RotateLegs == false)
-                return;
-
             foreach (Transform leg in _legs)
                 leg.DORotate(_config.FallingLegsRotation, _config.LegsRotationDuration);
         }
