@@ -93,9 +93,11 @@ namespace Core.Player
 
             HeroGrapplingState grapplingState = new(this, _inputHandler);
             HeroRunState runState = new(this, _inputHandler);
+            HeroDeathState deathState = new();
 
             _stateMachine.AddState<HeroGrapplingState>(grapplingState);
             _stateMachine.AddState<HeroRunState>(runState);
+            _stateMachine.AddState<HeroDeathState>(deathState);
         }
 
         private void SubscribeUpdate()
@@ -134,7 +136,10 @@ namespace Core.Player
             StateChangedCommand.Execute(typeof(HeroRunState));
         }
 
-        private void PerformDeath() => 
+        private void PerformDeath()
+        {
             IsDead.Value = true;
+            _stateMachine.ChangeState<HeroDeathState>();
+        }
     }
 }

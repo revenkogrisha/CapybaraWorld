@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: Touch Input Collection
   m_EditorClassIdentifier: 
   _holdAction: {fileID: -8694619376891108272, guid: 93154840abf8f46f3a1832a547ca2411, type: 3}
-  _positionHoldAction: {fileID: -2194359068452617338, guid: 93154840abf8f46f3a1832a547ca2411, type: 3}
+  _positionAction: {fileID: -2194359068452617338, guid: 93154840abf8f46f3a1832a547ca2411, type: 3}
   _dashAction: {fileID: -3542163431393415334, guid: 93154840abf8f46f3a1832a547ca2411, type: 3}
