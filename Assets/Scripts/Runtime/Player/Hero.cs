@@ -21,8 +21,10 @@ namespace Core.Player
         [SerializeField] private Rigidbody2D _rigidbody2D;
         [SerializeField] private GrapplingRope _rope;
 
+        [Header("Config")]
+        [SerializeField] private PlayerConfig _config;
+
         private readonly CompositeDisposable _disposable = new();
-        private PlayerConfig _config;
         private IFiniteStateMachine _stateMachine;
         private GroundChecker _groundChecker;
 
@@ -69,9 +71,6 @@ namespace Core.Player
         }
 
         #endregion
-
-        public void Initialize(PlayerConfig config) => 
-            _config = config;
 
         private void InitializeComponents()
         {

@@ -23,8 +23,6 @@ namespace Core.Factories
                 .InstantiatePrefabForComponent<Hero>(_config.PlayerPrefab);
 
             hero.transform.position = _config.PlayerSpawnPosition;
-            hero.Initialize(_config);
-
             return hero;
         }
     }
