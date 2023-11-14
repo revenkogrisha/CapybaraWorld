@@ -11,21 +11,19 @@ namespace Core.Player
 {
     public class HeroRunState : State
     {
+        private const float AccelerationMaximum = 1f;
+
         private readonly Hero _hero;
-        private readonly CompositeDisposable _disposable;
-        private readonly float _accelerationMaximum = 1f;
+        private readonly CompositeDisposable _disposable = new();
+        private CancellationTokenSource _cancellationTokenSource;
         private float _nextDashTime = 0;
         private bool _dashing;
         private float _acceleration;
-        private CancellationTokenSource _cancellationTokenSource;
 
         private bool IsStateActive => FiniteStateMachine.CompareState<HeroRunState>();
 
-        public HeroRunState(Hero hero)
-        {
+        public HeroRunState(Hero hero) =>
             _hero = hero;
-            _disposable = new();
-        }
 
         public override void Enter()
         {
@@ -89,7 +87,7 @@ namespace Core.Player
             while (canceled == false && elapsedTime < accelerationTime)
             {
                 float delta = elapsedTime / accelerationTime;
-                _acceleration = Mathf.Lerp(0f, _accelerationMaximum, delta);
+                _acceleration = Mathf.Lerp(0f, AccelerationMaximum, delta);
                 elapsedTime += Time.deltaTime;
 
                 canceled = await UniTask
@@ -114,7 +112,7 @@ namespace Core.Player
             while (canceled == false && elapsedTime < accelerationTime)
             {
                 float delta = elapsedTime / accelerationTime;
-                _acceleration = Mathf.Lerp(_accelerationMaximum, 0f, delta);
+                _acceleration = Mathf.Lerp(AccelerationMaximum, 0f, delta);
                 elapsedTime += Time.deltaTime;
 
                 canceled = await UniTask
