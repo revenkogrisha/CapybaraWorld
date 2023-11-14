@@ -1,5 +1,6 @@
 using System;
 using System.Diagnostics;
+using Core.Common;
 using Core.Infrastructure;
 using Core.Level;
 using Cysharp.Threading.Tasks;
@@ -22,12 +23,13 @@ namespace Core.Player
 
         private readonly CompositeDisposable _disposable = new();
         private PlayerConfig _config;
-        private Transform _thisTransform;
         private IFiniteStateMachine _stateMachine;
+        private GroundChecker _groundChecker;
 
         public readonly ReactiveProperty<Transform> GrappledJoint = new();
         public readonly ReactiveProperty<bool> IsRunning = new();
         public readonly ReactiveCommand DashedCommand = new();
+        public readonly ReactiveCommand<Type> StateChangedCommand = new();
         public ReactiveProperty<bool> IsDead { get; private set; } = new(false);
 
         public SpringJoint2D SpringJoint2D => _springJoint2D;
@@ -36,36 +38,20 @@ namespace Core.Player
         public PlayerConfig Config => _config;
         public GrapplingRope Rope => _rope;
 
-        public event Action<Type> StateChanged;
-
-        private bool ShouldSwitchToGrappling => HaveGroundBelow == false 
+        private bool ShouldSwitchToGrappling => _groundChecker.HaveGroundBelow() == false 
             && _stateMachine.CompareState<HeroGrapplingState>() == false;
-
-        private bool HaveGroundBelow
-        {
-            get
-            {
-                return Physics2D.Raycast(
-                    _thisTransform.position,
-                    Vector2.down,
-                    GrapplingActivationDistance,
-                    _config.GroundLayer);
-            }
-        }
 
         #region MonoBehaviour
 
         private void Awake()
         {
-            _springJoint2D.enabled = false;
-            _lineRenderer.enabled = false;
-            _thisTransform = transform;
+            InitializeComponents();
             InitialzeStateMachine();
         }
 
         private void Start()
         {
-            SubscribeProperties();
+            SubscribeUpdate();
             SubscribePhysicsCallbacks();
         }
 
@@ -87,7 +73,26 @@ namespace Core.Player
         public void Initialize(PlayerConfig config) => 
             _config = config;
 
-        private void SubscribeProperties()
+        private void InitializeComponents()
+        {
+            LayerMask groundLayer = _config.GroundLayer;
+            _groundChecker = new(transform, GrapplingActivationDistance, groundLayer);
+            _springJoint2D.enabled = false;
+            _lineRenderer.enabled = false;
+        }
+
+        private void InitialzeStateMachine()
+        {
+            _stateMachine = new FiniteStateMachine();
+
+            HeroGrapplingState grapplingState = new(this);
+            HeroRunState runState = new(this);
+
+            _stateMachine.AddState<HeroGrapplingState>(grapplingState);
+            _stateMachine.AddState<HeroRunState>(runState);
+        }
+
+        private void SubscribeUpdate()
         {
             IObservable<Unit> update = this.UpdateAsObservable();
             update
@@ -111,27 +116,16 @@ namespace Core.Player
                 .AddTo(_disposable);
         }
 
-        private void InitialzeStateMachine()
-        {
-            _stateMachine = new FiniteStateMachine();
-
-            HeroGrapplingState grapplingState = new(this);
-            HeroRunState runState = new(this);
-
-            _stateMachine.AddState<HeroGrapplingState>(grapplingState);
-            _stateMachine.AddState<HeroRunState>(runState);
-        }
-
         private void SwitchToGrapplingState()
         {
             _stateMachine.ChangeState<HeroGrapplingState>();
-            StateChanged?.Invoke(typeof(HeroGrapplingState));
+            StateChangedCommand.Execute(typeof(HeroGrapplingState));
         }
 
         private void SwitchToRunState()
         {
             _stateMachine.ChangeState<HeroRunState>();
-            StateChanged?.Invoke(typeof(HeroRunState));
+            StateChangedCommand.Execute(typeof(HeroRunState));
         }
 
         private void PerformDeath() => 
