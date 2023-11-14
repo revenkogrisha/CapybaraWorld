@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace Core.UI
 {
-    [CreateAssetMenu(fileName = "UI Collection", menuName = "Collections/UI Collection")]
+    [CreateAssetMenu(fileName = "UI Collection", menuName = "Collections/UI")]
     public class UICollection : ScriptableObject
     {
         [Header("Views")]

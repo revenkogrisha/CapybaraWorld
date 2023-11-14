@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using Core.Factories;
 using Core.Game;
+using Core.Game.Input;
 using Core.Level;
 using Core.Player;
 using Core.UI;
@@ -15,6 +16,7 @@ namespace Core.Infrastructure
     {
         private readonly List<IDisposable> _disposables = new();
         private readonly List<GameObject> _destroyables = new();
+        private readonly InputHandler _inputHandler;
         private readonly ILevelGenerator _levelGenerator;
         private readonly IFactory<Hero> _playerFactory;
         private readonly IFactory<FollowerObject> _playerDeadlineFactory;
@@ -25,6 +27,7 @@ namespace Core.Infrastructure
 
         [Inject]
         public GameplayState(
+            InputHandler inputHandler,
             ILevelGenerator levelGenerator,
             GameOverHandler gameOverHandler,
             PlayerFactory playerFactory,
@@ -33,6 +36,7 @@ namespace Core.Infrastructure
             Score score,
             UIProvider uiProvider)
         {
+            _inputHandler = inputHandler;
             _levelGenerator = levelGenerator;
             _gameOverHandler = gameOverHandler;
             _playerFactory = playerFactory;
@@ -45,8 +49,10 @@ namespace Core.Infrastructure
 
         public override void Enter()
         {
-            ClearCacheLists();
+            ClearLists();
             AddInjectedDisposables();
+            
+            _inputHandler.Initialize();
 
             Hero hero = CreateHero();            
             Transform heroTransform = hero.transform;
@@ -67,7 +73,7 @@ namespace Core.Infrastructure
             foreach (IDisposable disposable in _disposables)
                 disposable.Dispose();
 
-            // Made for simplicity - some objects could be just disabled & stored somewhere
+            // Made for simplicity - some objects could be just disabled & stored in special handler
             foreach (GameObject destroyable in _destroyables)
                 Object.Destroy(destroyable);
 
@@ -75,7 +81,7 @@ namespace Core.Infrastructure
             _destroyables.Clear();
         }
 
-        private void ClearCacheLists()
+        private void ClearLists()
         {
             _disposables.Clear();
             _destroyables.Clear();
@@ -83,6 +89,7 @@ namespace Core.Infrastructure
 
         private void AddInjectedDisposables()
         {
+            _disposables.Add(_inputHandler);
             _disposables.Add(_playerCamera);
             _disposables.Add(_gameOverHandler);
             _disposables.Add(_levelGenerator);

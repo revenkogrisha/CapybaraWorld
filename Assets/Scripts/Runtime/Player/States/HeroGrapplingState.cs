@@ -39,11 +39,11 @@ namespace Core.Player
 
         private void SubscribeInputHandler()
         {
-            _inputHandler.HoldStartedCommand
+            _inputHandler.HoldStartCommand
                 .Subscribe(_ => GrappleJoint())
                 .AddTo(_disposable);
 
-            _inputHandler.HoldEndedCommand
+            _inputHandler.HoldEndCommand
                 .Subscribe(_ => ReleaseJoint())
                 .AddTo(_disposable);
         }
