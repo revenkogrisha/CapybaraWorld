@@ -31,7 +31,7 @@ namespace Core.UI
 
         public async UniTask Conceal()
         {
-            CancellationToken token = default;
+            CancellationToken token = destroyCancellationToken;
             _canvasGroup.alpha = 1f;
 
             bool canceled = false;

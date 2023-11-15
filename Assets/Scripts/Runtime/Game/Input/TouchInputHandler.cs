@@ -66,7 +66,7 @@ namespace Core.Game.Input
             switch (swipe)
             {
                 case SwipeDirection.Up:
-                    Debug.Log("Up!");
+                    JumpCommand.Execute();
                     break;
 
                 case SwipeDirection.Down:
