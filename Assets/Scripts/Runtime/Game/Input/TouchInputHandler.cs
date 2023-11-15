@@ -7,6 +7,7 @@ namespace Core.Game.Input
     public class TouchInputHandler : InputHandler, IDisposable
     {
         private readonly TouchInputCollection _collection;
+        private readonly SwipeDetector _swipeDetector = new();
 
         public TouchInputHandler(TouchInputCollection collection) =>
             _collection = collection;
@@ -28,6 +29,7 @@ namespace Core.Game.Input
         private void OnHoldActionStarted(InputAction.CallbackContext context)
         {
             HoldStartCommand.Execute();
+            HandleSwipeStart();
             ExecuteMove();
         }
 
@@ -35,6 +37,7 @@ namespace Core.Game.Input
         {
             HoldEndCommand.Execute();
             StopCommand.Execute();
+            HandleSwipeEnd();
         }
 
         private void OnDashAction(InputAction.CallbackContext context) => 
@@ -42,12 +45,41 @@ namespace Core.Game.Input
 
         private void ExecuteMove()
         {
-            Vector2 touchPosition = _collection.PositionAction.action.ReadValue<Vector2>();
-            bool touchIsOnRight = touchPosition.x > Screen.width * 0.5f;
+            Vector2 position = GetTouchPosition();
+            bool touchIsOnRight = position.x > Screen.width * 0.5f;
 
             _ = touchIsOnRight == true
                 ? MoveRightCommand.Execute()
                 : MoveLeftCommand.Execute();
         }
+
+        private void HandleSwipeStart()
+        {
+            Vector2 position = GetTouchPosition();
+            _swipeDetector.HandleTouchStart(position, Time.time);
+        }
+
+        private void HandleSwipeEnd()
+        {
+            Vector2 position = GetTouchPosition();
+            SwipeDirection swipe = _swipeDetector.HandleTouchEnd(position, Time.time);
+            switch (swipe)
+            {
+                case SwipeDirection.Up:
+                    Debug.Log("Up!");
+                    break;
+
+                case SwipeDirection.Down:
+                    Debug.Log("Down!");
+                    break;
+
+                case SwipeDirection.Unknown:
+                    Debug.Log("Unknown!");
+                    break;
+            }
+        }
+
+        private Vector2 GetTouchPosition() =>
+            _collection.PositionAction.action.ReadValue<Vector2>();
     }
 }
