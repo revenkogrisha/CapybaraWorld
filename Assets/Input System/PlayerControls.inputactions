@@ -534,7 +534,7 @@
                     "name": "PrimaryPosition",
                     "type": "Value",
                     "id": "188d379c-7d85-44aa-8c66-1bb3a6b84422",
-                    "expectedControlType": "Vector3",
+                    "expectedControlType": "Vector2",
                     "processors": "",
                     "interactions": "Press",
                     "initialStateCheck": true
@@ -563,23 +563,23 @@
                 },
                 {
                     "name": "",
-                    "id": "3d578037-d359-4c6a-a5a7-b5dd3c9d1fad",
-                    "path": "<Touchscreen>/primaryTouch/startPosition",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Touch",
-                    "action": "PrimaryPosition",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "be1d9bd7-a041-4820-b054-f327ad991dc0",
                     "path": "<Touchscreen>/primaryTouch/tap",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
                     "action": "DoubleTap",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "2b290555-7039-4092-8dc6-2bb11bc2f86f",
+                    "path": "<Touchscreen>/primaryTouch/position",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Touch",
+                    "action": "PrimaryPosition",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
