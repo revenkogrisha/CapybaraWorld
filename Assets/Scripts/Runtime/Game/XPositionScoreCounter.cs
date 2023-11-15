@@ -8,7 +8,7 @@ namespace Core.Game
     public class XPositionScoreCounter : IScoreCounter
     {
         private const float UpdateFrequency = 1f;
-        private const float ValueMultiplier = 0.3f;
+        private const float ValueMultiplier = 0.2f;
 
         private readonly Transform _targetTransfrom;
         private readonly Score _score;
