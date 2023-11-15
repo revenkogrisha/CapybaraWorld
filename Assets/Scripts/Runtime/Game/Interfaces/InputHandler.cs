@@ -5,19 +5,19 @@ namespace Core.Game.Input
 {
     public abstract class InputHandler : IDisposable
     {
-        public readonly ReactiveCommand _holdStartedCommand = new();
-        public readonly ReactiveCommand _holdEndedCommand = new();
-        public readonly ReactiveCommand _movedLeftCommand = new();
-        public readonly ReactiveCommand _movedRightCommand = new();
-        public readonly ReactiveCommand _stopCommand = new();
-        public readonly ReactiveCommand _dashedCommand = new();
+        private readonly ReactiveCommand _holdStartCommand = new();
+        private readonly ReactiveCommand _holdEndCommand = new();
+        private readonly ReactiveCommand _moveLeftCommand = new();
+        private readonly ReactiveCommand _moveRightCommand = new();
+        private readonly ReactiveCommand _stopCommand = new();
+        private readonly ReactiveCommand _dashCommand = new();
 
-        public ReactiveCommand HoldStartCommand => _holdStartedCommand;
-        public ReactiveCommand HoldEndCommand => _holdEndedCommand;
-        public ReactiveCommand MoveLeftCommand => _movedLeftCommand;
+        public ReactiveCommand HoldStartCommand => _holdStartCommand;
+        public ReactiveCommand HoldEndCommand => _holdEndCommand;
+        public ReactiveCommand MoveLeftCommand => _moveLeftCommand;
         public ReactiveCommand StopCommand => _stopCommand;
-        public ReactiveCommand MoveRightCommand => _movedRightCommand;
-        public ReactiveCommand DashCommand => _dashedCommand;
+        public ReactiveCommand MoveRightCommand => _moveRightCommand;
+        public ReactiveCommand DashCommand => _dashCommand;
 
         public abstract void Initialize();
 
