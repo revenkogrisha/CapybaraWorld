@@ -8,7 +8,7 @@ namespace Core.Game.Input
     public class SwipeDetector
     {
         private const float MaximumTime = 1f;
-        private const float MinimumDistance = 1f;
+        private const float MinimumDistance = 150f;
         private const float DirectionDotThreshold = 0.85f;
 
         private readonly Dictionary<Vector2, SwipeDirection> _directions = new();
@@ -38,6 +38,7 @@ namespace Core.Game.Input
 
             float swipeTime = _endTime - _startTime;
             float distance = Vector2.Distance(_endPosition, _startPosition);
+            Debug.Log(distance);
             if (distance < MinimumDistance 
                 || swipeTime > MaximumTime)
                 return SwipeDirection.Unknown;
