@@ -22,6 +22,42 @@ MonoBehaviour:
   _dashForce: 30
   _dashDuration: 0.2
   _dashCooldown: 2
+  _jumpProgression:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 4.7653213
+      outSlope: 4.7653213
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.21082677
+      value: 1.0046573
+      inSlope: 0.16074347
+      outSlope: 0.16074347
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.14928159
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: -1.2730503
+      outSlope: -1.2730503
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  _jumpVector: {x: 0.2, y: 1}
+  _jumpDuration: 0.8
+  _jumpForce: 20
   _groundLayer:
     serializedVersion: 2
     m_Bits: 128

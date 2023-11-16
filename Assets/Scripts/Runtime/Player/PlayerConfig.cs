@@ -13,7 +13,7 @@ namespace Core.Player
 
         [Header("Hero Grappling Settings")]
         [SerializeField, Range(0f, 100f)] private float _grappleRadius = 10f;
-        [SerializeField] private float _grappleJumpVelocityMultiplier = 1.5f;
+        [SerializeField, Min(0f)] private float _grappleJumpVelocityMultiplier = 1.5f;
 
         [Header("Hero Run Settings")]
         [SerializeField, Range(0f, 100f)] private float _runSpeed = 15f;
@@ -23,6 +23,12 @@ namespace Core.Player
         [SerializeField, Min(0f)] private float _dashForce = 30f;
         [SerializeField, Min(0f)] private float _dashDuration = 0.2f;
         [SerializeField, Min(0f)] private float _dashCooldown = 2f;
+
+        [Header("Hero Jump Settings")]
+        [SerializeField] private AnimationCurve _jumpProgression;
+        [SerializeField] private Vector2 _jumpVector = new(0.2f, 1f);
+        [SerializeField, Min(0f)] private float _jumpDuration = 0.8f;
+        [SerializeField, Min(0f)] private float _jumpForce = 20f;
 
         [Header("Hero Collisions")]
         [SerializeField] private LayerMask _groundLayer;
@@ -42,6 +48,10 @@ namespace Core.Player
         public float DashForce => _dashForce;
         public float DashDuration => _dashDuration;
         public float DashCooldown => _dashCooldown;
+        public AnimationCurve JumpProgression => _jumpProgression;
+        public Vector2 JumpVector => _jumpVector;
+        public float JumpDuration => _jumpDuration;
+        public float JumpForce => _jumpForce;
         public LayerMask GroundLayer => _groundLayer;
         public LayerMask JointLayer => _jointLayer;
         public Vector2 PlayerSpawnPosition => _playerSpawnPosition;

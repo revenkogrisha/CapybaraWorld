@@ -5,6 +5,7 @@ using Core.Game.Input;
 using Core.Infrastructure;
 using Core.Other;
 using Cysharp.Threading.Tasks;
+using TMPro;
 using UniRx;
 using UniRx.Triggers;
 using UnityEngine;
@@ -19,6 +20,7 @@ namespace Core.Player
         private CancellationTokenSource _cancellationTokenSource;
         private float _nextDashTime = 0;
         private bool _dashing;
+        private bool _jumping;
         private float _acceleration;
         private LookingDirection _direction;
 
@@ -62,6 +64,10 @@ namespace Core.Player
 
             _inputHandler.DashCommand
                 .Subscribe(_ => Dash().Forget())
+                .AddTo(_disposable);
+
+            _inputHandler.JumpCommand
+                .Subscribe(_ => Jump().Forget())
                 .AddTo(_disposable);
         }
 
@@ -140,7 +146,7 @@ namespace Core.Player
 
         private void Run()
         {
-            if (_dashing == true)
+            if (_dashing == true || _jumping == true)
                 return;
 
             PlayerConfig config = _hero.Config;
@@ -176,5 +182,35 @@ namespace Core.Player
 
             _nextDashTime = Time.time + config.DashCooldown;
         }
+
+        private async UniTaskVoid Jump()
+        {
+            if (_jumping == true || _dashing == true)
+                return;
+
+            CancellationToken token = _hero.destroyCancellationToken;
+            PlayerConfig config = _hero.Config;
+            float duration = config.JumpDuration;
+            _jumping = true;
+
+            float elapsedTime = 0f;
+            bool canceled = false;
+            while (canceled == false && elapsedTime < duration)
+            {
+                float delta = elapsedTime / duration;
+                float progress = config.JumpProgression.Evaluate(delta);
+                
+                Vector2 velocity = config.JumpVector * config.JumpForce * progress;
+                _hero.Rigidbody2D.velocity = velocity;
+                elapsedTime += Time.deltaTime;
+                
+                canceled = await UniTask
+                    .NextFrame(token)
+                    .SuppressCancellationThrow();
+            }
+
+            _jumping = false;
+        }
     }
+    // TODO: fixed update, destroy token, player config
 }
