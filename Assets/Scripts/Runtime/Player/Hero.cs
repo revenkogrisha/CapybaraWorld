@@ -24,7 +24,7 @@ namespace Core.Player
         [SerializeField] private GrapplingRope _rope;
 
         [Header("Config")]
-        [SerializeField] private PlayerConfig _config;
+        [SerializeField] private HeroConfig _config;
 
         private readonly CompositeDisposable _disposable = new();
         private IFiniteStateMachine _stateMachine;
@@ -40,7 +40,7 @@ namespace Core.Player
         public SpringJoint2D SpringJoint2D => _springJoint2D;
         public LineRenderer LineRenderer => _lineRenderer;
         public Rigidbody2D Rigidbody2D => _rigidbody2D;
-        public PlayerConfig Config => _config;
+        public HeroConfig Config => _config;
         public GrapplingRope Rope => _rope;
 
         private bool ShouldSwitchToGrappling => _groundChecker.HaveGroundBelow() == false 

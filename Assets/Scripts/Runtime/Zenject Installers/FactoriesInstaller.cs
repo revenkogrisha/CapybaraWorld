@@ -7,7 +7,7 @@ namespace Core.Installers
 {
     public class FactoriesInstaller : MonoInstaller
     {
-        [SerializeField] private PlayerConfig _playerConfig;
+        [SerializeField] private PlayerAssets _playerAssets;
 
         public override void InstallBindings()
         {
@@ -21,7 +21,7 @@ namespace Core.Installers
                 .Bind<PlayerFactory>()
                 .FromNew()
                 .AsSingle()
-                .WithArguments(_playerConfig)
+                .WithArguments(_playerAssets)
                 .Lazy();
         }
 
@@ -31,7 +31,7 @@ namespace Core.Installers
                 .Bind<PlayerDeadlineFactory>()
                 .FromNew()
                 .AsSingle()
-                .WithArguments(_playerConfig)
+                .WithArguments(_playerAssets)
                 .Lazy();
         }
     }

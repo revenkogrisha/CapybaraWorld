@@ -5,24 +5,24 @@ namespace Core.Factories
 {
     public class PlayerFactory : IFactory<Hero>
     {
-        private readonly PlayerConfig _config;
+        private readonly PlayerAssets _assets;
         private readonly DiContainer _diContainer;
 
         [Inject]
         public PlayerFactory(
-            PlayerConfig playerConfig,
+            PlayerAssets assets,
             DiContainer diContainer)
         {
-            _config = playerConfig;
+            _assets = assets;
             _diContainer = diContainer;
         }
 
         public Hero Create()
         {
             Hero hero = _diContainer
-                .InstantiatePrefabForComponent<Hero>(_config.PlayerPrefab);
+                .InstantiatePrefabForComponent<Hero>(_assets.PlayerPrefab);
 
-            hero.transform.position = _config.PlayerSpawnPosition;
+            hero.transform.position = _assets.PlayerSpawnPosition;
             return hero;
         }
     }
