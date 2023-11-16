@@ -13,9 +13,6 @@ namespace Core.Player
 {
     public class HeroRunState : State
     {
-        private const float AccelerationMaximumLeft = -1f;
-        private const float AccelerationMaximumRight = 1f;
-
         private readonly Hero _hero;
         private readonly InputHandler _inputHandler;
         private readonly CompositeDisposable _disposable = new();
@@ -24,8 +21,6 @@ namespace Core.Player
         private bool _dashing;
         private float _acceleration;
         private LookingDirection _direction;
-
-        private bool IsStateActive => FiniteStateMachine.CompareState<HeroRunState>();
 
         public HeroRunState(Hero hero, InputHandler inputHandler)
         {
@@ -54,22 +49,18 @@ namespace Core.Player
         private void SubscribeInputHandler()
         {
             _inputHandler.MoveRightCommand
-                .Where(_ => IsStateActive == true)
                 .Subscribe(_ => AccelerateRight())
                 .AddTo(_disposable);
 
             _inputHandler.MoveLeftCommand
-                .Where(_ => IsStateActive == true)
                 .Subscribe(_ => AccelerateLeft())
                 .AddTo(_disposable);
 
             _inputHandler.StopCommand
-                .Where(_ => IsStateActive == true)
                 .Subscribe(_ => ReduceAcceleration().Forget())
                 .AddTo(_disposable);
 
             _inputHandler.DashCommand
-                .Where(_ => IsStateActive == true)
                 .Subscribe(_ => Dash().Forget())
                 .AddTo(_disposable);
         }
@@ -78,7 +69,6 @@ namespace Core.Player
         {
             IObservable<Unit> fixedUpdate = _hero.FixedUpdateAsObservable();
             fixedUpdate
-                .Where(_ => IsStateActive == true)
                 .Subscribe(_ => Run())
                 .AddTo(_disposable);
         }
@@ -103,9 +93,7 @@ namespace Core.Player
 
             _hero.IsRunning.Value = true;
 
-            float maximum = _direction == LookingDirection.Right
-                ? AccelerationMaximumRight
-                : AccelerationMaximumLeft;
+            float maximum = (float)_direction;
 
             float elapsedTime = 0;
             bool canceled = false;
@@ -174,10 +162,7 @@ namespace Core.Player
             Vector2 dashVelocity = new(config.DashForce, 0f);
             float initialGravityScale = rigidbody2D.gravityScale;
             
-            float directionMultiplier = _direction == LookingDirection.Right
-                ? 1f
-                : -1f;
-
+            float directionMultiplier = (float)_direction;
             rigidbody2D.velocity = dashVelocity * directionMultiplier;
             rigidbody2D.gravityScale = 0f;
             _dashing = true;

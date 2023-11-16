@@ -117,7 +117,7 @@ namespace Core.Infrastructure
 
         private void InitializeScoreCounter(Transform heroTransform)
         {
-            IScoreCounter scoreCounter = new XPositionScoreCounter(heroTransform, _score);
+            IScoreCounter scoreCounter = new DistanceScoreCounter(heroTransform, _score);
             scoreCounter.StartCount();
             _disposables.Add(scoreCounter);
         }
