@@ -5,7 +5,6 @@ using Core.Game.Input;
 using Core.Infrastructure;
 using Core.Other;
 using Cysharp.Threading.Tasks;
-using TMPro;
 using UniRx;
 using UniRx.Triggers;
 using UnityEngine;
@@ -20,9 +19,14 @@ namespace Core.Player
         private CancellationToken _cancellationToken;
         private float _nextDashTime = 0;
         private bool _dashing;
-        private bool _jumping;
         private float _acceleration;
         private LookingDirection _direction;
+
+        private bool IsJumping
+        {
+            get => _hero.IsJumping.Value;
+            set => _hero.IsJumping.Value = value;
+        }
 
         public HeroRunState(Hero hero, InputHandler inputHandler)
         {
@@ -133,7 +137,7 @@ namespace Core.Player
 
         private void Run()
         {
-            if (_dashing == true || _jumping == true)
+            if (_dashing == true || IsJumping == true)
                 return;
 
             HeroConfig config = _hero.Config;
@@ -172,13 +176,15 @@ namespace Core.Player
 
         private async UniTaskVoid Jump()
         {
-            if (_jumping == true || _dashing == true)
+            if (IsJumping == true || _dashing == true)
                 return;
 
             CancellationToken token = _hero.destroyCancellationToken;
             HeroConfig config = _hero.Config;
+            Rigidbody2D rigidbody2D = _hero.Rigidbody2D;
             float duration = config.JumpDuration;
-            _jumping = true;
+
+            IsJumping = true;
 
             float elapsedTime = 0f;
             bool canceled = false;
@@ -188,7 +194,7 @@ namespace Core.Player
                 float progress = config.JumpProgression.Evaluate(delta);
                 
                 Vector2 velocity = config.JumpVector * config.JumpForce * progress;
-                _hero.Rigidbody2D.velocity = velocity;
+                rigidbody2D.velocity = velocity;
                 elapsedTime += Time.deltaTime;
                 
                 canceled = await UniTask
@@ -196,7 +202,11 @@ namespace Core.Player
                     .SuppressCancellationThrow();
             }
 
-            _jumping = false;
+            await UniTask
+                .WaitUntil(() => Mathf.Approximately(rigidbody2D.velocity.y, 0f))
+                .SuppressCancellationThrow();
+
+            IsJumping = false;
         }
     }
 }
