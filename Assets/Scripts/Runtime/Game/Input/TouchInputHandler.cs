@@ -72,10 +72,6 @@ namespace Core.Game.Input
                 case SwipeDirection.Down:
                     Debug.Log("Down!");
                     break;
-
-                case SwipeDirection.Unknown:
-                    Debug.Log("Unknown!");
-                    break;
             }
         }
 
