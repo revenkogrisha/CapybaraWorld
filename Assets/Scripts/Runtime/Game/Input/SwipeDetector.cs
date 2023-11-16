@@ -38,7 +38,6 @@ namespace Core.Game.Input
 
             float swipeTime = _endTime - _startTime;
             float distance = Vector2.Distance(_endPosition, _startPosition);
-            Debug.Log(distance);
             if (distance < MinimumDistance 
                 || swipeTime > MaximumTime)
                 return SwipeDirection.Unknown;
