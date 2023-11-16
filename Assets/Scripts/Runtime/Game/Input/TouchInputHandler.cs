@@ -70,7 +70,7 @@ namespace Core.Game.Input
                     break;
 
                 case SwipeDirection.Down:
-
+                    DownCommand.Execute();
                     break;
             }
         }

@@ -12,6 +12,7 @@ namespace Core.Game.Input
         private readonly ReactiveCommand _stopCommand = new();
         private readonly ReactiveCommand _dashCommand = new();
         private readonly ReactiveCommand _jumpCommand = new();
+        private readonly ReactiveCommand _downCommand = new();
 
         public ReactiveCommand HoldStartCommand => _holdStartCommand;
         public ReactiveCommand HoldEndCommand => _holdEndCommand;
@@ -20,6 +21,7 @@ namespace Core.Game.Input
         public ReactiveCommand MoveRightCommand => _moveRightCommand;
         public ReactiveCommand DashCommand => _dashCommand;
         public ReactiveCommand JumpCommand => _jumpCommand;
+        public ReactiveCommand DownCommand => _downCommand;
 
         public abstract void Initialize();
 
