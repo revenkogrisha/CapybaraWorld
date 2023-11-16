@@ -23,11 +23,16 @@ namespace Core.Common
         private Transform _thisTransform;
         private LookingDirection _direction;
 
-        private bool FacingRight => _direction == LookingDirection.Right;
-        private bool FacingLeft => _direction == LookingDirection.Left;
         private bool ShouldFlip => ShouldFlipLeft == true || ShouldFlipRight == true;
-        private bool ShouldFlipRight => _rigidbody2D.velocity.x > _minimumVelocityToFlip && FacingLeft == true;
-        private bool ShouldFlipLeft => _rigidbody2D.velocity.x < -_minimumVelocityToFlip && FacingRight == true;
+        
+        private bool ShouldFlipRight => 
+            _rigidbody2D.velocity.x > _minimumVelocityToFlip && LookingLeft == true;
+
+        private bool ShouldFlipLeft =>
+            _rigidbody2D.velocity.x < -_minimumVelocityToFlip && LookingRight == true;
+
+        private bool LookingRight => _direction == LookingDirection.Right;
+        private bool LookingLeft => _direction == LookingDirection.Left;
 
         public event Action StartFlipping;
 
@@ -70,7 +75,7 @@ namespace Core.Common
             else
                 _thisTransform.localScale = flipped;
 
-            _direction = FacingLeft == true
+            _direction = LookingLeft == true
                 ? _direction = LookingDirection.Right
                 : _direction = LookingDirection.Left;
         }

@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Core.Game
 {
-    public class XPositionScoreCounter : IScoreCounter
+    public class DistanceScoreCounter : IScoreCounter
     {
         private const float UpdateFrequency = 1f;
         private const float ValueMultiplier = 0.2f;
@@ -14,7 +14,7 @@ namespace Core.Game
         private readonly Score _score;
         private CancellationTokenSource _cancellationSource;
 
-        public XPositionScoreCounter(Transform target, Score score)
+        public DistanceScoreCounter(Transform target, Score score)
         {
             _targetTransfrom = target;
             _score = score;
