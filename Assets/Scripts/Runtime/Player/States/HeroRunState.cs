@@ -215,7 +215,9 @@ namespace Core.Player
                 float delta = elapsedTime / duration;
                 float progress = config.JumpProgression.Evaluate(delta);
                 
-                Vector2 velocity = config.JumpVector * config.JumpForce * progress;
+                Vector2 jumpVector = config.JumpVector;
+                jumpVector.x *= (float)_direction;
+                Vector2 velocity = jumpVector * config.JumpForce * progress;
                 rigidbody2D.velocity = velocity;
                 elapsedTime += Time.deltaTime;
                 
@@ -233,7 +235,6 @@ namespace Core.Player
 
         private async UniTaskVoid DescendFromPlaftorm()
         {
-            Debug.Log(1);
             Collider2D platformCollider = _currentPlatform.GetComponent<Collider2D>();
             Physics2D.IgnoreCollision(_hero.Collider2D, platformCollider, true);
 
@@ -246,7 +247,6 @@ namespace Core.Player
 
             Physics2D.IgnoreCollision(_hero.Collider2D, platformCollider, false);
             _currentPlatform = null;
-            Debug.Log(2);
         }
     }
 }
