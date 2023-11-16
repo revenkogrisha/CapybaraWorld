@@ -9,10 +9,10 @@ namespace Core.Factories
         private readonly DeadlyForPlayerObject _playerDeadlinePrefab;
         private readonly Vector2 _playerDeadlinePosition;
 
-        public PlayerDeadlineFactory(PlayerConfig playerConfig)
+        public PlayerDeadlineFactory(PlayerAssets assets)
         {
-            _playerDeadlinePrefab = playerConfig.PlayerDeadlinePrefab;
-            _playerDeadlinePosition = playerConfig.PlayerDeadlinePosition;
+            _playerDeadlinePrefab = assets.PlayerDeadlinePrefab;
+            _playerDeadlinePosition = assets.PlayerDeadlinePosition;
         }
 
         public FollowerObject Create()

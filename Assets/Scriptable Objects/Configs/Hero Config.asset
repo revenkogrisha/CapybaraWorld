@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 33a52379ffd754d2bb1f34c2c2655158, type: 3}
-  m_Name: Player Config
+  m_Name: Hero Config
   m_EditorClassIdentifier: 
   _playerPrefab: {fileID: -3409599701113228269, guid: 0f0d51a41e4d3430485a067170072c57, type: 3}
   _playerDeadlinePrefab: {fileID: 3414211181807619048, guid: bcb1f1afee0654d6e84c9aab5b050a80, type: 3}
-  _middleObjectPrefab: {fileID: 5401349206143136987, guid: cfb7c75762c3b4945aaf343901ae2f91, type: 3}
+  _middleObjectPrefab: {fileID: 0}
   _grappleRadius: 11
   _grappleJumpVelocityMultiplier: 1.6
   _runSpeed: 15
@@ -28,15 +28,15 @@ MonoBehaviour:
     - serializedVersion: 3
       time: 0
       value: 0
-      inSlope: 4.7653213
-      outSlope: 4.7653213
+      inSlope: 5.010654
+      outSlope: 5.010654
       tangentMode: 34
       weightedMode: 0
       inWeight: 0
       outWeight: 0.33333334
     - serializedVersion: 3
-      time: 0.21082677
-      value: 1.0046573
+      time: 0.19837558
+      value: 0.9939914
       inSlope: 0.16074347
       outSlope: 0.16074347
       tangentMode: 0
@@ -45,18 +45,18 @@ MonoBehaviour:
       outWeight: 0.14928159
     - serializedVersion: 3
       time: 1
-      value: 0
-      inSlope: -1.2730503
-      outSlope: -1.2730503
+      value: -0.3
+      inSlope: -1.6142114
+      outSlope: -1.6142114
       tangentMode: 34
       weightedMode: 0
       inWeight: 0.33333334
-      outWeight: 0
+      outWeight: 0.33333334
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
   _jumpVector: {x: 0.2, y: 1}
-  _jumpDuration: 0.8
+  _jumpDuration: 0.55
   _jumpForce: 20
   _groundLayer:
     serializedVersion: 2
