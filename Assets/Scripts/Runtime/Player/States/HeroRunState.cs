@@ -17,7 +17,7 @@ namespace Core.Player
         private readonly Hero _hero;
         private readonly InputHandler _inputHandler;
         private readonly CompositeDisposable _disposable = new();
-        private CancellationTokenSource _cancellationTokenSource;
+        private CancellationToken _cancellationToken;
         private float _nextDashTime = 0;
         private bool _dashing;
         private bool _jumping;
@@ -28,6 +28,7 @@ namespace Core.Player
         {
             _hero = hero;
             _inputHandler = inputHandler;
+            _cancellationToken = _hero.destroyCancellationToken;
         }
 
         public override void Enter()
@@ -40,9 +41,6 @@ namespace Core.Player
         public override void Exit()
         {
             _disposable.Clear();
-            _cancellationTokenSource?.Cancel();
-            _cancellationTokenSource?.Dispose();
-            _cancellationTokenSource = null;
 
             _hero.IsRunning.Value = false;
             _dashing = false;
@@ -94,12 +92,9 @@ namespace Core.Player
         private async UniTaskVoid RaiseAcceleration()
         {
             float accelerationTime = _hero.Config.AccelerationTime;
-            _cancellationTokenSource = new();
-            CancellationToken token = _cancellationTokenSource.Token;
+            float maximum = (float)_direction;
 
             _hero.IsRunning.Value = true;
-
-            float maximum = (float)_direction;
 
             float elapsedTime = 0;
             bool canceled = false;
@@ -110,19 +105,14 @@ namespace Core.Player
                 elapsedTime += Time.deltaTime;
 
                 canceled = await UniTask
-                    .NextFrame(token)
+                    .NextFrame(_cancellationToken)
                     .SuppressCancellationThrow();
             }
-
-            _cancellationTokenSource?.Dispose();
-            _cancellationTokenSource = null;
         }
 
         private async UniTaskVoid ReduceAcceleration()
         {
             float accelerationTime = _hero.Config.AccelerationTime;
-            _cancellationTokenSource = new();
-            CancellationToken token = _cancellationTokenSource.Token;
 
             _hero.IsRunning.Value = false;
             float original = _acceleration;
@@ -136,12 +126,9 @@ namespace Core.Player
                 elapsedTime += Time.deltaTime;
 
                 canceled = await UniTask
-                    .NextFrame(token)
+                    .NextFrame(_cancellationToken)
                     .SuppressCancellationThrow();
             }
-
-            _cancellationTokenSource?.Dispose();
-            _cancellationTokenSource = null;
         }
 
         private void Run()
@@ -149,7 +136,7 @@ namespace Core.Player
             if (_dashing == true || _jumping == true)
                 return;
 
-            PlayerConfig config = _hero.Config;
+            HeroConfig config = _hero.Config;
             Vector2 runVelocity = _hero.Rigidbody2D.velocity;
             runVelocity.x = config.RunSpeed * _acceleration;
 
@@ -162,7 +149,7 @@ namespace Core.Player
                 return;
 
             _hero.DashedCommand.Execute();
-            PlayerConfig config = _hero.Config;
+            HeroConfig config = _hero.Config;
             Rigidbody2D rigidbody2D = _hero.Rigidbody2D;
 
             Vector2 dashVelocity = new(config.DashForce, 0f);
@@ -174,7 +161,7 @@ namespace Core.Player
             _dashing = true;
             
             await MyUniTask
-                .Delay(config.DashDuration, _hero.destroyCancellationToken)
+                .Delay(config.DashDuration, _cancellationToken)
                 .SuppressCancellationThrow();
 
             rigidbody2D.gravityScale = initialGravityScale;
@@ -189,7 +176,7 @@ namespace Core.Player
                 return;
 
             CancellationToken token = _hero.destroyCancellationToken;
-            PlayerConfig config = _hero.Config;
+            HeroConfig config = _hero.Config;
             float duration = config.JumpDuration;
             _jumping = true;
 
@@ -212,5 +199,4 @@ namespace Core.Player
             _jumping = false;
         }
     }
-    // TODO: fixed update, destroy token, player config
 }
