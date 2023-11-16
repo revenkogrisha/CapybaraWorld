@@ -14,14 +14,14 @@ namespace Core.Game.Input
 
         public override void Initialize()
         {
-            _collection.HoldAction.action.started += OnHoldActionStarted;
+            _collection.HoldAction.action.performed += OnHoldActionStarted;
             _collection.HoldAction.action.canceled += OnHoldActionEnded;
             _collection.DashAction.action.performed += OnDashAction;
         }
 
         public override void Dispose()
         {
-            _collection.HoldAction.action.started -= OnHoldActionStarted;
+            _collection.HoldAction.action.performed -= OnHoldActionStarted;
             _collection.HoldAction.action.canceled -= OnHoldActionEnded;
             _collection.DashAction.action.performed -= OnDashAction;
         }
@@ -70,7 +70,7 @@ namespace Core.Game.Input
                     break;
 
                 case SwipeDirection.Down:
-                    Debug.Log("Down!");
+
                     break;
             }
         }
