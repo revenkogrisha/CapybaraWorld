@@ -23,6 +23,7 @@ namespace Core.Player
         [SerializeField] private Vector2 _jumpVector = new(0.2f, 1f);
         [SerializeField, Min(0f)] private float _jumpDuration = 0.8f;
         [SerializeField, Min(0f)] private float _jumpForce = 20f;
+        [SerializeField, Min(0f)] private float _descendDuration = 1f;
 
         [Header("Collisions")]
         [SerializeField] private LayerMask _groundLayer;
@@ -39,6 +40,7 @@ namespace Core.Player
         public Vector2 JumpVector => _jumpVector;
         public float JumpDuration => _jumpDuration;
         public float JumpForce => _jumpForce;
+        public float DescendDuration => _descendDuration;
         public LayerMask GroundLayer => _groundLayer;
         public LayerMask JointLayer => _jointLayer;
     }

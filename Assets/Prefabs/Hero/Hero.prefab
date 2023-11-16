@@ -1737,6 +1737,7 @@ MonoBehaviour:
   _lineRenderer: {fileID: 3803528850761969816}
   _rigidbody2D: {fileID: 5037488325551175842}
   _rope: {fileID: 5236527769357152947}
+  _collider2D: {fileID: 7266856433574884422}
   _config: {fileID: 11400000, guid: 19f87217513ed4f248f07f7c16d76846, type: 2}
 --- !u!114 &5395183055495763638
 MonoBehaviour:

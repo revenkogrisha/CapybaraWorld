@@ -3,11 +3,13 @@ using System.Threading;
 using Core.Common;
 using Core.Game.Input;
 using Core.Infrastructure;
+using Core.Level;
 using Core.Other;
 using Cysharp.Threading.Tasks;
 using UniRx;
 using UniRx.Triggers;
 using UnityEngine;
+using UnityTools;
 
 namespace Core.Player
 {
@@ -21,6 +23,7 @@ namespace Core.Player
         private bool _dashing;
         private float _acceleration;
         private LookingDirection _direction;
+        private OneWayPlatform _currentPlatform;
 
         private bool IsJumping
         {
@@ -40,6 +43,7 @@ namespace Core.Player
             _acceleration = 0f;
             SubscribeInputHandler();
             SubscribeFixedUpdate();
+            SubscribePhysicsCallbacks();
         }
 
         public override void Exit()
@@ -71,6 +75,11 @@ namespace Core.Player
             _inputHandler.JumpCommand
                 .Subscribe(_ => Jump().Forget())
                 .AddTo(_disposable);
+
+            _inputHandler.DownCommand
+                .Where(_ => _currentPlatform != null)
+                .Subscribe(_ => DescendFromPlaftorm().Forget())
+                .AddTo(_disposable);
         }
 
         private void SubscribeFixedUpdate()
@@ -78,6 +87,19 @@ namespace Core.Player
             IObservable<Unit> fixedUpdate = _hero.FixedUpdateAsObservable();
             fixedUpdate
                 .Subscribe(_ => Run())
+                .AddTo(_disposable);
+        }
+
+        private void SubscribePhysicsCallbacks()
+        {
+            IObservable<Collision2D> onCollisionEnter2D = _hero.OnCollisionEnter2DAsObservable();
+            onCollisionEnter2D
+                .Subscribe(collision2D =>
+                {
+                    Tools.InvokeIfNotNull<OneWayPlatform>(
+                        collision2D,
+                        component => _currentPlatform = component);
+                })
                 .AddTo(_disposable);
         }
 
@@ -207,6 +229,24 @@ namespace Core.Player
                 .SuppressCancellationThrow();
 
             IsJumping = false;
+        }
+
+        private async UniTaskVoid DescendFromPlaftorm()
+        {
+            Debug.Log(1);
+            Collider2D platformCollider = _currentPlatform.GetComponent<Collider2D>();
+            Physics2D.IgnoreCollision(_hero.Collider2D, platformCollider, true);
+
+            bool canceled = await MyUniTask
+                .Delay(_hero.Config.DescendDuration, _cancellationToken)
+                .SuppressCancellationThrow();
+
+            if (canceled == true)
+                return;
+
+            Physics2D.IgnoreCollision(_hero.Collider2D, platformCollider, false);
+            _currentPlatform = null;
+            Debug.Log(2);
         }
     }
 }

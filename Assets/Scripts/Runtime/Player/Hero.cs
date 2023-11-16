@@ -22,6 +22,7 @@ namespace Core.Player
         [SerializeField] private LineRenderer _lineRenderer;
         [SerializeField] private Rigidbody2D _rigidbody2D;
         [SerializeField] private GrapplingRope _rope;
+        [SerializeField] private Collider2D _collider2D;
 
         [Header("Config")]
         [SerializeField] private HeroConfig _config;
@@ -39,6 +40,7 @@ namespace Core.Player
         public ReactiveProperty<bool> IsDead { get; private set; } = new(false);
 
         public SpringJoint2D SpringJoint2D => _springJoint2D;
+        public Collider2D Collider2D => _collider2D;
         public LineRenderer LineRenderer => _lineRenderer;
         public Rigidbody2D Rigidbody2D => _rigidbody2D;
         public HeroConfig Config => _config;
