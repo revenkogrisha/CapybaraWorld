@@ -13,18 +13,22 @@ namespace Core.Player
         [SerializeField] private Hero _hero;
         [SerializeField] private Slider _slider;
         [SerializeField] private AnimatedUI _animatedUI;
-        [SerializeField] private PlayerConfig _config;
+        [SerializeField] private HeroConfig _config;
 
-        private CompositeDisposable _disposable = new();
+        private readonly CompositeDisposable _disposable = new();
+        private CancellationToken _cancellationToken;
         private bool _displaying = false;
 
         #region MonoBehaviour
+
+        private void Awake() =>
+            _cancellationToken = destroyCancellationToken;
 
         private void OnEnable()
         {
             _hero.DashedCommand
                 .Where(_ => _displaying == false)
-                .Subscribe(_ => Display())
+                .Subscribe(_ => Display(_cancellationToken).Forget())
                 .AddTo(_disposable);
         }
 
@@ -33,9 +37,8 @@ namespace Core.Player
 
         #endregion
 
-        private async void Display()
+        private async UniTaskVoid Display(CancellationToken token)
         {
-            CancellationToken token = destroyCancellationToken;
             _animatedUI.Reveal().Forget();
             _displaying = true;
 
@@ -46,8 +49,18 @@ namespace Core.Player
             if (dashCanceled == true)
                 return;
 
-            bool canceled = false;
+            await AnimateCooldown(token)
+                .SuppressCancellationThrow();
+
+            _animatedUI.Conceal().Forget();
+            _displaying = false;
+        }
+
+        private async UniTask AnimateCooldown(CancellationToken token)
+        {
             float duration = _config.DashCooldown;
+
+            bool canceled = false;
             float elapsedTime = 0f;
             while (canceled == false && elapsedTime < duration)
             {
@@ -60,9 +73,6 @@ namespace Core.Player
                     .NextFrame(token)
                     .SuppressCancellationThrow();
             }
-
-            _animatedUI.Conceal().Forget();
-            _displaying = false;
         }
     }
 }
