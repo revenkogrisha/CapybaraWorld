@@ -33,6 +33,7 @@ namespace Core.Player
 
         public readonly ReactiveProperty<Transform> GrappledJoint = new();
         public readonly ReactiveProperty<bool> IsRunning = new();
+        public readonly ReactiveProperty<bool> IsJumping = new();
         public readonly ReactiveCommand DashedCommand = new();
         public readonly ReactiveCommand<Type> StateChangedCommand = new();
         public ReactiveProperty<bool> IsDead { get; private set; } = new(false);

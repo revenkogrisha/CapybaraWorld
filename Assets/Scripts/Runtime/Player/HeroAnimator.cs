@@ -30,6 +30,7 @@ namespace Core.Player
         private readonly int _grapplingHash = Animator.StringToHash("Grappling");
         private readonly int _runningHash = Animator.StringToHash("Running");
         public readonly int _dashedHash = Animator.StringToHash("Dashed");
+        public readonly int _jumpingHash = Animator.StringToHash("Jumping");
 
         private CompositeDisposable _disposable = new();
         private Transform _thisTransform;
@@ -71,6 +72,10 @@ namespace Core.Player
 
             _hero.IsRunning
                 .Subscribe(SetRunning)
+                .AddTo(_disposable);
+
+            _hero.IsJumping
+                .Subscribe(SetJumping)
                 .AddTo(_disposable);
 
             _hero.DashedCommand
@@ -230,6 +235,9 @@ namespace Core.Player
             _animator.enabled = true;
             _animator.SetBool(_runningHash, value);
         }
+
+        private void SetJumping(bool value) => 
+            _animator.SetBool(_jumpingHash, value);
 
         private void PerformDash() =>
             _animator.SetTrigger(_dashedHash);
