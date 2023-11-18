@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace Core.Level
 {
-    public class EnemyIdleState : State
+	public class EnemyIdleState : State
 	{
 		private readonly Transform _thisTransform;
 		private readonly Enemy _enemy;
@@ -48,9 +48,9 @@ namespace Core.Level
 			while (canceled == false)
 			{
 				Vector2 origin = _thisTransform.position;
-				Vector2 direction = Vector2.left * (float)_direction;
 				float spotRadius = _enemy.Config.SpotRadius;
 				LayerMask targetLayer = _enemy.Config.TargetLayer;
+				Vector2 direction = Vector2.left * (float)_direction;
 
 				RaycastHit2D hit = Physics2D.Raycast(origin, direction, spotRadius, targetLayer);
 				if (hit == true)

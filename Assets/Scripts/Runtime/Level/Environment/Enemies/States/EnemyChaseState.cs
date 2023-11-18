@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace Core.Level
 {
-    public class EnemyChaseState : State<Vector2>
+	public class EnemyChaseState : State<Vector2>
 	{
 		private const float TargetMinimumDistance = 0.5f;
 		
@@ -45,7 +45,10 @@ namespace Core.Level
 			{
 				float distance = Vector2.Distance(_thisTransform.position, _targetPosition);
 				if (distance <= TargetMinimumDistance)
+				{
 					FiniteStateMachine.ChangeState<EnemyIdleState>();
+					break;
+				}
 				
 				Rigidbody2D rigidbody2D = _enemy.Rigidbody2D;
 				Vector2 velocity = rigidbody2D.velocity;
