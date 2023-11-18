@@ -20,7 +20,6 @@ namespace Core.Player
         private readonly CompositeDisposable _disposable = new();
         private CancellationToken _cancellationToken;
         private float _nextDashTime = 0;
-        private bool _dashing;
         private float _acceleration;
         private LookingDirection _direction;
         private OneWayPlatform _currentPlatform;
@@ -29,6 +28,12 @@ namespace Core.Player
         {
             get => _hero.IsJumping.Value;
             set => _hero.IsJumping.Value = value;
+        }
+
+        private bool IsDashing
+        {
+            get => _hero.IsDashing.Value;
+            set => _hero.IsDashing.Value = value;
         }
 
         public HeroRunState(Hero hero, InputHandler inputHandler)
@@ -51,7 +56,7 @@ namespace Core.Player
             _disposable.Clear();
 
             _hero.IsRunning.Value = false;
-            _dashing = false;
+            IsDashing = false;
         }
 
         private void SubscribeInputHandler()
@@ -159,7 +164,7 @@ namespace Core.Player
 
         private void Run()
         {
-            if (_dashing == true || IsJumping == true)
+            if (IsDashing == true || IsJumping == true)
                 return;
 
             HeroConfig config = _hero.Config;
@@ -171,7 +176,7 @@ namespace Core.Player
 
         private async UniTaskVoid Dash()
         {
-            if (Time.time < _nextDashTime || _dashing == true)
+            if (Time.time < _nextDashTime || IsDashing == true)
                 return;
 
             _hero.DashedCommand.Execute();
@@ -184,21 +189,21 @@ namespace Core.Player
             float directionMultiplier = (float)_direction;
             rigidbody2D.velocity = dashVelocity * directionMultiplier;
             rigidbody2D.gravityScale = 0f;
-            _dashing = true;
+            IsDashing = true;
             
             await MyUniTask
                 .Delay(config.DashDuration, _cancellationToken)
                 .SuppressCancellationThrow();
 
             rigidbody2D.gravityScale = initialGravityScale;
-            _dashing = false;
+            IsDashing = false;
 
             _nextDashTime = Time.time + config.DashCooldown;
         }
 
         private async UniTaskVoid Jump()
         {
-            if (IsJumping == true || _dashing == true)
+            if (IsJumping == true || IsDashing == true)
                 return;
 
             CancellationToken token = _hero.destroyCancellationToken;

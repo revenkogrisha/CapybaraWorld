@@ -12,15 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 33a52379ffd754d2bb1f34c2c2655158, type: 3}
   m_Name: Hero Config
   m_EditorClassIdentifier: 
-  _playerPrefab: {fileID: -3409599701113228269, guid: 0f0d51a41e4d3430485a067170072c57, type: 3}
-  _playerDeadlinePrefab: {fileID: 3414211181807619048, guid: bcb1f1afee0654d6e84c9aab5b050a80, type: 3}
-  _middleObjectPrefab: {fileID: 0}
   _grappleRadius: 11
   _grappleJumpVelocityMultiplier: 1.6
   _runSpeed: 15
   _accelerationTime: 0.15
-  _dashForce: 30
-  _dashDuration: 0.2
+  _dashForce: 35
+  _dashDuration: 0.3
   _dashCooldown: 2
   _jumpProgression:
     serializedVersion: 2
@@ -58,11 +55,10 @@ MonoBehaviour:
   _jumpVector: {x: 0.2, y: 1}
   _jumpDuration: 0.55
   _jumpForce: 20
+  _descendDuration: 1
   _groundLayer:
     serializedVersion: 2
     m_Bits: 128
   _jointLayer:
     serializedVersion: 2
     m_Bits: 64
-  _playerSpawnPosition: {x: -20, y: 5}
-  _playerDeadlinePosition: {x: 0, y: -14}
