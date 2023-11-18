@@ -10,11 +10,11 @@ namespace Core.Level
 	public class EnemyIdleState : State
 	{
 		private readonly Transform _thisTransform;
-		private readonly Enemy _enemy;
+		private readonly ChaseEnemy _enemy;
 		private LookingDirection _direction;
 		private CancellationTokenSource _cancellationSource;
 
-		public EnemyIdleState(Enemy enemy)
+		public EnemyIdleState(ChaseEnemy enemy)
 		{
 			_enemy = enemy;
 			_thisTransform = enemy.transform;

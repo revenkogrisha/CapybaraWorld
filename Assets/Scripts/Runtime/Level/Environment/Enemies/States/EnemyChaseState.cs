@@ -12,12 +12,12 @@ namespace Core.Level
 		
 		private readonly CompositeDisposable _disposable = new();
 		private readonly Transform _thisTransform;
-		private readonly Enemy _enemy;
+		private readonly ChaseEnemy _enemy;
 		private Vector3
 		 _targetPosition;
 		private Vector2 _directionToTarget;
 
-		public EnemyChaseState(Enemy enemy)
+		public EnemyChaseState(ChaseEnemy enemy)
 		{
 			_enemy = enemy;
 			_thisTransform = _enemy.transform;
