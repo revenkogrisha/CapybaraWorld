@@ -2,13 +2,14 @@ using System.Threading;
 using Core.Infrastructure;
 using Cysharp.Threading.Tasks;
 using UniRx;
-using UniRx.Triggers;
 using UnityEngine;
 
 namespace Core.Level
 {
-	public class EnemyChaseState : State<Vector2>
+    public class EnemyChaseState : State<Vector2>
 	{
+		private const float TargetMinimumDistance = 0.5f;
+		
 		private readonly CompositeDisposable _disposable = new();
 		private readonly Transform _thisTransform;
 		private readonly Enemy _enemy;
@@ -28,15 +29,11 @@ namespace Core.Level
 			_directionToTarget = GetDirectionToTarget();
 		}
 
-		public override void Enter()
-		{
+		public override void Enter() => 
 			ChaseTarget().Forget();
-		}
 
-		public override void Exit()
-		{
+		public override void Exit() => 
 			_disposable.Clear();
-		}
 
 		private async UniTaskVoid ChaseTarget()
 		{
@@ -47,12 +44,8 @@ namespace Core.Level
 			while (canceled == false)
 			{
 				float distance = Vector2.Distance(_thisTransform.position, _targetPosition);
-					
-				if (distance <= 0.5f)
-				{
+				if (distance <= TargetMinimumDistance)
 					FiniteStateMachine.ChangeState<EnemyIdleState>();
-					break;
-				}
 				
 				Rigidbody2D rigidbody2D = _enemy.Rigidbody2D;
 				Vector2 velocity = rigidbody2D.velocity;
