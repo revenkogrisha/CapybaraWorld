@@ -16,7 +16,7 @@ MonoBehaviour:
   _grappleJumpVelocityMultiplier: 1.6
   _runSpeed: 15
   _accelerationTime: 0.15
-  _dashForce: 35
+  _dashForce: 30
   _dashDuration: 0.3
   _dashCooldown: 2
   _jumpProgression:
