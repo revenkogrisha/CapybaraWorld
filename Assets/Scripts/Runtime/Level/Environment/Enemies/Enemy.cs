@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Core.Level
 {
-    public class Enemy : MonoBehaviour
+	public class Enemy : MonoBehaviour
 	{
 		[SerializeField] private Rigidbody2D _rigidbody2D;
 		[SerializeField] private EnemyConfig _config;
@@ -27,6 +27,11 @@ namespace Core.Level
 			_disposable.Clear();
 
 		#endregion
+		
+		public void PerformDeath()
+		{
+			Destroy(gameObject);
+		}
 
 		private void InitializeStateMachine()
 		{
