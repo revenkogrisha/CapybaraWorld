@@ -15,3 +15,5 @@ MonoBehaviour:
   _regularFov: 7
   _focusFov: 10
   _fovChangeDuration: 0.2
+  _hitShakeIntensity: 3
+  _hitShakeDuration: 0.2

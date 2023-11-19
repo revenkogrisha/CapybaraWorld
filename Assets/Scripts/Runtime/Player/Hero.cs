@@ -37,6 +37,7 @@ namespace Core.Player
 		public readonly ReactiveProperty<bool> IsJumping = new();
 		public readonly ReactiveProperty<bool> IsDashing = new();
 		public readonly ReactiveCommand DashedCommand = new();
+		public readonly ReactiveCommand HitCommand = new();
 		public readonly ReactiveCommand<Type> StateChangedCommand = new();
 		public ReactiveProperty<bool> IsDead { get; private set; } = new(false);
 
@@ -130,7 +131,7 @@ namespace Core.Player
 			onCollisionEnter2D
 				.Where(_ => IsDashing.Value == true)
 				.Subscribe(collision => 
-					Tools.InvokeIfNotNull<Enemy>(collision, enemy => enemy.PerformDeath()))
+					Tools.InvokeIfNotNull<Enemy>(collision, enemy => OnEnemyCollision(enemy)))
 				.AddTo(_disposable);
 
 			onCollisionEnter2D
@@ -155,6 +156,12 @@ namespace Core.Player
 		{
 			IsDead.Value = true;
 			_stateMachine.ChangeState<HeroDeathState>();
+		}
+
+		private void OnEnemyCollision(Enemy enemy)
+		{
+			enemy.PerformDeath();
+			HitCommand.Execute();
 		}
 	}
 }
