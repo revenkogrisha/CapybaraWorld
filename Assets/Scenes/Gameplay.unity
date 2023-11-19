@@ -226,6 +226,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _camera: {fileID: 880517167}
   _spriteRenderer: {fileID: 3372954}
+  _applyX: 1
   _effectX: 0.7
   _effectY: 0.5
 --- !u!1 &85593492
@@ -1136,6 +1137,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _camera: {fileID: 880517167}
   _spriteRenderer: {fileID: 703512982}
+  _applyX: 1
   _effectX: 0.7
   _effectY: 0.5
 --- !u!212 &703512982
@@ -1540,6 +1542,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _camera: {fileID: 880517167}
   _spriteRenderer: {fileID: 991777218}
+  _applyX: 1
   _effectX: 1
   _effectY: 0
 --- !u!114 &1023768393
@@ -2736,6 +2739,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _camera: {fileID: 880517167}
   _spriteRenderer: {fileID: 2032821135}
+  _applyX: 1
   _effectX: 0.8
   _effectY: 0.2
 --- !u!1 &2070087743
@@ -3085,6 +3089,7 @@ GameObject:
   - component: {fileID: 2141529484}
   - component: {fileID: 2141529486}
   - component: {fileID: 2141529485}
+  - component: {fileID: 2141529487}
   m_Layer: 0
   m_Name: cm
   m_TagString: Untagged
@@ -3162,6 +3167,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac0b09e7857660247b1477e93731de29, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &2141529487
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2141529483}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 68bb026fafb42b14791938953eaace77, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_NoiseProfile: {fileID: 11400000, guid: 69ce8388f6785dd4c8c39915efece2f4, type: 2}
+  m_PivotOffset: {x: 0, y: 0, z: 0}
+  m_AmplitudeGain: 0
+  m_FrequencyGain: 1
+  mNoiseOffsets: {x: 0, y: 0, z: 0}
 --- !u!1001 &718072254811764580
 PrefabInstance:
   m_ObjectHideFlags: 0

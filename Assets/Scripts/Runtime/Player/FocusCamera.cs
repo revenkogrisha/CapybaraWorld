@@ -1,6 +1,7 @@
 using System;
 using System.Threading;
 using Cinemachine;
+using Core.Common;
 using Cysharp.Threading.Tasks;
 using UniRx;
 using UniRx.Triggers;
@@ -18,6 +19,7 @@ namespace Core.Player
         [SerializeField] private CameraConfig _config;
 
         private CompositeDisposable _disposable = new();
+        private CinemachineShake _shake;
         private Transform _followObject;
         private bool _focusing = false;
         private Hero _hero;
@@ -32,9 +34,12 @@ namespace Core.Player
 
         #region MonoBehaviour
 
-        public void Dispose() => 
+        public void Dispose()
+        {
             _disposable.Clear();
-        
+            _shake.Dispose();
+        }
+
         #endregion
 
         public void Initialize(Hero hero)
@@ -44,6 +49,7 @@ namespace Core.Player
 
             _followObject = hero.transform;
             _cinemachine.Follow = _followObject;
+            _shake = new(_cinemachine);
             
             SubscribeHero();
             SubscribeUpdate();
@@ -86,6 +92,10 @@ namespace Core.Player
             _hero.GrappledJoint
                 .Where(joint => joint == null)
                 .Subscribe(joint => StopFocus())
+                .AddTo(_disposable);
+
+            _hero.HitCommand
+                .Subscribe(_ => OnHeroHit())
                 .AddTo(_disposable);
         }
 
@@ -131,5 +141,8 @@ namespace Core.Player
                     .SuppressCancellationThrow();
             }
         }
+
+        private void OnHeroHit() =>
+            _shake.Shake(_config.HitShakeIntensity, _config.HitShakeDuration).Forget();
     }
 }
