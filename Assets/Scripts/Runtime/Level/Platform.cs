@@ -5,7 +5,7 @@ namespace Core.Level
 {
     public abstract class Platform : MonoBehaviour
     {
-        public const float Length = 60f;
+        public const float Length = 120f;
 
         [Conditional("UNITY_EDITOR")]
         protected void OnDrawGizmos()

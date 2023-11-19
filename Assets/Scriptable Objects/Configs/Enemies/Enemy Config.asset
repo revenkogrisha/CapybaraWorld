@@ -12,10 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ff8cd23ad041647f5a9b6085ee1023e3, type: 3}
   m_Name: Enemy Config
   m_EditorClassIdentifier: 
-  _spotRadius: 20
+  _spotRadius: 10
   _spotInterval: 0.8
-  _speed: 8
-  _chaseDuration: 1
+  _speed: 6
   _targetLayer:
     serializedVersion: 2
     m_Bits: 256
