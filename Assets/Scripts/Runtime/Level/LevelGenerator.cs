@@ -103,7 +103,7 @@ namespace Core.Level
 
         public void GenerateDefaultAmount()
         {
-            for (var i = 0; i < _config.PlatformsAmountToGenerate; i++)
+            for (var i = 0; i < _config.PlatformsStartAmount; i++)
                 GenerateRandomPlatform();
         }
 
