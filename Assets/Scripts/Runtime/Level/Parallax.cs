@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using UniRx;
 using UniRx.Triggers;
 using UnityEngine;
@@ -66,7 +65,7 @@ namespace Core.Level
             _startX += _length;
 
         private void MoveLeft() =>
-            _startX += _length;
+            _startX -= _length;
 
         private Vector2 GetParallaxedPosition(float distance)
         {
