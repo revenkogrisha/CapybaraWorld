@@ -52,7 +52,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  _jumpVector: {x: 0.2, y: 1}
+  _jumpVector: {x: 0.5, y: 1}
   _jumpDuration: 0.55
   _jumpForce: 20
   _descendDuration: 1
