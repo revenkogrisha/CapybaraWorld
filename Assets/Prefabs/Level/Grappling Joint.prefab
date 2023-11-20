@@ -4841,10 +4841,10 @@ GameObject:
   m_Component:
   - component: {fileID: 7437639906120788173}
   - component: {fileID: 2196842813852766509}
-  - component: {fileID: 8491509376672859607}
   - component: {fileID: 5487094363530102969}
+  - component: {fileID: 8491509376672859607}
   m_Layer: 6
-  m_Name: Joint
+  m_Name: Grappling Joint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4918,18 +4918,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &8491509376672859607
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3479101933710896054}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d3a3589f68f114c7db680bfa58969b1b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!58 &5487094363530102969
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -4965,3 +4953,16 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.5
+--- !u!114 &8491509376672859607
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3479101933710896054}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d3a3589f68f114c7db680bfa58969b1b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _particles: {fileID: 6921031374938227274}

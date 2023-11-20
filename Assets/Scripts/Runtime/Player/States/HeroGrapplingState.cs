@@ -70,8 +70,6 @@ namespace Core.Player
             _hero.Rigidbody2D.velocity *= Vector2.right * 0.8f;
             Vector2 jointPosition = _jointObject.transform.position;
             _hero.SpringJoint2D.connectedAnchor = jointPosition;
-
-            _hero.GrappledJoint.Value = _jointObject.transform;
         }
 
         private void ReleaseJoint()
@@ -105,6 +103,10 @@ namespace Core.Player
                 .First();
 
             _jointObject = nearest.GetComponent<GrapplingJoint>();
+            _hero.GrappledJoint.Value = _jointObject.transform;
+            
+            _jointObject.OnGrappled();
+
             return _jointObject != null;
         }
 
