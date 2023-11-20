@@ -29,9 +29,6 @@ namespace Core.Level
         private bool IsNowSpecialPlatformTurn => 
             _platformNumber % _config.SpecialPlatformSequentialNumber == 0 && _platformNumber > 0;
 
-        private bool IsNowLocationChangeTurn =>
-             _platformNumber % _config.LocationChangeSequentialNumber == 0 && _platformNumber > 0;
-
         private bool IsLevelMidPointXLessHeroX
         {
             get
@@ -126,9 +123,6 @@ namespace Core.Level
 
         private void GenerateRandomPlatform()
         {
-            if (IsNowLocationChangeTurn == true)
-                ChangeLocation();
-
             Vector2 position = GetPlatformPosition();
             Platform randomPlatform = IsNowSpecialPlatformTurn == true
                 ? GenerateSpecialPlatform(position)
