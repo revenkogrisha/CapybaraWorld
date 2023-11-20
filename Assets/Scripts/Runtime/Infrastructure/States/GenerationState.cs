@@ -14,6 +14,7 @@ namespace Core.Infrastructure
 
         public override void Enter()
         {
+            _levelGenerator.Clean();
             _levelGenerator.Generate();
             FiniteStateMachine.ChangeState(_stateToMoveOn);
         }

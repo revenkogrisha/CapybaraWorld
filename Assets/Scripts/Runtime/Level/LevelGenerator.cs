@@ -42,19 +42,8 @@ namespace Core.Level
             _backgroundHandler = new(_config.BackgroundPrefab);
         }
 
-        public void Dispose()
-        {
+        public void Dispose() => 
             _cts.Clear();
-
-            _platformNumber = 0;
-            _lastGeneratedPlatformX = 0f;
-
-            foreach (Platform platform in _platformsOnLevel)
-                NightPool.Despawn(platform);
-                
-            _platformsOnLevel.Clear();
-            _backgroundHandler.Dispose();
-        }
 
         public void InitializeCenter(Transform transform)
         {
@@ -70,6 +59,18 @@ namespace Core.Level
             GenerateDefaultAmount();
 
             CreateBackground();
+        }
+
+        public void Clean()
+        {
+            _platformNumber = 0;
+            _lastGeneratedPlatformX = 0f;
+
+            foreach (Platform platform in _platformsOnLevel)
+                NightPool.Despawn(platform);
+                
+            _platformsOnLevel.Clear();
+            _backgroundHandler.Dispose();
         }
 
         public void SpawnStartPlatform()
