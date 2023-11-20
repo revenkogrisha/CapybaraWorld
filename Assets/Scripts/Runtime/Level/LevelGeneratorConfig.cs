@@ -7,7 +7,6 @@ namespace Core.Level
     {
         [Header("Generation Settings")]
         [SerializeField] private int _specialPlatformSequentialNumber = 4;
-        [SerializeField] private int _locationChangeSequentialNumber = 10;
 
         [Header("Platforms Settings")]
         [SerializeField] private int _platformsStartAmount = 5;
@@ -19,7 +18,6 @@ namespace Core.Level
         [SerializeField] private Location[] _locations;
 
         public int SpecialPlatformSequentialNumber => _specialPlatformSequentialNumber;
-        public int LocationChangeSequentialNumber => _locationChangeSequentialNumber;
         public int PlatformsStartAmount => _platformsStartAmount;
         public float XtartPoint => _xStartPoint;
         public float PlatformsY => _platformsY;
