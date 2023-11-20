@@ -11,7 +11,7 @@ namespace Core.Player
 
         [Space]
         [SerializeField, Min(0f)] private float _onGrappledVelocityMultiplier = 0.7f;
-        [SerializeField] private Vector2 _onGrappledVelocityVector = new(0.2f, 1f);
+        [SerializeField] private Vector2 _onGrappledVelocityVector = new(1f, 0.8f);
 
         [Header("Run Settings")]
         [SerializeField, Range(0f, 100f)] private float _runSpeed = 15f;

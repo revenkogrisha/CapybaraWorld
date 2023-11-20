@@ -142,7 +142,6 @@ namespace Core.Player
 
 		private void SwitchToGrapplingState()
 		{
-			print("State");
 			_stateMachine.ChangeState<HeroGrapplingState>();
 			StateChangedCommand.Execute(typeof(HeroGrapplingState));
 		}
