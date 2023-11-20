@@ -46,9 +46,7 @@ namespace Core.Level
         public void Dispose()
         {
             Object.Destroy(_thisTransform.gameObject);
-            
-            _cts?.Cancel();
-            ClearCTS();
+            _cts.Clear();
         }
 
         public void BeginFollowing(Transform toFollow)
@@ -97,12 +95,6 @@ namespace Core.Level
             movedPosition.y = toFollowPosition.y;
 
             return movedPosition;
-        }
-
-        private void ClearCTS()
-        {
-            _cts?.Dispose();
-            _cts = null;
         }
     }
 }
