@@ -7,11 +7,16 @@ namespace Core.Level
 {
     public class Parallax : MonoBehaviour
     {
+        [Header("Components")]
         [SerializeField] private Transform _camera;
         [SerializeField] private SpriteRenderer _spriteRenderer;
+
+        [Header("Settings")]
         [SerializeField] private bool _applyX = true;
         [SerializeField, Range(0f, 1f)] private float _effectX;
-        private bool _applyY = false;
+
+        [Space]
+        [SerializeField] private bool _applyY = false;
         [SerializeField, Range(0f, 1f)] private float _effectY;
 
         private readonly CompositeDisposable _disposable = new();

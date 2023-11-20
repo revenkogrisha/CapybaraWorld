@@ -228,7 +228,8 @@ MonoBehaviour:
   _spriteRenderer: {fileID: 3372954}
   _applyX: 1
   _effectX: 0.7
-  _effectY: 0.5
+  _applyY: 0
+  _effectY: 1
 --- !u!1 &85593492
 GameObject:
   m_ObjectHideFlags: 0
@@ -1139,7 +1140,8 @@ MonoBehaviour:
   _spriteRenderer: {fileID: 703512982}
   _applyX: 1
   _effectX: 0.7
-  _effectY: 0.5
+  _applyY: 0
+  _effectY: 1
 --- !u!212 &703512982
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1544,7 +1546,8 @@ MonoBehaviour:
   _spriteRenderer: {fileID: 991777218}
   _applyX: 1
   _effectX: 1
-  _effectY: 0
+  _applyY: 0
+  _effectY: 1
 --- !u!114 &1023768393
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2741,7 +2744,8 @@ MonoBehaviour:
   _spriteRenderer: {fileID: 2032821135}
   _applyX: 1
   _effectX: 0.8
-  _effectY: 0.2
+  _applyY: 0
+  _effectY: 1
 --- !u!1 &2070087743
 GameObject:
   m_ObjectHideFlags: 0
