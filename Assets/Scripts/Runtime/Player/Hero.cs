@@ -15,7 +15,7 @@ namespace Core.Player
 {
 	public class Hero : MonoBehaviour, IDieable
 	{
-		private const float GrapplingActivationDistance = 8f;
+		private const float GrapplingActivationDistance = 50f;
 
 		[Header("Components")]
 		[SerializeField] private SpringJoint2D _springJoint2D;
@@ -142,6 +142,7 @@ namespace Core.Player
 
 		private void SwitchToGrapplingState()
 		{
+			print("State");
 			_stateMachine.ChangeState<HeroGrapplingState>();
 			StateChangedCommand.Execute(typeof(HeroGrapplingState));
 		}

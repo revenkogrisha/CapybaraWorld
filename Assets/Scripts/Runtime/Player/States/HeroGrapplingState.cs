@@ -19,8 +19,6 @@ namespace Core.Player
         private GrapplingJoint _jointObject;
         private bool _isGrappling;
 
-        private bool IsStateActive => FiniteStateMachine.CompareState<HeroGrapplingState>();
-
         public HeroGrapplingState(Hero hero, InputHandler inputHandler)
         {
             _hero = hero;
@@ -50,8 +48,7 @@ namespace Core.Player
 
         private void SubscribeUpdate()
         {
-            IObservable<Unit> update = _hero.UpdateAsObservable();
-            update
+            _hero.UpdateAsObservable()
                 .Where(_ => _isGrappling == true)
                 .Subscribe(_ => _hero.Rope.Draw(_jointObject.transform.position))
                 .AddTo(_disposable);
@@ -59,7 +56,7 @@ namespace Core.Player
 
         private void GrappleJoint()
         {
-            if (_isGrappling == true || IsStateActive == false)
+            if (_isGrappling == true)
                 return;
 
             bool canGrapple = TryFindNearestJoint();
@@ -67,9 +64,9 @@ namespace Core.Player
                 return;
 
             EnableGrappling(true);
-            _hero.Rigidbody2D.velocity *= Vector2.right * 0.8f;
-            Vector2 jointPosition = _jointObject.transform.position;
-            _hero.SpringJoint2D.connectedAnchor = jointPosition;
+
+            _hero.Rigidbody2D.velocity = GetOnGrappledVelocity();
+            ConnectToJoint();
         }
 
         private void ReleaseJoint()
@@ -78,9 +75,10 @@ namespace Core.Player
                 return;
 
             EnableGrappling(false);
+
             Vector2 velocity = _hero.Rigidbody2D.velocity;
-            if (velocity.x > 0 && velocity.y >= 0)
-                _hero.Rigidbody2D.velocity *= _hero.Config.GrappleJumpVelocityMultiplier;
+            if (velocity.y >= 0)
+                _hero.Rigidbody2D.velocity *= _hero.Config.ReleaseVelocityMultiplier;
 
             _hero.GrappledJoint.Value = null;
         }
@@ -117,6 +115,21 @@ namespace Core.Player
             _isGrappling = value;
             
             _hero.Rope.enabled = value;
+        }
+
+        private void ConnectToJoint()
+        {
+            Vector2 jointPosition = _jointObject.transform.position;
+            _hero.SpringJoint2D.connectedAnchor = jointPosition;
+        }
+
+        private Vector2 GetOnGrappledVelocity()
+        {
+            HeroConfig config = _hero.Config;
+            Vector2 velocity = _hero.Rigidbody2D.velocity;
+            return velocity 
+                * (config.OnGrappledVelocityVector 
+                * config.OnGrappledVelocityMultiplier);
         }
     }
 

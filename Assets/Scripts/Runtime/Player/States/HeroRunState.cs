@@ -170,6 +170,7 @@ namespace Core.Player
 
         private async UniTaskVoid Dash(CancellationToken token)
         {
+            Debug.Log("Dash");
             if (Time.time < _nextDashTime || IsDashing == true)
                 return;
 
