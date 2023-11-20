@@ -21,18 +21,15 @@ namespace Core.Player
 
         private readonly CompositeDisposable _disposable = new();
         private Hero _hero;
-        private CancellationTokenSource _cts;
+        private CancellationToken _cancellationToken;
         private Transform _thisTransform;
         private Transform _heroTransform;
         private bool _displaying = false;
 
         #region MonoBehaviour
 
-        private void OnDestroy()
-        {
+        private void OnDestroy() => 
             _disposable.Clear();
-            _cts?.Cancel();
-        }
 
         #endregion
 
@@ -43,6 +40,8 @@ namespace Core.Player
             _heroTransform = _hero.transform;
 
             _canvas.worldCamera = Camera.main;
+
+            _cancellationToken = destroyCancellationToken;
             
             Subscribe();
         }
@@ -51,7 +50,7 @@ namespace Core.Player
         {
             _hero.DashedCommand
                 .Where(_ => _displaying == false)
-                .Subscribe(_ => Display().Forget())
+                .Subscribe(_ => Display(_cancellationToken).Forget())
                 .AddTo(_disposable);
 
             this.UpdateAsObservable()
@@ -60,20 +59,16 @@ namespace Core.Player
                 .AddTo(_disposable);
         }
 
-        private async UniTask Display()
+        private async UniTaskVoid Display(CancellationToken token)
         {
-            _cts = new();
-            _animatedUI.Reveal(_cts.Token).Forget();
+            _animatedUI.Reveal(token).Forget();
             _displaying = true;
 
-            await MyUniTask
-                .Delay(_config.DashDuration, _cts.Token)
-                .SuppressCancellationThrow();
+            await MyUniTask.Delay(_config.DashDuration, token);
 
-            await AnimateCooldown(_cts.Token)
-                .SuppressCancellationThrow();
+            await AnimateCooldown(token);
 
-            await _animatedUI.Conceal(_cts.Token);
+            await _animatedUI.Conceal(token);
             _displaying = false;
         }
 
@@ -87,18 +82,15 @@ namespace Core.Player
         {
             float duration = _config.DashCooldown;
 
-            bool canceled = false;
             float elapsedTime = 0f;
-            while (canceled == false && elapsedTime < duration)
+            while (elapsedTime < duration)
             {
                 float delta = elapsedTime / duration;
                 _slider.value = delta;
 
                 elapsedTime += Time.deltaTime;
 
-                canceled = await UniTask
-                    .NextFrame(token)
-                    .SuppressCancellationThrow();
+                await UniTask.NextFrame(token);
             }
         }
     }

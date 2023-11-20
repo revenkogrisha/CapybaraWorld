@@ -11,7 +11,7 @@ namespace Core.Level
 
         private readonly Color _defaultBackground;
         private readonly Camera _camera;
-        private CancellationTokenSource _cancellationTokenSource;
+        private CancellationTokenSource _cts;
 
         public BackgroundHandler()
         {
@@ -21,9 +21,8 @@ namespace Core.Level
 
         public void Dispose()
         {
-            _cancellationTokenSource?.Cancel();
-            _cancellationTokenSource?.Dispose();
-            _cancellationTokenSource = null;
+            _cts?.Cancel();
+            ClearCTS();
         }
 
         public void ChangeBackgroundColor(Location location)
@@ -40,27 +39,27 @@ namespace Core.Level
 
         private async UniTaskVoid LerpBackground(Color newBackground)
         {
-            _cancellationTokenSource = new();
-            CancellationToken token = _cancellationTokenSource.Token;
+            _cts = new();
+            CancellationToken token = _cts.Token;
 
             float elapsedTime = 0;
             Color currentBackground = _camera.backgroundColor;
 
-            bool canceled = false;
-            while (canceled == false && elapsedTime < BackgroundLerpDuration)
+            while (elapsedTime < BackgroundLerpDuration)
             {
                 float time = elapsedTime / BackgroundLerpDuration;
                 _camera.backgroundColor = Color.Lerp(currentBackground, newBackground, time);
 
                 elapsedTime += Time.deltaTime;
 
-                canceled = await UniTask
-                    .NextFrame(token)
-                    .SuppressCancellationThrow();
+                await UniTask.NextFrame(token);
             }
+        }
 
-            _cancellationTokenSource?.Dispose();
-            _cancellationTokenSource = null;
+        private void ClearCTS()
+        {
+            _cts?.Dispose();
+            _cts = null;
         }
     }
 }

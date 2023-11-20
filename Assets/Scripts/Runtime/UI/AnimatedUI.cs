@@ -1,3 +1,4 @@
+using System;
 using System.Threading;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
@@ -13,35 +14,41 @@ namespace Core.UI
         [SerializeField] private float _revealSpeed = 0.05f;
         [SerializeField] private float _concealSpeed = 0.05f;
 
-        public async UniTask Reveal()
+        public async UniTask Reveal(CancellationToken token = default)
         {
-            CancellationToken token = destroyCancellationToken;
-            _canvasGroup.alpha = 0f;
-
-            bool canceled = false;
-            while (canceled == false && _canvasGroup.alpha < 1f)
+            try
             {
-                _canvasGroup.alpha += _revealSpeed;
+                _canvasGroup.alpha = 0f;
 
-                canceled = await UniTask
-                    .NextFrame(token)
-                    .SuppressCancellationThrow();
+                while (_canvasGroup.alpha < 1f)
+                {
+                    _canvasGroup.alpha += _revealSpeed;
+
+                    await UniTask.NextFrame(token);
+                }
+            }
+            catch
+            {
+                print("Exception handled in Animated UI");
             }
         }
 
-        public async UniTask Conceal()
+        public async UniTask Conceal(CancellationToken token = default)
         {
-            CancellationToken token = destroyCancellationToken;
-            _canvasGroup.alpha = 1f;
-
-            bool canceled = false;
-            while (canceled == false && _canvasGroup.alpha > 0f)
+            try
             {
-                _canvasGroup.alpha -= _concealSpeed;
+                _canvasGroup.alpha = 1f;
 
-                canceled = await UniTask
-                    .NextFrame(token)
-                    .SuppressCancellationThrow();
+                while (_canvasGroup.alpha > 0f)
+                {
+                    _canvasGroup.alpha -= _concealSpeed;
+
+                    await UniTask.NextFrame(token);
+                }
+            }
+            catch
+            {
+                print("Exception handled in Animated UI");
             }
         }
     }

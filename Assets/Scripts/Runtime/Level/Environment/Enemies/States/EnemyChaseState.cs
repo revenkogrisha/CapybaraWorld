@@ -13,8 +13,7 @@ namespace Core.Level
 		private readonly CompositeDisposable _disposable = new();
 		private readonly Transform _thisTransform;
 		private readonly ChaseEnemy _enemy;
-		private Vector3
-		 _targetPosition;
+		private Vector3 _targetPosition;
 		private Vector2 _directionToTarget;
 
 		public EnemyChaseState(ChaseEnemy enemy)
@@ -38,10 +37,9 @@ namespace Core.Level
 		private async UniTaskVoid ChaseTarget()
 		{
 			CancellationToken token = _enemy.destroyCancellationToken;
-			bool canceled = false;
 			
 			float elapsedTime = 0f;
-			while (canceled == false)
+			while (true)
 			{
 				float distance = Vector2.Distance(_thisTransform.position, _targetPosition);
 				if (distance <= TargetMinimumDistance)
@@ -57,9 +55,7 @@ namespace Core.Level
 				rigidbody2D.velocity = velocity;
 				
 				elapsedTime += Time.deltaTime;
-				canceled = await UniTask
-					.NextFrame(token)
-					.SuppressCancellationThrow();
+				await UniTask.NextFrame(token);
 			}
 		}
 

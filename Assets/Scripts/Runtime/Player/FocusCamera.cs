@@ -21,6 +21,7 @@ namespace Core.Player
         private CompositeDisposable _disposable = new();
         private CinemachineShake _shake;
         private Transform _followObject;
+        private Transform _heroJointMiddleTransform;
         private bool _focusing = false;
         private Hero _hero;
         private Transform _jointTransform;
@@ -46,6 +47,7 @@ namespace Core.Player
         {
             _hero = hero;
             _heroTransform = _hero.transform;
+            _heroJointMiddleTransform = _heroJointMiddle.transform;
 
             _followObject = hero.transform;
             _cinemachine.Follow = _followObject;
@@ -63,7 +65,7 @@ namespace Core.Player
             _jointTransform = joint;
 
             _focusing = true;
-            _cinemachine.Follow = _heroJointMiddle.transform;
+            _cinemachine.Follow = _heroJointMiddleTransform;
 
             ChangeFov(_config.FocusFov, _config.FovChangeDuration)
                 .Forget();
@@ -118,7 +120,7 @@ namespace Core.Player
             }
             else
             {
-                _heroJointMiddle.transform.position = _heroTransform.position;
+                _heroJointMiddleTransform.position = _heroTransform.position;
             }
         }
 
@@ -128,17 +130,13 @@ namespace Core.Player
             float currentFov = CinemachineFov;
 
             float elapsedTime = 0f;
-
-            bool canceled = false;
-            while (canceled == false && elapsedTime < duration)
+            while (elapsedTime < duration)
             {
                 float delta = elapsedTime / duration;
                 CinemachineFov = Mathf.Lerp(currentFov, targetFov, delta);
                 
                 elapsedTime += Time.deltaTime;
-                canceled = await UniTask
-                    .NextFrame(token)
-                    .SuppressCancellationThrow();
+                await UniTask.NextFrame(token);
             }
         }
 
