@@ -6,8 +6,12 @@ namespace Core.Player
     public class HeroConfig : ScriptableObject
     {
         [Header("Grappling Settings")]
-        [SerializeField, Range(0f, 100f)] private float _grappleRadius = 10f;
-        [SerializeField, Min(0f)] private float _grappleJumpVelocityMultiplier = 1.5f;
+        [SerializeField, Range(0f, 20f)] private float _grappleRadius = 11f;
+        [SerializeField, Min(0f)] private float _releaseVelocityMultiplier = 1.4f;
+
+        [Space]
+        [SerializeField, Min(0f)] private float _onGrappledVelocityMultiplier = 0.7f;
+        [SerializeField] private Vector2 _onGrappledVelocityVector = new(0.2f, 1f);
 
         [Header("Run Settings")]
         [SerializeField, Range(0f, 100f)] private float _runSpeed = 15f;
@@ -30,7 +34,9 @@ namespace Core.Player
         [SerializeField] private LayerMask _jointLayer;
 
         public float GrappleRadius => _grappleRadius;
-        public float GrappleJumpVelocityMultiplier => _grappleJumpVelocityMultiplier;
+        public float ReleaseVelocityMultiplier => _releaseVelocityMultiplier;
+        public float OnGrappledVelocityMultiplier => _onGrappledVelocityMultiplier;
+        public Vector2 OnGrappledVelocityVector => _onGrappledVelocityVector;
         public float RunSpeed => _runSpeed;
         public float AccelerationTime => _accelerationTime;
         public float DashForce => _dashForce;
