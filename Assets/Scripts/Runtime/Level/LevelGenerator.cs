@@ -21,9 +21,9 @@ namespace Core.Level
         private Transform _centerTransform;
         private int _platformNumber = 0;
         private float _lastGeneratedPlatformX = 0f;
-        private int _locationNumber = 0;
+        private Location _currentLocation;
 
-        public Location CurrentLocation => _config.Locations[_locationNumber];
+        public Location CurrentLocation => _currentLocation;
         private float HeroX => _centerTransform.position.x;
         private bool IsLevelMidPointXLessHeroX => GetLevelMidPointX() < HeroX;
 
@@ -39,22 +39,21 @@ namespace Core.Level
 
             ILocationsHandler locationsHandler = this;
             _platformFactory = new PlatformFactory(locationsHandler, platfomrsParent);
-            _backgroundHandler = new();
+            _backgroundHandler = new(_config.BackgroundPrefab);
         }
 
         public void Dispose()
         {
-            _backgroundHandler.Dispose();
             _cts.Clear();
 
             _platformNumber = 0;
             _lastGeneratedPlatformX = 0f;
-            _locationNumber = 0;
 
             foreach (Platform platform in _platformsOnLevel)
                 NightPool.Despawn(platform);
                 
             _platformsOnLevel.Clear();
+            _backgroundHandler.Dispose();
         }
 
         public void InitializeCenter(Transform transform)
@@ -65,8 +64,12 @@ namespace Core.Level
 
         public void Generate()
         {
+            SetRandomLocation();
+
             SpawnStartPlatform();
             GenerateDefaultAmount();
+
+            CreateBackground();
         }
 
         public void SpawnStartPlatform()
@@ -84,6 +87,13 @@ namespace Core.Level
         {
             for (var i = 0; i < _config.PlatformsStartAmount; i++)
                 GenerateRandomPlatform();
+        }
+
+        private void CreateBackground()
+        {
+            Vector2 position = _config.BackgroundPosition;
+            BackgroundPreset preset = CurrentLocation.BackgroundPreset;
+            _backgroundHandler.CreateBackground(position, preset);
         }
 
         private async UniTask CheckPlayerPosition()
@@ -113,13 +123,11 @@ namespace Core.Level
             UpdateGenerationData(randomPlatform);
         }
 
-        private void ChangeLocation()
+        private void SetRandomLocation()
         {
-            _locationNumber++;
-                
-            int locationsLength = _config.Locations.Length;
-            if (_locationNumber >= locationsLength)
-                _locationNumber = _config.Locations.GetRandomIndex();
+            int index = _config.Locations.GetRandomIndex();
+            Location location = _config.Locations[index];
+            _currentLocation = location;
         }
 
         private Platform GenerateSimplePlatform(Vector2 position) =>
@@ -140,7 +148,6 @@ namespace Core.Level
 
         private Vector2 GetPlatformPosition() => 
             new(_lastGeneratedPlatformX, _config.PlatformsY);
-
 
         float GetLevelMidPointX()
         {

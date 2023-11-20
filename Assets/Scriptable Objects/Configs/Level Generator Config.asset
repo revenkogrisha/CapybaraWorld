@@ -13,10 +13,11 @@ MonoBehaviour:
   m_Name: Level Generator Config
   m_EditorClassIdentifier: 
   _specialPlatformSequentialNumber: 2
-  _locationChangeSequentialNumber: 10
   _platformsStartAmount: 5
   _xStartPoint: 0
   _platformsY: -2
   _startPlatform: {fileID: 8222899738712285114, guid: 256a30b11d259466ab5d58c3d3fc1534, type: 3}
   _locations:
   - {fileID: 11400000, guid: 390591acfff2e4571beeff1d3f3e41ef, type: 2}
+  _backgroundPrefab: {fileID: 1260117884632274307, guid: aa3b4763dc96a4681a5fde6896e4dbc9, type: 3}
+  _backgroundPosition: {x: 0, y: 2.5}

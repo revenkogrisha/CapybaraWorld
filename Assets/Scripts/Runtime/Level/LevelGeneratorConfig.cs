@@ -17,11 +17,17 @@ namespace Core.Level
         [SerializeField] private SimplePlatform _startPlatform;
         [SerializeField] private Location[] _locations;
 
+        [Header("Background")]
+        [SerializeField] private Background _backgroundPrefab;
+        [SerializeField] private Vector2 _backgroundPosition = new(0f, 2.5f);
+
         public int SpecialPlatformSequentialNumber => _specialPlatformSequentialNumber;
         public int PlatformsStartAmount => _platformsStartAmount;
         public float XtartPoint => _xStartPoint;
         public float PlatformsY => _platformsY;
         public SimplePlatform StartPlatform => _startPlatform;
         public Location[] Locations => _locations;
+        public Background BackgroundPrefab => _backgroundPrefab;
+        public Vector2 BackgroundPosition => _backgroundPosition;
     }
 }

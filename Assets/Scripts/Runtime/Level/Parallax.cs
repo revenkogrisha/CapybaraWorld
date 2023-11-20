@@ -8,7 +8,6 @@ namespace Core.Level
     public class Parallax : MonoBehaviour
     {
         [Header("Components")]
-        [SerializeField] private Transform _camera;
         [SerializeField] private SpriteRenderer _spriteRenderer;
 
         [Header("Settings")]
@@ -21,6 +20,7 @@ namespace Core.Level
 
         private readonly CompositeDisposable _disposable = new();
         private float _length;
+        private Transform _camera;
         private Transform _thisTransform;
         private Vector2 _startPosition;
         private float _temp;
@@ -30,6 +30,7 @@ namespace Core.Level
         private void Awake()
         {
             _thisTransform = transform;
+            _camera = Camera.main.transform;
             _startPosition = _thisTransform.position;
             _length = _spriteRenderer.bounds.size.x;
         }
