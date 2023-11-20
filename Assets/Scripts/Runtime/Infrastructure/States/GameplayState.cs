@@ -65,7 +65,7 @@ namespace Core.Infrastructure
 
             _levelGenerator.InitializeCenter(heroTransform);
 
-            DisplayScore();
+            CreateUI(hero);
         }
 
         public override void Exit()
@@ -112,9 +112,6 @@ namespace Core.Infrastructure
             _disposables.Add(playerDeadline);
         }
 
-        private void InitializeGameOverHandler(IDieable hero) =>
-            _gameOverHandler.SubscribeHeroDeath(hero);
-
         private void InitializeScoreCounter(Transform heroTransform)
         {
             IScoreCounter scoreCounter = new DistanceScoreCounter(heroTransform, _score);
@@ -122,10 +119,26 @@ namespace Core.Infrastructure
             _disposables.Add(scoreCounter);
         }
 
+        private void InitializeGameOverHandler(IDieable hero) =>
+            _gameOverHandler.SubscribeHeroDeath(hero);
+
+        private void CreateUI(Hero hero)
+        {
+            DisplayScore();
+            CreateDashRecoveryDisplay(hero);
+        }
+
         private void DisplayScore()
         {
             ScoreDisplay scoreDisplay = _uiProvider.CreateScoreDisplay();
             _destroyables.Add(scoreDisplay.gameObject);
+        }
+
+        private void CreateDashRecoveryDisplay(Hero hero)
+        {
+            DashRecoveryDisplay display = _uiProvider.CreateDashRecoveryDisplay();
+            display.Initialize(hero);
+            _destroyables.Add(display.gameObject);
         }
     }
 }

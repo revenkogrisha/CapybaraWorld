@@ -1,3 +1,4 @@
+using Core.Player;
 using UnityEngine;
 
 namespace Core.UI
@@ -12,11 +13,13 @@ namespace Core.UI
 
         [Header("Common")]
         [SerializeField] private ScoreDisplay _scorePrefab;
+        [SerializeField] private DashRecoveryDisplay _dashRecoveryDisplay;
 
         public MainMenu MainMenuPrefab => _mainMenuPrefab;
         public GameOverMenu GameOverMenuPrefab => _gameOverMenuPrefab;
         public LoadingScreen LoadingScreenCanvasPrefab => _loadingScreenCanvasPrefab;
 
         public ScoreDisplay ScorePrefab => _scorePrefab;
+        public DashRecoveryDisplay DashRecoveryDisplay => _dashRecoveryDisplay;
     }
 }

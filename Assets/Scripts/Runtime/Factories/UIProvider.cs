@@ -1,3 +1,4 @@
+using Core.Player;
 using Core.UI;
 using Zenject;
 
@@ -54,6 +55,15 @@ namespace Core.Factories
                     _root.RectTransform);
 
             return scoreText;
+        }
+
+        public DashRecoveryDisplay CreateDashRecoveryDisplay()
+        {
+            DashRecoveryDisplay display = _diContainer
+                .InstantiatePrefabForComponent<DashRecoveryDisplay>(
+                    _collection.DashRecoveryDisplay);
+
+            return display;
         }
     }
 }
