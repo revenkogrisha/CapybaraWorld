@@ -2,6 +2,7 @@ using System;
 using System.Threading;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
+using Core.Other;
 
 namespace Core.Level
 {
@@ -19,11 +20,8 @@ namespace Core.Level
             _defaultBackground = _camera.backgroundColor;
         }
 
-        public void Dispose()
-        {
-            _cts?.Cancel();
-            ClearCTS();
-        }
+        public void Dispose() =>
+            _cts.Clear();
 
         public void ChangeBackgroundColor(Location location)
         {
@@ -54,12 +52,6 @@ namespace Core.Level
 
                 await UniTask.NextFrame(token);
             }
-        }
-
-        private void ClearCTS()
-        {
-            _cts?.Dispose();
-            _cts = null;
         }
     }
 }

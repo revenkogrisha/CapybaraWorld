@@ -19,11 +19,8 @@ namespace Core.Common
             Reset();
         }
 
-        public void Dispose()
-        {
-            _cts?.Cancel();
-            ClearCTS();
-        }
+        public void Dispose() => 
+            _cts.Clear();
 
         public async UniTaskVoid Shake(float intensity, float duration)
         {
@@ -39,17 +36,11 @@ namespace Core.Common
             }
             catch
             {
-                ClearCTS();
+                _cts.Clear();
             }
         }
 
         private void Reset() =>
             _perlinNoise.m_AmplitudeGain = 0f;
-
-        private void ClearCTS()
-        {
-            _cts?.Dispose();
-            _cts = null;
-        }
     }
 }

@@ -27,11 +27,8 @@ namespace Core.Level
 			StartLookingForTarget().Forget();
 		}
 
-		public override void Exit()
-		{
-			_cts?.Cancel();
-			ClearCTS();
-		}
+		public override void Exit() =>
+			_cts.Clear();
 		
 		private void StopMoving()
 		{
@@ -68,7 +65,7 @@ namespace Core.Level
 			}
 			catch
 			{  
-				ClearCTS();
+				_cts.Clear();
 			}
 		}
 
@@ -77,12 +74,6 @@ namespace Core.Level
 			_direction = _direction == LookingDirection.Left
 				? LookingDirection.Right
 				: LookingDirection.Left;
-		}
-
-		private void ClearCTS()
-		{
-			_cts?.Dispose();
-			_cts = null;
 		}
 	}
 }

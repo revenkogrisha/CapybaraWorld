@@ -26,11 +26,8 @@ namespace Core.Game
         public void StartCount() =>
             Count().Forget();
 
-        public void StopCount()
-        {
-            _cts?.Cancel();
-            ClearCTS();
-        }
+        public void StopCount() => 
+            _cts.Clear();
 
         private async UniTaskVoid Count()
         {
@@ -52,12 +49,6 @@ namespace Core.Game
 
                 await MyUniTask.Delay(UpdateFrequency, token);
             }
-        }
-
-        private void ClearCTS()
-        {
-            _cts?.Dispose();
-            _cts = null;
         }
     }
 }
