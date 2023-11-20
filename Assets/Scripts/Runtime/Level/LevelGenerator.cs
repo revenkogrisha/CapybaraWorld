@@ -25,26 +25,11 @@ namespace Core.Level
 
         public Location CurrentLocation => _config.Locations[_locationNumber];
         private float HeroX => _centerTransform.position.x;
+        private bool IsLevelMidPointXLessHeroX => GetLevelMidPointX() < HeroX;
 
         private bool IsNowSpecialPlatformTurn => 
             _platformNumber % _config.SpecialPlatformSequentialNumber == 0 && _platformNumber > 0;
 
-        private bool IsLevelMidPointXLessHeroX
-        {
-            get
-            {
-                float midPointX = GetLevelMidPointX();
-                return midPointX < HeroX;
-
-                float GetLevelMidPointX()
-                {
-                    Platform oldestPlatform = _platformsOnLevel.Peek();
-                    float oldestPlatformX = oldestPlatform.transform.position.x;
-                    return (_lastGeneratedPlatformX + oldestPlatformX) / 2f;
-                }
-            }
-        }
-        
         public LevelGenerator(LevelGeneratorConfig config, Transform platfomrsParent)
         {
             _config = config;
@@ -60,10 +45,7 @@ namespace Core.Level
         public void Dispose()
         {
             _backgroundHandler.Dispose();
-
-            _cts?.Cancel();
-            _cts?.Dispose();
-            _cts = null;
+            _cts.Clear();
 
             _platformNumber = 0;
             _lastGeneratedPlatformX = 0f;
@@ -158,5 +140,13 @@ namespace Core.Level
 
         private Vector2 GetPlatformPosition() => 
             new(_lastGeneratedPlatformX, _config.PlatformsY);
+
+
+        float GetLevelMidPointX()
+        {
+            Platform oldestPlatform = _platformsOnLevel.Peek();
+            float oldestPlatformX = oldestPlatform.transform.position.x;
+            return (_lastGeneratedPlatformX + oldestPlatformX) / 2f;
+        }
     }
 }
