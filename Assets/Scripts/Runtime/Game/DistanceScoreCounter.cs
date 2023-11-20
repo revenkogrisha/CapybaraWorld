@@ -12,7 +12,7 @@ namespace Core.Game
 
         private readonly Transform _targetTransfrom;
         private readonly Score _score;
-        private CancellationTokenSource _cancellationSource;
+        private CancellationTokenSource _cts;
 
         public DistanceScoreCounter(Transform target, Score score)
         {
@@ -26,16 +26,18 @@ namespace Core.Game
         public void StartCount() =>
             Count().Forget();
 
-        public void StopCount() => 
-            _cancellationSource?.Cancel();
+        public void StopCount()
+        {
+            _cts?.Cancel();
+            ClearCTS();
+        }
 
         private async UniTaskVoid Count()
         {
-            _cancellationSource = new();
-            CancellationToken token = _cancellationSource.Token;
+            _cts = new();
+            CancellationToken token = _cts.Token;
 
-            bool canceled = false;
-            while (canceled == false)
+            while (true)
             {
                 float targetX = _targetTransfrom.position.x;
                 int playthroughDistance = Mathf.RoundToInt(targetX * ValueMultiplier);
@@ -48,13 +50,14 @@ namespace Core.Game
                 if (isHighestScore == true)
                     _score.CaptureHighestScore();
 
-                canceled = await MyUniTask
-                    .Delay(UpdateFrequency, token)
-                    .SuppressCancellationThrow();
+                await MyUniTask.Delay(UpdateFrequency, token);
             }
+        }
 
-            _cancellationSource?.Dispose();
-            _cancellationSource = null;
+        private void ClearCTS()
+        {
+            _cts?.Dispose();
+            _cts = null;
         }
     }
 }

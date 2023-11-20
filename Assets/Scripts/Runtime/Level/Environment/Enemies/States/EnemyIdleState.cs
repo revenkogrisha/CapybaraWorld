@@ -1,3 +1,4 @@
+using System;
 using System.Threading;
 using Core.Common;
 using Core.Infrastructure;
@@ -12,7 +13,7 @@ namespace Core.Level
 		private readonly Transform _thisTransform;
 		private readonly ChaseEnemy _enemy;
 		private LookingDirection _direction;
-		private CancellationTokenSource _cancellationSource;
+		private CancellationTokenSource _cts;
 
 		public EnemyIdleState(ChaseEnemy enemy)
 		{
@@ -28,9 +29,8 @@ namespace Core.Level
 
 		public override void Exit()
 		{
-			_cancellationSource?.Cancel();
-			_cancellationSource?.Dispose();
-			_cancellationSource = null;
+			_cts?.Cancel();
+			ClearCTS();
 		}
 		
 		private void StopMoving()
@@ -41,34 +41,35 @@ namespace Core.Level
 
 		private async UniTaskVoid StartLookingForTarget()
 		{
-			_cancellationSource = new();
-			CancellationToken token = _cancellationSource.Token;
+			_cts = new();
+			CancellationToken token = _cts.Token;
 
-			bool canceled = false;
-			while (canceled == false)
+			try
 			{
-				Vector2 origin = _thisTransform.position;
-				float spotRadius = _enemy.Config.SpotRadius;
-				LayerMask targetLayer = _enemy.Config.TargetLayer;
-				Vector2 direction = Vector2.left * (float)_direction;
-
-				RaycastHit2D hit = Physics2D.Raycast(origin, direction, spotRadius, targetLayer);
-				if (hit == true)
+				while (true)
 				{
-					Vector2 targetPosition = hit.transform.position;
-					FiniteStateMachine.ChangeState<EnemyChaseState, Vector2>(targetPosition);
-					break;
+					Vector2 origin = _thisTransform.position;
+					float spotRadius = _enemy.Config.SpotRadius;
+					LayerMask targetLayer = _enemy.Config.TargetLayer;
+					Vector2 direction = Vector2.left * (float)_direction;
+
+					RaycastHit2D hit = Physics2D.Raycast(origin, direction, spotRadius, targetLayer);
+					if (hit == true)
+					{
+						Vector2 targetPosition = hit.transform.position;
+						FiniteStateMachine.ChangeState<EnemyChaseState, Vector2>(targetPosition);
+						break;
+					}
+
+					ChangeDirection();
+
+					await MyUniTask.Delay(_enemy.Config.SpotInterval, token);
 				}
-
-				ChangeDirection();
-
-				canceled = await MyUniTask
-					.Delay(_enemy.Config.SpotInterval, token)
-					.SuppressCancellationThrow();
 			}
-
-			_cancellationSource?.Dispose();
-			_cancellationSource = null;
+			catch
+			{  
+				ClearCTS();
+			}
 		}
 
 		private void ChangeDirection()
@@ -76,6 +77,12 @@ namespace Core.Level
 			_direction = _direction == LookingDirection.Left
 				? LookingDirection.Right
 				: LookingDirection.Left;
+		}
+
+		private void ClearCTS()
+		{
+			_cts?.Dispose();
+			_cts = null;
 		}
 	}
 }

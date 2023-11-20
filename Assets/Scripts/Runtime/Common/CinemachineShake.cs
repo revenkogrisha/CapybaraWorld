@@ -9,7 +9,7 @@ namespace Core.Common
     public class CinemachineShake : IDisposable
     {
         private readonly CinemachineBasicMultiChannelPerlin _perlinNoise;
-        private CancellationTokenSource _cancellationSource;
+        private CancellationTokenSource _cts;
 
         public CinemachineShake(CinemachineVirtualCamera cinemachine)
         {
@@ -21,31 +21,35 @@ namespace Core.Common
 
         public void Dispose()
         {
-            _cancellationSource?.Cancel();
-            _cancellationSource?.Dispose();
-            _cancellationSource = null;
+            _cts?.Cancel();
+            ClearCTS();
         }
 
         public async UniTaskVoid Shake(float intensity, float duration)
         {
-            _cancellationSource = new();
-            CancellationToken token = _cancellationSource.Token;
-
-            _perlinNoise.m_AmplitudeGain = intensity;
+            _cts = new();
+            CancellationToken token = _cts.Token;
 
             try
             {
+                _perlinNoise.m_AmplitudeGain = intensity;
+
                 await MyUniTask.Delay(duration, token);
                 Reset();
             }
-            finally
+            catch
             {
-                _cancellationSource?.Dispose();
-                _cancellationSource = null;
+                ClearCTS();
             }
         }
 
         private void Reset() =>
             _perlinNoise.m_AmplitudeGain = 0f;
+
+        private void ClearCTS()
+        {
+            _cts?.Dispose();
+            _cts = null;
+        }
     }
 }

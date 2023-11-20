@@ -108,8 +108,8 @@ namespace Core.Player
 
         private void OnJointGrappled(Transform joint)
         {
-            StartRotatingBody(joint);
-            StartRotatingHand(joint);
+            StartRotatingBody(joint).Forget();
+            StartRotatingHand(joint).Forget();
         }
 
         private void OnJointReleased()
@@ -126,26 +126,23 @@ namespace Core.Player
                 StartGrappling();
         }
 
-        private async void StartRotatingBody(Transform targetJoint)
+        private async UniTaskVoid StartRotatingBody(Transform targetJoint)
         {
             CancellationToken token = destroyCancellationToken;
             _shouldRotateBody = true;
 
-            bool canceled = false;
-            while (canceled == false && _shouldRotateBody == true)
+            while (_shouldRotateBody == true)
             {
                 _thisTransform.rotation = LerpRotate(
                     _thisTransform,
                     targetJoint,
                     _config.BodyRotationSpeed);
 
-                canceled = await UniTask
-                    .NextFrame(token)
-                    .SuppressCancellationThrow();
+                await UniTask.NextFrame(token);
             }
         }
 
-        private async void StartRotatingHand(Transform targetJoint)
+        private async UniTaskVoid StartRotatingHand(Transform targetJoint)
         {
             _animator.SetBool(_freeFallingHash, false);
             _animator.enabled = false;
@@ -153,17 +150,14 @@ namespace Core.Player
             CancellationToken token = destroyCancellationToken;
             _shouldRotateHand = true;
 
-            bool canceled = false;
-            while (canceled == false && _shouldRotateHand == true)
+            while (_shouldRotateHand == true)
             {
                 _armWithHook.rotation = LerpRotate(
                     _armWithHook,
                     targetJoint,
                     _config.HandRotationSpeed);
 
-                canceled = await UniTask
-                    .NextFrame(token)
-                    .SuppressCancellationThrow();
+                await UniTask.NextFrame(token);
             }
         }
 

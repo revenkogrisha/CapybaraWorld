@@ -12,7 +12,7 @@ namespace Core.Level
         private float _updateIntervalInSeconds = 1f;
         private Transform _transformToFollow;
         private Transform _thisTransform;
-        private CancellationTokenSource _cancellationTokenSource;
+        private CancellationTokenSource _cts;
 
         public bool IgnoreXMovement { get; set; }
         public bool IgnoreYMovement { get; set; }
@@ -47,9 +47,8 @@ namespace Core.Level
         {
             Object.Destroy(_thisTransform.gameObject);
             
-            _cancellationTokenSource?.Cancel();
-            _cancellationTokenSource?.Dispose();
-            _cancellationTokenSource = null;
+            _cts?.Cancel();
+            ClearCTS();
         }
 
         public void BeginFollowing(Transform toFollow)
@@ -60,22 +59,16 @@ namespace Core.Level
 
         private async UniTask Follow()
         {
-            _cancellationTokenSource = new();
-            CancellationToken token = _cancellationTokenSource.Token;
+            _cts = new();
+            CancellationToken token = _cts.Token;
 
-            bool canceled = false;
-            while (canceled == false)
+            while (true)
             {
                 Vector3 movedPosition = GetMovedPosition();
                 _thisTransform.position = movedPosition;
 
-                canceled = await MyUniTask
-                    .Delay(_updateIntervalInSeconds, token)
-                    .SuppressCancellationThrow();
+                await MyUniTask.Delay(_updateIntervalInSeconds, token);
             }
-
-            _cancellationTokenSource?.Dispose();
-            _cancellationTokenSource = null;
         }
 
         private Vector3 GetMovedPosition()
@@ -104,6 +97,12 @@ namespace Core.Level
             movedPosition.y = toFollowPosition.y;
 
             return movedPosition;
+        }
+
+        private void ClearCTS()
+        {
+            _cts?.Dispose();
+            _cts = null;
         }
     }
 }

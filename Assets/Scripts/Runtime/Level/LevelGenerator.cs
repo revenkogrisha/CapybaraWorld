@@ -17,7 +17,7 @@ namespace Core.Level
         private readonly LevelGeneratorConfig _config;
         private readonly IPlatformFactory<Platform> _platformFactory;
         private readonly BackgroundHandler _backgroundHandler;
-        private CancellationTokenSource _cancellationTokenSource;
+        private CancellationTokenSource _cts;
         private Transform _centerTransform;
         private int _platformNumber = 0;
         private float _lastGeneratedPlatformX = 0f;
@@ -64,9 +64,9 @@ namespace Core.Level
         {
             _backgroundHandler.Dispose();
 
-            _cancellationTokenSource?.Cancel();
-            _cancellationTokenSource?.Dispose();
-            _cancellationTokenSource = null;
+            _cts?.Cancel();
+            _cts?.Dispose();
+            _cts = null;
 
             _platformNumber = 0;
             _lastGeneratedPlatformX = 0f;
@@ -109,11 +109,10 @@ namespace Core.Level
 
         private async UniTask CheckPlayerPosition()
         {
-            _cancellationTokenSource = new();
-            CancellationToken token = _cancellationTokenSource.Token;
+            _cts = new();
+            CancellationToken token = _cts.Token;
             
-            bool canceled = false;
-            while (canceled == false)
+            while (true)
             {
                 if (IsLevelMidPointXLessHeroX == true) 
                 {
@@ -121,13 +120,8 @@ namespace Core.Level
                     GenerateRandomPlatform();
                 }
 
-                canceled = await MyUniTask
-                    .Delay(HeroPositionCheckFrequency, token)
-                    .SuppressCancellationThrow();
+                await MyUniTask.Delay(HeroPositionCheckFrequency, token);
             }
-
-            _cancellationTokenSource?.Dispose();
-            _cancellationTokenSource = null;
         }
 
         private void GenerateRandomPlatform()

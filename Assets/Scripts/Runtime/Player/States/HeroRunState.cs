@@ -70,11 +70,11 @@ namespace Core.Player
                 .AddTo(_disposable);
 
             _inputHandler.StopCommand
-                .Subscribe(_ => ReduceAcceleration().Forget())
+                .Subscribe(_ => ReduceAcceleration(_cancellationToken).Forget())
                 .AddTo(_disposable);
 
             _inputHandler.DashCommand
-                .Subscribe(_ => Dash().Forget())
+                .Subscribe(_ => Dash(_cancellationToken).Forget())
                 .AddTo(_disposable);
 
             _inputHandler.JumpCommand
@@ -83,7 +83,7 @@ namespace Core.Player
 
             _inputHandler.DownCommand
                 .Where(_ => _currentPlatform != null)
-                .Subscribe(_ => DescendFromPlaftorm().Forget())
+                .Subscribe(_ => DescendFromPlaftorm(_cancellationToken).Forget())
                 .AddTo(_disposable);
         }
 
@@ -111,16 +111,16 @@ namespace Core.Player
         private void AccelerateRight()
         {
             _direction = LookingDirection.Right;
-            RaiseAcceleration().Forget();
+            RaiseAcceleration(_cancellationToken).Forget();
         }
 
         private void AccelerateLeft()
         {
             _direction = LookingDirection.Left;
-            RaiseAcceleration().Forget();
+            RaiseAcceleration(_cancellationToken).Forget();
         }
 
-        private async UniTaskVoid RaiseAcceleration()
+        private async UniTaskVoid RaiseAcceleration(CancellationToken token)
         {
             float accelerationTime = _hero.Config.AccelerationTime;
             float maximum = (float)_direction;
@@ -128,20 +128,17 @@ namespace Core.Player
             _hero.IsRunning.Value = true;
 
             float elapsedTime = 0;
-            bool canceled = false;
-            while (canceled == false && elapsedTime < accelerationTime)
+            while (elapsedTime < accelerationTime)
             {
                 float delta = elapsedTime / accelerationTime;
                 _acceleration = Mathf.Lerp(0f, maximum, delta);
                 elapsedTime += Time.deltaTime;
 
-                canceled = await UniTask
-                    .NextFrame(_cancellationToken)
-                    .SuppressCancellationThrow();
+                await UniTask.NextFrame(token);
             }
         }
 
-        private async UniTaskVoid ReduceAcceleration()
+        private async UniTaskVoid ReduceAcceleration(CancellationToken token)
         {
             float accelerationTime = _hero.Config.AccelerationTime;
 
@@ -149,16 +146,13 @@ namespace Core.Player
             float original = _acceleration;
 
             float elapsedTime = 0;
-            bool canceled = false;
-            while (canceled == false && elapsedTime < accelerationTime)
+            while (elapsedTime < accelerationTime)
             {
                 float delta = elapsedTime / accelerationTime;
                 _acceleration = Mathf.Lerp(original, 0f, delta);
                 elapsedTime += Time.deltaTime;
 
-                canceled = await UniTask
-                    .NextFrame(_cancellationToken)
-                    .SuppressCancellationThrow();
+                await UniTask.NextFrame(token);
             }
         }
 
@@ -174,7 +168,7 @@ namespace Core.Player
             _hero.Rigidbody2D.velocity = runVelocity;
         }
 
-        private async UniTaskVoid Dash()
+        private async UniTaskVoid Dash(CancellationToken token)
         {
             if (Time.time < _nextDashTime || IsDashing == true)
                 return;
@@ -191,9 +185,7 @@ namespace Core.Player
             rigidbody2D.gravityScale = 0f;
             IsDashing = true;
             
-            await MyUniTask
-                .Delay(config.DashDuration, _cancellationToken)
-                .SuppressCancellationThrow();
+            await MyUniTask.Delay(config.DashDuration, token);
 
             rigidbody2D.gravityScale = initialGravityScale;
             IsDashing = false;
@@ -214,8 +206,7 @@ namespace Core.Player
             IsJumping = true;
 
             float elapsedTime = 0f;
-            bool canceled = false;
-            while (canceled == false && elapsedTime < duration)
+            while (elapsedTime < duration)
             {
                 float delta = elapsedTime / duration;
                 float progress = config.JumpProgression.Evaluate(delta);
@@ -226,29 +217,22 @@ namespace Core.Player
                 rigidbody2D.velocity = velocity;
                 elapsedTime += Time.deltaTime;
                 
-                canceled = await UniTask
-                    .NextFrame(token)
-                    .SuppressCancellationThrow();
+                await UniTask.NextFrame(token);
             }
 
-            await UniTask
-                .WaitUntil(() => Mathf.Approximately(rigidbody2D.velocity.y, 0f))
-                .SuppressCancellationThrow();
+            await UniTask.WaitUntil(
+                () => Mathf.Approximately(rigidbody2D.velocity.y, 0f) == true,
+                cancellationToken: token);
 
             IsJumping = false;
         }
 
-        private async UniTaskVoid DescendFromPlaftorm()
+        private async UniTaskVoid DescendFromPlaftorm(CancellationToken token)
         {
             Collider2D platformCollider = _currentPlatform.GetComponent<Collider2D>();
             Physics2D.IgnoreCollision(_hero.Collider2D, platformCollider, true);
 
-            bool canceled = await MyUniTask
-                .Delay(_hero.Config.DescendDuration, _cancellationToken)
-                .SuppressCancellationThrow();
-
-            if (canceled == true)
-                return;
+            await MyUniTask.Delay(_hero.Config.DescendDuration, token);
 
             Physics2D.IgnoreCollision(_hero.Collider2D, platformCollider, false);
             _currentPlatform = null;
