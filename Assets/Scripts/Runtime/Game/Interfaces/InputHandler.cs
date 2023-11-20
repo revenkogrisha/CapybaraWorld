@@ -24,7 +24,6 @@ namespace Core.Game.Input
         public ReactiveCommand DownCommand => _downCommand;
 
         public abstract void Initialize();
-
         public abstract void Dispose();
     }
 }
