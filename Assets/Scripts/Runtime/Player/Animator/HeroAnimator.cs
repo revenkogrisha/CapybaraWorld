@@ -25,13 +25,6 @@ namespace Core.Player
         [Header("Legs")]
         [SerializeField] private Transform[] _legs;
 
-        private readonly int _freeFallingHash = Animator.StringToHash("FreeFalling");
-        private readonly int _landedHash = Animator.StringToHash("Landed");
-        private readonly int _grapplingHash = Animator.StringToHash("Grappling");
-        private readonly int _runningHash = Animator.StringToHash("Running");
-        public readonly int _dashedHash = Animator.StringToHash("Dashed");
-        public readonly int _jumpingHash = Animator.StringToHash("Jumping");
-
         private CompositeDisposable _disposable = new();
         private Transform _thisTransform;
         private bool _shouldRotateHand;
@@ -144,7 +137,7 @@ namespace Core.Player
 
         private async UniTaskVoid StartRotatingHand(Transform targetJoint)
         {
-            _animator.SetBool(_freeFallingHash, false);
+            _animator.SetBool(HeroAnimatorConfig.FreeFallingHash, false);
             _animator.enabled = false;
 
             CancellationToken token = destroyCancellationToken;
@@ -180,7 +173,7 @@ namespace Core.Player
             LerpArmToDefault();
 
             _animator.enabled = true;
-            _animator.SetBool(_freeFallingHash, true);
+            _animator.SetBool(HeroAnimatorConfig.FreeFallingHash, true);
         }
 
         private void StopRotatingBody()
@@ -214,26 +207,26 @@ namespace Core.Player
         {
             _animator.enabled = true;
             _sword.SetActive(true);
-            _animator.SetTrigger(_landedHash);
-            _animator.SetBool(_grapplingHash, false);
+            _animator.SetTrigger(HeroAnimatorConfig.LandedHash);
+            _animator.SetBool(HeroAnimatorConfig.GrapplingHash, false);
         }
 
         private void StartGrappling()
         {
             _sword.SetActive(false);
-            _animator.SetBool(_grapplingHash, true);
+            _animator.SetBool(HeroAnimatorConfig.GrapplingHash, true);
         }
 
         private void SetRunning(bool value)
         {
             _animator.enabled = true;
-            _animator.SetBool(_runningHash, value);
+            _animator.SetBool(HeroAnimatorConfig.RunningHash, value);
         }
 
         private void SetJumping(bool value) => 
-            _animator.SetBool(_jumpingHash, value);
+            _animator.SetBool(HeroAnimatorConfig.JumpingHash, value);
 
         private void PerformDash() =>
-            _animator.SetTrigger(_dashedHash);
+            _animator.SetTrigger(HeroAnimatorConfig.DashedHash);
     }
 }

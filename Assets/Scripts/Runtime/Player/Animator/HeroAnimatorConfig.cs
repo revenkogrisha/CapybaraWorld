@@ -5,6 +5,13 @@ namespace Core.Player
     [CreateAssetMenu(fileName = "Hero Animator Config", menuName = "Configs/Hero Animator Config")]
     public class HeroAnimatorConfig : ScriptableObject
     {
+        public static readonly int FreeFallingHash = Animator.StringToHash("FreeFalling");
+        public static readonly int LandedHash = Animator.StringToHash("Landed");
+        public static readonly int GrapplingHash = Animator.StringToHash("Grappling");
+        public static readonly int RunningHash = Animator.StringToHash("Running");
+        public static readonly int DashedHash = Animator.StringToHash("Dashed");
+        public static readonly int JumpingHash = Animator.StringToHash("Jumping");
+
         [Header("Body")]
         [SerializeField] private float _bodyRotationSpeed = 2f;
         
