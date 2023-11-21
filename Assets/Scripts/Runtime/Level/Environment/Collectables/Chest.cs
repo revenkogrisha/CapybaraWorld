@@ -10,7 +10,7 @@ namespace Core.Level
         private const float DespawnDelay = 3f;
         
         [SerializeField] private ChestPreset _preset;
-        [SerializeField] private ParticleSystem _particles;
+        [SerializeField] private ParticleSystem[] _particles;
         
         private CoinFactory _coinFactory;
         private bool _canOpen = true;
@@ -28,7 +28,9 @@ namespace Core.Level
 
             _canOpen = false;
 
-            _particles.Stop();
+            foreach (ParticleSystem system in _particles)
+                system.Stop();
+                
             transform.DOScale(Vector2.zero, _preset.FadeDuration);
 
             Invoke(nameof(Despawn), DespawnDelay);

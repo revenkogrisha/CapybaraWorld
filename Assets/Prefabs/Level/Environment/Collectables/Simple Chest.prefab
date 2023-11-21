@@ -4945,7 +4945,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _preset: {fileID: 11400000, guid: 88e3064858486472492dfcecff445535, type: 2}
-  _particles: {fileID: 2738198674754233338}
+  _particles:
+  - {fileID: 2738198674754233338}
 --- !u!1 &5359234169107392605
 GameObject:
   m_ObjectHideFlags: 0
