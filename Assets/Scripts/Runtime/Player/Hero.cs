@@ -131,6 +131,11 @@ namespace Core.Player
 					Tools.InvokeIfNotNull<Chest>(collider, chest => chest.Open()))
 				.AddTo(_disposable);
 
+			onTriggerEnter2D
+				.Subscribe(collider => 
+					Tools.InvokeIfNotNull<Food>(collider, EatFood))
+				.AddTo(_disposable);
+
 			IObservable<Collision2D> onCollisionEnter2D = this.OnCollisionEnter2DAsObservable();
 			onCollisionEnter2D
 				.Where(_ => ShouldSwitchToRunning == true)
@@ -141,17 +146,18 @@ namespace Core.Player
 			onCollisionEnter2D
 				.Where(_ => IsDashing.Value == true)
 				.Subscribe(collision => 
-					Tools.InvokeIfNotNull<Enemy>(collision, enemy => OnEnemyCollision(enemy)))
+					Tools.InvokeIfNotNull<Enemy>(collision, OnEnemyCollision))
 				.AddTo(_disposable);
 
 			onCollisionEnter2D
 				.Where(_ => IsDashing.Value == false)
-				.Subscribe(collision => Tools.InvokeIfNotNull<Enemy>(collision, PerformDeath))
+				.Subscribe(collision => 
+					Tools.InvokeIfNotNull<Enemy>(collision, PerformDeath))
 				.AddTo(_disposable);
 
 			onCollisionEnter2D
 				.Subscribe(collision => 
-					Tools.InvokeIfNotNull<Coin>(collision, coin => coin.GetCollected()))
+					Tools.InvokeIfNotNull<Coin>(collision, CollectCoin))
 				.AddTo(_disposable);
 		}
 
@@ -177,6 +183,16 @@ namespace Core.Player
 		{
 			enemy.PerformDeath();
 			HitCommand.Execute();
+		}
+
+		private void CollectCoin(Coin coin)
+		{
+			coin.GetCollected();
+		}
+
+		private void EatFood(Food food)
+		{
+			food.GetEatten();
 		}
 	}
 }
