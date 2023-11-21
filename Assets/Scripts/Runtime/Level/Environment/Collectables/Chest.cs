@@ -1,4 +1,5 @@
 using Core.Factories;
+using Core.Other;
 using DG.Tweening;
 using UnityEngine;
 
@@ -6,18 +7,31 @@ namespace Core.Level
 {
     public class Chest : MonoBehaviour
     {
-        private CoinFactory _coinFactory;
+        private const float DespawnDelay = 3f;
+        
         [SerializeField] private ChestPreset _preset;
+        [SerializeField] private ParticleSystem _particles;
+        
+        private CoinFactory _coinFactory;
+        private bool _canOpen = true;
 
         private void Awake() => 
             _coinFactory = new(_preset.CoinPrefab, transform.parent, transform.position);
 
         public void Open()
         {
+            if (_canOpen == false)
+                return;
+
             for (int i = 0; i < _preset.CoinsInside; i++)
                 PushOutCoin();
 
-            transform.DOScale(Vector2.zero, 0.3f);
+            _canOpen = false;
+
+            _particles.Stop();
+            transform.DOScale(Vector2.zero, _preset.FadeDuration);
+
+            Invoke(nameof(Despawn), DespawnDelay);
         }
 
         private void PushOutCoin()
@@ -33,12 +47,16 @@ namespace Core.Level
 
         private Vector2 GetPushVector()
         {
-            float randomX = Random.Range(-1f, 1f);
-            float randomY = Random.Range(0f, 1f);
+            VectorRange pushRange = _preset.PushRange;
+            float randomX = Random.Range(pushRange.Minimum.x, pushRange.Maximum.x);
+            float randomY = Random.Range(pushRange.Minimum.y, pushRange.Maximum.y);
             return new(randomX, randomY);
         }
 
         private float GetPushForce() => 
             Random.Range(_preset.MinimumPushForce, _preset.MaximumPushForce);
+
+        private void Despawn() =>
+            gameObject.SelfDespawn();
     }
 }

@@ -6,13 +6,16 @@ namespace Core.Other
     [Serializable]
     public class VectorRange
     {
-        public Vector2 Minimum { get; set; }
-        public Vector2 Maximum { get; set; }
+        [SerializeField] private Vector2 _minimum;
+        [SerializeField] private Vector2 _maximum;
+
+        public Vector2 Minimum => _minimum;
+        public Vector2 Maximum => _maximum;
 
         public VectorRange(Vector2 minimum, Vector2 maximum)
         {
-            Minimum = minimum;
-            Maximum = maximum;
+            _minimum = minimum;
+            _maximum = maximum;
         }
     }
 }
