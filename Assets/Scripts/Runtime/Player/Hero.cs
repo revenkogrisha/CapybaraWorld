@@ -9,6 +9,7 @@ using UniRx;
 using UniRx.Triggers;
 using UnityEngine;
 using UnityTools;
+using Core.Other;
 using Zenject;
 
 namespace Core.Player
