@@ -51,6 +51,8 @@ namespace Core.Player
 		private bool ShouldSwitchToGrappling => _groundChecker.HaveGroundBelow() == false 
 			&& _stateMachine.CompareState<HeroGrapplingState>() == false;
 
+		private bool ShouldSwitchToRunning => _stateMachine.CompareState<HeroRunState>() == false;
+
 		#region MonoBehaviour
 
 		private void Awake()
@@ -124,6 +126,7 @@ namespace Core.Player
 
 			IObservable<Collision2D> onCollisionEnter2D = this.OnCollisionEnter2DAsObservable();
 			onCollisionEnter2D
+				.Where(_ => ShouldSwitchToRunning == true)
 				.Where(collision => collision.CompareLayers(_config.GroundLayer) == true)
 				.Subscribe(_ => SwitchToRunState())
 				.AddTo(_disposable);

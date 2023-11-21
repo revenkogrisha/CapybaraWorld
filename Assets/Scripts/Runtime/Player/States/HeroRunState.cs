@@ -136,6 +136,8 @@ namespace Core.Player
 
                 await UniTask.NextFrame(token);
             }
+
+            _acceleration = maximum;
         }
 
         private async UniTaskVoid ReduceAcceleration(CancellationToken token)
@@ -154,6 +156,8 @@ namespace Core.Player
 
                 await UniTask.NextFrame(token);
             }
+
+            _acceleration = 0f;
         }
 
         private void Run()
