@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4968046977922858085}
   - component: {fileID: 8222899738712285114}
   m_Layer: 0
-  m_Name: Example Simple
+  m_Name: Forest Simple 0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -66,7 +66,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7437639906120788173, guid: 8d0d6b4995b794ac3b056a8b4fcbc1c3, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 7.2
+      value: 5.96
       objectReference: {fileID: 0}
     - target: {fileID: 7437639906120788173, guid: 8d0d6b4995b794ac3b056a8b4fcbc1c3, type: 3}
       propertyPath: m_LocalPosition.z

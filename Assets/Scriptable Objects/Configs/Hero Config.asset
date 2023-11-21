@@ -16,7 +16,7 @@ MonoBehaviour:
   _releaseVelocityMultiplier: 1.4
   _onGrappledVelocityMultiplier: 0.7
   _onGrappledVelocityVector: {x: 1, y: 0.8}
-  _runSpeed: 15
+  _runSpeed: 12
   _accelerationTime: 0.15
   _dashForce: 30
   _dashDuration: 0.3
