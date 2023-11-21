@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Player Assets
   m_EditorClassIdentifier: 
   _playerPrefab: {fileID: -3409599701113228269, guid: 0f0d51a41e4d3430485a067170072c57, type: 3}
-  _playerDeadlinePrefab: {fileID: 3414211181807619048, guid: bcb1f1afee0654d6e84c9aab5b050a80, type: 3}
+  _playerDeadlinePrefab: {fileID: 3414211181807619048, guid: acd75926f2cde42eea10eae63a39b923, type: 3}
   _playerSpawnPosition: {x: -20, y: 8}
   _playerDeadlinePosition: {x: 0, y: -14}

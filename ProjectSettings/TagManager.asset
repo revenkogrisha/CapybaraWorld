@@ -44,6 +44,9 @@ TagManager:
   - name: Background
     uniqueID: 2008083375
     locked: 0
+  - name: Decor
+    uniqueID: 338859431
+    locked: 0
   - name: Hero
     uniqueID: 576322715
     locked: 0
