@@ -42,7 +42,7 @@ namespace Core.Level
             _backgroundHandler = new(_config.BackgroundPrefab);
         }
 
-        public void Dispose() => 
+        public void Dispose() =>
             _cts.Clear();
 
         public void InitializeCenter(Transform transform)
