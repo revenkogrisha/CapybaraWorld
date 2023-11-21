@@ -124,6 +124,12 @@ namespace Core.Player
 					Tools.InvokeIfNotNull<DeadlyForPlayerObject>(collider, PerformDeath))
 				.AddTo(_disposable);
 
+			onTriggerEnter2D
+				.Where(_ => IsDashing.Value == true)
+				.Subscribe(collider => 
+					Tools.InvokeIfNotNull<Chest>(collider, chest => chest.Open()))
+				.AddTo(_disposable);
+
 			IObservable<Collision2D> onCollisionEnter2D = this.OnCollisionEnter2DAsObservable();
 			onCollisionEnter2D
 				.Where(_ => ShouldSwitchToRunning == true)
@@ -140,6 +146,11 @@ namespace Core.Player
 			onCollisionEnter2D
 				.Where(_ => IsDashing.Value == false)
 				.Subscribe(collision => Tools.InvokeIfNotNull<Enemy>(collision, PerformDeath))
+				.AddTo(_disposable);
+
+			onCollisionEnter2D
+				.Subscribe(collision => 
+					Tools.InvokeIfNotNull<Coin>(collision, coin => coin.GetCollected()))
 				.AddTo(_disposable);
 		}
 
