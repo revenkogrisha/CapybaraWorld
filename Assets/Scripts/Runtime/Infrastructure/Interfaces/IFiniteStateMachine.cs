@@ -13,6 +13,8 @@ namespace Core.Infrastructure
 
         public void ChangeState(State state);
 
+        public void ChangeState<TArg>(State<TArg> state, TArg arg);
+
         public TState GetStateWithArg<TState, TArg>(TArg arg) 
             where TState : State<TArg>;
 
