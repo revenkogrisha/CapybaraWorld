@@ -28,10 +28,13 @@ namespace Core.Level
 			_directionToTarget = GetDirectionToTarget();
 		}
 
-		public override void Enter() => 
-			ChaseTarget().Forget();
+        public override void Enter()
+        {
+			_enemy.Triggered.Value = true;
+            ChaseTarget().Forget();
+        }
 
-		public override void Exit() => 
+        public override void Exit() => 
 			_disposable.Clear();
 
 		private async UniTaskVoid ChaseTarget()
