@@ -44,13 +44,13 @@ namespace Core.Level
 				float distance = Vector2.Distance(_thisTransform.position, _targetPosition);
 				if (distance <= TargetMinimumDistance)
 				{
-					FiniteStateMachine.ChangeState<EnemyIdleState>();
+					FiniteStateMachine.ChangeState<EnemySearchingState>();
 					break;
 				}
 				
 				Rigidbody2D rigidbody2D = _enemy.Rigidbody2D;
 				Vector2 velocity = rigidbody2D.velocity;
-				velocity.x = _directionToTarget.x * _enemy.Config.Speed;
+				velocity.x = _directionToTarget.x * _enemy.Preset.Speed;
 				
 				rigidbody2D.velocity = velocity;
 				

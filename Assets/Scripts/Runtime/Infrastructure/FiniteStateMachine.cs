@@ -49,6 +49,20 @@ namespace Core.Infrastructure
             state.Enter();
         }
 
+        public void ChangeState<TArg>(State<TArg> state, TArg arg)
+        {
+            if (_states.ContainsValue(state) == false)
+                throw new ArgumentException($"Unable to change to {state.GetType().FullName} - it's not added to the state machine! Add it first");
+
+            state.FiniteStateMachine = this;
+
+            _currentState?.Exit();
+            _currentState = state;
+
+            state.SetArg(arg);
+            state.Enter();
+        }
+
         public void ChangeState<TState, TArg>(TArg arg)
             where TState : State<TArg>
         {
