@@ -17,4 +17,4 @@ MonoBehaviour:
   _targetLayer:
     serializedVersion: 2
     m_Bits: 256
-  _speed: 8
+  _speed: 6
