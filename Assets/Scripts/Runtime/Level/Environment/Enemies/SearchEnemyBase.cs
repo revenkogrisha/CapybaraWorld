@@ -12,6 +12,8 @@ namespace Core.Level
         [Space]
         [SerializeField] private SearchEnemyPreset _searchPreset;
 
+        public readonly ReactiveProperty<bool> Triggered = new();
+
         protected State<Vector2> StateOnTrigger;
 		protected IFiniteStateMachine StateMachine;
 

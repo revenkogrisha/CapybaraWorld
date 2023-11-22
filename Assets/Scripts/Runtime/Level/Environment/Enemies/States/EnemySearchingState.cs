@@ -25,6 +25,7 @@ namespace Core.Level
 
 		public override void Enter()
 		{
+			_enemy.Triggered.Value = false;
 			StopMoving();
 			StartLookingForTarget().Forget();
 		}
@@ -66,7 +67,7 @@ namespace Core.Level
 			}
 			catch (Exception exception)
 			{  
-				Debug.LogError($"{exception.StackTrace}: {exception.Message}");
+				Debug.Log($"{exception.StackTrace}: {exception.Message}");
 				_cts.Clear();
 			}
 		}
