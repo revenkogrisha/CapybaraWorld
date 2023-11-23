@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Core.Level
 {
-    public class Food : MonoBehaviour, ISpawnable
+    public class Food : Entity, ISpawnable
     {
         [SerializeField] private float _fadeDuration = 0.3f;
 

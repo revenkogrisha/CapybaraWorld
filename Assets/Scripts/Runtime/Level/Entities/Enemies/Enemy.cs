@@ -1,9 +1,8 @@
 using Core.Other;
-using UnityEngine;
 
 namespace Core.Level
 {
-    public class Enemy : MonoBehaviour
+    public class Enemy : Entity
 	{
         public void PerformDeath() => 
 			gameObject.SelfDespawn();

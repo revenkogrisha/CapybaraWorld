@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace Core.Level
 {
-    public class Chest : MonoBehaviour, ISpawnable
+    public class Chest : Entity, ISpawnable
     {
         private const float DespawnDelay = 2f;
         
