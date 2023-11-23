@@ -1,4 +1,5 @@
 using Core.Level;
+using Core.Other;
 using NTC.Pool;
 using UnityEngine;
 
@@ -7,20 +8,25 @@ namespace Core.Factories
     public class CoinFactory : IFactory<Coin>
     {
         private readonly Coin _coinPrefab;
-        private readonly Transform _root;
-        private readonly Vector2 _position;
 
-        public CoinFactory(Coin coinPrefab, Transform root, Vector2 position)
+        public CoinFactory(Coin coinPrefab)
         {
             _coinPrefab = coinPrefab;
-            _root = root;
-            _position = position;
+        }
+
+        public Coin Create(Transform root, Vector2 position)
+        {
+            Coin coin = Create();
+
+            coin.SetParent(root);
+            coin.SetLocalPosition(position);
+
+            return coin;
         }
 
         public Coin Create()
         {
-            Coin coin = NightPool.Spawn(_coinPrefab, _root);
-            coin.transform.localPosition = _position;
+            Coin coin = NightPool.Spawn(_coinPrefab);
             return coin;
         }
     }
