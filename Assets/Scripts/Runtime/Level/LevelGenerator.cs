@@ -6,6 +6,7 @@ using NTC.Pool;
 using Core.Other;
 using UnityTools;
 using Core.Factories;
+using Zenject;
 
 namespace Core.Level
 {
@@ -15,6 +16,7 @@ namespace Core.Level
 
         private readonly Queue<Platform> _platformsOnLevel;
         private readonly LevelGeneratorConfig _config;
+        private readonly EntitySpawner _entitySpawner;
         private readonly IPlatformFactory<Platform> _platformFactory;
         private readonly BackgroundHandler _backgroundHandler;
         private CancellationTokenSource _cts;
@@ -30,10 +32,14 @@ namespace Core.Level
         private bool IsNowSpecialPlatformTurn => 
             _platformNumber % _config.SpecialPlatformSequentialNumber == 0 && _platformNumber > 0;
 
-        public LevelGenerator(LevelGeneratorConfig config, Transform platfomrsParent)
+        [Inject]
+        public LevelGenerator(
+            LevelGeneratorConfig config,
+            Transform platfomrsParent,
+            EntitySpawner entitySpawner)
         {
             _config = config;
-
+            _entitySpawner = entitySpawner;
             _lastGeneratedPlatformX = _config.XtartPoint;
             _platformsOnLevel = new();
 
@@ -77,9 +83,9 @@ namespace Core.Level
         {
             Platform platform = _platformFactory.Create(_config.StartPlatform);
             
-            Vector2 newPosition = platform.transform.position;
+            Vector2 newPosition = platform.GetPosition();
             newPosition.y = _config.PlatformsY;
-            platform.transform.position = newPosition;
+            platform.SetPosition(newPosition);
 
             UpdateGenerationData(platform);
         }
@@ -131,11 +137,21 @@ namespace Core.Level
             _currentLocation = location;
         }
 
-        private Platform GenerateSimplePlatform(Vector2 position) =>
-            _platformFactory.CreateSimple(position);
+        private Platform GenerateSimplePlatform(Vector2 position)
+        {
+            Platform platform = _platformFactory.CreateSimple(position);
+            _entitySpawner.SpawnEntities(platform);
+            return platform;
+        }
 
-        private Platform GenerateSpecialPlatform(Vector2 position) =>
-            _platformFactory.CreateSpecial(position);
+
+        private Platform GenerateSpecialPlatform(Vector2 position)
+        {
+            Platform platform = _platformFactory.CreateSpecial(position);
+            _entitySpawner.SpawnEntities(platform);
+            return platform;
+        }
+
 
         private void UpdateGenerationData(Platform platform)
         {
@@ -150,10 +166,10 @@ namespace Core.Level
         private Vector2 GetPlatformPosition() => 
             new(_lastGeneratedPlatformX, _config.PlatformsY);
 
-        float GetLevelMidPointX()
+        private float GetLevelMidPointX()
         {
             Platform oldestPlatform = _platformsOnLevel.Peek();
-            float oldestPlatformX = oldestPlatform.transform.position.x;
+            float oldestPlatformX = oldestPlatform.GetPosition().x;
             return (_lastGeneratedPlatformX + oldestPlatformX) / 2f;
         }
     }

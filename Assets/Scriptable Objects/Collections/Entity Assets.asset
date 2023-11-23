@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dee21f081ab8d4e7fba7c6cf2d1f1b84, type: 3}
+  m_Name: Entity Assets
+  m_EditorClassIdentifier: 
+  _foodPrefab: {fileID: 3031488019999921443, guid: 37191b2947fc146628b4bb93c64c28b2, type: 3}
+  _simpleChestPrefab: {fileID: 7442003449770973536, guid: 6f49c11a7abd145ca88a92d551a38fcc, type: 3}
+  _treasureChestPrefab: {fileID: 7442003449770973536, guid: da08e08d70efa4907978abcfcead016c, type: 3}
