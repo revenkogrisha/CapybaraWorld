@@ -1,3 +1,4 @@
+using Core.Other;
 using Core.Player;
 using Zenject;
 
@@ -22,7 +23,7 @@ namespace Core.Factories
             Hero hero = _diContainer
                 .InstantiatePrefabForComponent<Hero>(_assets.PlayerPrefab);
 
-            hero.transform.position = _assets.PlayerSpawnPosition;
+            hero.SetPosition(_assets.PlayerSpawnPosition);
             return hero;
         }
     }
