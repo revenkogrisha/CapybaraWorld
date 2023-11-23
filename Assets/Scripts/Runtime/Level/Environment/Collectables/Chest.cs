@@ -7,7 +7,7 @@ namespace Core.Level
 {
     public class Chest : MonoBehaviour
     {
-        private const float DespawnDelay = 3f;
+        private const float DespawnDelay = 2f;
         
         [SerializeField] private ChestPreset _preset;
         [SerializeField] private ParticleSystem[] _particles;
