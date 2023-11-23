@@ -20,7 +20,6 @@ namespace Core.Level
 
         private void OnEnable()
         {
-            Debug.Log(1);
             Chests.Add(ChestKind.Simple, _simpleChestPrefab);
             Chests.Add(ChestKind.Treasure, _treasureChestPrefab);
         }

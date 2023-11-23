@@ -1,11 +1,12 @@
 using Core.Factories;
 using Core.Other;
 using DG.Tweening;
+using NTC.Pool;
 using UnityEngine;
 
 namespace Core.Level
 {
-    public class Chest : MonoBehaviour
+    public class Chest : MonoBehaviour, ISpawnable
     {
         private const float DespawnDelay = 2f;
         
@@ -15,8 +16,12 @@ namespace Core.Level
         private CoinFactory _coinFactory;
         private bool _canOpen = true;
 
-        private void Awake() => 
-            _coinFactory = new(_preset.CoinPrefab, transform.parent, transform.position);
+        public void OnSpawn()
+        {
+            _coinFactory = new(_preset.CoinPrefab);
+            transform.localScale = Vector2.one;
+            _canOpen = true;
+        }
 
         public void Open()
         {
@@ -38,7 +43,7 @@ namespace Core.Level
 
         private void PushOutCoin()
         {
-            Coin coin = _coinFactory.Create();
+            Coin coin = _coinFactory.Create(transform.parent, transform.localPosition);
             coin.Initialize();
 
             Vector2 pushVector = GetPushVector();
