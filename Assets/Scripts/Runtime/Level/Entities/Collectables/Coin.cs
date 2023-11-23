@@ -9,7 +9,7 @@ namespace Core.Level
 {
     public class Coin : MonoBehaviour, IDespawnable
     {
-        private const float BlockDuration = 1.5f;
+        private const float BlockDuration = 1.3f;
 
         [SerializeField] private Rigidbody2D _rigidbody2D;
         [SerializeField] private LayerMask _heroLayer;
