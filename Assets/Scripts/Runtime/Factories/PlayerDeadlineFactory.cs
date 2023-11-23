@@ -1,4 +1,5 @@
 using Core.Level;
+using Core.Other;
 using Core.Player;
 using UnityEngine;
 
@@ -18,7 +19,7 @@ namespace Core.Factories
         public FollowerObject Create()
         {
             DeadlyForPlayerObject deadlineObject = Object.Instantiate(_playerDeadlinePrefab);
-            deadlineObject.transform.position = _playerDeadlinePosition;
+            deadlineObject.SetPosition(_playerDeadlinePosition);
             FollowerObject playerDeadline = new(deadlineObject.transform);
 
             return playerDeadline;

@@ -1,4 +1,5 @@
 using Core.Level;
+using Core.Other;
 using NTC.Pool;
 using UnityEngine;
 
@@ -24,7 +25,7 @@ namespace Core.Factories
             Platform prefab = GetRandomPlatform(currentLocation.SimplePlatforms);
 
             Platform platform = Create(prefab);
-            platform.transform.position = position;
+            platform.SetPosition(position);
 
             return platform;
         }
@@ -35,7 +36,7 @@ namespace Core.Factories
             Platform prefab = GetRandomPlatform(currentLocation.SpecialPlatforms);
 
             Platform platform = Create(prefab);
-            platform.transform.position = position;
+            platform.SetPosition(position);
 
             return platform;
         }

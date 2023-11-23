@@ -3,6 +3,7 @@ using System.Linq;
 using Core.Game.Input;
 using Core.Infrastructure;
 using Core.Level;
+using Core.Other;
 using UniRx;
 using UniRx.Triggers;
 using UnityEngine;
@@ -50,7 +51,7 @@ namespace Core.Player
         {
             _hero.UpdateAsObservable()
                 .Where(_ => _isGrappling == true)
-                .Subscribe(_ => _hero.Rope.Draw(_jointObject.transform.position))
+                .Subscribe(_ => _hero.Rope.Draw(_jointObject.GetPosition()))
                 .AddTo(_disposable);
         }
 
@@ -119,7 +120,7 @@ namespace Core.Player
 
         private void ConnectToJoint()
         {
-            Vector2 jointPosition = _jointObject.transform.position;
+            Vector2 jointPosition = _jointObject.GetPosition();
             _hero.SpringJoint2D.connectedAnchor = jointPosition;
         }
 
