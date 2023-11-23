@@ -6,12 +6,27 @@ namespace Core.Installers
 {
     public class LevelInstaller : MonoInstaller
     {
+        [SerializeField] private EntityAssets _entityAssets;
+        [SerializeField] private EnemyAssets _enemyAssets;
+
+        [Space]
         [SerializeField] private LevelGeneratorConfig _levelGeneratorConfig;
         [SerializeField] private Transform _platformsParent;
 
         public override void InstallBindings()
         {
+            BindEntitiesSpawner();
             BindLevelGenerator();
+        }
+
+        private void BindEntitiesSpawner()
+        {
+            Container
+                .Bind<EntitySpawner>()
+                .FromNew()
+                .AsSingle()
+                .WithArguments(_entityAssets, _enemyAssets)
+                .Lazy();
         }
 
         private void BindLevelGenerator()

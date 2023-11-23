@@ -7,6 +7,10 @@ namespace Core.Level
     {
         public const float Length = 120f;
 
+        [SerializeField] private SpawnMarker[] _spawnMarkers;
+
+        public SpawnMarker[] SpawnMarkers => _spawnMarkers;
+
         [Conditional("UNITY_EDITOR")]
         protected void OnDrawGizmos()
         {
