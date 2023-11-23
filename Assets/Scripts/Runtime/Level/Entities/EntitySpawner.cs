@@ -36,10 +36,7 @@ namespace Core.Level
             foreach (SpawnMarker marker in filtered)
             {
                 Food food = NightPool.Spawn(_entityAssets.FoodPrefab, root);
-
-                Vector3 localPosition = marker.GetLocalPosition();
-                food.SetLocalPosition(localPosition);
-                marker.SetProduct(food.gameObject);
+                SetupProduct(food, marker);
             }
         }
 
@@ -61,20 +58,14 @@ namespace Core.Level
             foreach (SpawnMarker marker in simpleChests)
             {
                 Chest chest = NightPool.Spawn(simpleChestPrefab, root);
-
-                Vector3 localPosition = marker.GetLocalPosition();
-                chest.SetLocalPosition(localPosition);
-                marker.SetProduct(chest.gameObject);
+                SetupProduct(chest, marker);
             }
 
             Chest treasureChestPrefab = _entityAssets.Chests[ChestKind.Treasure];
             foreach (SpawnMarker marker in treasureChests)
             {
                 Chest chest = NightPool.Spawn(treasureChestPrefab, root);
-
-                Vector3 localPosition = marker.GetLocalPosition();
-                chest.SetLocalPosition(localPosition);
-                marker.SetProduct(chest.gameObject);
+                SetupProduct(chest, marker);
             }
         }
 
@@ -92,11 +83,15 @@ namespace Core.Level
             foreach (SpawnMarker marker in cactopusMarkers)
             {
                 Enemy enemy = NightPool.Spawn(cactopusPrefab, root);
-
-                Vector3 localPosition = marker.GetLocalPosition();
-                enemy.SetLocalPosition(localPosition);
-                marker.SetProduct(enemy.gameObject);
+                SetupProduct(enemy, marker);
             }
+        }
+
+        private void SetupProduct(Entity product, SpawnMarker marker)
+        {
+            Vector3 localPosition = marker.GetLocalPosition();
+            product.SetLocalPosition(localPosition);
+            marker.SetProduct(product.gameObject);
         }
     }
 }

@@ -2,7 +2,6 @@ using Core.Other;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using NTC.Pool;
-using Unity.Mathematics;
 using UnityEngine;
 
 namespace Core.Level
@@ -14,11 +13,14 @@ namespace Core.Level
         [SerializeField] private Rigidbody2D _rigidbody2D;
         [SerializeField] private LayerMask _heroLayer;
 
+        [Space]
+        [SerializeField] private float _fadeDuration = 0.2f;
+
         public Rigidbody2D Rigidbody2D => _rigidbody2D;
 
         public void OnDespawn()
         {
-            transform.rotation = quaternion.identity;
+            transform.rotation = Quaternion.identity;
             _rigidbody2D.velocity = Vector2.zero;
         }
         
@@ -28,8 +30,8 @@ namespace Core.Level
         public void GetCollected()
         {
             DOTween.Sequence()
-                .Append(transform.DOScale(Vector2.zero, 0.2f))
-                .AppendCallback(() => NightPool.Despawn(gameObject));
+                .Append(transform.DOScale(Vector2.zero, _fadeDuration))
+                .AppendCallback(() => gameObject.SelfDespawn());
         }
 
         private async UniTaskVoid BlockCollecting()
