@@ -12,7 +12,7 @@ namespace Core.Level
 
         private void OnEnable()
         {
-            Enemies.Add(EnemyKind.Cactopus, _cactopusPrefab);
+            Enemies[EnemyKind.Cactopus] = _cactopusPrefab;
         }
     }
 }

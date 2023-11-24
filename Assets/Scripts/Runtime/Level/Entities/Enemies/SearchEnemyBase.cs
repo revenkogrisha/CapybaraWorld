@@ -1,11 +1,12 @@
 using System;
 using Core.Infrastructure;
+using NTC.Pool;
 using UniRx;
 using UnityEngine;
 
 namespace Core.Level
 {
-    public abstract class SearchEnemyBase : Enemy
+    public abstract class SearchEnemyBase : Enemy, ISpawnable
     {
         [SerializeField] private Rigidbody2D _rigidbody2D;
 
@@ -28,11 +29,12 @@ namespace Core.Level
 		{
 			InitializeStateMachine();   
             InitializeStates();
-
-			StateMachine.ChangeState<EnemySearchingState>();
 		}
 
-		private void OnDisable() => 
+        public void OnSpawn() => 
+            StateMachine.ChangeState<EnemySearchingState>();
+
+        private void OnDisable() => 
 			_disposable.Clear();
 
         #endregion
