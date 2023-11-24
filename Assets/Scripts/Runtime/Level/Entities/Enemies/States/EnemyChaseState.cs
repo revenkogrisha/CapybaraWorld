@@ -1,5 +1,6 @@
 using System.Threading;
 using Core.Infrastructure;
+using Core.Other;
 using Cysharp.Threading.Tasks;
 using UniRx;
 using UnityEngine;
@@ -10,9 +11,9 @@ namespace Core.Level
 	{
 		private const float TargetMinimumDistance = 0.5f;
 		
-		private readonly CompositeDisposable _disposable = new();
 		private readonly Transform _thisTransform;
 		private readonly ChaseEnemy _enemy;
+		private CancellationTokenSource _cts;
 		private Vector3 _targetPosition;
 		private Vector2 _directionToTarget;
 
@@ -34,12 +35,16 @@ namespace Core.Level
             ChaseTarget().Forget();
         }
 
-        public override void Exit() => 
-			_disposable.Clear();
+        public override void Exit()
+        {
+			StopMoving();
+			_cts.Clear();
+        }
 
         private async UniTaskVoid ChaseTarget()
 		{
-			CancellationToken token = _enemy.destroyCancellationToken;
+			_cts = new();
+			CancellationToken token = _cts.Token;
 			
 			float elapsedTime = 0f;
 			while (true)
@@ -62,7 +67,10 @@ namespace Core.Level
 			}
 		}
 
-		private float GetDistanceToTarget() =>
+        private void StopMoving() => 
+			_enemy.Rigidbody2D.velocity = Vector2.zero;
+
+        private float GetDistanceToTarget() =>
 			Vector2.Distance(_thisTransform.position, _targetPosition);
 
 		private Vector2 GetDirectionToTarget() =>

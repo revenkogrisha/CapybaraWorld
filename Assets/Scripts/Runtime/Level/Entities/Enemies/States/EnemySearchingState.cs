@@ -1,11 +1,9 @@
-using System;
 using System.Threading;
 using Core.Common;
 using Core.Infrastructure;
 using Core.Other;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
-using UnityEngine.InputSystem.Processors;
 
 namespace Core.Level
 {
@@ -27,47 +25,32 @@ namespace Core.Level
 		public override void Enter()
 		{
 			_enemy.Triggered.Value = false;
-			
-			StopMoving();
 			StartLookingForTarget().Forget();
 		}
 
         public override void Exit() => 
 			_cts.Clear();
 
-        private void StopMoving()
-		{
-			Vector2 velocity = Vector2.zero;
-			_enemy.Rigidbody2D.velocity = velocity;
-		}
-
-		private async UniTaskVoid StartLookingForTarget()
+        private async UniTaskVoid StartLookingForTarget()
 		{
 			_cts = new();
 			CancellationToken token = _cts.Token;
 
-			try
+			while (true)
 			{
-				while (true)
+				RaycastHit2D hit = PerformSearchRaycast();
+				if (hit == true)
 				{
-					RaycastHit2D hit = PerformSearchRaycast();
-					if (hit == true)
-					{
-						Vector2 targetPosition = hit.transform.position;
-						FiniteStateMachine.ChangeState(_stateOnTrigger, targetPosition);
-						break;
-					}
-
-					ChangeDirection();
-
-					await MyUniTask.Delay(_enemy.SearchPreset.SpotInterval, token);
+					Vector2 targetPosition = hit.transform.position;
+					FiniteStateMachine.ChangeState(_stateOnTrigger, targetPosition);
+					break;
 				}
+
+				ChangeDirection();
+
+				await MyUniTask.Delay(_enemy.SearchPreset.SpotInterval, token);
 			}
-			catch (Exception exception)
-			{  
-				Debug.Log($"{exception.StackTrace}: {exception.Message}");
-				_cts.Clear();
-			}
+
 		}
 
 		private void ChangeDirection()
