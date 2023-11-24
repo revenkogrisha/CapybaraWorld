@@ -45,5 +45,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _entityKind: 0
-  _chestKind: 0
-  _enemyKind: 0
+  _chestKind: 2
+  _enemyKind: 1

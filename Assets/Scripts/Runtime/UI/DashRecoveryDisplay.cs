@@ -11,12 +11,13 @@ namespace Core.Player
 {
     public class DashRecoveryDisplay : MonoBehaviour
     {
+        [Header("Components")]
         [SerializeField] private Slider _slider;
         [SerializeField] private AnimatedUI _animatedUI;
-        [SerializeField] private HeroConfig _config;
         [SerializeField] private Canvas _canvas;
 
-        [Space]
+        [Header("Configuration")]
+        [SerializeField] private HeroConfig _config;
         [SerializeField] private Vector2 _positionOffset = new(0f, 1f);
 
         private readonly CompositeDisposable _disposable = new();

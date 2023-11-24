@@ -3,21 +3,26 @@ using Cysharp.Threading.Tasks;
 using System.Threading;
 using Core.Other;
 using System;
+using TriInspector;
 
 namespace Core.Common
 {
+    [DeclareBoxGroup("Lerping", Title = "Lerping")]
     public class Flipper : MonoBehaviour
     {
         private const float CheckFrequency = 0.15f;
 
+        [Title("Components")]
         [SerializeField] private Rigidbody2D _rigidbody2D;
 
-        [Space]
-        [SerializeField] private float _minimumVelocityToFlip = 5f;
+        [Title("Configuration")]
+        [SerializeField, Min(0f)] private float _minimumVelocityToFlip = 5f;
+        [EnumToggleButtons]
         [SerializeField] private LookingDirection _startDirection = LookingDirection.Right;
 
-        [Space]
+        [Group("Lerping")]
         [SerializeField] private bool _lerpFlipping = true;
+        [Group("Lerping")]
         [SerializeField] private float _lerpDuration = 0.4f;
 
         private Transform _thisTransform;

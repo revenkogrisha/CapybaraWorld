@@ -1,12 +1,15 @@
 using System.Diagnostics;
+using TriInspector;
 using UnityEngine;
 
 namespace Core.Level
 {
+    [DeclareHorizontalGroup("Buttons")]
     public abstract class Platform : MonoBehaviour
     {
         public const float Length = 120f;
 
+        [ListDrawerSettings(AlwaysExpanded = true, HideAddButton = true)]
         [SerializeField] private SpawnMarker[] _spawnMarkers;
 
         public SpawnMarker[] SpawnMarkers => _spawnMarkers;
@@ -31,5 +34,13 @@ namespace Core.Level
             Gizmos.DrawLine(leftTop, rightTop);
             Gizmos.DrawLine(leftBottom, rightBottom);
         }
+
+        [Button(ButtonSizes.Large), GUIColor(255, 153, 153), Group("Buttons")]
+        private void ClearMarkers() =>
+            _spawnMarkers = null;
+
+        [Button(ButtonSizes.Large), GUIColor(153, 225, 153), Group("Buttons")]
+        private void AssignMarkers() =>
+            _spawnMarkers = GetComponentsInChildren<SpawnMarker>();
     }
 }

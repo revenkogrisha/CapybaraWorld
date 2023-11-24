@@ -10,6 +10,7 @@ using UnityEngine;
 using UnityTools;
 using Core.Other;
 using Zenject;
+using TriInspector;
 
 namespace Core.Player
 {
@@ -17,14 +18,14 @@ namespace Core.Player
 	{
 		private const float GrapplingActivationDistance = 50f;
 
-		[Header("Components")]
+		[Title("Components")]
 		[SerializeField] private SpringJoint2D _springJoint2D;
 		[SerializeField] private LineRenderer _lineRenderer;
 		[SerializeField] private Rigidbody2D _rigidbody2D;
 		[SerializeField] private GrapplingRope _rope;
 		[SerializeField] private Collider2D _collider2D;
 
-		[Header("Config")]
+		[Title("Configuration")]
 		[SerializeField] private HeroConfig _config;
 
 		private readonly CompositeDisposable _disposable = new();
@@ -32,14 +33,14 @@ namespace Core.Player
 		private GroundChecker _groundChecker;
 		private InputHandler _inputHandler;
 
-		public readonly ReactiveProperty<Transform> GrappledJoint = new();
-		public readonly ReactiveProperty<bool> IsRunning = new();
-		public readonly ReactiveProperty<bool> IsJumping = new();
-		public readonly ReactiveProperty<bool> IsDashing = new();
-		public readonly ReactiveCommand DashedCommand = new();
-		public readonly ReactiveCommand HitCommand = new();
-		public readonly ReactiveCommand<Type> StateChangedCommand = new();
-		public ReactiveProperty<bool> IsDead { get; private set; } = new(false);
+		[HideInInspector] public readonly ReactiveProperty<Transform> GrappledJoint = new();
+		[HideInInspector] public readonly ReactiveProperty<bool> IsRunning = new();
+		[HideInInspector] public readonly ReactiveProperty<bool> IsJumping = new();
+		[HideInInspector] public readonly ReactiveProperty<bool> IsDashing = new();
+		[HideInInspector] public readonly ReactiveCommand DashedCommand = new();
+		[HideInInspector] public readonly ReactiveCommand HitCommand = new();
+		[HideInInspector] public readonly ReactiveCommand<Type> StateChangedCommand = new();
+		[HideInInspector] public ReactiveProperty<bool> IsDead { get; private set; } = new(false);
 
 		public SpringJoint2D SpringJoint2D => _springJoint2D;
 		public Collider2D Collider2D => _collider2D;

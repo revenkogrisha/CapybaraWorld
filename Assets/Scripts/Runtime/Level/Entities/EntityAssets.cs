@@ -7,10 +7,10 @@ namespace Core.Level
     [CreateAssetMenu(fileName = "Entity Assets", menuName = "Collections/Entity Assets")]
     public class EntityAssets : ScriptableObject
     {
-        [Title("Food")]
+        [Header("Food")]
         [SerializeField] private Food _foodPrefab;
 
-        [Title("Chests")]
+        [Header("Chests")]
         [SerializeField] private Chest _simpleChestPrefab;
         [SerializeField] private Chest _treasureChestPrefab;
 
