@@ -12,12 +12,12 @@ namespace Core.Level
         [SerializeField] private EntityKind _entityKind;
 
         [Title("Chest Spawn Settings")]
-        [ShowIf(nameof(_entityKind), EntityKind.Chest)]
+        [ShowIf(nameof(_entityKind), EntityKind.Chest), EnumToggleButtons]
         [InfoBox("Choose Chest to be spawned")]
         [SerializeField] private ChestKind _chestKind;
 
         [Title("Enemy Spawn Settings")]
-        [ShowIf(nameof(_entityKind), EntityKind.Enemy)]
+        [ShowIf(nameof(_entityKind), EntityKind.Enemy), EnumToggleButtons]
         [InfoBox("Choose Enemy to be spawned")]
         [SerializeField] private EnemyKind _enemyKind;
 
