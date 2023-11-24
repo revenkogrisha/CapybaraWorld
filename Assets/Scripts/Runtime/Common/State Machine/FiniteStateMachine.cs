@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Core.Infrastructure
+namespace Core.Common
 {
     public class FiniteStateMachine : IFiniteStateMachine
     {

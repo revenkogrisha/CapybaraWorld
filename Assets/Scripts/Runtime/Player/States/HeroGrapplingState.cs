@@ -1,9 +1,9 @@
 using System;
 using System.Linq;
 using Core.Game.Input;
-using Core.Infrastructure;
 using Core.Level;
 using Core.Other;
+using Core.Common;
 using UniRx;
 using UniRx.Triggers;
 using UnityEngine;

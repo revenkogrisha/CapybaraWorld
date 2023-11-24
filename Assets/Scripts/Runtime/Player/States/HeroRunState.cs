@@ -2,7 +2,6 @@ using System;
 using System.Threading;
 using Core.Common;
 using Core.Game.Input;
-using Core.Infrastructure;
 using Core.Level;
 using Core.Other;
 using Cysharp.Threading.Tasks;
