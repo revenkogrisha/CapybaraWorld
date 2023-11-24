@@ -2,7 +2,6 @@ using System;
 using System.Diagnostics;
 using Core.Common;
 using Core.Game.Input;
-using Core.Infrastructure;
 using Core.Level;
 using Cysharp.Threading.Tasks;
 using UniRx;
@@ -14,7 +13,7 @@ using Zenject;
 
 namespace Core.Player
 {
-	public class Hero : MonoBehaviour, IDieable
+    public class Hero : MonoBehaviour, IDieable
 	{
 		private const float GrapplingActivationDistance = 50f;
 

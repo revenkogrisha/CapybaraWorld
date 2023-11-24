@@ -1,13 +1,12 @@
 using System.Threading;
-using Core.Infrastructure;
+using Core.Common;
 using Core.Other;
 using Cysharp.Threading.Tasks;
-using UniRx;
 using UnityEngine;
 
 namespace Core.Level
 {
-	public class EnemyChaseState : State<Vector2>
+    public class EnemyChaseState : State<Vector2>
 	{
 		private const float TargetMinimumDistance = 0.5f;
 		

@@ -1,4 +1,4 @@
-namespace Core.Infrastructure
+namespace Core.Common
 {
     public abstract class State<TArg> : State
     {
