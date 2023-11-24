@@ -5,6 +5,7 @@ using Core.Infrastructure;
 using Core.Other;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
+using UnityEngine.InputSystem.Processors;
 
 namespace Core.Level
 {
@@ -26,14 +27,18 @@ namespace Core.Level
 		public override void Enter()
 		{
 			_enemy.Triggered.Value = false;
-			StopMoving();
+			
+			//StopMoving();
 			StartLookingForTarget().Forget();
 		}
 
-		public override void Exit() =>
-			_cts.Clear();
-		
-		private void StopMoving()
+        public override void Exit()
+        {
+Debug.Log("Search exit");
+            _cts.Clear();
+        }
+
+        private void StopMoving()
 		{
 			Vector2 velocity = Vector2.zero;
 			_enemy.Rigidbody2D.velocity = velocity;
@@ -48,11 +53,7 @@ namespace Core.Level
 			{
 				while (true)
 				{
-					Vector2 origin = _thisTransform.position;
-					float spotRadius = _enemy.SearchPreset.SpotRadius;
-					LayerMask targetLayer = _enemy.SearchPreset.TargetLayer;
-					Vector2 direction = Vector2.left * (float)_direction;
-					RaycastHit2D hit = Physics2D.Raycast(origin, direction, spotRadius, targetLayer);
+					RaycastHit2D hit = PerformSearchRaycast();
 					if (hit == true)
 					{
 						Vector2 targetPosition = hit.transform.position;
@@ -78,5 +79,23 @@ namespace Core.Level
 				? LookingDirection.Right
 				: LookingDirection.Left;
 		}
+
+		private RaycastHit2D PerformSearchRaycast()
+		{
+			Vector2 origin = _thisTransform.position;
+			float spotRadius = _enemy.SearchPreset.SpotRadius;
+			LayerMask targetLayer = _enemy.SearchPreset.TargetLayer;
+
+			Vector2 direction = GetDirection();
+
+			return Physics2D.Raycast(
+				origin,
+				direction,
+				spotRadius,
+				targetLayer);
+		}
+
+		private Vector2 GetDirection() =>
+			Vector2.left * (float)_direction;
     }
 }

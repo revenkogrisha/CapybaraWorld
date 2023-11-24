@@ -34,17 +34,25 @@ namespace Core.Level
             ChaseTarget().Forget();
         }
 
-        public override void Exit() => 
-			_disposable.Clear();
+        public override void Exit()
+        {
+            _disposable.Clear();
+        }
 
-		private async UniTaskVoid ChaseTarget()
+        private void StopMoving()
+		{
+			Vector2 velocity = Vector2.zero;
+			_enemy.Rigidbody2D.velocity = velocity;
+		}
+
+        private async UniTaskVoid ChaseTarget()
 		{
 			CancellationToken token = _enemy.destroyCancellationToken;
 			
 			float elapsedTime = 0f;
 			while (true)
 			{
-				float distance = Vector2.Distance(_thisTransform.position, _targetPosition);
+				float distance = GetDistanceToTarget();
 				if (distance <= TargetMinimumDistance)
 				{
 					FiniteStateMachine.ChangeState<EnemySearchingState>();
@@ -61,6 +69,9 @@ namespace Core.Level
 				await UniTask.NextFrame(token);
 			}
 		}
+
+		private float GetDistanceToTarget() =>
+			Vector2.Distance(_thisTransform.position, _targetPosition);
 
 		private Vector2 GetDirectionToTarget() =>
 			(_targetPosition - _thisTransform.position).normalized;
