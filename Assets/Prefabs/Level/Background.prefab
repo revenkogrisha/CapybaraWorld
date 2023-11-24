@@ -1276,7 +1276,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _spriteRenderer: {fileID: 4759377180612480115}
   _applyX: 1
-  _effectX: 1
+  _effectX: 0.95
   _applyY: 0
   _effectY: 1
 --- !u!1 &5515847619841137387

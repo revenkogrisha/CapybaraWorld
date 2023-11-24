@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Cactopus
   m_EditorClassIdentifier: 
   _spotRadius: 10
-  _spotInterval: 0.6
+  _spotInterval: 0.5
   _targetLayer:
     serializedVersion: 2
     m_Bits: 256
