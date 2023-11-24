@@ -28,15 +28,12 @@ namespace Core.Level
 		{
 			_enemy.Triggered.Value = false;
 			
-			//StopMoving();
+			StopMoving();
 			StartLookingForTarget().Forget();
 		}
 
-        public override void Exit()
-        {
-Debug.Log("Search exit");
-            _cts.Clear();
-        }
+        public override void Exit() => 
+			_cts.Clear();
 
         private void StopMoving()
 		{

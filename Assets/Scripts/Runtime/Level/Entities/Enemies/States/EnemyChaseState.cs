@@ -34,16 +34,8 @@ namespace Core.Level
             ChaseTarget().Forget();
         }
 
-        public override void Exit()
-        {
-            _disposable.Clear();
-        }
-
-        private void StopMoving()
-		{
-			Vector2 velocity = Vector2.zero;
-			_enemy.Rigidbody2D.velocity = velocity;
-		}
+        public override void Exit() => 
+			_disposable.Clear();
 
         private async UniTaskVoid ChaseTarget()
 		{
