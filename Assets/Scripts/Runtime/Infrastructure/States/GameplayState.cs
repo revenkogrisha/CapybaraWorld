@@ -131,7 +131,7 @@ namespace Core.Infrastructure
         }
 
         private void InitializeGameFinishHandler(IDieable hero) =>
-            _gameOverHandler.SubscribeHeroDeath(hero);
+            _gameOverHandler.Initialize(hero);
 
         private void CreateUI(Hero hero)
         {

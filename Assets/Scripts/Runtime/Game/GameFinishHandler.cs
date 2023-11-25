@@ -3,22 +3,34 @@ using Core.Infrastructure;
 using Core.Player;
 using Cysharp.Threading.Tasks;
 using UniRx;
+using Zenject;
 
 namespace Core.Game
 {
-    public class GameFinishHandler : IDisposable
+    public class GameFinishHandler : IGameEventsHandler, IDisposable
     {
+        private const int WinScore = 130;
+        
         private readonly IGlobalStateMachine _globalStateMachine;
-        private readonly CompositeDisposable _disposable;
+        private readonly Score _score;
+        private readonly CompositeDisposable _disposable = new();
 
-        public GameFinishHandler(IGlobalStateMachine globalStateMachine)
+        public ReactiveCommand GameWinCommand { get; } = new();
+
+        [Inject]
+        public GameFinishHandler(IGlobalStateMachine globalStateMachine, Score score)
         {
-            _disposable = new();
             _globalStateMachine = globalStateMachine;
+            _score = score;
         }
 
-        public void SubscribeHeroDeath(IDieable hero)
+        public void Initialize(IDieable hero)
         {
+            _score.PlaythroughScore
+                .Where(value => value >= WinScore)
+                .Subscribe(_ => FinishGame(GameResult.Win))
+                .AddTo(_disposable);
+            
             hero.IsDead
                 .Where(isDead => isDead == true)
                 .Subscribe(_ => FinishGame(GameResult.Lost))
@@ -48,12 +60,13 @@ namespace Core.Game
         private void OnGameWon()
         {
             _globalStateMachine.ChangeState<GameWinState>();
+            GameWinCommand.Execute();
             _disposable?.Clear();
         }
 
         private void OnGameLost()
         {
-            _globalStateMachine.ChangeState<GameOverState>();
+            _globalStateMachine.ChangeState<GameLostState>();
             _disposable?.Clear();
         }
     }

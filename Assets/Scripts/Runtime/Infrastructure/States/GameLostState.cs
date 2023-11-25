@@ -6,13 +6,13 @@ using Zenject;
 
 namespace Core.Infrastructure
 {
-    public class GameOverState : State
+    public class GameLostState : State
     {
         private readonly UIProvider _uiProvider;
-        private GameOverMenu _gameOverMenu;
+        private GameLostMenu _gameOverMenu;
 
         [Inject]
-        public GameOverState(UIProvider uiProvider) => 
+        public GameLostState(UIProvider uiProvider) => 
             _uiProvider = uiProvider;
 
         public override void Enter() => 

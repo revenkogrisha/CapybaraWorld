@@ -10,7 +10,8 @@ namespace Core.Infrastructure
         private GenerationState _generationState;
         private MainMenuState _mainMenuState;
         private GameplayState _gameplayState;
-        private GameOverState _gameOverState;
+        private GameWinState _gameWinState;
+        private GameLostState _gameLostState;
 
         private void Awake()
         {
@@ -24,13 +25,15 @@ namespace Core.Infrastructure
             GenerationState generationState,
             MainMenuState mainMenuState,
             GameplayState gameplayState,
-            GameOverState gameOverState)
+            GameWinState gameWinState,
+            GameLostState gameOverState)
         {
             _stateMachine = stateMachine;
             _generationState = generationState;
             _mainMenuState = mainMenuState;
             _gameplayState = gameplayState;
-            _gameOverState = gameOverState;
+            _gameWinState = gameWinState;
+            _gameLostState = gameOverState;
         }
 
         private void AddGlobalStatesToMachine()
@@ -38,7 +41,8 @@ namespace Core.Infrastructure
             _stateMachine.AddState<GenerationState>(_generationState);
             _stateMachine.AddState<MainMenuState>(_mainMenuState);
             _stateMachine.AddState<GameplayState>(_gameplayState);
-            _stateMachine.AddState<GameOverState>(_gameOverState);
+            _stateMachine.AddState<GameWinState>(_gameWinState);
+            _stateMachine.AddState<GameLostState>(_gameLostState);
         }
     }
 }
