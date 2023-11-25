@@ -7,7 +7,6 @@ using Core.Game.Input;
 using Core.Level;
 using Core.Other;
 using Core.Player;
-using Core.UI;
 using UnityEngine;
 using Inject = Zenject.InjectAttribute;
 
@@ -133,17 +132,8 @@ namespace Core.Infrastructure
         private void InitializeGameFinishHandler(IDieable hero) =>
             _gameOverHandler.Initialize(hero);
 
-        private void CreateUI(Hero hero)
-        {
-            DisplayScore();
+        private void CreateUI(Hero hero) => 
             CreateDashRecoveryDisplay(hero);
-        }
-
-        private void DisplayScore()
-        {
-            ScoreDisplay scoreDisplay = _uiProvider.CreateScoreDisplay();
-            _destroyables.Add(scoreDisplay.gameObject);
-        }
 
         private void CreateDashRecoveryDisplay(Hero hero)
         {
