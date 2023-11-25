@@ -25,13 +25,13 @@ namespace Core.Infrastructure
         private readonly Score _score;
         private readonly UIProvider _uiProvider;
         private readonly PlayerData _playerData;
-        private readonly GameOverHandler _gameOverHandler;
+        private readonly GameFinishHandler _gameOverHandler;
 
         [Inject]
         public GameplayState(
             InputHandler inputHandler,
             ILevelGenerator levelGenerator,
-            GameOverHandler gameOverHandler,
+            GameFinishHandler gameOverHandler,
             PlayerFactory playerFactory,
             PlayerDeadlineFactory playerDeadlineFactory,
             IPlayerCamera playerCamera,
@@ -66,7 +66,7 @@ namespace Core.Infrastructure
             
             InitializeScoreCounter(heroTransform);
             InitializePlayerDeadline(heroTransform);
-            InitializeGameOverHandler(hero);
+            InitializeGameFinishHandler(hero);
 
             _levelGenerator.InitializeCenter(heroTransform);
 
@@ -84,9 +84,6 @@ namespace Core.Infrastructure
 
             _disposables.Clear();
             _destroyables.Clear();
-
-Debug.Log("Coins -> " + _playerData.CoinsAmount);
-Debug.Log("Food -> " + _playerData.FoodAmount);
         }
 
         private void ClearLists()
@@ -133,7 +130,7 @@ Debug.Log("Food -> " + _playerData.FoodAmount);
             _disposables.Add(scoreCounter);
         }
 
-        private void InitializeGameOverHandler(IDieable hero) =>
+        private void InitializeGameFinishHandler(IDieable hero) =>
             _gameOverHandler.SubscribeHeroDeath(hero);
 
         private void CreateUI(Hero hero)

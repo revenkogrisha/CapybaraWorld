@@ -12,6 +12,7 @@ namespace Core.Player
 
         public int CoinsAmount { get; private set; }
         public int FoodAmount { get; private set; }
+        public int LevelNumber { get; private set; }
 
         public void Dispose() => 
             _disposable.Clear();

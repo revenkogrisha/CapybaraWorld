@@ -23,7 +23,7 @@ namespace Core.Installers
         private void BindGameOverHandler()
         {
             Container
-                .Bind<GameOverHandler>()
+                .Bind<GameFinishHandler>()
                 .FromNew()
                 .AsSingle()
                 .Lazy();
