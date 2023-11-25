@@ -8,7 +8,7 @@ using Zenject;
 
 namespace Core.UI
 {
-    public class GameOverMenu : MonoBehaviour
+    public class GameLostMenu : MonoBehaviour
     {
         private const string ScoreFormat = "Current Score: \n {0}";
         private const string HighestScoreFormat = "Highest Score: \n {0}";

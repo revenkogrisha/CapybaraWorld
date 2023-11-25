@@ -33,7 +33,7 @@ namespace Core.Player
 		private GroundChecker _groundChecker;
 		private InputHandler _inputHandler;
 
-		[HideInInspector] public ReactiveProperty<bool> IsDead { get; private set; } = new(false);
+		[HideInInspector] public ReactiveProperty<bool> IsDead { get; } = new(false);
 		[HideInInspector] public readonly ReactiveProperty<Transform> GrappledJoint = new();
 		[HideInInspector] public readonly ReactiveProperty<bool> IsRunning = new();
 		[HideInInspector] public readonly ReactiveProperty<bool> IsJumping = new();
@@ -41,8 +41,8 @@ namespace Core.Player
 		[HideInInspector] public readonly ReactiveCommand<Type> StateChangedCommand = new();
 		public readonly ReactiveCommand DashedCommand = new();
 		public readonly ReactiveCommand HitCommand = new();
-		public ReactiveCommand CoinCollectedCommand { get; private set; } = new();
-        public ReactiveCommand FoodCollectedCommand { get; private set; } = new();
+		public ReactiveCommand CoinCollectedCommand { get; } = new();
+        public ReactiveCommand FoodCollectedCommand { get; } = new();
 
 		public SpringJoint2D SpringJoint2D => _springJoint2D;
 		public Collider2D Collider2D => _collider2D;

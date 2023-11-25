@@ -8,9 +8,12 @@ namespace Core.Installers
         public override void InstallBindings()
         {
             BindGenerationState();
+
             BindMainMenuState();
             BindGameplayState();
-            BindGameOverState();
+            
+            BindGameWinState();
+            BindGameLostState();
         }
 
         private void BindGenerationState()
@@ -40,10 +43,19 @@ namespace Core.Installers
                 .Lazy();
         }
 
-        private void BindGameOverState()
+        private void BindGameWinState()
         {
             Container
-                .Bind<GameOverState>()
+                .Bind<GameWinState>()
+                .FromNew()
+                .AsSingle()
+                .Lazy();
+        }
+
+        private void BindGameLostState()
+        {
+            Container
+                .Bind<GameLostState>()
                 .FromNew()
                 .AsSingle()
                 .Lazy();
