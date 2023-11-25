@@ -5,11 +5,11 @@ using Core.Factories;
 using Core.Game;
 using Core.Game.Input;
 using Core.Level;
+using Core.Other;
 using Core.Player;
 using Core.UI;
 using UnityEngine;
 using Inject = Zenject.InjectAttribute;
-using Object = UnityEngine.Object;
 
 namespace Core.Infrastructure
 {
@@ -24,7 +24,8 @@ namespace Core.Infrastructure
         private readonly IPlayerCamera _playerCamera;
         private readonly Score _score;
         private readonly UIProvider _uiProvider;
-        private GameOverHandler _gameOverHandler;
+        private readonly PlayerData _playerData;
+        private readonly GameOverHandler _gameOverHandler;
 
         [Inject]
         public GameplayState(
@@ -35,7 +36,8 @@ namespace Core.Infrastructure
             PlayerDeadlineFactory playerDeadlineFactory,
             IPlayerCamera playerCamera,
             Score score,
-            UIProvider uiProvider)
+            UIProvider uiProvider,
+            PlayerData playerData)
         {
             _inputHandler = inputHandler;
             _levelGenerator = levelGenerator;
@@ -45,18 +47,20 @@ namespace Core.Infrastructure
             _playerCamera = playerCamera;
             _score = score;
             _uiProvider = uiProvider;
-
+            _playerData = playerData;
         }
 
         public override void Enter()
         {
             ClearLists();
             AddInjectedDisposables();
-            
+
             _inputHandler.Initialize();
 
             Hero hero = CreateHero();            
             Transform heroTransform = hero.transform;
+
+            InitializePlayerData(hero);
 
             InitializeCamera(hero);
             
@@ -76,10 +80,13 @@ namespace Core.Infrastructure
 
             // Made for simplicity - some objects could be just disabled & stored in special handler
             foreach (GameObject destroyable in _destroyables)
-                Object.Destroy(destroyable);
+                destroyable.SelfDestroy();
 
             _disposables.Clear();
             _destroyables.Clear();
+
+Debug.Log("Coins -> " + _playerData.CoinsAmount);
+Debug.Log("Food -> " + _playerData.FoodAmount);
         }
 
         private void ClearLists()
@@ -101,6 +108,12 @@ namespace Core.Infrastructure
             Hero hero = _playerFactory.Create();
             _destroyables.Add(hero.gameObject);
             return hero;
+        }
+
+        private void InitializePlayerData(IPlayerEventsHandler playerEvents)
+        {
+            _playerData.Initialize(playerEvents);
+            _disposables.Add(_playerData);
         }
 
         private void InitializeCamera(Hero hero) =>
