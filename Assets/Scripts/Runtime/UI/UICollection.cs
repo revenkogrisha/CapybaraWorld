@@ -12,14 +12,12 @@ namespace Core.UI
         [SerializeField] private LoadingScreen _loadingScreenCanvasPrefab;
 
         [Header("Common")]
-        [SerializeField] private ScoreDisplay _scorePrefab;
         [SerializeField] private DashRecoveryDisplay _dashRecoveryDisplay;
 
         public MainMenu MainMenuPrefab => _mainMenuPrefab;
         public GameLostMenu GameOverMenuPrefab => _gameOverMenuPrefab;
         public LoadingScreen LoadingScreenCanvasPrefab => _loadingScreenCanvasPrefab;
 
-        public ScoreDisplay ScorePrefab => _scorePrefab;
         public DashRecoveryDisplay DashRecoveryDisplay => _dashRecoveryDisplay;
     }
 }

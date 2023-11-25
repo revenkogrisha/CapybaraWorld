@@ -47,16 +47,6 @@ namespace Core.Factories
             return loadingScreen;
         }
 
-        public ScoreDisplay CreateScoreDisplay()
-        {
-            ScoreDisplay scoreText = _diContainer
-                .InstantiatePrefabForComponent<ScoreDisplay>(
-                    _collection.ScorePrefab,
-                    _root.RectTransform);
-
-            return scoreText;
-        }
-
         public DashRecoveryDisplay CreateDashRecoveryDisplay()
         {
             DashRecoveryDisplay display = _diContainer
