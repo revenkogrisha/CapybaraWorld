@@ -1,8 +1,8 @@
 using Core.Common;
 using Core.Game;
 using Core.Infrastructure;
-using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityTools.Buttons;
 using Zenject;
 
@@ -10,19 +10,15 @@ namespace Core.UI
 {
     public class GameLostMenu : MonoBehaviour
     {
-        private const string ScoreFormat = "Current Score: \n {0}";
-        private const string HighestScoreFormat = "Highest Score: \n {0}";
-
         [Header("Buttons")]
         [SerializeField] private UIButton _restartButton;
         [SerializeField] private UIButton _menuButton;
 
-        [Header("Texts")]
-        [SerializeField] private TMP_Text _scoreTMP;
-        [SerializeField] private TMP_Text _highestScoreTMP;
+        [Space]
+        [SerializeField] private Slider _progressBar;
 
         private IGlobalStateMachine _globalStateMachine;
-        private Score _score;
+        private IPlaythroughProgressHandler _playthrough;
 
         #region MonoBehaviour
 
@@ -30,10 +26,9 @@ namespace Core.UI
         {
             _restartButton.OnClicked += RestartGame;
             _menuButton.OnClicked += ReturnToMenu;
+            
+            SetProgressBarValue(_playthrough.PlaythroughProgress);
         }
-
-        private void Start() =>
-            SetScoreTexts();
 
         private void OnDisable()
         {
@@ -44,20 +39,16 @@ namespace Core.UI
         #endregion
 
         [Inject]
-        private void Construct(IGlobalStateMachine globalStateMachine, Score score)
+        private void Construct(
+            IGlobalStateMachine globalStateMachine,
+            IPlaythroughProgressHandler playthrough, Score score)
         {
             _globalStateMachine = globalStateMachine;
-            _score = score;
+            _playthrough = playthrough;
         }
 
-        private void SetScoreTexts()
-        {
-            string scoreText = string.Format(ScoreFormat, _score.PlaythroughScore.Value);
-            string highestScoreText = string.Format(HighestScoreFormat, _score.HighestScore);
-
-            _scoreTMP.text = scoreText;
-            _highestScoreTMP.SetText(highestScoreText);
-        }
+        private void SetProgressBarValue(float delta) => 
+            _progressBar.value = delta;
 
         private void RestartGame()
         {

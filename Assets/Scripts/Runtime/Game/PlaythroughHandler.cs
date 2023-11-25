@@ -3,11 +3,12 @@ using Core.Infrastructure;
 using Core.Player;
 using Cysharp.Threading.Tasks;
 using UniRx;
+using UnityEngine;
 using Zenject;
 
 namespace Core.Game
 {
-    public class GameFinishHandler : IGameEventsHandler, IDisposable
+    public class PlaythroughHandler : IPlaythroughProgressHandler, IGameEventsHandler, IDisposable
     {
         private const int WinScore = 130;
         
@@ -16,9 +17,10 @@ namespace Core.Game
         private readonly CompositeDisposable _disposable = new();
 
         public ReactiveCommand GameWinCommand { get; } = new();
+        public float PlaythroughProgress => (float)_score.PlaythroughScore.Value / (float)WinScore;
 
         [Inject]
-        public GameFinishHandler(IGlobalStateMachine globalStateMachine, Score score)
+        public PlaythroughHandler(IGlobalStateMachine globalStateMachine, Score score)
         {
             _globalStateMachine = globalStateMachine;
             _score = score;

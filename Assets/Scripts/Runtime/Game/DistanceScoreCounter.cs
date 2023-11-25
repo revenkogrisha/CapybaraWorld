@@ -43,10 +43,6 @@ namespace Core.Game
 
                 _score.PlaythroughScore.Value = playthroughDistance;
 
-                bool isHighestScore = _score.PlaythroughScore.Value > _score.HighestScore;
-                if (isHighestScore == true)
-                    _score.CaptureHighestScore();
-
                 await MyUniTask.Delay(UpdateFrequency, token);
             }
         }
