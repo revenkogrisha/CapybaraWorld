@@ -14,7 +14,7 @@ using TriInspector;
 
 namespace Core.Player
 {
-    public class Hero : MonoBehaviour, IDieable
+    public class Hero : MonoBehaviour, IDieable, IPlayerEventsHandler
 	{
 		private const float GrapplingActivationDistance = 50f;
 
@@ -33,14 +33,16 @@ namespace Core.Player
 		private GroundChecker _groundChecker;
 		private InputHandler _inputHandler;
 
+		[HideInInspector] public ReactiveProperty<bool> IsDead { get; private set; } = new(false);
 		[HideInInspector] public readonly ReactiveProperty<Transform> GrappledJoint = new();
 		[HideInInspector] public readonly ReactiveProperty<bool> IsRunning = new();
 		[HideInInspector] public readonly ReactiveProperty<bool> IsJumping = new();
 		[HideInInspector] public readonly ReactiveProperty<bool> IsDashing = new();
-		[HideInInspector] public readonly ReactiveCommand DashedCommand = new();
-		[HideInInspector] public readonly ReactiveCommand HitCommand = new();
 		[HideInInspector] public readonly ReactiveCommand<Type> StateChangedCommand = new();
-		[HideInInspector] public ReactiveProperty<bool> IsDead { get; private set; } = new(false);
+		public readonly ReactiveCommand DashedCommand = new();
+		public readonly ReactiveCommand HitCommand = new();
+		public ReactiveCommand CoinCollectedCommand { get; private set; } = new();
+        public ReactiveCommand FoodCollectedCommand { get; private set; } = new();
 
 		public SpringJoint2D SpringJoint2D => _springJoint2D;
 		public Collider2D Collider2D => _collider2D;
@@ -133,7 +135,7 @@ namespace Core.Player
 
 			onTriggerEnter2D
 				.Subscribe(collider => 
-					Tools.InvokeIfNotNull<Food>(collider, EatFood))
+					Tools.InvokeIfNotNull<Food>(collider, TryCollectFood))
 				.AddTo(_disposable);
 
 			IObservable<Collision2D> onCollisionEnter2D = this.OnCollisionEnter2DAsObservable();
@@ -157,7 +159,7 @@ namespace Core.Player
 
 			onCollisionEnter2D
 				.Subscribe(collision => 
-					Tools.InvokeIfNotNull<Coin>(collision, CollectCoin))
+					Tools.InvokeIfNotNull<Coin>(collision, TryCollectCoin))
 				.AddTo(_disposable);
 		}
 
@@ -185,14 +187,22 @@ namespace Core.Player
 			HitCommand.Execute();
 		}
 
-		private void CollectCoin(Coin coin)
+		private void TryCollectCoin(Coin coin)
 		{
+			if (coin.CanCollect == false)
+				return;
+
 			coin.GetCollected();
+			CoinCollectedCommand.Execute();
 		}
 
-		private void EatFood(Food food)
+		private void TryCollectFood(Food food)
 		{
-			food.GetEatten();
+			if (food.CanCollect == false)
+				return;
+
+			food.GetCollected();
+			FoodCollectedCommand.Execute();
 		}
 	}
 }
