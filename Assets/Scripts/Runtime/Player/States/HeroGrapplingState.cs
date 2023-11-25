@@ -33,7 +33,7 @@ namespace Core.Player
             SubscribeUpdate();
         }
 
-        public override void Exit() =>
+        public override void Exit() => 
             _disposable.Clear();
 
         private void SubscribeInputHandler()
@@ -57,6 +57,7 @@ namespace Core.Player
 
         private void GrappleJoint()
         {
+Debug.Log("Grapple " + _hero.GetInstanceID());
             if (_isGrappling == true)
                 return;
 
@@ -133,5 +134,4 @@ namespace Core.Player
                 * config.OnGrappledVelocityMultiplier);
         }
     }
-
 }

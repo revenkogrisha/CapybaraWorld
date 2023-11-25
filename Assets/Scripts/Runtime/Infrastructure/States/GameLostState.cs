@@ -1,7 +1,7 @@
 using Core.Common;
 using Core.Factories;
+using Core.Other;
 using Core.UI;
-using UnityEngine;
 using Zenject;
 
 namespace Core.Infrastructure
@@ -16,9 +16,9 @@ namespace Core.Infrastructure
             _uiProvider = uiProvider;
 
         public override void Enter() => 
-            _gameOverMenu = _uiProvider.CreateGameOverMenu();
+            _gameOverMenu = _uiProvider.CreateGameLostMenu();
 
         public override void Exit() => 
-            Object.Destroy(_gameOverMenu.gameObject);
+            _gameOverMenu.gameObject.SelfDestroy();
     }
 }
