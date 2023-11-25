@@ -103,11 +103,11 @@ namespace Core.Player
 
 			HeroGrapplingState grapplingState = new(this, _inputHandler);
 			HeroRunState runState = new(this, _inputHandler);
-			HeroDeathState deathState = new();
+			InactiveState inactiveState = new();
 
 			_stateMachine.AddState<HeroGrapplingState>(grapplingState);
 			_stateMachine.AddState<HeroRunState>(runState);
-			_stateMachine.AddState<HeroDeathState>(deathState);
+			_stateMachine.AddState<InactiveState>(inactiveState);
 		}
 
 		private void SubscribeUpdate()
@@ -178,7 +178,7 @@ namespace Core.Player
 		private void PerformDeath()
 		{
 			IsDead.Value = true;
-			_stateMachine.ChangeState<HeroDeathState>();
+			_stateMachine.ChangeState<InactiveState>();
 		}
 
 		private void OnEnemyCollision(Enemy enemy)
