@@ -8,7 +8,7 @@ namespace Core.Level
 {
     public class Coin : MonoBehaviour, IDespawnable
     {
-        private const float BlockDuration = 1.3f;
+        private const float BlockDuration = 1f;
 
         [SerializeField] private Rigidbody2D _rigidbody2D;
         [SerializeField] private LayerMask _heroLayer;
@@ -16,12 +16,15 @@ namespace Core.Level
         [Space]
         [SerializeField] private float _fadeDuration = 0.2f;
 
+        public bool CanCollect { get; private set; } = true;
+
         public Rigidbody2D Rigidbody2D => _rigidbody2D;
 
         public void OnDespawn()
         {
             transform.rotation = Quaternion.identity;
             _rigidbody2D.velocity = Vector2.zero;
+            CanCollect = true;
         }
         
         public void Initialize() => 
@@ -29,6 +32,7 @@ namespace Core.Level
 
         public void GetCollected()
         {
+            CanCollect = false;
             DOTween.Sequence()
                 .Append(transform.DOScale(Vector2.zero, _fadeDuration))
                 .AppendCallback(() => gameObject.SelfDespawn());
@@ -36,6 +40,7 @@ namespace Core.Level
 
         private async UniTaskVoid BlockCollecting()
         {
+            CanCollect = false;
             _rigidbody2D.excludeLayers = _heroLayer;
             _rigidbody2D.includeLayers = 0;
 
@@ -43,6 +48,7 @@ namespace Core.Level
 
             _rigidbody2D.excludeLayers = 0;
             _rigidbody2D.includeLayers = _heroLayer;
+            CanCollect = true;
         }
     }
 }
