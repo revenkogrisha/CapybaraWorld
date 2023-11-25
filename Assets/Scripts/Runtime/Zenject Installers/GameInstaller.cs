@@ -8,7 +8,7 @@ namespace Core.Installers
         public override void InstallBindings()
         {
             BindScore();
-            BindGameOverHandler();
+            BindPlaythroughHandler();
         }
 
         private void BindScore()
@@ -20,10 +20,10 @@ namespace Core.Installers
                 .Lazy();
         }
 
-        private void BindGameOverHandler()
+        private void BindPlaythroughHandler()
         {
             Container
-                .BindInterfacesAndSelfTo<GameFinishHandler>()
+                .BindInterfacesAndSelfTo<PlaythroughHandler>()
                 .FromNew()
                 .AsSingle()
                 .Lazy();

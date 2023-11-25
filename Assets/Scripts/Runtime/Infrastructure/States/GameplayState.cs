@@ -24,13 +24,13 @@ namespace Core.Infrastructure
         private readonly Score _score;
         private readonly UIProvider _uiProvider;
         private readonly PlayerData _playerData;
-        private readonly GameFinishHandler _gameOverHandler;
+        private readonly PlaythroughHandler _playthroughHandler;
 
         [Inject]
         public GameplayState(
             InputHandler inputHandler,
             ILevelGenerator levelGenerator,
-            GameFinishHandler gameOverHandler,
+            PlaythroughHandler playthroughHandler,
             PlayerFactory playerFactory,
             PlayerDeadlineFactory playerDeadlineFactory,
             IPlayerCamera playerCamera,
@@ -40,7 +40,7 @@ namespace Core.Infrastructure
         {
             _inputHandler = inputHandler;
             _levelGenerator = levelGenerator;
-            _gameOverHandler = gameOverHandler;
+            _playthroughHandler = playthroughHandler;
             _playerFactory = playerFactory;
             _playerDeadlineFactory = playerDeadlineFactory;
             _playerCamera = playerCamera;
@@ -95,7 +95,7 @@ namespace Core.Infrastructure
         {
             _disposables.Add(_inputHandler);
             _disposables.Add(_playerCamera);
-            _disposables.Add(_gameOverHandler);
+            _disposables.Add(_playthroughHandler);
             _disposables.Add(_levelGenerator);
         }
 
@@ -130,7 +130,7 @@ namespace Core.Infrastructure
         }
 
         private void InitializeGameFinishHandler(IDieable hero) =>
-            _gameOverHandler.Initialize(hero);
+            _playthroughHandler.Initialize(hero);
 
         private void CreateUI(Hero hero) => 
             CreateDashRecoveryDisplay(hero);
