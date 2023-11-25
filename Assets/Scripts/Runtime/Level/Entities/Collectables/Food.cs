@@ -9,20 +9,17 @@ namespace Core.Level
     {
         [SerializeField] private float _fadeDuration = 0.3f;
 
-        private bool _canEat = true;
+        public bool CanCollect { get; private set; } = true;
 
         public void OnSpawn()
         {
             transform.localScale = Vector2.one;
-            _canEat = true;
+            CanCollect = true;
         }
 
-        public void GetEatten()
+        public void GetCollected()
         {
-            if (_canEat == false)
-                return;
-
-            _canEat = false;
+            CanCollect = false;
             DOTween.Sequence()
                 .Append(transform.DOScale(Vector2.zero, _fadeDuration))
                 .AppendCallback(Despawn);
