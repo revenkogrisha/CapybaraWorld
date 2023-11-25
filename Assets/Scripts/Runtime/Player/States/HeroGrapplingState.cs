@@ -57,7 +57,6 @@ namespace Core.Player
 
         private void GrappleJoint()
         {
-Debug.Log("Grapple " + _hero.GetInstanceID());
             if (_isGrappling == true)
                 return;
 

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using UnityEngine;
 
 namespace Core.Common
 {
@@ -30,6 +31,9 @@ namespace Core.Common
 
             State newState = _states[type];
 
+            if (newState == _currentState)
+                return;
+
             _currentState?.Exit();
             _currentState = newState;
 
@@ -40,6 +44,10 @@ namespace Core.Common
         {
             if (_states.ContainsValue(state) == false)
                 throw new ArgumentException($"Unable to change to {state.GetType().FullName} - it's not added to the state machine! Add it first");
+
+            
+            if (state == _currentState)
+                return;
 
             state.FiniteStateMachine = this;
 
@@ -53,6 +61,9 @@ namespace Core.Common
         {
             if (_states.ContainsValue(state) == false)
                 throw new ArgumentException($"Unable to change to {state.GetType().FullName} - it's not added to the state machine! Add it first");
+
+            if (state == _currentState)
+                return;
 
             state.FiniteStateMachine = this;
 
@@ -71,6 +82,10 @@ namespace Core.Common
                 throw new ArgumentException($"Unable to change to {type.FullName} - it's not added to the state machine! Add it first");
 
             State<TArg> newState = (State<TArg>)_states[type];
+
+            if (newState == _currentState)
+                return;
+
             newState.FiniteStateMachine = this;
 
             _currentState?.Exit();
