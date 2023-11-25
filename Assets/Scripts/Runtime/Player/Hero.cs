@@ -70,10 +70,13 @@ namespace Core.Player
 			SubscribePhysicsCallbacks();
 		}
 
-		private void OnDestroy() => 
-			_disposable.Clear();
+        private void OnDestroy()
+        {
+			_stateMachine.ChangeState<InactiveState>();
+            _disposable.Clear();
+        }
 
-		[Conditional("UNITY_EDITOR")]
+        [Conditional("UNITY_EDITOR")]
 		private void OnDrawGizmos()
 		{
 			if (_config == null)

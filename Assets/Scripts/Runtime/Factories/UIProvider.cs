@@ -28,7 +28,17 @@ namespace Core.Factories
             return mainMenu;
         }
 
-        public GameLostMenu CreateGameOverMenu()
+        public GameWinMenu CreateGameWinMenu()
+        {
+            GameWinMenu gameWinMenu = _diContainer
+                .InstantiatePrefabForComponent<GameWinMenu>(
+                    _collection.GameWinMenuPrefab,
+                     _root.RectTransform);
+            
+            return gameWinMenu;
+        }
+
+        public GameLostMenu CreateGameLostMenu()
         {
             GameLostMenu gameOverMenu = _diContainer
                 .InstantiatePrefabForComponent<GameLostMenu>(
