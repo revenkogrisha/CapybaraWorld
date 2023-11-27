@@ -2,6 +2,7 @@ using System;
 using UniRx;
 using Core.Game;
 using Zenject;
+using UnityEngine;
 
 namespace Core.Player
 {
@@ -45,7 +46,7 @@ namespace Core.Player
         private void AddFood() =>
             FoodAmount += FoodDefaultReward;
 
-        private void IncreaseLevelNumber() =>
+        private void IncreaseLevelNumber() => 
             LevelNumber++;
     }
 }
