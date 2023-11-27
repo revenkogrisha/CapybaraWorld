@@ -9,7 +9,7 @@ namespace Core.Game
 {
     public class PlaythroughHandler : IPlaythroughProgressHandler, IGameEventsHandler, IDisposable
     {
-        private const int WinScore = 130;
+        private const int WinScore = 135;
         
         private readonly GameNavigation _navigation;
         private readonly Score _score;
@@ -60,15 +60,11 @@ namespace Core.Game
 
         private void OnGameWon()
         {
-            _navigation.ToWin();
             GameWinCommand.Execute();
-            _disposable?.Clear();
+            _navigation.ToWin();
         }
 
-        private void OnGameLost()
-        {
+        private void OnGameLost() =>
             _navigation.ToLost();
-            _disposable?.Clear();
-        }
     }
 }
