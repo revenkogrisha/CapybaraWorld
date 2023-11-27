@@ -5,7 +5,7 @@ using Zenject;
 
 namespace Core.UI
 {
-    public class GameLostMenu : FinalMenu
+    public class GameLostMenu : FinishMenu
     {
         [Space]
         [SerializeField] private Slider _progressBar;

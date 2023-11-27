@@ -9,31 +9,25 @@ namespace Core.UI
     {
         [SerializeField] private UIButton _playButton;
 
-        private IGlobalStateMachine _globalStateMachine;
+        private GameNavigation _navigation;
 
         #region MonoBehaviour
-        
-        private void OnEnable()
-        {
-            _playButton.OnClicked += StartGame;
-        }
 
-        private void OnDisable()
-        {
+        private void OnEnable() => 
+            _playButton.OnClicked += StartGame;
+
+        private void OnDisable() =>
             _playButton.OnClicked -= StartGame;
-        }
 
         #endregion
 
         [Inject]
-        private void Construct(IGlobalStateMachine globalStateMachine)
+        private void Construct(GameNavigation navigation)
         {
-            _globalStateMachine = globalStateMachine;
+            _navigation = navigation;
         }
 
-        private void StartGame()
-        {
-            _globalStateMachine.ChangeState<GameplayState>();
-        }
+        private void StartGame() => 
+            _navigation.ToGameplay();
     }
 }
