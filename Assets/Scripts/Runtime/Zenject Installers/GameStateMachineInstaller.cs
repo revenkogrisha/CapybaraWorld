@@ -3,9 +3,27 @@ using Zenject;
 
 namespace Core.Installers
 {
-    public class StatesInstaller : MonoInstaller
+    public class GameStateMachineInstaller : MonoInstaller
     {
         public override void InstallBindings()
+        {
+            BindStateMachine();
+            BindStates();
+
+            BindNavigation();
+        }
+
+        private void BindStateMachine()
+        {
+            Container
+                .Bind<IGameStateMachine>()
+                .To<GameStateMachine>()
+                .FromNew()
+                .AsSingle()
+                .Lazy();
+        }
+
+        private void BindStates()
         {
             BindGenerationState();
 
@@ -14,6 +32,15 @@ namespace Core.Installers
             
             BindGameWinState();
             BindGameLostState();
+        }
+
+        private void BindNavigation()
+        {
+            Container
+                .Bind<GameNavigation>()
+                .FromNew()
+                .AsSingle()
+                .Lazy();
         }
 
         private void BindGenerationState()

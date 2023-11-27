@@ -1,5 +1,4 @@
 using Core.Game.Input;
-using Core.Infrastructure;
 using UnityEngine;
 using Zenject;
 
@@ -9,21 +8,8 @@ namespace Core.Installers
     {
         [SerializeField] private TouchInputCollection _touchInputCollection;
 
-        public override void InstallBindings()
-        {
-            BindGlobalStateMachine();
+        public override void InstallBindings() => 
             BindInputHandler();
-        }
-
-        private void BindGlobalStateMachine()
-        {
-            Container
-                .Bind<IGlobalStateMachine>()
-                .To<GlobalStateMachine>()
-                .FromNew()
-                .AsSingle()
-                .NonLazy();
-        }
 
         private void BindInputHandler()
         {

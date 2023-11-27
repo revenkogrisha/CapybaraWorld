@@ -1,4 +1,4 @@
 namespace Core.UI
 {
-    public class GameWinMenu : FinalMenu {  }
+    public class GameWinMenu : FinishMenu {  }
 }
