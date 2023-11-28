@@ -30,9 +30,9 @@ namespace Core.UI
             _navigation = navigation;
 
         private void RestartGame() => 
-            _navigation.Regenerate<GameplayState>();
+            _navigation.Generate<GameplayState>();
 
         private void ReturnToMenu() => 
-            _navigation.Regenerate<MainMenuState>();
+            _navigation.Generate<MainMenuState>();
     }
 }
