@@ -10,10 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4aacc6b655ef143388a507d5d7ba5cf5, type: 3}
-  m_Name: Example Location
+  m_Name: Forest
   m_EditorClassIdentifier: 
   _backgroundPreset: {fileID: 11400000, guid: 3c53c8de28f0b436ca98aec9597e8ec5, type: 2}
   _simplePlatforms:
   - {fileID: 8222899738712285114, guid: 256a30b11d259466ab5d58c3d3fc1534, type: 3}
   _specialPlatforms:
   - {fileID: 1280936354804307747, guid: 138f329feb51f41fba1b8a43fc3b0155, type: 3}
+  - {fileID: 1280936354804307747, guid: 2b538548f12ff4fc99b6dabbf7ee53c6, type: 3}
