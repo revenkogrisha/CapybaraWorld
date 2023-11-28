@@ -7,6 +7,7 @@ using Core.Game.Input;
 using Core.Level;
 using Core.Other;
 using Core.Player;
+using Core.Saving;
 using UnityEngine;
 using Inject = Zenject.InjectAttribute;
 
@@ -24,6 +25,7 @@ namespace Core.Infrastructure
         private readonly Score _score;
         private readonly UIProvider _uiProvider;
         private readonly PlayerData _playerData;
+        private readonly ISaveService _saveService;
         private readonly PlaythroughHandler _playthroughHandler;
 
         [Inject]
@@ -36,7 +38,8 @@ namespace Core.Infrastructure
             IPlayerCamera playerCamera,
             Score score,
             UIProvider uiProvider,
-            PlayerData playerData)
+            PlayerData playerData,
+            ISaveService saveService)
         {
             _inputHandler = inputHandler;
             _levelGenerator = levelGenerator;
@@ -47,6 +50,7 @@ namespace Core.Infrastructure
             _score = score;
             _uiProvider = uiProvider;
             _playerData = playerData;
+            _saveService = saveService;
         }
 
         public override void Enter()
@@ -74,6 +78,8 @@ namespace Core.Infrastructure
 
         public override void Exit()
         {
+            _saveService.Save();
+            
             foreach (IDisposable disposable in _disposables)
                 disposable.Dispose();
 
@@ -97,6 +103,7 @@ namespace Core.Infrastructure
             _disposables.Add(_playerCamera);
             _disposables.Add(_playthroughHandler);
             _disposables.Add(_levelGenerator);
+            _disposables.Add(_playerData);
         }
 
         private Hero CreateHero()
@@ -106,11 +113,8 @@ namespace Core.Infrastructure
             return hero;
         }
 
-        private void InitializePlayerData(IPlayerEventsHandler playerEvents)
-        {
-            _playerData.Initialize(playerEvents);
-            _disposables.Add(_playerData);
-        }
+        private void InitializePlayerData(IPlayerEventsHandler playerEvents) => 
+            _playerData.InitializeEvents(playerEvents);
 
         private void InitializeCamera(Hero hero) =>
             _playerCamera.Initialize(hero);

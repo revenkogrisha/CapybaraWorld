@@ -25,6 +25,7 @@ namespace Core.Installers
 
         private void BindStates()
         {
+            BindDataInitializationState();
             BindGenerationState();
 
             BindMainMenuState();
@@ -38,6 +39,15 @@ namespace Core.Installers
         {
             Container
                 .Bind<GameNavigation>()
+                .FromNew()
+                .AsSingle()
+                .Lazy();
+        }
+
+        private void BindDataInitializationState()
+        {
+            Container
+                .Bind<DataInitializationState>()
                 .FromNew()
                 .AsSingle()
                 .Lazy();

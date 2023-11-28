@@ -10,8 +10,11 @@ namespace Core.Infrastructure
         [Inject]
         public GameNavigation(IGameStateMachine globalStateMachine) =>
             _globalStateMachine = globalStateMachine;
-            
-        public void Regenerate<TNextState>() 
+
+        public void ToLoadingData() => 
+            _globalStateMachine.ChangeState<DataInitializationState>();
+
+        public void Generate<TNextState>() 
             where TNextState : State
         {
             TNextState nextState = _globalStateMachine.GetState<TNextState>();

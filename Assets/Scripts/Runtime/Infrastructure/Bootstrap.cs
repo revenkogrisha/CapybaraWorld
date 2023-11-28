@@ -6,6 +6,7 @@ namespace Core.Infrastructure
     public class Bootstrap : MonoBehaviour
     {
         private IGameStateMachine _stateMachine;
+        private DataInitializationState _dataInitializationState;
         private GenerationState _generationState;
         private MainMenuState _mainMenuState;
         private GameplayState _gameplayState;
@@ -16,12 +17,13 @@ namespace Core.Infrastructure
         private void Awake()
         {
             AddGameStatesToMachine();
-            _navigation.Regenerate<MainMenuState>();
+            _navigation.ToLoadingData();
         }
 
         [Inject]
         private void Construct(
             IGameStateMachine stateMachine,
+            DataInitializationState dataInitializationState,
             GenerationState generationState,
             MainMenuState mainMenuState,
             GameplayState gameplayState,
@@ -30,6 +32,7 @@ namespace Core.Infrastructure
             GameNavigation navigation)
         {
             _stateMachine = stateMachine;
+            _dataInitializationState = dataInitializationState;
             _generationState = generationState;
             _mainMenuState = mainMenuState;
             _gameplayState = gameplayState;
@@ -40,6 +43,7 @@ namespace Core.Infrastructure
 
         private void AddGameStatesToMachine()
         {
+            _stateMachine.AddState<DataInitializationState>(_dataInitializationState);
             _stateMachine.AddState<GenerationState>(_generationState);
             _stateMachine.AddState<MainMenuState>(_mainMenuState);
             _stateMachine.AddState<GameplayState>(_gameplayState);
