@@ -55,6 +55,9 @@ namespace Core.Level
 			}
 			catch (Exception e)
 			{
+				if (e is OperationCanceledException)
+					return;
+				
 				Debug.Log($"{GetType()}: {e.Message} \n {e.StackTrace}");
 			}
 		}
