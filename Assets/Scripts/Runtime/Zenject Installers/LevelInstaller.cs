@@ -32,8 +32,7 @@ namespace Core.Installers
         private void BindLevelGenerator()
         {
             Container
-                .Bind<ILevelGenerator>()
-                .To<LevelGenerator>()
+                .BindInterfacesTo<LevelGenerator>()
                 .FromNew()
                 .AsSingle()
                 .WithArguments(_levelGeneratorConfig, _platformsParent)
