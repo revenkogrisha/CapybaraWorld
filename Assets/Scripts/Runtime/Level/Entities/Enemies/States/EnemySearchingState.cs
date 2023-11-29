@@ -1,3 +1,4 @@
+using System;
 using System.Threading;
 using Core.Common;
 using Core.Other;
@@ -35,21 +36,27 @@ namespace Core.Level
 			_cts = new();
 			CancellationToken token = _cts.Token;
 
-			while (true)
+			try
 			{
-				RaycastHit2D hit = PerformSearchRaycast();
-				if (hit == true)
+				while (true)
 				{
-					Vector2 targetPosition = hit.transform.position;
-					FiniteStateMachine.ChangeState(_stateOnTrigger, targetPosition);
-					break;
+					RaycastHit2D hit = PerformSearchRaycast();
+					if (hit == true)
+					{
+						Vector2 targetPosition = hit.transform.position;
+						FiniteStateMachine.ChangeState(_stateOnTrigger, targetPosition);
+						break;
+					}
+
+					ChangeDirection();
+
+					await MyUniTask.Delay(_enemy.SearchPreset.SpotInterval, token);
 				}
-
-				ChangeDirection();
-
-				await MyUniTask.Delay(_enemy.SearchPreset.SpotInterval, token);
 			}
-
+			catch (Exception e)
+			{
+				Debug.Log($"{GetType()}: {e.Message} \n {e.StackTrace}");
+			}
 		}
 
 		private void ChangeDirection()

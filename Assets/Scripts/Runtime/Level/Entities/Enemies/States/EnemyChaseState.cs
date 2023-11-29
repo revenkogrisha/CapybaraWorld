@@ -1,3 +1,4 @@
+using System;
 using System.Threading;
 using Core.Common;
 using Core.Other;
@@ -46,23 +47,30 @@ namespace Core.Level
 			CancellationToken token = _cts.Token;
 			
 			float elapsedTime = 0f;
-			while (true)
+			try
 			{
-				float distance = GetDistanceToTarget();
-				if (distance <= TargetMinimumDistance)
+				while (true)
 				{
-					FiniteStateMachine.ChangeState<EnemySearchingState>();
-					break;
+					float distance = GetDistanceToTarget();
+					if (distance <= TargetMinimumDistance)
+					{
+						FiniteStateMachine.ChangeState<EnemySearchingState>();
+						break;
+					}
+					
+					Rigidbody2D rigidbody2D = _enemy.Rigidbody2D;
+					Vector2 velocity = rigidbody2D.velocity;
+					velocity.x = _directionToTarget.x * _enemy.Preset.Speed;
+					
+					rigidbody2D.velocity = velocity;
+					
+					elapsedTime += Time.deltaTime;
+					await UniTask.NextFrame(token);
 				}
-				
-				Rigidbody2D rigidbody2D = _enemy.Rigidbody2D;
-				Vector2 velocity = rigidbody2D.velocity;
-				velocity.x = _directionToTarget.x * _enemy.Preset.Speed;
-				
-				rigidbody2D.velocity = velocity;
-				
-				elapsedTime += Time.deltaTime;
-				await UniTask.NextFrame(token);
+			}
+			catch (Exception e)
+			{
+				Debug.Log($"{GetType()}: {e.Message} \n {e.StackTrace}");
 			}
 		}
 
