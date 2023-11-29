@@ -142,15 +142,15 @@ MonoBehaviour:
       m_Calls: []
   m_text: Capybara! Treasure World
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2100000, guid: e73a58f6e2794ae7b1b7e50b7fb811b0, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 21e766cf20a8e4f8cbf4b1ea831c9320, type: 2}
+  m_sharedMaterial: {fileID: 2100000, guid: 74e74d52455ca4b74b99514a23573787, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4278225663
-  m_fontColor: {r: 1, g: 0.5411765, b: 0, a: 1}
+    rgba: 4280527862
+  m_fontColor: {r: 0.9647059, g: 0.67058825, b: 0.13725491, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -261,6 +261,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 93b4bb4b171db41c8ad9d250625740e1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _canvasGroup: {fileID: 0}
+  _revealSpeed: 0.05
+  _concealSpeed: 0.05
 --- !u!114 &5620173783858879687
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -371,6 +374,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7237026184080814049, guid: 98ada39b94b0c4deebc4ea4ec028dce8, type: 3}
       propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7540812747523462584, guid: 98ada39b94b0c4deebc4ea4ec028dce8, type: 3}
+      propertyPath: m_hasFontAssetChanged
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
