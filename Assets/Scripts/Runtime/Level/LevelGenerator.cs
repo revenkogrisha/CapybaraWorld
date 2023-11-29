@@ -7,12 +7,14 @@ using Core.Other;
 using UnityTools;
 using Core.Factories;
 using Zenject;
+using Core.Saving;
+using System;
 
 namespace Core.Level
 {
     public class LevelGenerator : ILevelGenerator, ILocationsHandler
     {
-        private const float HeroPositionCheckFrequency = 1.5f;
+        private const float HeroPositionCheckInterval = 1.5f;
 
         private readonly Queue<Platform> _platformsOnLevel;
         private readonly LevelGeneratorConfig _config;
@@ -24,11 +26,11 @@ namespace Core.Level
         private int _platformNumber = 0;
         private float _lastGeneratedPlatformX = 0f;
         private Location _currentLocation;
+        private int _locationIndex = 0;
 
         public Location CurrentLocation => _currentLocation;
         private float HeroX => _centerTransform.position.x;
         private bool IsLevelMidPointXLessHeroX => GetLevelMidPointX() < HeroX;
-
         private bool IsNowSpecialPlatformTurn => 
             _platformNumber % _config.SpecialPlatformSequentialNumber == 0 && _platformNumber > 0;
 
@@ -57,10 +59,23 @@ namespace Core.Level
             CheckPlayerPosition().Forget();
         }
 
+        public void Save(SaveData data) => 
+            data.LocationIndex = _locationIndex;
+
+        public void Load(SaveData data) => 
+            SetLocationByIndex(data.LocationIndex);
+
+        public void SetRandomLocation()
+        {
+            int index = _config.Locations.GetRandomIndex();
+            Location location = _config.Locations[index];
+
+            _currentLocation = location;
+            _locationIndex = index;
+        }
+
         public void Generate()
         {
-            SetRandomLocation();
-
             SpawnStartPlatform();
             GenerateDefaultAmount();
 
@@ -116,8 +131,23 @@ namespace Core.Level
                     GenerateRandomPlatform();
                 }
 
-                await MyUniTask.Delay(HeroPositionCheckFrequency, token);
+                await MyUniTask.Delay(HeroPositionCheckInterval, token);
             }
+        }
+
+        private void SetLocationByIndex(int index)
+        {
+            if (index >= _config.Locations.Length)
+                throw new ArgumentOutOfRangeException("Incorrect location index was set!");
+
+            if (index < 0)
+                throw new ArgumentException("Location index cannot be lower than zero!");
+
+            Location location = _config.Locations[index];
+            if (location == null)
+                throw new ArgumentNullException("Location gotten by index is null!");
+
+            _currentLocation = location;
         }
 
         private void GenerateRandomPlatform()
@@ -128,13 +158,6 @@ namespace Core.Level
                 : GenerateSimplePlatform(position);
 
             UpdateGenerationData(randomPlatform);
-        }
-
-        private void SetRandomLocation()
-        {
-            int index = _config.Locations.GetRandomIndex();
-            Location location = _config.Locations[index];
-            _currentLocation = location;
         }
 
         private Platform GenerateSimplePlatform(Vector2 position)

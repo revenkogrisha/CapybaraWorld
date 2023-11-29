@@ -1,5 +1,6 @@
 using System;
 using Core.Infrastructure;
+using Core.Level;
 using Core.Player;
 using Cysharp.Threading.Tasks;
 using UniRx;
@@ -10,7 +11,7 @@ namespace Core.Game
     public class PlaythroughHandler : IPlaythroughProgressHandler, IGameEventsHandler, IDisposable
     {
         private const int WinScore = 135;
-        
+        private readonly ILocationsHandler _locationsHandler;
         private readonly GameNavigation _navigation;
         private readonly Score _score;
         private readonly CompositeDisposable _disposable = new();
@@ -19,8 +20,12 @@ namespace Core.Game
         public float PlaythroughProgress => (float)_score.PlaythroughScore.Value / (float)WinScore;
 
         [Inject]
-        public PlaythroughHandler(GameNavigation navigation, Score score)
+        public PlaythroughHandler(
+            ILocationsHandler locationsHandler,
+            GameNavigation navigation,
+            Score score)
         {
+            _locationsHandler = locationsHandler; 
             _navigation = navigation;
             _score = score;
         }
@@ -61,6 +66,7 @@ namespace Core.Game
         private void OnGameWon()
         {
             GameWinCommand.Execute();
+            _locationsHandler.SetRandomLocation();
             _navigation.ToWin();
         }
 

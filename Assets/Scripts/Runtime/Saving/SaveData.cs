@@ -8,5 +8,6 @@ namespace Core.Saving
         public int CoinsAmount = 0;
         public int FoodAmount = 0;
         public int LevelNumber = 1;
+        public int LocationIndex = 0;
     }
 }
