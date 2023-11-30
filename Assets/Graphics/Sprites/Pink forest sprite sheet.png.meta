@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 1b53969bf43214ed99519e144e949c18
+guid: 14ded2791f9994ad99d23c434cf1db78
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -20,11 +20,12 @@ TextureImporter:
     externalNormalMap: 0
     heightScale: 0.25
     normalMapFilter: 0
+    flipGreenChannel: 0
   isReadable: 0
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
   vTOnly: 0
-  ignoreMasterTextureLimit: 0
+  ignoreMipmapLimit: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -63,6 +64,7 @@ TextureImporter:
   textureFormatSet: 0
   ignorePngGamma: 0
   applyGammaDecoding: 0
+  swizzle: 50462976
   cookieLightType: 0
   platformSettings:
   - serializedVersion: 3
@@ -70,11 +72,12 @@ TextureImporter:
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 1
-    compressionQuality: 50
+    textureCompression: 2
+    compressionQuality: 100
     crunchedCompression: 0
     allowsAlphaSplitting: 0
     overridden: 0
+    ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
@@ -87,6 +90,7 @@ TextureImporter:
     crunchedCompression: 0
     allowsAlphaSplitting: 0
     overridden: 0
+    ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
@@ -99,6 +103,7 @@ TextureImporter:
     crunchedCompression: 0
     allowsAlphaSplitting: 0
     overridden: 0
+    ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
@@ -111,6 +116,7 @@ TextureImporter:
     crunchedCompression: 0
     allowsAlphaSplitting: 0
     overridden: 0
+    ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
@@ -123,19 +129,33 @@ TextureImporter:
     crunchedCompression: 0
     allowsAlphaSplitting: 0
     overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: iPhone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 2
+    compressionQuality: 100
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Sword
+      name: Island_0
       rect:
         serializedVersion: 2
-        x: 78
-        y: 57
-        width: 302
-        height: 393
+        x: 19
+        y: 306
+        width: 404
+        height: 177
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -143,20 +163,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e5c97dfe10aa04d5c9c440c8254808b3
-      internalID: -1397832311
+      spriteID: 4e2213db4ea2e40fab844bbcd6710588
+      internalID: -1838440721
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Statue
+      name: Island_1
       rect:
         serializedVersion: 2
-        x: 460
-        y: 64
-        width: 270
-        height: 375
+        x: 452
+        y: 305
+        width: 837
+        height: 176
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -164,20 +184,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 088f1c0209fc543fa9f2c65542d283d1
-      internalID: 1455532518
+      spriteID: 3706a6e63cea54751b8a608e7cf26ac5
+      internalID: -615417610
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Windmill_0
+      name: Island_2
       rect:
         serializedVersion: 2
-        x: 1548
-        y: 37
-        width: 364
-        height: 409
+        x: 1312
+        y: 305
+        width: 1052
+        height: 176
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -185,20 +205,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e349a320af44e4c2aa90cf8f54183c11
-      internalID: 576232075
+      spriteID: 93ff463e8a8444c369c1421ed9751b95
+      internalID: -1869837458
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Windmill_1
+      name: Island_3
       rect:
         serializedVersion: 2
-        x: 1928
-        y: 177
-        width: 359
-        height: 359
+        x: 31
+        y: 43
+        width: 620
+        height: 176
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -206,8 +226,29 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 856bc564ea24a4b9b9942c1b70b2c5d0
-      internalID: 1821737478
+      spriteID: fee0c5ac6106347f196a92de11353c5b
+      internalID: -1193276239
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Island_4
+      rect:
+        serializedVersion: 2
+        x: 664
+        y: 42
+        width: 1700
+        height: 177
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 98b166ae3554c45e195f0c404f7d300c
+      internalID: 642185735
       vertices: []
       indices: 
       edges: []
@@ -223,15 +264,13 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Windmill_1: 576232075
-      Windmill_0: 576232075
-      Decor Structures sprite sheet_2: -322440541
-      Sword: -1397832311
-      Statue: 1455532518
-      Decor Structures sprite sheet_3: 1205219759
-  spritePackingTag: 
+      Island_0: -1838440721
+      Island_1: -615417610
+      Island_2: -1869837458
+      Island_3: -1193276239
+      Island_4: 642185735
+  mipmapLimitGroupName: 
   pSDRemoveMatte: 0
-  pSDShowRemoveMatteOption: 0
   userData: 
   assetBundleName: 
   assetBundleVariant: 
