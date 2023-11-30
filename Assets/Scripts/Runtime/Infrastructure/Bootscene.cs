@@ -6,7 +6,7 @@ namespace Core.Infrastructure
 {
     public class Bootscene : MonoBehaviour
     {
-        private const int TargetFrameRate = 60;
+        private const int TargetFrameRate = 120;
 
         private LoadingProvider _loadingProvider;
 

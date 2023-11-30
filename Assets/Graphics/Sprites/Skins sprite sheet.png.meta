@@ -20,11 +20,12 @@ TextureImporter:
     externalNormalMap: 0
     heightScale: 0.25
     normalMapFilter: 0
+    flipGreenChannel: 0
   isReadable: 0
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
   vTOnly: 0
-  ignoreMasterTextureLimit: 0
+  ignoreMipmapLimit: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -63,6 +64,7 @@ TextureImporter:
   textureFormatSet: 0
   ignorePngGamma: 0
   applyGammaDecoding: 0
+  swizzle: 50462976
   cookieLightType: 0
   platformSettings:
   - serializedVersion: 3
@@ -75,6 +77,7 @@ TextureImporter:
     crunchedCompression: 0
     allowsAlphaSplitting: 0
     overridden: 0
+    ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
@@ -87,6 +90,7 @@ TextureImporter:
     crunchedCompression: 0
     allowsAlphaSplitting: 0
     overridden: 0
+    ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
@@ -99,6 +103,7 @@ TextureImporter:
     crunchedCompression: 0
     allowsAlphaSplitting: 0
     overridden: 0
+    ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
@@ -111,6 +116,7 @@ TextureImporter:
     crunchedCompression: 0
     allowsAlphaSplitting: 0
     overridden: 0
+    ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
@@ -123,6 +129,20 @@ TextureImporter:
     crunchedCompression: 0
     allowsAlphaSplitting: 0
     overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: iPhone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
@@ -769,40 +789,39 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Pinkbara_Body: -598417987
+      Blackbara_Body: -907199320
+      Blackbara_Head: -34807063
+      Blackbara_LArm: -598417987
+      Blackbara_Leg: -1330340903
+      Blackbara_RArm: -186711741
+      DarkBara_Body: 646096914
+      DarkBara_Head: 317021763
       DarkBara_LArm: 629613151
-      Purplebara_Head: 1138996402
-      Purplebara_RArm: 443169922
       DarkBara_Leg: 513421181
+      DarkBara_RArm: 1835073145
+      GreenBara_Body: -1781092865
+      GreenBara_Head: -1507083671
+      GreenBara_LArm: -1732202905
       GreenBara_Leg: 780475699
-      Redbara_Head: -706347043
+      GreenBara_RArm: 600591636
+      Pinkbara_Body: -598417987
+      Pinkbara_Head: -419870927
       Pinkbara_LArm: -1781092865
       Pinkbara_Leg: 148015019
-      Redbara_LArm: 962097720
-      DarkBara_Head: 317021763
-      Skins sprite sheet_1: -243716487
-      Redbara_Body: 84403471
-      Blackbara_Head: -34807063
-      GreenBara_LArm: -1732202905
       Pinkbara_RArm: 148129793
       Purplebara_Body: 178941328
-      Redbara_RArm: -209862144
-      Purplebara_Leg: -1705605479
-      Blackbara_LArm: -598417987
-      Blackbara_Body: -907199320
-      Pinkbara_Head: -419870927
-      DarkBara_RArm: 1835073145
-      GreenBara_RArm: 600591636
-      Blackbara_RArm: -186711741
-      GreenBara_Body: -1781092865
-      DarkBara_Body: 646096914
-      Redbara_Leg: 1835073145
+      Purplebara_Head: 1138996402
       Purplebara_LArm: -304867411
-      Blackbara_Leg: -1330340903
-      GreenBara_Head: -1507083671
-  spritePackingTag: 
+      Purplebara_Leg: -1705605479
+      Purplebara_RArm: 443169922
+      Redbara_Body: 84403471
+      Redbara_Head: -706347043
+      Redbara_LArm: 962097720
+      Redbara_Leg: 1835073145
+      Redbara_RArm: -209862144
+      Skins sprite sheet_1: -243716487
+  mipmapLimitGroupName: 
   pSDRemoveMatte: 0
-  pSDShowRemoveMatteOption: 0
   userData: 
   assetBundleName: 
   assetBundleVariant: 
