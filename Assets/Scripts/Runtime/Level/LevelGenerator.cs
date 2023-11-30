@@ -9,18 +9,22 @@ using Core.Factories;
 using Zenject;
 using Core.Saving;
 using System;
+using Core.UI;
 
 namespace Core.Level
 {
     public class LevelGenerator : ILevelGenerator, ILocationsHandler
     {
-        private const float HeroPositionCheckInterval = 1.5f;
+        private const float PositionCheckInterval = 1.5f;
 
         private readonly Queue<Platform> _platformsOnLevel;
+        private readonly AreaLabelsCollection _areaLabels;
         private readonly LevelGeneratorConfig _config;
         private readonly EntitySpawner _entitySpawner;
         private readonly IPlatformFactory<Platform> _platformFactory;
         private readonly BackgroundHandler _backgroundHandler;
+        private AreaLabelsService _areaLabelsService;
+        private AreaLabelContainer _labelContainer;
         private CancellationTokenSource _cts;
         private Transform _centerTransform;
         private int _platformNumber = 0;
@@ -37,6 +41,7 @@ namespace Core.Level
         [Inject]
         public LevelGenerator(
             LevelGeneratorConfig config,
+            AreaLabelsCollection areaLabels,
             Transform platfomrsParent,
             EntitySpawner entitySpawner)
         {
@@ -45,18 +50,30 @@ namespace Core.Level
             _lastGeneratedPlatformX = _config.XtartPoint;
             _platformsOnLevel = new();
 
+            _areaLabels = areaLabels;
+
             ILocationsHandler locationsHandler = this;
             _platformFactory = new PlatformFactory(locationsHandler, platfomrsParent);
             _backgroundHandler = new(_config.BackgroundPrefab);
         }
 
-        public void Dispose() =>
+        public void Dispose()
+        {
             _cts.Clear();
+            _areaLabelsService.Dispose();
+            _labelContainer.gameObject.SelfDestroy();
+        }
 
-        public void InitializeCenter(Transform transform)
+        public void InitializeLabels(AreaLabelContainer container)
+        {
+            _areaLabelsService = new(_areaLabels, container);
+            _labelContainer = container;
+        }
+
+        public void Initialize(Transform transform)
         {
             _centerTransform = transform;
-            CheckPlayerPosition().Forget();
+            CheckCenterPosition().Forget();
         }
 
         public void Save(SaveData data) => 
@@ -118,7 +135,7 @@ namespace Core.Level
             _backgroundHandler.CreateBackground(position, preset);
         }
 
-        private async UniTask CheckPlayerPosition()
+        private async UniTask CheckCenterPosition()
         {
             _cts = new();
             CancellationToken token = _cts.Token;
@@ -131,7 +148,11 @@ namespace Core.Level
                     GenerateRandomPlatform();
                 }
 
-                await MyUniTask.Delay(HeroPositionCheckInterval, token);
+                float positionX = _centerTransform.position.x;
+                int landPlatformNumber = _config.SpecialPlatformSequentialNumber;
+                _areaLabelsService.CheckDistance(positionX, landPlatformNumber);
+
+                await MyUniTask.Delay(PositionCheckInterval, token);
             }
         }
 

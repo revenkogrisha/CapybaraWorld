@@ -11,6 +11,9 @@ namespace Core.Installers
 
         [Space]
         [SerializeField] private LevelGeneratorConfig _levelGeneratorConfig;
+        [SerializeField] private AreaLabelsCollection _areaLabels;
+
+        [Space]
         [SerializeField] private Transform _platformsParent;
 
         public override void InstallBindings()
@@ -35,7 +38,7 @@ namespace Core.Installers
                 .BindInterfacesTo<LevelGenerator>()
                 .FromNew()
                 .AsSingle()
-                .WithArguments(_levelGeneratorConfig, _platformsParent)
+                .WithArguments(_levelGeneratorConfig, _areaLabels, _platformsParent)
                 .Lazy();
         }
     }

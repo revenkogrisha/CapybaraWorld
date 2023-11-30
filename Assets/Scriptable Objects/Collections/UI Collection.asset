@@ -17,3 +17,4 @@ MonoBehaviour:
   _gameOverMenuPrefab: {fileID: 2333696530276556720, guid: 9cf5d985f1eef49c18dbf6243afef445, type: 3}
   _loadingScreenCanvasPrefab: {fileID: 2815525695979309901, guid: 691bc00b7cb784184a7409382d9c921f, type: 3}
   _dashRecoveryDisplay: {fileID: 4930987023289001876, guid: 4a1c5f3500af9488eb5ba6430ae9794a, type: 3}
+  _areaLabelContainer: {fileID: 460496030546480575, guid: faffa74e4cb89475ea4faa522fabb370, type: 3}

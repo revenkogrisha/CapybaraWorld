@@ -8,6 +8,7 @@ using Core.Level;
 using Core.Other;
 using Core.Player;
 using Core.Saving;
+using Core.UI;
 using UnityEngine;
 using Inject = Zenject.InjectAttribute;
 
@@ -55,7 +56,7 @@ namespace Core.Infrastructure
 
         public override void Enter()
         {
-            ClearLists();
+            ClearDisposeLists();
             AddInjectedDisposables();
 
             _inputHandler.Initialize();
@@ -63,15 +64,15 @@ namespace Core.Infrastructure
             Hero hero = CreateHero();            
             Transform heroTransform = hero.transform;
 
-            InitializePlayerData(hero);
+            _playerData.InitializeEvents(hero);
 
-            InitializeCamera(hero);
+            _playerCamera.Initialize(hero);
             
             InitializeScoreCounter(heroTransform);
             InitializePlayerDeadline(heroTransform);
-            InitializeGameFinishHandler(hero);
+            _playthroughHandler.Initialize(hero);
 
-            _levelGenerator.InitializeCenter(heroTransform);
+            _levelGenerator.Initialize(heroTransform);
 
             CreateUI(hero);
         }
@@ -91,7 +92,7 @@ namespace Core.Infrastructure
             _destroyables.Clear();
         }
 
-        private void ClearLists()
+        private void ClearDisposeLists()
         {
             _disposables.Clear();
             _destroyables.Clear();
@@ -113,12 +114,6 @@ namespace Core.Infrastructure
             return hero;
         }
 
-        private void InitializePlayerData(IPlayerEventsHandler playerEvents) => 
-            _playerData.InitializeEvents(playerEvents);
-
-        private void InitializeCamera(Hero hero) =>
-            _playerCamera.Initialize(hero);
-
         private void InitializePlayerDeadline(Transform heroTransform)
         {
             FollowerObject playerDeadline = _playerDeadlineFactory.Create();
@@ -133,8 +128,11 @@ namespace Core.Infrastructure
             _disposables.Add(scoreCounter);
         }
 
-        private void InitializeGameFinishHandler(IDieable hero) =>
-            _playthroughHandler.Initialize(hero);
+        private void InitializeLevelGenerator(Transform heroTransform)
+        {
+            
+
+        }
 
         private void CreateUI(Hero hero) => 
             CreateDashRecoveryDisplay(hero);

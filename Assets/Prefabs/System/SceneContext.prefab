@@ -90,6 +90,7 @@ MonoBehaviour:
   _entityAssets: {fileID: 11400000, guid: 2ca60673e1a92471581dff21b29ec4d2, type: 2}
   _enemyAssets: {fileID: 11400000, guid: ac413751dc090405fbeda6b642de2b03, type: 2}
   _levelGeneratorConfig: {fileID: 11400000, guid: 1805d48b1bc4e421abde3eada9f65e5c, type: 2}
+  _areaLabels: {fileID: 11400000, guid: 5d6292258e754406a91ae45538f63c1a, type: 2}
   _platformsParent: {fileID: 0}
 --- !u!114 &5593888851257901341
 MonoBehaviour:
@@ -116,7 +117,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f625fef5323fb431fb9a294d314d09e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _focusCameraReference: {fileID: 0}
+  _focusCamera: {fileID: 0}
 --- !u!114 &8120219910018482654
 MonoBehaviour:
   m_ObjectHideFlags: 0

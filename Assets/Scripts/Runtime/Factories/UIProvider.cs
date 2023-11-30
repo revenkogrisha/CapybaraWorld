@@ -23,7 +23,7 @@ namespace Core.Factories
             MainMenu mainMenu = _diContainer
                 .InstantiatePrefabForComponent<MainMenu>(
                     _collection.MainMenuPrefab,
-                     _root.RectTransform);
+                    _root.RectTransform);
             
             return mainMenu;
         }
@@ -33,7 +33,7 @@ namespace Core.Factories
             GameWinMenu gameWinMenu = _diContainer
                 .InstantiatePrefabForComponent<GameWinMenu>(
                     _collection.GameWinMenuPrefab,
-                     _root.RectTransform);
+                    _root.RectTransform);
             
             return gameWinMenu;
         }
@@ -43,7 +43,7 @@ namespace Core.Factories
             GameLostMenu gameOverMenu = _diContainer
                 .InstantiatePrefabForComponent<GameLostMenu>(
                     _collection.GameOverMenuPrefab,
-                     _root.RectTransform);
+                    _root.RectTransform);
             
             return gameOverMenu;
         }
@@ -64,6 +64,16 @@ namespace Core.Factories
                     _collection.DashRecoveryDisplay);
 
             return display;
+        }
+
+        public AreaLabelContainer CreateAreaLabelContainer()
+        {
+            AreaLabelContainer container = _diContainer
+                .InstantiatePrefabForComponent<AreaLabelContainer>(
+                    _collection.AreaLabelContainer,
+                    _root.RectTransform);
+
+            return container;
         }
     }
 }

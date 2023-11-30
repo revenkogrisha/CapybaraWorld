@@ -1,4 +1,5 @@
 using System;
+using Core.UI;
 using UnityEngine;
 
 namespace Core.Level
@@ -6,7 +7,8 @@ namespace Core.Level
     public interface ILevelGenerator : IDisposable
     {
         public void Generate();
-        public void InitializeCenter(Transform center);
+        public void InitializeLabels(AreaLabelContainer container);
+        public void Initialize(Transform center);
         public void Clean();
     }
 }
