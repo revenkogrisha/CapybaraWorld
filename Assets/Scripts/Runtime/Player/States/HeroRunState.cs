@@ -216,8 +216,12 @@ namespace Core.Player
                 
                 Vector2 jumpVector = config.JumpVector;
                 jumpVector.x *= (float)_direction;
-                Vector2 velocity = jumpVector * config.JumpForce * progress;
+                
+                float jumpX = jumpVector.x * config.JumpForce;
+                float jumpY = jumpVector.y * config.JumpForce * progress;
+                Vector2 velocity = new(jumpX, jumpY);
                 rigidbody2D.velocity = velocity;
+                
                 elapsedTime += Time.deltaTime;
                 
                 await UniTask.NextFrame(token);
