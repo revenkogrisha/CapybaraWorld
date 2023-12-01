@@ -202,9 +202,8 @@ namespace Core.Player
                 return;
 
             CancellationToken token = _hero.destroyCancellationToken;
-            HeroConfig config = _hero.Config;
             Rigidbody2D rigidbody2D = _hero.Rigidbody2D;
-            float duration = config.JumpDuration;
+            float duration = _hero.Config.JumpDuration;
 
             IsJumping = true;
 
@@ -212,14 +211,10 @@ namespace Core.Player
             while (elapsedTime < duration)
             {
                 float delta = elapsedTime / duration;
-                float progress = config.JumpProgression.Evaluate(delta);
+                float progress = _hero.Config.JumpProgression.Evaluate(delta);
                 
-                Vector2 jumpVector = config.JumpVector;
-                jumpVector.x *= (float)_direction;
-                
-                float jumpX = jumpVector.x * config.JumpForce;
-                float jumpY = jumpVector.y * config.JumpForce * progress;
-                Vector2 velocity = new(jumpX, jumpY);
+                Vector2 jumpVector = GetJumpVector();
+                Vector2 velocity = GetJumpVelocity(jumpVector, progress);
                 rigidbody2D.velocity = velocity;
                 
                 elapsedTime += Time.deltaTime;
@@ -243,6 +238,21 @@ namespace Core.Player
 
             Physics2D.IgnoreCollision(_hero.Collider2D, platformCollider, false);
             _currentPlatform = null;
+        }
+
+        private Vector2 GetJumpVelocity(Vector2 jumpVector, float progress)
+        {
+            HeroConfig config = _hero.Config;
+            float jumpX = jumpVector.x * config.JumpForce;
+            float jumpY = jumpVector.y * config.JumpForce * progress;
+            return new(jumpX, jumpY);
+        }
+
+        private Vector2 GetJumpVector()
+        {
+            Vector2 jumpVector = _hero.Config.JumpVector;
+            jumpVector.x *= (float)_direction;
+            return jumpVector;
         }
     }
 }
