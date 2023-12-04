@@ -31,7 +31,7 @@ You have many capybaras in your team to achive any goals and find all hidden che
 
 ### Built With
 
-* [Extenject](https://github.com/Mathijs-Bakker/Extenject) - dependency injection Container for Unity
+* [Extenject](https://github.com/Mathijs-Bakker/Extenject) - dependency injection container for Unity
 * [UniTask](https://github.com/Cysharp/UniTask) - better async/await for Unity
 * [UniRx](https://github.com/neuecc/UniRx) - reactive extensions for Unity
 * [Universal RP](https://unity.com/ru/srp/universal-render-pipeline) - scriptable render pipeline made by Unity
