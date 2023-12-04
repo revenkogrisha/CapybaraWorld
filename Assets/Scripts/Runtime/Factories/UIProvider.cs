@@ -1,5 +1,6 @@
 using Core.Player;
 using Core.UI;
+using UnityEngine;
 using Zenject;
 
 namespace Core.Factories
@@ -18,14 +19,40 @@ namespace Core.Factories
             _diContainer = diContainer;
         }
 
-        public MainMenu CreateMainMenu()
+        public MainMenu CreateMainMenu(RectTransform parent = null)
         {
+            if (parent == null)
+                parent = _root.RectTransform;
+            
             MainMenu mainMenu = _diContainer
                 .InstantiatePrefabForComponent<MainMenu>(
                     _collection.MainMenuPrefab,
-                    _root.RectTransform);
+                    parent);
             
             return mainMenu;
+        }
+        
+        public UpgradeMenu CreateUpgradeMenu(RectTransform parent = null)
+        {
+            if (parent == null)
+                parent = _root.RectTransform;
+            
+            UpgradeMenu upgradeMenu = _diContainer
+                .InstantiatePrefabForComponent<UpgradeMenu>(
+                    _collection.UpgradeMenuPrefab,
+                    parent);
+            
+            return upgradeMenu;
+        }
+        
+        public MainMenuRoot CreateMainMenuRoot()
+        {
+            MainMenuRoot root = _diContainer
+                .InstantiatePrefabForComponent<MainMenuRoot>(
+                    _collection.MainMenuRootPrefab,
+                    _root.RectTransform);
+            
+            return root;
         }
 
         public GameWinMenu CreateGameWinMenu()
