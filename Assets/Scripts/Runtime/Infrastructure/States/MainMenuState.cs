@@ -9,16 +9,21 @@ namespace Core.Infrastructure
     public class MainMenuState : State
     {
         private readonly UIProvider _uiProvider;
-        private MainMenu _mainMenu;
+        private MainMenuRoot _root;
 
         [Inject]
         public MainMenuState(UIProvider uiProvider) =>
             _uiProvider = uiProvider;
 
-        public override void Enter() =>
-            _mainMenu = _uiProvider.CreateMainMenu();
+        public override void Enter()
+        {
+            _root = _uiProvider.CreateMainMenuRoot();
+            _root.Initialize();
+            
+            _root.ShowMainMenu();
+        }
 
-        public override void Exit() =>
-            _mainMenu.gameObject.SelfDestroy();
+        public override void Exit() => 
+            _root.gameObject.SelfDestroy();
     }
 }

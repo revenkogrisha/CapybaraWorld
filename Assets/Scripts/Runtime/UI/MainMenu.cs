@@ -1,6 +1,7 @@
 using Core.Infrastructure;
 using Core.Level;
 using Core.Player;
+using Cysharp.Threading.Tasks;
 using TMPro;
 using UnityEngine;
 using UnityTools.Buttons;
@@ -8,26 +9,37 @@ using Zenject;
 
 namespace Core.UI
 {
-    public class MainMenu : MonoBehaviour
+    public class MainMenu : AnimatedUI
     {
         private const string LevelTextFormat = "Level {0}";
         private const string LocationTextFormat = "Location: {0}";
         
+        [Space]
         [SerializeField] private UIButton _playButton;
+        [SerializeField] private UIButton _upgradeButton;
+        
+        [Space]
         [SerializeField] private TMP_Text _levelTMP;
         [SerializeField] private TMP_Text _locationTMP;
 
         private ILocationsHandler _locationsHandler;
         private PlayerData _playerData;
         private GameNavigation _navigation;
+        private MainMenuRoot _root;
 
         #region MonoBehaviour
 
-        private void OnEnable() => 
+        private void OnEnable()
+        {
             _playButton.OnClicked += StartGame;
+            _upgradeButton.OnClicked += ToUpgradeMenu;
+        }
 
-        private void OnDisable() =>
+        private void OnDisable()
+        {
             _playButton.OnClicked -= StartGame;
+            _upgradeButton.OnClicked -= ToUpgradeMenu;
+        }
 
         private void Start()
         {
@@ -48,8 +60,17 @@ namespace Core.UI
             _navigation = navigation;
         }
 
+        public void InitializeRoot(MainMenuRoot root) => 
+            _root = root;
+
         private void StartGame() => 
             _navigation.ToGameplay();
+
+        private void ToUpgradeMenu()
+        {
+            Conceal(disable: true).Forget();
+            _root.ShowUpgradeMenu();
+        }
 
         private void DisplayLevelNumber()
         {
@@ -59,8 +80,8 @@ namespace Core.UI
 
         private void DisplayLocationName()
         {
-            string name = _locationsHandler.CurrentLocation.Name;
-            string locationText = string.Format(LocationTextFormat, name);
+            string locationName = _locationsHandler.CurrentLocation.Name;
+            string locationText = string.Format(LocationTextFormat, locationName);
             _locationTMP.SetText(locationText);
         }
     }
