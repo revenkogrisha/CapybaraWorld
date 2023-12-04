@@ -5,7 +5,7 @@ namespace Core.UI
 {
     public interface IAnimatedUI
     {
-        public UniTask Reveal(CancellationToken token);
-        public UniTask Conceal(CancellationToken token);
+        public UniTask Reveal(CancellationToken token, bool enable);
+        public UniTask Conceal(CancellationToken token, bool disable);
     }
 }
