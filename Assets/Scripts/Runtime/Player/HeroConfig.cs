@@ -14,8 +14,8 @@ namespace Core.Player
         [SerializeField] private Vector2 _onGrappledVelocityVector = new(1f, 0.8f);
 
         [Header("Run Settings")]
-        [SerializeField, Range(0f, 100f)] private float _runSpeed = 15f;
-        [SerializeField, Range(0f, 1f)] private float _accelerationTime = 0.3f;
+        [SerializeField, Range(0f, 100f)] private float _runSpeed = 12f;
+        [SerializeField, Range(0f, 1f)] private float _accelerationTime = 0.15f;
 
         [Header("Dash Settings")]
         [SerializeField, Min(0f)] private float _dashForce = 30f;
@@ -25,8 +25,8 @@ namespace Core.Player
         [Header("Jump Settings")]
         [SerializeField] private AnimationCurve _jumpProgression;
         [SerializeField] private Vector2 _jumpVector = new(0.2f, 1f);
-        [SerializeField, Min(0f)] private float _jumpDuration = 0.8f;
-        [SerializeField, Min(0f)] private float _jumpForce = 20f;
+        [SerializeField, Min(0f)] private float _jumpDuration = 0.55f;
+        [SerializeField, Min(0f)] private float _jumpForce = 18f;
         [SerializeField, Min(0f)] private float _descendDuration = 1f;
 
         [Header("Collisions")]
