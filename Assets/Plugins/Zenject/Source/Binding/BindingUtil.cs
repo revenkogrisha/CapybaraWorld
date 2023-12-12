@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using ModestTree;
 using Zenject.Internal;
 using System.Linq;
@@ -10,7 +9,6 @@ using TypeExtensions = ModestTree.TypeExtensions;
 using UnityEngine;
 
 #if UNITY_EDITOR
-using UnityEditor;
 #endif
 
 #endif

@@ -2,7 +2,6 @@ using System;
 using Core.Infrastructure;
 using Core.Level;
 using Core.Player;
-using Cysharp.Threading.Tasks;
 using UniRx;
 using Zenject;
 
