@@ -11,7 +11,8 @@ namespace Core.Installers
         public override void InstallBindings()
         {
             BindPlayerData();
-            BindPlayerCamera();
+            BindCamera();
+            BindUpgrade();
         }
 
         private void BindPlayerData()
@@ -23,12 +24,21 @@ namespace Core.Installers
                 .Lazy();
         }
 
-        private void BindPlayerCamera()
+        private void BindCamera()
         {
             Container
                 .Bind<IPlayerCamera>()
                 .To<FocusCamera>()
                 .FromInstance(_focusCamera)
+                .AsSingle()
+                .Lazy();
+        }
+        
+        private void BindUpgrade()
+        {
+            Container
+                .Bind<PlayerUpgrade>()
+                .FromNew()
                 .AsSingle()
                 .Lazy();
         }

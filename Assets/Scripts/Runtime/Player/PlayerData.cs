@@ -8,8 +8,8 @@ namespace Core.Player
 {
     public class PlayerData : ISaveable, IDisposable
     {
-        private const int CoinsDefaultReward = 1;
-        private const int FoodDefaultReward = 1;
+        private const int CoinsReward = 1;
+        private const int FoodReward = 1;
         
         private readonly IGameEventsHandler _gameEvents;
         private readonly CompositeDisposable _disposable = new();
@@ -54,11 +54,28 @@ namespace Core.Player
                 .AddTo(_disposable);
         }
 
+        public void RemoveCoins(int amount)
+        {
+            int newAmount = CoinsAmount - amount;
+            if (newAmount < 0)
+                throw new ArgumentException("Not enough coins to remove!");
+
+            CoinsAmount = newAmount;
+        }
+        public void RemoveFood(int amount)
+        {
+            int newAmount = FoodAmount - amount;
+            if (newAmount < 0)
+                throw new ArgumentException("Not enough food to remove!");
+
+            FoodAmount = newAmount;
+        }
+
         private void AddCoin() =>
-            CoinsAmount += CoinsDefaultReward;
+            CoinsAmount += CoinsReward;
 
         private void AddFood() =>
-            FoodAmount += FoodDefaultReward;
+            FoodAmount += FoodReward;
 
         private void IncreaseLevelNumber() => 
             LevelNumber++;
