@@ -9,5 +9,7 @@ namespace Core.Saving
         public int FoodAmount = 0;
         public int LevelNumber = 1;
         public int LocationIndex = 0;
+        public int UpgradeCost = 15;
+        public int HeroLevel = 1;
     }
 }
