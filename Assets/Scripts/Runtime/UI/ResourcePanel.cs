@@ -12,14 +12,17 @@ namespace Core.UI
         
         private PlayerData _playerData;
 
-        private void Start()
-        {
-            _coinsTMP.SetText(_playerData.CoinsAmount.ToString());
-            _foodTMP.SetText(_playerData.FoodAmount.ToString());
-        }
+        private void Start() => 
+            DisplayResources();
 
         [Inject]
         private void Construct(PlayerData playerData) =>
             _playerData = playerData;
+
+        public void DisplayResources()
+        {
+            _coinsTMP.SetText(_playerData.CoinsAmount.ToString());
+            _foodTMP.SetText(_playerData.FoodAmount.ToString());
+        }
     }
 }
