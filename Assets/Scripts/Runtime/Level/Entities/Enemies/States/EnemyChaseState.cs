@@ -1,9 +1,11 @@
 using System;
 using System.Threading;
 using Core.Common;
+using Core.Editor;
 using Core.Other;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
+using XDiffGui;
 
 namespace Core.Level
 {
@@ -57,23 +59,21 @@ namespace Core.Level
 						FiniteStateMachine.ChangeState<EnemySearchingState>();
 						break;
 					}
-					
+
 					Rigidbody2D rigidbody2D = _enemy.Rigidbody2D;
 					Vector2 velocity = rigidbody2D.velocity;
 					velocity.x = _directionToTarget.x * _enemy.Preset.Speed;
-					
+
 					rigidbody2D.velocity = velocity;
-					
+
 					elapsedTime += Time.deltaTime;
 					await UniTask.NextFrame(token);
 				}
 			}
-			catch (Exception e)
+			catch (OperationCanceledException ex) {  }
+			catch (Exception ex)
 			{
-				if (e is OperationCanceledException)
-					return;
-				
-				Debug.Log($"{GetType()}: {e.Message} \n {e.StackTrace}");
+				RDebug.Error($"{GetType().Name}::{nameof(ChaseTarget)}: {ex.Message} \n {ex.StackTrace}");
 			}
 		}
 
