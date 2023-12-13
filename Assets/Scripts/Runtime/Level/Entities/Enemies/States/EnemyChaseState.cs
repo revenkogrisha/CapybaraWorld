@@ -70,7 +70,7 @@ namespace Core.Level
 					await UniTask.NextFrame(token);
 				}
 			}
-			catch (OperationCanceledException ex) {  }
+			catch (OperationCanceledException) {  }
 			catch (Exception ex)
 			{
 				RDebug.Error($"{GetType().Name}::{nameof(ChaseTarget)}: {ex.Message} \n {ex.StackTrace}");
