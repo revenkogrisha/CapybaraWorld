@@ -54,12 +54,10 @@ namespace Core.Level
 					await MyUniTask.Delay(_enemy.SearchPreset.SpotInterval, token);
 				}
 			}
-			catch (Exception e)
+			catch (OperationCanceledException) {  }
+			catch (Exception ex)
 			{
-				if (e is OperationCanceledException)
-					return;
-				
-				RDebug.Log($"{GetType().Name}::{nameof(StartLookingForTarget)}: {e.Message} \n {e.StackTrace}");
+				RDebug.Error($"{GetType().Name}::{nameof(StartLookingForTarget)}: {ex.Message} \n {ex.StackTrace}");
 			}
 		}
 

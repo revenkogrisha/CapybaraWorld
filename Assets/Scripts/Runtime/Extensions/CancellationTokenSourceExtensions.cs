@@ -4,12 +4,6 @@ namespace Core.Other
 {
     public static class CancellationTokenSourceExtensions
     {
-        public static void Reset(this CancellationTokenSource cts)
-        {
-            cts.Clear();
-            cts = new();
-        }
-
         public static void Clear(this CancellationTokenSource cts)
         {
             if (cts == null)
@@ -19,7 +13,6 @@ namespace Core.Other
                 cts.Cancel();
             
             cts.Dispose();
-            cts = null;
         }
     }
 }
