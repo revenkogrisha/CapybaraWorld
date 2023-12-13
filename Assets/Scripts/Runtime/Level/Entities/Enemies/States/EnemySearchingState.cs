@@ -1,6 +1,7 @@
 using System;
 using System.Threading;
 using Core.Common;
+using Core.Editor;
 using Core.Other;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
@@ -58,7 +59,7 @@ namespace Core.Level
 				if (e is OperationCanceledException)
 					return;
 				
-				Debug.Log($"{GetType()}: {e.Message} \n {e.StackTrace}");
+				RDebug.Log($"{GetType().Name}::{nameof(StartLookingForTarget)}: {e.Message} \n {e.StackTrace}");
 			}
 		}
 
