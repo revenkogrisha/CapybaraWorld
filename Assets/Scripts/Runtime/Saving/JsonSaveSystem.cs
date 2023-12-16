@@ -1,4 +1,6 @@
 using System.IO;
+using Core.Editor;
+using UnityEditor;
 using UnityEngine;
 
 namespace Core.Saving
@@ -7,26 +9,40 @@ namespace Core.Saving
     {
         public const string SaveFileFormat = "/CapybaraWorld.json";
 
-        private readonly string _filePath;
+        private static string FilePath = Application.persistentDataPath + SaveFileFormat;
 
-        public JsonSaveSystem() => 
-            _filePath = Application.persistentDataPath + SaveFileFormat;
+        [MenuItem("Tools/CapybaraWorld/Delete Save Data", false, 20)]
+        public static void DeleteSaveData()
+        {
+            if (EditorUtility.DisplayDialog("Delete Save Data", "Are you sure that you want to DELETE your SAVE DATA?",
+                    "DELETE MY DATA!", "Cancel"))
+            {
+                if (File.Exists(FilePath) == false)
+                {
+                    EditorUtility.DisplayDialog("Failed", "You don't have save data, or the path is incorrect. You also maybe using the wrong 'SaveSystem'", "Okay");
+                    return;
+                }
+                
+                File.Delete(FilePath);
+                EditorUtility.DisplayDialog("Succeeded", "Your save data was deleted", "Okay");
+            }
+        }
 
         public void Save(SaveData data)
         {
             string json = JsonUtility.ToJson(data);
-            using StreamWriter writer = new(_filePath);
+            using StreamWriter writer = new(FilePath);
 
             writer.Write(json);
         }
 
         public SaveData Load()
         {
-            if (File.Exists(_filePath) == false)
+            if (File.Exists(FilePath) == false)
                 return new SaveData();
 
             string json = "";
-            using StreamReader reader = new(_filePath);
+            using StreamReader reader = new(FilePath);
 
             string line = "";
             while ((line = reader.ReadLine()) != null)
@@ -34,7 +50,7 @@ namespace Core.Saving
 
             if (string.IsNullOrEmpty(json))
                 return new SaveData();
-
+            
             return JsonUtility.FromJson<SaveData>(json);
         }
     }
