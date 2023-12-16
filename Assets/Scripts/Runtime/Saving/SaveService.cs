@@ -1,4 +1,6 @@
+using System;
 using System.Collections.Generic;
+using Core.Editor;
 using Zenject;
 
 namespace Core.Saving
@@ -26,19 +28,37 @@ namespace Core.Saving
 
         public void Save()
         {
-            SaveData data = new();
-            foreach (ISaveable saveable in _saveables)
-                saveable.Save(data);
-            
-            _saveSystem.Save(data);
+            try
+            {
+                SaveData data = new();
+                foreach (ISaveable saveable in _saveables)
+                    saveable.Save(data);
+
+                _saveSystem.Save(data);
+
+                RDebug.Info($"{GetType().Name}: Data was saved");
+            }
+            catch (Exception ex)
+            {
+                RDebug.Error($"{GetType().Name}: Failed to save data: {ex.Message} \n {ex.StackTrace}", true);
+            }
         }
 
         public void Load()
         {
-            SaveData data = _saveSystem.Load();
+            try
+            {
+                SaveData data = _saveSystem.Load();
 
-            foreach (ISaveable saveable in _saveables)
-                saveable.Load(data);
+                foreach (ISaveable saveable in _saveables)
+                    saveable.Load(data);
+                
+                RDebug.Info($"{GetType().Name}: Data was loaded");
+            }
+            catch (Exception ex)
+            {
+                RDebug.Error($"{GetType().Name}: Failed to load data: {ex.Message} \n {ex.StackTrace}", true);
+            }
         }
     }
 }
