@@ -14,9 +14,27 @@ namespace Core.Editor
         private static bool IsReady => EditorApplication.isCompiling == false && EditorApplication.isPlayingOrWillChangePlaymode == false;
         
         static EditorSceneHelper()
-        {       
+        {   
             ToolbarExtender.LeftToolbarGUI.Add(OnLeftOnToolbarGUI);
             EditorSceneManager.playModeStartScene = null;
+        }
+
+        [MenuItem("Tools/CapybaraWorld/To Bootscene", false, 0)]
+        private static void ToBootscene()
+        {
+            if (IsReady == false)
+                return;
+
+            EditorSceneManager.OpenScene(BootscenePath);
+        }
+        
+        [MenuItem("Tools/CapybaraWorld/To Game", false, 1)]
+        private static void ToGame()
+        {
+            if (EditorApplication.isCompiling == true || EditorApplication.isPlaying == true)
+                return;
+
+            EditorSceneManager.OpenScene(GameScenePath);
         }
 
         private static void OnLeftOnToolbarGUI()
@@ -29,32 +47,14 @@ namespace Core.Editor
 
         private static void OnStartBootsceneButton()
         {
-            GUIContent startBootButtonContent = new("Play Bootscene",
+            GUIContent content = new("Play Bootscene",
                 "Starts playmode from Bootscene.unity, but doesn't open it");
             
-            if (GUILayout.Button(startBootButtonContent, ToolbarStyles.GetCommandButtonStyle()))
+            if (GUILayout.Button(content, ToolbarStyles.GetCommandButtonStyle()))
             {
                 EditorSceneManager.playModeStartScene = AssetDatabase.LoadAssetAtPath<SceneAsset>(BootscenePath);
                 EditorApplication.EnterPlaymode();
             }
-        }
-
-        [MenuItem("Tools/CapybaraWorld/To Bootscene")]
-        private static void ToBootscene()
-        {
-            if (IsReady == false)
-                return;
-
-            EditorSceneManager.OpenScene(BootscenePath);
-        }
-        
-        [MenuItem("Tools/CapybaraWorld/To Game")]
-        private static void ToGame()
-        {
-            if (EditorApplication.isCompiling == true || EditorApplication.isPlaying == true)
-                return;
-
-            EditorSceneManager.OpenScene(GameScenePath);
         }
     }
 }
