@@ -1,6 +1,6 @@
 {
     "name": "RuntimeAssembly",
-    "rootNamespace": "",
+    "rootNamespace": "Core",
     "references": [
         "GUID:324caed91501a9c47a04ebfd87b68794",
         "GUID:0d8beb7f090555447a6cf5ce9e54dbb4",

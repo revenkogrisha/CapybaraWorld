@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Generic;
-using Core.Editor;
+using Core.Editor.Debugger;
 using Zenject;
 
 namespace Core.Saving
