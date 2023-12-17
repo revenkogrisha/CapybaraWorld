@@ -1,7 +1,7 @@
 using System;
 using System.Threading;
 using Core.Common;
-using Core.Editor;
+using Core.Editor.Debugger;
 using Core.Other;
 using Cysharp.Threading.Tasks;
 using UnityEngine;

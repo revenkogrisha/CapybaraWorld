@@ -1,5 +1,7 @@
 using System.IO;
+#if UNITY_EDITOR
 using UnityEditor;
+#endif
 using UnityEngine;
 
 namespace Core.Saving
@@ -10,6 +12,7 @@ namespace Core.Saving
 
         private static string FilePath = Application.persistentDataPath + SaveFileFormat;
 
+#if UNITY_EDITOR
         [MenuItem("Tools/CapybaraWorld/Delete Save Data", false, 20)]
         public static void DeleteSaveData()
         {
@@ -26,6 +29,7 @@ namespace Core.Saving
                 EditorUtility.DisplayDialog("Succeeded", "Your save data was deleted", "Okay");
             }
         }
+#endif
 
         public void Save(SaveData data)
         {
