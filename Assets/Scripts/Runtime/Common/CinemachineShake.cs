@@ -1,6 +1,7 @@
 using System;
 using System.Threading;
 using Cinemachine;
+using Core.Editor.Debugger;
 using Core.Other;
 using Cysharp.Threading.Tasks;
 
@@ -31,12 +32,18 @@ namespace Core.Common
             {
                 _perlinNoise.m_AmplitudeGain = intensity;
 
-                await MyUniTask.Delay(duration, token);
+                await UniTaskUtility.Delay(duration, token);
                 Reset();
             }
-            catch
+            catch (OperationCanceledException) {  }
+            catch (Exception ex)
+            {
+                RDebug.Warning($"{nameof(CinemachineShake)}::{nameof(Shake)}: {ex.Message} \n{ex.StackTrace}");
+            }
+            finally
             {
                 _cts.Clear();
+                _cts = null;
             }
         }
 

@@ -9,6 +9,8 @@ using Core.Factories;
 using Zenject;
 using Core.Saving;
 using System;
+using Core.Editor.Debugger;
+using Core.Game;
 using Core.UI;
 
 namespace Core.Level
@@ -135,24 +137,37 @@ namespace Core.Level
             _backgroundHandler.CreateBackground(position, preset);
         }
 
-        private async UniTask CheckCenterPosition()
+        private async UniTaskVoid CheckCenterPosition()
         {
             _cts = new();
             CancellationToken token = _cts.Token;
-            
-            while (true)
+
+            try
             {
-                if (IsLevelMidPointXLessHeroX == true) 
+                while (true)
                 {
-                    DespawnOldestPlatform();
-                    GenerateRandomPlatform();
+                    if (IsLevelMidPointXLessHeroX == true)
+                    {
+                        DespawnOldestPlatform();
+                        GenerateRandomPlatform();
+                    }
+
+                    float positionX = _centerTransform.position.x;
+                    int landPlatformNumber = _config.SpecialPlatformSequentialNumber;
+                    _areaLabelsService.CheckDistance(positionX, landPlatformNumber);
+
+                    await UniTaskUtility.Delay(PositionCheckInterval, token);
                 }
-
-                float positionX = _centerTransform.position.x;
-                int landPlatformNumber = _config.SpecialPlatformSequentialNumber;
-                _areaLabelsService.CheckDistance(positionX, landPlatformNumber);
-
-                await MyUniTask.Delay(PositionCheckInterval, token);
+            }
+            catch (OperationCanceledException) {  }
+            catch (Exception ex)
+            {
+                RDebug.Warning($"{nameof(LevelGenerator)}::{nameof(CheckCenterPosition)}: {ex.Message} \n{ex.StackTrace}");
+            }
+            finally
+            {
+                _cts.Clear();
+                _cts = null;
             }
         }
 

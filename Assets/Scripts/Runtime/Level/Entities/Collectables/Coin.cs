@@ -44,7 +44,7 @@ namespace Core.Level
             _rigidbody2D.excludeLayers = _heroLayer;
             _rigidbody2D.includeLayers = 0;
 
-            await MyUniTask.Delay(BlockDuration, destroyCancellationToken);
+            await UniTaskUtility.Delay(BlockDuration, destroyCancellationToken);
 
             _rigidbody2D.excludeLayers = 0;
             _rigidbody2D.includeLayers = _heroLayer;

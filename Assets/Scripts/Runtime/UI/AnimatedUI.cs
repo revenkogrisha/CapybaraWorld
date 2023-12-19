@@ -1,4 +1,6 @@
+using System;
 using System.Threading;
+using Core.Editor.Debugger;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 
@@ -29,9 +31,10 @@ namespace Core.UI
                     await UniTask.NextFrame(token);
                 }
             }
-            catch
+            catch (OperationCanceledException) {  }
+            catch (Exception ex)
             {
-                print("Exception handled in Animated UI");
+                RDebug.Warning($"UniTaskVoid exception: {nameof(AnimatedUI)}::{nameof(Reveal)}: {ex.Message} \n{ex.StackTrace}");
             }
         }
 
@@ -52,9 +55,10 @@ namespace Core.UI
                     gameObject.SetActive(false);
 
             }
-            catch
+            catch (OperationCanceledException) {  }
+            catch (Exception ex)
             {
-                print("Exception handled in Animated UI");
+                RDebug.Warning($"{nameof(AnimatedUI)}::{nameof(Conceal)}: {ex.Message} \n{ex.StackTrace}");
             }
         }
 

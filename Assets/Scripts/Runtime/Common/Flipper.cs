@@ -62,7 +62,7 @@ namespace Core.Common
                 if (ShouldFlip == true)
                     Flip();
 
-                await MyUniTask.Delay(CheckFrequency, token);
+                await UniTaskUtility.Delay(CheckFrequency, token);
             }
         }
 
