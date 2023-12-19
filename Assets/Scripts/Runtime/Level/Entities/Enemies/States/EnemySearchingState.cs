@@ -51,13 +51,18 @@ namespace Core.Level
 
 					ChangeDirection();
 
-					await MyUniTask.Delay(_enemy.SearchPreset.SpotInterval, token);
+					await UniTaskUtility.Delay(_enemy.SearchPreset.SpotInterval, token);
 				}
 			}
 			catch (OperationCanceledException) {  }
 			catch (Exception ex)
 			{
-				RDebug.Error($"{GetType().Name}::{nameof(StartLookingForTarget)}: {ex.Message} \n {ex.StackTrace}");
+				RDebug.Warning($"{nameof(EnemySearchingState)}::{nameof(StartLookingForTarget)}: {ex.Message} \n{ex.StackTrace}");
+			}
+			finally
+			{
+				_cts.Clear();
+				_cts = null;
 			}
 		}
 

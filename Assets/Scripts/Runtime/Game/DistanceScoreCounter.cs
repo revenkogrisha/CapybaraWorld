@@ -1,4 +1,6 @@
+using System;
 using System.Threading;
+using Core.Editor.Debugger;
 using Core.Other;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
@@ -34,16 +36,35 @@ namespace Core.Game
             _cts = new();
             CancellationToken token = _cts.Token;
 
-            while (true)
+            try
             {
-                float targetX = _targetTransfrom.position.x;
-                int playthroughDistance = Mathf.RoundToInt(targetX * ValueMultiplier);
-                if (playthroughDistance < 0)
-                    playthroughDistance = 0;
+                while (true)
+                {
+                    float targetX = _targetTransfrom.position.x;
+                    int playthroughDistance = Mathf.RoundToInt(targetX * ValueMultiplier);
+                    if (playthroughDistance < 0)
+                        playthroughDistance = 0;
 
-                _score.PlaythroughScore.Value = playthroughDistance;
+                    _score.PlaythroughScore.Value = playthroughDistance;
 
-                await MyUniTask.Delay(UpdateFrequency, token);
+                    if (token.IsCancellationRequested == true)
+                    {
+                        _cts?.Dispose();
+                        _cts = null;
+                    }
+
+                    await UniTaskUtility.Delay(UpdateFrequency, token);
+                }
+            }
+            catch (OperationCanceledException ex) {  }
+            catch (Exception ex)
+            {
+                RDebug.Warning($"{nameof(DistanceScoreCounter)}::{nameof(Count)}: {ex.Message} \n{ex.StackTrace}");
+            }
+            finally
+            {
+                _cts.Clear();
+                _cts = null;
             }
         }
     }

@@ -3,6 +3,8 @@ using Cysharp.Threading.Tasks;
 using Core.Other;
 using System;
 using System.Threading;
+using Codice.Client.ChangeTrackerService;
+using Core.Editor.Debugger;
 using Object = UnityEngine.Object;
 
 namespace Core.Level
@@ -55,17 +57,30 @@ namespace Core.Level
             Follow().Forget();
         }
 
-        private async UniTask Follow()
+        private async UniTaskVoid Follow()
         {
             _cts = new();
             CancellationToken token = _cts.Token;
 
-            while (true)
+            try
             {
-                Vector3 movedPosition = GetMovedPosition();
-                _thisTransform.position = movedPosition;
+                while (true)
+                {
+                    Vector3 movedPosition = GetMovedPosition();
+                    _thisTransform.position = movedPosition;
 
-                await MyUniTask.Delay(_updateIntervalInSeconds, token);
+                    await UniTaskUtility.Delay(_updateIntervalInSeconds, token);
+                }
+            }
+            catch (OperationCanceledException) {  }
+            catch (Exception ex)
+            {
+                RDebug.Warning($"{nameof(FollowerObject)}::{nameof(Follow)}: {ex.Message} \n{ex.StackTrace}");
+            }
+            finally
+            {
+                _cts.Clear();
+                _cts = null;
             }
         }
 

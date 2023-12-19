@@ -1,6 +1,8 @@
 using System;
 using System.Threading;
 using Core.Common;
+using Core.Editor.Debugger;
+using Core.Game;
 using Core.Game.Input;
 using Core.Level;
 using Core.Other;
@@ -17,7 +19,7 @@ namespace Core.Player
         private readonly Hero _hero;
         private readonly InputHandler _inputHandler;
         private readonly CompositeDisposable _disposable = new();
-        private CancellationToken _cancellationToken;
+        private readonly CancellationToken _cts;
         private float _nextDashTime = 0;
         private float _acceleration;
         private LookingDirection _direction;
@@ -39,7 +41,7 @@ namespace Core.Player
         {
             _hero = hero;
             _inputHandler = inputHandler;
-            _cancellationToken = _hero.destroyCancellationToken;
+            _cts = _hero.destroyCancellationToken;
         }
 
         public override void Enter()
@@ -69,11 +71,11 @@ namespace Core.Player
                 .AddTo(_disposable);
 
             _inputHandler.StopCommand
-                .Subscribe(_ => ReduceAcceleration(_cancellationToken).Forget())
+                .Subscribe(_ => ReduceAcceleration(_cts).Forget())
                 .AddTo(_disposable);
 
             _inputHandler.DashCommand
-                .Subscribe(_ => Dash(_cancellationToken).Forget())
+                .Subscribe(_ => Dash(_cts).Forget())
                 .AddTo(_disposable);
 
             _inputHandler.JumpCommand
@@ -82,7 +84,7 @@ namespace Core.Player
 
             _inputHandler.DownCommand
                 .Where(_ => _currentPlatform != null)
-                .Subscribe(_ => DescendFromPlaftorm(_cancellationToken).Forget())
+                .Subscribe(_ => DescendFromPlaftorm(_cts).Forget())
                 .AddTo(_disposable);
         }
 
@@ -110,53 +112,69 @@ namespace Core.Player
         private void AccelerateRight()
         {
             _direction = LookingDirection.Right;
-            RaiseAcceleration(_cancellationToken).Forget();
+            RaiseAcceleration(_cts).Forget();
         }
 
         private void AccelerateLeft()
         {
             _direction = LookingDirection.Left;
-            RaiseAcceleration(_cancellationToken).Forget();
+            RaiseAcceleration(_cts).Forget();
         }
 
         private async UniTaskVoid RaiseAcceleration(CancellationToken token)
         {
-            float accelerationTime = _hero.Config.AccelerationTime;
-            float maximum = (float)_direction;
-
-            _hero.IsRunning.Value = true;
-
-            float elapsedTime = 0;
-            while (elapsedTime < accelerationTime)
+            try
             {
-                float delta = elapsedTime / accelerationTime;
-                _acceleration = Mathf.Lerp(0f, maximum, delta);
-                elapsedTime += Time.deltaTime;
+                float accelerationTime = _hero.Config.AccelerationTime;
+                float maximum = (float)_direction;
 
-                await UniTask.NextFrame(token);
+                _hero.IsRunning.Value = true;
+
+                float elapsedTime = 0;
+                while (elapsedTime < accelerationTime)
+                {
+                    float delta = elapsedTime / accelerationTime;
+                    _acceleration = Mathf.Lerp(0f, maximum, delta);
+                    elapsedTime += Time.deltaTime;
+
+                    await UniTask.NextFrame(token);
+                }
+
+                _acceleration = maximum;
             }
-
-            _acceleration = maximum;
+            catch (OperationCanceledException) {  }
+            catch (Exception ex)
+            {
+                RDebug.Warning($"{nameof(HeroRunState)}::{nameof(RaiseAcceleration)}: {ex.Message} \n{ex.StackTrace}");
+            }
         }
 
         private async UniTaskVoid ReduceAcceleration(CancellationToken token)
         {
-            float accelerationTime = _hero.Config.AccelerationTime;
-
-            _hero.IsRunning.Value = false;
-            float original = _acceleration;
-
-            float elapsedTime = 0;
-            while (elapsedTime < accelerationTime)
+            try
             {
-                float delta = elapsedTime / accelerationTime;
-                _acceleration = Mathf.Lerp(original, 0f, delta);
-                elapsedTime += Time.deltaTime;
+                float accelerationTime = _hero.Config.AccelerationTime;
 
-                await UniTask.NextFrame(token);
+                _hero.IsRunning.Value = false;
+                float original = _acceleration;
+
+                float elapsedTime = 0;
+                while (elapsedTime < accelerationTime)
+                {
+                    float delta = elapsedTime / accelerationTime;
+                    _acceleration = Mathf.Lerp(original, 0f, delta);
+                    elapsedTime += Time.deltaTime;
+
+                    await UniTask.NextFrame(token);
+                }
+
+                _acceleration = 0f;
             }
-
-            _acceleration = 0f;
+            catch (OperationCanceledException) {  }
+            catch (Exception ex)
+            {
+                RDebug.Warning($"{nameof(HeroRunState)}::{nameof(ReduceAcceleration)}: {ex.Message} \n{ex.StackTrace}");
+            }
         }
 
         private void Run()
@@ -188,7 +206,7 @@ namespace Core.Player
             rigidbody2D.gravityScale = 0f;
             IsDashing = true;
             
-            await MyUniTask.Delay(config.DashDuration, token);
+            await UniTaskUtility.Delay(config.DashDuration, token);
 
             rigidbody2D.gravityScale = initialGravityScale;
             IsDashing = false;
@@ -234,7 +252,7 @@ namespace Core.Player
             Collider2D platformCollider = _currentPlatform.GetComponent<Collider2D>();
             Physics2D.IgnoreCollision(_hero.Collider2D, platformCollider, true);
 
-            await MyUniTask.Delay(_hero.Config.DescendDuration, token);
+            await UniTaskUtility.Delay(_hero.Config.DescendDuration, token);
 
             Physics2D.IgnoreCollision(_hero.Collider2D, platformCollider, false);
             _currentPlatform = null;

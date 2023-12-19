@@ -1,4 +1,6 @@
+using System;
 using System.Threading;
+using Core.Editor.Debugger;
 using Core.Other;
 using Core.UI;
 using Cysharp.Threading.Tasks;
@@ -62,15 +64,23 @@ namespace Core.Player
 
         private async UniTaskVoid Display(CancellationToken token)
         {
-            _animatedUI.Reveal(token).Forget();
-            _displaying = true;
+            try
+            {
+                _animatedUI.Reveal(token).Forget();
+                _displaying = true;
 
-            await MyUniTask.Delay(_config.DashDuration, token);
+                await UniTaskUtility.Delay(_config.DashDuration, token);
 
-            await AnimateCooldown(token);
+                await AnimateCooldown(token);
 
-            await _animatedUI.Conceal(token);
-            _displaying = false;
+                await _animatedUI.Conceal(token);
+                _displaying = false;
+            }
+            catch (OperationCanceledException) {  }
+            catch (Exception ex)
+            {
+                RDebug.Warning($"{nameof(DashRecoveryDisplay)}::{nameof(Display)}: {ex.Message} \n{ex.StackTrace}");
+            }
         }
 
         private void FollowHero()
@@ -81,17 +91,25 @@ namespace Core.Player
 
         private async UniTask AnimateCooldown(CancellationToken token)
         {
-            float duration = _config.DashCooldown;
-
-            float elapsedTime = 0f;
-            while (elapsedTime < duration)
+            try
             {
-                float delta = elapsedTime / duration;
-                _slider.value = delta;
+                float duration = _config.DashCooldown;
 
-                elapsedTime += Time.deltaTime;
+                float elapsedTime = 0f;
+                while (elapsedTime < duration)
+                {
+                    float delta = elapsedTime / duration;
+                    _slider.value = delta;
 
-                await UniTask.NextFrame(token);
+                    elapsedTime += Time.deltaTime;
+
+                    await UniTask.NextFrame(token);
+                }
+            }
+            catch (OperationCanceledException) {  }
+            catch (Exception ex)
+            {
+                RDebug.Warning($"{nameof(DashRecoveryDisplay)}::{nameof(AnimateCooldown)}: {ex.Message} \n{ex.StackTrace}");
             }
         }
     }

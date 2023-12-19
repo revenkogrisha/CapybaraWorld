@@ -66,13 +66,19 @@ namespace Core.Level
 					rigidbody2D.velocity = velocity;
 
 					elapsedTime += Time.deltaTime;
+
 					await UniTask.NextFrame(token);
 				}
 			}
 			catch (OperationCanceledException) {  }
 			catch (Exception ex)
 			{
-				RDebug.Error($"{GetType().Name}::{nameof(ChaseTarget)}: {ex.Message} \n {ex.StackTrace}");
+				RDebug.Warning($"{GetType().Name}::{nameof(ChaseTarget)}: {ex.Message} \n {ex.StackTrace}");
+			}
+			finally
+			{
+				_cts.Clear();
+				_cts = null;
 			}
 		}
 
