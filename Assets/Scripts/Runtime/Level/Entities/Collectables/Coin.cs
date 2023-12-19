@@ -1,3 +1,5 @@
+using System;
+using Core.Editor.Debugger;
 using Core.Other;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
@@ -40,15 +42,23 @@ namespace Core.Level
 
         private async UniTaskVoid BlockCollecting()
         {
-            CanCollect = false;
-            _rigidbody2D.excludeLayers = _heroLayer;
-            _rigidbody2D.includeLayers = 0;
+            try
+            {
+                CanCollect = false;
+                _rigidbody2D.excludeLayers = _heroLayer;
+                _rigidbody2D.includeLayers = 0;
 
-            await UniTaskUtility.Delay(BlockDuration, destroyCancellationToken);
+                await UniTaskUtility.Delay(BlockDuration, destroyCancellationToken);
 
-            _rigidbody2D.excludeLayers = 0;
-            _rigidbody2D.includeLayers = _heroLayer;
-            CanCollect = true;
+                _rigidbody2D.excludeLayers = 0;
+                _rigidbody2D.includeLayers = _heroLayer;
+                CanCollect = true;
+            }
+            catch (OperationCanceledException) {  }
+            catch (Exception ex)
+            {
+                RDebug.Warning($"{nameof(Coin)}::{nameof(BlockCollecting)}: {ex.Message} \n{ex.StackTrace}");
+            }
         }
     }
 }

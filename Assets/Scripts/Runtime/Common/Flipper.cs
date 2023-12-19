@@ -3,6 +3,7 @@ using Cysharp.Threading.Tasks;
 using System.Threading;
 using Core.Other;
 using System;
+using Core.Editor.Debugger;
 using TriInspector;
 
 namespace Core.Common
@@ -56,13 +57,21 @@ namespace Core.Common
 
         private async UniTaskVoid CheckRigidbodyVelocity()
         {
-            CancellationToken token = destroyCancellationToken;
-            while (true)
+            try
             {
-                if (ShouldFlip == true)
-                    Flip();
+                CancellationToken token = destroyCancellationToken;
+                while (true)
+                {
+                    if (ShouldFlip == true)
+                        Flip();
 
-                await UniTaskUtility.Delay(CheckFrequency, token);
+                    await UniTaskUtility.Delay(CheckFrequency, token);
+                }
+            }
+            catch (OperationCanceledException) {  }
+            catch (Exception ex)
+            {
+                RDebug.Warning($"{nameof(Flipper)}::{nameof(CheckRigidbodyVelocity)}: {ex.Message} \n{ex.StackTrace}");
             }
         }
 
