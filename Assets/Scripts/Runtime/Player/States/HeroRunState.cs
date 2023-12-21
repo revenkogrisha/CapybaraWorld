@@ -17,6 +17,7 @@ namespace Core.Player
     {
         private readonly Hero _hero;
         private readonly InputHandler _inputHandler;
+        private readonly PlayerUpgrade _upgrade;
         private readonly CompositeDisposable _disposable = new();
         private readonly CancellationToken _cts;
         private float _nextDashTime = 0;
@@ -36,10 +37,12 @@ namespace Core.Player
             set => _hero.IsDashing.Value = value;
         }
 
-        public HeroRunState(Hero hero, InputHandler inputHandler)
+        public HeroRunState(Hero hero, InputHandler inputHandler, PlayerUpgrade upgrade)
         {
             _hero = hero;
             _inputHandler = inputHandler;
+            _upgrade = upgrade;
+            
             _cts = _hero.destroyCancellationToken;
         }
 
@@ -190,71 +193,95 @@ namespace Core.Player
 
         private async UniTaskVoid Dash(CancellationToken token)
         {
-            if (Time.time < _nextDashTime || IsDashing == true)
-                return;
+            try
+            {
+                if (Time.time < _nextDashTime || IsDashing == true)
+                    return;
 
-            _hero.DashedCommand.Execute();
-            HeroConfig config = _hero.Config;
-            Rigidbody2D rigidbody2D = _hero.Rigidbody2D;
+                _hero.DashedCommand.Execute();
+                HeroConfig config = _hero.Config;
+                Rigidbody2D rigidbody2D = _hero.Rigidbody2D;
 
-            Vector2 dashVelocity = new(config.DashForce, 0f);
-            float initialGravityScale = rigidbody2D.gravityScale;
-            
-            float directionMultiplier = (float)_direction;
-            rigidbody2D.velocity = dashVelocity * directionMultiplier;
-            rigidbody2D.gravityScale = 0f;
-            IsDashing = true;
-            
-            await UniTaskUtility.Delay(config.DashDuration, token);
+                Vector2 dashVelocity = new(config.DashForce, 0f);
+                float initialGravityScale = rigidbody2D.gravityScale;
 
-            rigidbody2D.gravityScale = initialGravityScale;
-            IsDashing = false;
+                float directionMultiplier = (float)_direction;
+                rigidbody2D.velocity = dashVelocity * directionMultiplier * _upgrade.DashSpeedBonus.Multiplier;
+                rigidbody2D.gravityScale = 0f;
+                IsDashing = true;
 
-            _nextDashTime = Time.time + config.DashCooldown;
+                await UniTaskUtility.Delay(config.DashDuration, token);
+
+                rigidbody2D.gravityScale = initialGravityScale;
+                IsDashing = false;
+
+                _nextDashTime = Time.time + config.DashCooldown;
+            }
+            catch (OperationCanceledException) {  }
+            catch (Exception ex)
+            {
+                RDebug.Warning($"{nameof(HeroRunState)}::{nameof(Dash)}: {ex.Message} \n{ex.StackTrace}");
+            }
         }
 
         private async UniTaskVoid Jump()
         {
-            if (IsJumping == true || IsDashing == true)
-                return;
-
-            CancellationToken token = _hero.destroyCancellationToken;
-            Rigidbody2D rigidbody2D = _hero.Rigidbody2D;
-            float duration = _hero.Config.JumpDuration;
-
-            IsJumping = true;
-
-            float elapsedTime = 0f;
-            while (elapsedTime < duration)
+            try
             {
-                float delta = elapsedTime / duration;
-                float progress = _hero.Config.JumpProgression.Evaluate(delta);
+                if (IsJumping == true || IsDashing == true)
+                    return;
+
+                CancellationToken token = _hero.destroyCancellationToken;
+                Rigidbody2D rigidbody2D = _hero.Rigidbody2D;
+                float duration = _hero.Config.JumpDuration;
+
+                IsJumping = true;
+
+                float elapsedTime = 0f;
+                while (elapsedTime < duration)
+                {
+                    float delta = elapsedTime / duration;
+                    float progress = _hero.Config.JumpProgression.Evaluate(delta);
                 
-                Vector2 jumpVector = GetJumpVector();
-                Vector2 velocity = GetJumpVelocity(jumpVector, progress);
-                rigidbody2D.velocity = velocity;
+                    Vector2 jumpVector = GetJumpVector();
+                    Vector2 velocity = GetJumpVelocity(jumpVector, progress);
+                    rigidbody2D.velocity = velocity;
                 
-                elapsedTime += Time.deltaTime;
+                    elapsedTime += Time.deltaTime;
                 
-                await UniTask.NextFrame(token);
+                    await UniTask.NextFrame(token);
+                }
+
+                await UniTask.WaitUntil(
+                    () => Mathf.Approximately(rigidbody2D.velocity.y, 0f) == true,
+                    cancellationToken: token);
+
+                IsJumping = false;
             }
-
-            await UniTask.WaitUntil(
-                () => Mathf.Approximately(rigidbody2D.velocity.y, 0f) == true,
-                cancellationToken: token);
-
-            IsJumping = false;
+            catch (OperationCanceledException) {  }
+            catch (Exception ex)
+            {
+                RDebug.Warning($"{nameof(HeroRunState)}::{nameof(Jump)}: {ex.Message} \n{ex.StackTrace}");
+            }
         }
 
         private async UniTaskVoid DescendFromPlaftorm(CancellationToken token)
         {
-            Collider2D platformCollider = _currentPlatform.GetComponent<Collider2D>();
-            Physics2D.IgnoreCollision(_hero.Collider2D, platformCollider, true);
+            try
+            {
+                Collider2D platformCollider = _currentPlatform.GetComponent<Collider2D>();
+                Physics2D.IgnoreCollision(_hero.Collider2D, platformCollider, true);
 
-            await UniTaskUtility.Delay(_hero.Config.DescendDuration, token);
+                await UniTaskUtility.Delay(_hero.Config.DescendDuration, token);
 
-            Physics2D.IgnoreCollision(_hero.Collider2D, platformCollider, false);
-            _currentPlatform = null;
+                Physics2D.IgnoreCollision(_hero.Collider2D, platformCollider, false);
+                _currentPlatform = null;
+            }
+            catch (OperationCanceledException) {  }
+            catch (Exception ex)
+            {
+                RDebug.Warning($"{nameof(HeroRunState)}::{nameof(DescendFromPlaftorm)}: {ex.Message} \n{ex.StackTrace}");
+            }
         }
 
         private Vector2 GetJumpVelocity(Vector2 jumpVector, float progress)

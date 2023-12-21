@@ -31,13 +31,15 @@ namespace Core.Player
 		private IFiniteStateMachine _stateMachine;
 		private GroundChecker _groundChecker;
 		private InputHandler _inputHandler;
+		private PlayerUpgrade _upgrade;
 
 		[HideInInspector] public ReactiveProperty<bool> IsDead { get; } = new(false);
 		[HideInInspector] public readonly ReactiveProperty<Transform> GrappledJoint = new();
 		[HideInInspector] public readonly ReactiveProperty<bool> IsRunning = new();
 		[HideInInspector] public readonly ReactiveProperty<bool> IsJumping = new();
 		[HideInInspector] public readonly ReactiveProperty<bool> IsDashing = new();
-		[HideInInspector] public readonly ReactiveCommand<Type> StateChangedCommand = new();
+		
+		public readonly ReactiveCommand<Type> StateChangedCommand = new();
 		public readonly ReactiveCommand DashedCommand = new();
 		public readonly ReactiveCommand HitCommand = new();
 		public ReactiveCommand CoinCollectedCommand { get; } = new();
@@ -88,8 +90,11 @@ namespace Core.Player
 		#endregion
 
 		[Inject]
-		private void Construct(InputHandler inputHandler) =>
+		private void Construct(InputHandler inputHandler, PlayerUpgrade upgrade)
+		{
 			_inputHandler = inputHandler;
+			_upgrade = upgrade;
+		}
 
 		private void InitializeComponents()
 		{
@@ -104,7 +109,7 @@ namespace Core.Player
 			_stateMachine = new FiniteStateMachine();
 
 			HeroGrapplingState grapplingState = new(this, _inputHandler);
-			HeroRunState runState = new(this, _inputHandler);
+			HeroRunState runState = new(this, _inputHandler, _upgrade);
 			InactiveState inactiveState = new();
 
 			_stateMachine.AddState<HeroGrapplingState>(grapplingState);
@@ -114,8 +119,7 @@ namespace Core.Player
 
 		private void SubscribeUpdate()
 		{
-			IObservable<Unit> update = this.UpdateAsObservable();
-			update
+			this.UpdateAsObservable()
 				.Where(_ => ShouldSwitchToGrappling == true)
 				.Subscribe(_ => SwitchToGrapplingState())
 				.AddTo(_disposable);
