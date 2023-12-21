@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Core.Level
 {
-    public class Food : Entity, ISpawnable
+    public class Food : Entity, ICollectable, ISpawnable
     {
         [SerializeField] private float _fadeDuration = 0.3f;
 
@@ -17,7 +17,7 @@ namespace Core.Level
             CanCollect = true;
         }
 
-        public void GetCollected()
+        public void OnCollected()
         {
             CanCollect = false;
             DOTween.Sequence()

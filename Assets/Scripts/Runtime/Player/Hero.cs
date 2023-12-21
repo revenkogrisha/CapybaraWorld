@@ -198,7 +198,7 @@ namespace Core.Player
 			if (coin.CanCollect == false)
 				return;
 
-			coin.GetCollected();
+			coin.OnCollected();
 			CoinCollectedCommand.Execute();
 		}
 
@@ -207,7 +207,7 @@ namespace Core.Player
 			if (food.CanCollect == false)
 				return;
 
-			food.GetCollected();
+			food.OnCollected();
 			FoodCollectedCommand.Execute();
 		}
 	}
