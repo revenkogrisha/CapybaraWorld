@@ -8,7 +8,7 @@ using UnityEngine;
 
 namespace Core.Level
 {
-    public class Coin : MonoBehaviour, IDespawnable
+    public class Coin : MonoBehaviour, ICollectable, IDespawnable
     {
         private const float BlockDuration = 1f;
 
@@ -32,7 +32,7 @@ namespace Core.Level
         public void Initialize() => 
             BlockCollecting().Forget();
 
-        public void GetCollected()
+        public void OnCollected()
         {
             CanCollect = false;
             DOTween.Sequence()
