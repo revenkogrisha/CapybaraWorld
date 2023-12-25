@@ -1,21 +1,17 @@
 using Core.Saving;
+using UnityEngine.Serialization;
 using Zenject;
 
 namespace Core.Player
 {
     public class PlayerUpgrade : ISaveable
     {
+        private const int StartHeroLevel = 1;
         private const int CostUpgradeIncrease = 15;
-
-        private const float DashCooldownMax = 2f;
-        private const float DashSpeedMax = 1.5f;
-        
-        private const float DashCooldownUpgradeStep = 0.05f;
-        private const float DashSpeedUpgradeStep = 0.05f;
         
         private readonly PlayerData _playerData;
         private readonly UpgradableStat[] _upgradableStats;
-        private int _heroLevel = 1;
+        private int _heroLevel = StartHeroLevel;
         private int _cost = 15;
         
         public UpgradableStat DashCooldownBonus { get; }
@@ -26,12 +22,12 @@ namespace Core.Player
         public bool CanUpgradeHero => _playerData.CoinsAmount > _cost;
 
         [Inject]
-        public PlayerUpgrade(PlayerData playerData)
+        public PlayerUpgrade(PlayerData playerData, PlayerUpgradeConfig config)
         {
             _playerData = playerData;
 
-            DashCooldownBonus = new(DashCooldownUpgradeStep, DashCooldownMax);
-            DashSpeedBonus = new(DashSpeedUpgradeStep, DashSpeedMax);
+            DashCooldownBonus = new(config.DashCooldownStep, config.DashCooldownMax);
+            DashSpeedBonus = new(config.DashSpeedStep, config.DashSpeedMax);
             
             _upgradableStats = new[]
             {
@@ -50,17 +46,28 @@ namespace Core.Player
         {
             _cost = data.UpgradeCost;
             _heroLevel = data.HeroLevel;
+
+            RestoreStats();
         }
 
-        public void UpgradeHero()
+        public void UpgradeHero(bool force = false)
         {
-            _playerData.RemoveCoins(_cost);
+            if (force == false)
+            {
+                _playerData.RemoveCoins(_cost);
+                _cost += CostUpgradeIncrease;
+            }
             
             _heroLevel++;
-            _cost += CostUpgradeIncrease;
 
             foreach (UpgradableStat stat in _upgradableStats) 
                 stat.Upgrade();
+        }
+
+        private void RestoreStats()
+        {
+            for (int i = 0; i < _heroLevel - StartHeroLevel; i++)
+                UpgradeHero(true);
         }
     }
 }
