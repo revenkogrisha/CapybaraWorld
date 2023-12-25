@@ -118,6 +118,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _focusCamera: {fileID: 0}
+  _upgradeConfig: {fileID: 11400000, guid: 24d21497a5e7d4ddfa127fb8cf64b8ed, type: 2}
 --- !u!114 &8120219910018482654
 MonoBehaviour:
   m_ObjectHideFlags: 0

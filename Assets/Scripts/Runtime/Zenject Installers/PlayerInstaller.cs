@@ -7,6 +7,9 @@ namespace Core.Installers
     public class PlayerInstaller : MonoInstaller
     {
         [SerializeField] private FocusCamera _focusCamera;
+        
+        [Space]
+        [SerializeField] private PlayerUpgradeConfig _upgradeConfig;
 
         public override void InstallBindings()
         {
@@ -40,6 +43,7 @@ namespace Core.Installers
                 .Bind<PlayerUpgrade>()
                 .FromNew()
                 .AsSingle()
+                .WithArguments(_upgradeConfig)
                 .Lazy();
         }
     }
