@@ -1,4 +1,6 @@
 using System.Threading;
+using Cysharp.Threading.Tasks;
+using UnityEngine;
 
 namespace Core.Other
 {
@@ -13,6 +15,22 @@ namespace Core.Other
                 cts.Cancel();
             
             cts.Dispose();
+        }
+        
+        
+        public static async UniTaskVoid CancelByTimeout(this CancellationTokenSource cts, float timeout)
+        {
+            float timeoutTime = Time.time + timeout;
+            while (true)
+            {
+                if (cts.IsCancellationRequested == false && Time.time >= timeoutTime)
+                {
+                    cts.Cancel();
+                    return;
+                }
+
+                await UniTask.NextFrame();
+            }
         }
     }
 }
