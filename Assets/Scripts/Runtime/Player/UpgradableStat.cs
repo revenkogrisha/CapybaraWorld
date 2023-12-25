@@ -4,7 +4,7 @@ namespace Core.Player
 {
     public class UpgradableStat
     {
-        private float _multiplier;
+        private float _multiplier = 1f;
         private readonly float _upgradeStep;
         private readonly float _maxMultiplier;
 
