@@ -1,3 +1,9 @@
+using System.Diagnostics;
+using System.Threading;
+using Core.Common;
+using Core.Other;
+using Cysharp.Threading.Tasks;
+using Google.Play.AppUpdate;
 using UnityEngine;
 using Zenject;
 
@@ -16,6 +22,10 @@ namespace Core.Infrastructure
 
         private void Awake()
         {
+#if !UNITY_EDITOR && UNITY_ANDROID
+            HandleAppUpdate().Forget();
+#endif
+            
             AddGameStatesToMachine();
             _navigation.ToLoadingData();
         }
@@ -40,6 +50,25 @@ namespace Core.Infrastructure
             _gameLostState = gameOverState;
             _navigation = navigation;
         }
+
+#if !UNITY_EDITOR && UNITY_ANDROID
+        private async UniTaskVoid HandleAppUpdate()
+        {
+            // Let UniTaskVoid suppress exceptions until custom loggers will be added to track them on Android
+            const float updateTimeout = 60f;
+            CancellationTokenSource cts = new();
+
+            IAppUpdateService updateService = new AppUpdateService();
+            updateService.Initialize();
+            
+            cts.CancelByTimeout(updateTimeout).Forget();
+            UpdateAvailability result = await updateService.StartUpdateCheck(cts.Token);
+
+            if (result == UpdateAvailability.UpdateAvailable)
+                await updateService.Request(cts.Token);
+            
+        }
+#endif
 
         private void AddGameStatesToMachine()
         {
