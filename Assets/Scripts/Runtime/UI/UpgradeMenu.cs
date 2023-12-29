@@ -22,6 +22,9 @@ namespace Core.UI
         [Space] 
         [SerializeField] private TMP_Text _costTMP;
         [SerializeField] private TMP_Text _heroLevelTMP;
+
+        [Header("Dev Buttons")] 
+        [SerializeField] private UIButton _devUpgradeButton;
         
         private MainMenuRoot _root;
         private PlayerUpgrade _playerUpgrade;
@@ -33,6 +36,8 @@ namespace Core.UI
         {
             _heroUpgradeButton.OnClicked += UpgradeHero;
             _backButton.OnClicked += ToMainMenu;
+
+            _devUpgradeButton.OnClicked += ForceUpgrade;
             
             UpdateDisplayedData();
             ValidateButton();
@@ -42,6 +47,8 @@ namespace Core.UI
         {
             _heroUpgradeButton.OnClicked -= UpgradeHero;
             _backButton.OnClicked -= ToMainMenu;
+            
+            _devUpgradeButton.OnClicked -= ForceUpgrade;
         }
 
         private void Start() => 
@@ -73,6 +80,16 @@ namespace Core.UI
         private void UpgradeHero()
         {
             _playerUpgrade.UpgradeHero();
+            _saveService.Save();
+            
+            UpdateDisplayedData();
+            
+            ValidateButton();
+        }
+
+        private void ForceUpgrade()
+        {
+            _playerUpgrade.UpgradeHero(true);
             _saveService.Save();
             
             UpdateDisplayedData();
