@@ -6,6 +6,7 @@ dependencies {
 // Android Resolver Dependencies Start
     implementation 'com.google.android.play:app-update:2.0.0' // Assets/GooglePlayPlugins/com.google.play.appupdate/Editor/Dependencies.xml:3
     implementation 'com.google.android.play:core-common:2.0.0' // Assets/GooglePlayPlugins/com.google.play.core/Editor/Dependencies.xml:3
+    implementation 'com.google.android.play:review:2.0.0' // Assets/GooglePlayPlugins/com.google.play.review/Editor/Dependencies.xml:3
 // Android Resolver Dependencies End
 **DEPS**}
 
