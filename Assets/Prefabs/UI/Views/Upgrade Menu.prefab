@@ -923,6 +923,7 @@ GameObject:
   - component: {fileID: 8748552569467232463}
   - component: {fileID: 5986961007170332025}
   - component: {fileID: 7280549757935541144}
+  - component: {fileID: 8517706102486580440}
   m_Layer: 5
   m_Name: Upgrade Menu
   m_TagString: Untagged
@@ -986,6 +987,20 @@ MonoBehaviour:
   _costTMP: {fileID: 7422050738270704273}
   _heroLevelTMP: {fileID: 4263875917330034059}
   _devUpgradeButton: {fileID: 8098690329265933662}
+--- !u!114 &8517706102486580440
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8240751470569476099}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1d3f6ea6e29747f9a2d842f3fa4684b2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _buttons:
+  - {fileID: 8098690329265933662}
 --- !u!1 &9067716026174015966
 GameObject:
   m_ObjectHideFlags: 0
