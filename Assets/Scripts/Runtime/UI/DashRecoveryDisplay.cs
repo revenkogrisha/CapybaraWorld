@@ -53,7 +53,7 @@ namespace Core.Player
         {
             _hero.DashedCommand
                 .Where(_ => _displaying == false)
-                .Subscribe(_ => Display(_cancellationToken).Forget())
+                .Subscribe(duration => Display(duration, _cancellationToken).Forget())
                 .AddTo(_disposable);
 
             this.UpdateAsObservable()
@@ -62,7 +62,7 @@ namespace Core.Player
                 .AddTo(_disposable);
         }
 
-        private async UniTaskVoid Display(CancellationToken token)
+        private async UniTaskVoid Display(float duration, CancellationToken token)
         {
             try
             {
@@ -71,7 +71,7 @@ namespace Core.Player
 
                 await UniTaskUtility.Delay(_config.DashDuration, token);
 
-                await AnimateCooldown(token);
+                await AnimateCooldown(duration, token);
 
                 await _animatedUI.Conceal(token);
                 _displaying = false;
@@ -89,12 +89,10 @@ namespace Core.Player
             _thisTransform.position = position;
         }
 
-        private async UniTask AnimateCooldown(CancellationToken token)
+        private async UniTask AnimateCooldown(float duration, CancellationToken token)
         {
             try
             {
-                float duration = _config.DashCooldown;
-
                 float elapsedTime = 0f;
                 while (elapsedTime < duration)
                 {

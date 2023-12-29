@@ -40,7 +40,7 @@ namespace Core.Player
 		[HideInInspector] public readonly ReactiveProperty<bool> IsDashing = new();
 		
 		public readonly ReactiveCommand<Type> StateChangedCommand = new();
-		public readonly ReactiveCommand DashedCommand = new();
+		public readonly ReactiveCommand<float> DashedCommand = new();
 		public readonly ReactiveCommand HitCommand = new();
 		public ReactiveCommand CoinCollectedCommand { get; } = new();
         public ReactiveCommand FoodCollectedCommand { get; } = new();
@@ -62,7 +62,7 @@ namespace Core.Player
 		private void Awake()
 		{
 			InitializeComponents();
-			InitialzeStateMachine();
+			InitializeStateMachine();
 		}
 
 		private void Start()
@@ -104,7 +104,7 @@ namespace Core.Player
 			_lineRenderer.enabled = false;
 		}
 
-		private void InitialzeStateMachine()
+		private void InitializeStateMachine()
 		{
 			_stateMachine = new FiniteStateMachine();
 

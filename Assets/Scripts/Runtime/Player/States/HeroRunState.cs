@@ -198,9 +198,10 @@ namespace Core.Player
                 if (Time.time < _nextDashTime || IsDashing == true)
                     return;
 
-                _hero.DashedCommand.Execute();
                 HeroConfig config = _hero.Config;
                 Rigidbody2D rigidbody2D = _hero.Rigidbody2D;
+                
+                _hero.DashedCommand.Execute(config.DashCooldown / _upgrade.DashCooldownBonus.Multiplier);
 
                 Vector2 dashVelocity = new(config.DashForce, 0f);
                 float initialGravityScale = rigidbody2D.gravityScale;
@@ -215,7 +216,7 @@ namespace Core.Player
                 rigidbody2D.gravityScale = initialGravityScale;
                 IsDashing = false;
 
-                _nextDashTime = Time.time + config.DashCooldown;
+                _nextDashTime = Time.time + config.DashCooldown / _upgrade.DashCooldownBonus.Multiplier;
             }
             catch (OperationCanceledException) {  }
             catch (Exception ex)
