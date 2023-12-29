@@ -1,5 +1,4 @@
 using Core.Saving;
-using UnityEngine.Serialization;
 using Zenject;
 
 namespace Core.Player
