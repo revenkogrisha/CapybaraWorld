@@ -43,7 +43,7 @@ namespace Core.Factories
 
         public Platform Create(Platform prefab)
         {
-            var position = new Vector2();
+            Vector2 position = new();
             Platform platform = NightPool.Spawn(
                 prefab,
                 position,
