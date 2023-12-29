@@ -2,6 +2,7 @@
   "dependencies": {
     "com.codewriter.triinspector": "https://github.com/codewriter-packages/Tri-Inspector.git",
     "com.cysharp.unitask": "https://github.com/Cysharp/UniTask.git?path=src/UniTask/Assets/Plugins/UniTask",
+    "com.google.external-dependency-manager": "1.2.178",
     "com.marijnzwemmer.unity-toolbar-extender": "https://github.com/marijnz/unity-toolbar-extender.git",
     "com.nighttraincode.nightpool": "https://github.com/MeeXaSiK/NightPool.git",
     "com.unity.adaptiveperformance.google.android": "1.2.1",
@@ -51,5 +52,14 @@
     "com.unity.modules.vr": "1.0.0",
     "com.unity.modules.wind": "1.0.0",
     "com.unity.modules.xr": "1.0.0"
-  }
+  },
+  "scopedRegistries": [
+    {
+      "name": "package.openupm.com",
+      "url": "https://package.openupm.com",
+      "scopes": [
+        "com.google.external-dependency-manager"
+      ]
+    }
+  ]
 }
