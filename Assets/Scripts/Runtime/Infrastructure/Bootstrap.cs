@@ -1,9 +1,10 @@
-using System.Diagnostics;
+#if !UNITY_EDITOR && UNITY_ANDROID
 using System.Threading;
 using Core.Common;
 using Core.Other;
 using Cysharp.Threading.Tasks;
 using Google.Play.AppUpdate;
+#endif
 using UnityEngine;
 using Zenject;
 
@@ -54,19 +55,17 @@ namespace Core.Infrastructure
 #if !UNITY_EDITOR && UNITY_ANDROID
         private async UniTaskVoid HandleAppUpdate()
         {
-            // Let UniTaskVoid suppress exceptions until custom loggers will be added to track them on Android
-            const float updateTimeout = 60f;
+            const float requestTimeout = 60f;
             CancellationTokenSource cts = new();
 
             IAppUpdateService updateService = new AppUpdateService();
             updateService.Initialize();
             
-            cts.CancelByTimeout(updateTimeout).Forget();
+            cts.CancelByTimeout(requestTimeout).Forget();
             UpdateAvailability result = await updateService.StartUpdateCheck(cts.Token);
 
             if (result == UpdateAvailability.UpdateAvailable)
                 await updateService.Request(cts.Token);
-            
         }
 #endif
 

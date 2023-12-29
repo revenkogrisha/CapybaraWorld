@@ -1,4 +1,6 @@
 #if !UNITY_EDITOR && UNITY_ANDROID
+
+using System;
 using System.Collections;
 using System.Threading;
 using Core.Editor.Debugger;
@@ -21,40 +23,55 @@ namespace Core.Common
         {
             string log = $"{nameof(AppUpdateService)}::{nameof(StartUpdateCheck)}";
             
-            if (_manager == null)
+            try
             {
-                RDebug.Error($"{log}: manager is null");
-                return UpdateAvailability.Unknown;
-            }
+                if (_manager == null)
+                {
+                    RDebug.Error($"{log}: manager is null");
+                    return UpdateAvailability.Unknown;
+                }
 
-            await CheckForUpdateCoroutine().ToUniTask(cancellationToken: token);
+                await CheckForUpdateCoroutine().ToUniTask(cancellationToken: token);
             
-            if (_lastInfo == null)
+                if (_lastInfo == null)
+                {
+                    RDebug.Error($"{log}: info is null");
+                    return UpdateAvailability.Unknown;
+                }
+
+                return _lastInfo.UpdateAvailability;
+            }
+            catch (Exception ex)
             {
-                RDebug.Error($"{log}: info is null");
+                RDebug.Error($"{log}: {ex.Message} \n{ex.StackTrace}");
                 return UpdateAvailability.Unknown;
             }
-
-            return _lastInfo.UpdateAvailability;
         }
 
         public async UniTask Request(CancellationToken token)
         {
             string log = $"{nameof(AppUpdateService)}::{nameof(Request)}";
-                
-            if (_lastInfo == null)
-            {
-                RDebug.Error($"{log}: info is null");
-                return;
-            }
             
-            if (_manager == null)
+            try
             {
-                RDebug.Error($"{log}: manager is null");
-                return;
-            }
+                if (_lastInfo == null)
+                {
+                    RDebug.Error($"{log}: info is null");
+                    return;
+                }
+            
+                if (_manager == null)
+                {
+                    RDebug.Error($"{log}: manager is null");
+                    return;
+                }
 
-            await RequestCoroutine().ToUniTask(cancellationToken: token);
+                await RequestCoroutine().ToUniTask(cancellationToken: token);
+            }
+            catch (Exception ex)
+            {
+                RDebug.Error($"{log}: {ex.Message} \n{ex.StackTrace}");
+            }
         }
 
         public void Clear()
