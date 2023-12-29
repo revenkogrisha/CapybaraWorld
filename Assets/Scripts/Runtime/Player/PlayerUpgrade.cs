@@ -60,14 +60,19 @@ namespace Core.Player
             
             _heroLevel++;
 
-            foreach (UpgradableStat stat in _upgradableStats) 
-                stat.Upgrade();
+            UpgradeAllStats();
         }
 
         private void RestoreStats()
         {
             for (int i = 0; i < _heroLevel - StartHeroLevel; i++)
-                UpgradeHero(true);
+                UpgradeAllStats();
+        }
+
+        private void UpgradeAllStats()
+        {
+            foreach (UpgradableStat stat in _upgradableStats) 
+                stat.Upgrade();
         }
     }
 }
