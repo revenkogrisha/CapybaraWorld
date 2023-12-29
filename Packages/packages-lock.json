@@ -16,6 +16,13 @@
       "dependencies": {},
       "hash": "56662924960a53695a640af80125f1cfd334d5ee"
     },
+    "com.google.external-dependency-manager": {
+      "version": "1.2.178",
+      "depth": 0,
+      "source": "registry",
+      "dependencies": {},
+      "url": "https://package.openupm.com"
+    },
     "com.marijnzwemmer.unity-toolbar-extender": {
       "version": "https://github.com/marijnz/unity-toolbar-extender.git",
       "depth": 0,
