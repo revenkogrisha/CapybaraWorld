@@ -36,11 +36,11 @@ namespace Core.Saving
 
                 _saveSystem.Save(data);
 
-                RDebug.Info($"{GetType().Name}: Data was saved");
+                RDebug.Info($"{nameof(SaveService)}: Data was saved");
             }
             catch (Exception ex)
             {
-                RDebug.Error($"{GetType().Name}: Failed to save data: {ex.Message} \n {ex.StackTrace}", true);
+                RDebug.Error($"{nameof(SaveService)}::{nameof(Save)} Failed to save data: {ex.Message} \n {ex.StackTrace}", true);
             }
         }
 
@@ -53,11 +53,11 @@ namespace Core.Saving
                 foreach (ISaveable saveable in _saveables)
                     saveable.Load(data);
                 
-                RDebug.Info($"{GetType().Name}: Data was loaded");
+                RDebug.Info($"{nameof(SaveService)}: Data was loaded");
             }
             catch (Exception ex)
             {
-                RDebug.Error($"{GetType().Name}: Failed to load data: {ex.Message} \n {ex.StackTrace}", true);
+                RDebug.Error($"{nameof(SaveService)}::{nameof(Load)} Failed to load data: {ex.Message} \n {ex.StackTrace}", true);
             }
         }
     }
