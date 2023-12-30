@@ -40,6 +40,7 @@ namespace Core.Level
         {
 			StopMoving();
 			_cts.Clear();
+			_cts = null;
         }
 
         private async UniTaskVoid ChaseTarget()
@@ -73,12 +74,7 @@ namespace Core.Level
 			catch (OperationCanceledException) {  }
 			catch (Exception ex)
 			{
-				RDebug.Warning($"{GetType().Name}::{nameof(ChaseTarget)}: {ex.Message} \n {ex.StackTrace}");
-			}
-			finally
-			{
-				_cts.Clear();
-				_cts = null;
+				RDebug.Warning($"{nameof(EnemyChaseState)}::{nameof(ChaseTarget)}: {ex.Message} \n {ex.StackTrace}");
 			}
 		}
 
