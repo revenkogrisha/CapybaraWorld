@@ -29,8 +29,11 @@ namespace Core.Level
 			StartLookingForTarget().Forget();
 		}
 
-        public override void Exit() => 
-			_cts.Clear();
+        public override void Exit()
+        {
+	        _cts.Clear();
+	        _cts = null;
+        }
 
         private async UniTaskVoid StartLookingForTarget()
 		{
@@ -58,11 +61,6 @@ namespace Core.Level
 			catch (Exception ex)
 			{
 				RDebug.Warning($"{nameof(EnemySearchingState)}::{nameof(StartLookingForTarget)}: {ex.Message} \n{ex.StackTrace}");
-			}
-			finally
-			{
-				_cts.Clear();
-				_cts = null;
 			}
 		}
 
