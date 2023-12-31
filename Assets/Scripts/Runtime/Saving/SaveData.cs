@@ -11,5 +11,6 @@ namespace Core.Saving
         public int LocationIndex = 0;
         public int UpgradeCost = 15;
         public int HeroLevel = 1;
+        public bool IsLocationRandomSelectionEnabled = false;
     }
 }
