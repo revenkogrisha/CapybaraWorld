@@ -14,7 +14,6 @@ namespace Core.Level
         [SerializeField] private float _platformsY = -2f;
 
         [Header("Platforms")]
-        [SerializeField] private SimplePlatform _startPlatform;
         [SerializeField] private Location[] _locations;
 
         [Header("Background")]
@@ -25,7 +24,6 @@ namespace Core.Level
         public int PlatformsStartAmount => _platformsStartAmount;
         public float XtartPoint => _xStartPoint;
         public float PlatformsY => _platformsY;
-        public SimplePlatform StartPlatform => _startPlatform;
         public Location[] Locations => _locations;
         public Background BackgroundPrefab => _backgroundPrefab;
         public Vector2 BackgroundPosition => _backgroundPosition;
