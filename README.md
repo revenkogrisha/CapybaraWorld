@@ -38,6 +38,9 @@ You have many capybaras in your team to achive any goals and find all hidden che
 * [Cinemachine](https://unity.com/unity/features/editor/art-and-design/cinemachine) - Advanced camera for Unity
 * [DOTween](http://dotween.demigiant.com/) - animation engine for Unity
 * [NightPool](https://github.com/MeeXaSiK/NightPool) - fast object pool for Unity
+* [Google Play Core](https://developer.android.com/reference/com/google/android/play/core/release-notes) - Google SDKs for Android & Unity to use Google Play API 
+* [Toolbar Extender](https://github.com/marijnz/unity-toolbar-extender) - tool for creating custom editor buttons on toolbar 
+* [Tri-Inspector](https://github.com/codewriter-packages/Tri-Inspector) - tool for customising Unity Inspector (like **Odin**)
 
 >[!NOTE]
 >Some of the systems implemented in the project may seem over-engineered for this project size - it's true, I was practicing my skills, don't worry :)  
