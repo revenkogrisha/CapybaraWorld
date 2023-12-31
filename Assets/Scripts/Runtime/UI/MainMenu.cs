@@ -1,3 +1,6 @@
+#if REVENKO_DEVELOP
+using Core.Editor.Debugger;
+#endif
 using Core.Infrastructure;
 using Core.Level;
 using Core.Player;
@@ -22,6 +25,11 @@ namespace Core.UI
         [SerializeField] private TMP_Text _levelTMP;
         [SerializeField] private TMP_Text _locationTMP;
 
+#if REVENKO_DEVELOP
+        [Header("Dev Buttons")] 
+        [SerializeField] private UIButton _devLocationButton;
+#endif
+
         private ILocationsHandler _locationsHandler;
         private PlayerData _playerData;
         private GameNavigation _navigation;
@@ -33,12 +41,20 @@ namespace Core.UI
         {
             _playButton.OnClicked += StartGame;
             _upgradeButton.OnClicked += ToUpgradeMenu;
+
+#if REVENKO_DEVELOP
+            _devLocationButton.OnClicked += UpdateLocation;
+#endif
         }
 
         private void OnDisable()
         {
             _playButton.OnClicked -= StartGame;
             _upgradeButton.OnClicked -= ToUpgradeMenu;
+
+#if REVENKO_DEVELOP
+            _devLocationButton.OnClicked -= UpdateLocation;
+#endif
         }
 
         private void Start()
@@ -84,5 +100,17 @@ namespace Core.UI
             string locationText = string.Format(LocationTextFormat, locationName);
             _locationTMP.SetText(locationText);
         }
+
+#if REVENKO_DEVELOP
+        private void UpdateLocation()
+        {
+            _locationsHandler.UpdateLocation();
+            
+            DisplayLevelNumber();
+            DisplayLocationName();
+            
+            RDebug.Log("Dev >> Location updated");
+        }
+#endif
     }
 }

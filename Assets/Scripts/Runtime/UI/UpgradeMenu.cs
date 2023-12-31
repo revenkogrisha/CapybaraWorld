@@ -23,8 +23,10 @@ namespace Core.UI
         [SerializeField] private TMP_Text _costTMP;
         [SerializeField] private TMP_Text _heroLevelTMP;
 
+#if REVENKO_DEVELOP
         [Header("Dev Buttons")] 
         [SerializeField] private UIButton _devUpgradeButton;
+#endif
         
         private MainMenuRoot _root;
         private PlayerUpgrade _playerUpgrade;
@@ -37,8 +39,10 @@ namespace Core.UI
             _heroUpgradeButton.OnClicked += UpgradeHero;
             _backButton.OnClicked += ToMainMenu;
 
+#if REVENKO_DEVELOP
             _devUpgradeButton.OnClicked += ForceUpgrade;
-            
+#endif
+
             UpdateDisplayedData();
             ValidateButton();
         }
@@ -48,7 +52,9 @@ namespace Core.UI
             _heroUpgradeButton.OnClicked -= UpgradeHero;
             _backButton.OnClicked -= ToMainMenu;
             
+#if REVENKO_DEVELOP
             _devUpgradeButton.OnClicked -= ForceUpgrade;
+#endif
         }
 
         private void Start() => 
