@@ -11,7 +11,7 @@ namespace Core.Common
 
         private void Awake()
         {
-#if UNITY_EDITOR || DEVELOPMENT_BUILD
+#if REVENKO_DEVELOP
             _isDevEnvironment = true;
 #else
             _isDevEnvironment = false;
