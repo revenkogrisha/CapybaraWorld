@@ -9,11 +9,17 @@ namespace Core.Level
         [SerializeField] private BackgroundPreset _backgroundPreset;
 
         [Space]
+        [SerializeField] private Platform _startPlatform;
+
+        [Space]
         [SerializeField] private SimplePlatform[] _simplePlatforms;
         [SerializeField] private SpecialPlatform[] _specialPlatforms;
 
         public string Name => _name;
         public BackgroundPreset BackgroundPreset => _backgroundPreset;
+        
+        public Platform StartPlatform => _startPlatform;
+        
         public SimplePlatform[] SimplePlatforms => _simplePlatforms;
         public SpecialPlatform[] SpecialPlatforms => _specialPlatforms;
     }
