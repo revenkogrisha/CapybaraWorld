@@ -43,7 +43,7 @@ namespace Core.Level
         public LevelGenerator(
             LevelGeneratorConfig config,
             AreaLabelsCollection areaLabels,
-            Transform platfomrsParent,
+            Transform platformsParent,
             EntitySpawner entitySpawner)
         {
             _config = config;
@@ -54,7 +54,7 @@ namespace Core.Level
             _areaLabels = areaLabels;
 
             ILocationsHandler locationsHandler = this;
-            _platformFactory = new PlatformFactory(locationsHandler, platfomrsParent);
+            _platformFactory = new PlatformFactory(locationsHandler, platformsParent);
             _backgroundHandler = new(_config.BackgroundPrefab);
         }
 
@@ -112,7 +112,7 @@ namespace Core.Level
             _backgroundHandler.Dispose();
         }
 
-        public void SpawnStartPlatform()
+        private void SpawnStartPlatform()
         {
             Platform platform = _platformFactory.Create(_config.StartPlatform);
             
@@ -123,7 +123,7 @@ namespace Core.Level
             UpdateGenerationData(platform);
         }
 
-        public void GenerateDefaultAmount()
+        private void GenerateDefaultAmount()
         {
             for (int i = 0; i < _config.PlatformsStartAmount; i++)
                 GenerateRandomPlatform();
@@ -172,15 +172,17 @@ namespace Core.Level
 
         private void SetLocationByIndex(int index)
         {
+            string log = $"{nameof(LevelGenerator)}::{nameof(SetLocationByIndex)}";
+            
             if (index >= _config.Locations.Length)
-                throw new ArgumentOutOfRangeException("Incorrect location index was set!");
+                throw new ArgumentOutOfRangeException($"{log}: Incorrect location index was set!");
 
             if (index < 0)
-                throw new ArgumentException("Location index cannot be lower than zero!");
+                throw new ArgumentException($"{log}: Location index cannot be lower than zero!");
 
             Location location = _config.Locations[index];
             if (location == null)
-                throw new ArgumentNullException("Location gotten by index is null!");
+                throw new ArgumentNullException($"{log}: Location gotten by index is null!");
 
             _currentLocation = location;
         }
