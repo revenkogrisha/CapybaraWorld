@@ -65,7 +65,7 @@ namespace Core.Game
         private void OnGameWon()
         {
             GameWinCommand.Execute();
-            _locationsHandler.SetRandomLocation();
+            _locationsHandler.UpdateLocation();
             _navigation.ToWin();
         }
 

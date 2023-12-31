@@ -32,6 +32,7 @@ namespace Core.Level
         private float _lastGeneratedPlatformX = 0f;
         private Location _currentLocation;
         private int _locationIndex = 0;
+        private bool _isLocationRandomSelectionEnabled = false;
 
         public Location CurrentLocation => _currentLocation;
         private float HeroX => _centerTransform.position.x;
@@ -77,18 +78,41 @@ namespace Core.Level
             CheckCenterPosition().Forget();
         }
 
-        public void Save(SaveData data) => 
+        public void Save(SaveData data)
+        {
             data.LocationIndex = _locationIndex;
+            data.IsLocationRandomSelectionEnabled = _isLocationRandomSelectionEnabled;
+        }
 
-        public void Load(SaveData data) => 
+        public void Load(SaveData data)
+        {
             SetLocationByIndex(data.LocationIndex);
+            _isLocationRandomSelectionEnabled = data.IsLocationRandomSelectionEnabled;
+        }
 
-        public void SetRandomLocation()
+        public void UpdateLocation()
+        {
+            if (_isLocationRandomSelectionEnabled == true)
+            {
+                SetRandomLocation();
+            }
+            else if (_locationIndex < _config.Locations.Length - 1)
+            {
+                _locationIndex++;
+                _currentLocation = _config.Locations[_locationIndex];
+            }
+            else
+            {
+                _isLocationRandomSelectionEnabled = true;
+                SetRandomLocation();
+            }
+        }
+
+        private void SetRandomLocation()
         {
             int index = _config.Locations.GetRandomIndex();
-            Location location = _config.Locations[index];
 
-            _currentLocation = location;
+            _currentLocation = _config.Locations[index];
             _locationIndex = index;
         }
 
