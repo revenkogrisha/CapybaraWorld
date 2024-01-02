@@ -1,8 +1,10 @@
+using System;
 using Core.Factories;
 using Core.Other;
 using DG.Tweening;
 using NTC.Pool;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace Core.Level
 {
@@ -16,11 +18,15 @@ namespace Core.Level
         private CoinFactory _coinFactory;
         private bool _canOpen = true;
 
+        private void Awake()
+        {
+            if (Preloaded == true)
+                Setup();
+        }
+
         public void OnSpawn()
         {
-            _coinFactory = new(_preset.CoinPrefab);
-            transform.localScale = Vector2.one;
-            _canOpen = true;
+            Setup();
         }
 
         public void Open()
@@ -41,6 +47,13 @@ namespace Core.Level
             Invoke(nameof(Despawn), DespawnDelay);
         }
 
+        private void Setup()
+        {
+            _coinFactory = new(_preset.CoinPrefab);
+            transform.localScale = Vector2.one;
+            _canOpen = true;
+        }
+        
         private void PushOutCoin()
         {
             Coin coin = _coinFactory.Create(transform.parent, transform.localPosition);

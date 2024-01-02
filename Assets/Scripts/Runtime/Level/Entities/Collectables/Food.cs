@@ -1,3 +1,4 @@
+using System;
 using Core.Other;
 using DG.Tweening;
 using NTC.Pool;
@@ -11,11 +12,14 @@ namespace Core.Level
 
         public bool CanCollect { get; private set; } = true;
 
-        public void OnSpawn()
+        private void Awake()
         {
-            transform.localScale = Vector2.one;
-            CanCollect = true;
+            if (Preloaded == true)
+                Setup();
         }
+
+        public void OnSpawn() => 
+            Setup();
 
         public void OnCollected()
         {
@@ -23,6 +27,12 @@ namespace Core.Level
             DOTween.Sequence()
                 .Append(transform.DOScale(Vector2.zero, _fadeDuration))
                 .AppendCallback(Despawn);
+        }
+
+        private void Setup()
+        {
+            transform.localScale = Vector2.one;
+            CanCollect = true;
         }
 
         private void Despawn() =>
