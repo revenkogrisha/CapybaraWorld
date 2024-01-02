@@ -109,7 +109,11 @@ namespace Core.UI
             DisplayLevelNumber();
             DisplayLocationName();
             
-            RDebug.Log("Dev >> Location updated");
+            RDebug.Log("Location updated");
+            
+            _navigation.Generate<MainMenuState>();
+            
+            RDebug.Log("Regenerated!");
         }
 #endif
     }
