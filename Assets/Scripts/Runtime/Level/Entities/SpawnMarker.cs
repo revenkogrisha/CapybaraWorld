@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics;
 using System.Linq;
 using TriInspector;
 using UnityEngine;
@@ -10,6 +11,9 @@ namespace Core.Level
         private const string NameFormat = "# {0} Marker";
         
         [SerializeField] private EntityKind _entityKind;
+        
+        [Space]
+        [SerializeField] private Vector3 _gizmosOffset = Vector3.down;
 
         [Title("Chest Spawn Settings")]
         [ShowIf(nameof(_entityKind), EntityKind.Chest), EnumToggleButtons]
@@ -35,8 +39,24 @@ namespace Core.Level
                 .ToArray();
         }
 
+        #region MonoBehaviour
+        
         private void OnValidate() =>
             gameObject.name = string.Format(NameFormat, _entityKind.ToString());
+
+        [Conditional("UNITY_EDITOR")]
+        private void OnDrawGizmos()
+        {
+            if (transform == null)
+                return;
+            
+            Gizmos.color = Color.magenta;
+
+            Vector3 thisPosition = transform.position;
+            Gizmos.DrawLine(thisPosition, thisPosition + _gizmosOffset);
+        }
+
+        #endregion
 
         public void SetProduct(GameObject product)
         {
