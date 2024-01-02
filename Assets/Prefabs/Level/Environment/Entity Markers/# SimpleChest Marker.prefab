@@ -45,5 +45,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _entityKind: 1
+  _gizmosOffset: {x: 0, y: -0.8, z: 0}
   _chestKind: 1
   _enemyKind: 0
