@@ -4,7 +4,7 @@
         <repositories>
             <repository>https://repo.maven.apache.org/maven2</repository>
         </repositories>
-        <androidPackage spec="androidx.fragment:fragment:1.6.2" />
-        <androidPackage spec="androidx.annotation:annotation:1.7.1" />
+        <androidPackage spec="androidx.fragment:fragment:1.1.0" />
+        <androidPackage spec="androidx.annotation:annotation:1.1.0" />
     </androidPackages>
 </dependencies>

@@ -1,7 +1,7 @@
 <dependencies>
   <packages>
-    <package>androidx.annotation:annotation:1.7.1</package>
-    <package>androidx.fragment:fragment:1.6.2</package>
+    <package>androidx.annotation:annotation:1.1.0</package>
+    <package>androidx.fragment:fragment:1.1.0</package>
     <package>com.google.android.play:app-update:2.0.0</package>
     <package>com.google.android.play:core-common:2.0.0</package>
     <package>com.google.android.play:review:2.0.0</package>
