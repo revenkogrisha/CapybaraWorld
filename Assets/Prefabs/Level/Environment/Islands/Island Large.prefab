@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 3227753571072294300}
   - component: {fileID: 2204242132013134772}
   - component: {fileID: 8675415287841424541}
+  - component: {fileID: -8310467409605534901}
   m_Layer: 7
   m_Name: Island Large
   m_TagString: Untagged
@@ -88,6 +89,18 @@ PlatformEffector2D:
   m_UseSideFriction: 0
   m_UseSideBounce: 0
   m_SideArc: 1
+--- !u!114 &-8310467409605534901
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4877825440285542465}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8c216361ebe425eb89643136cb0d2ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &9020411082213073859
 GameObject:
   m_ObjectHideFlags: 0
@@ -159,7 +172,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -817365661
-  m_SortingLayer: 3
+  m_SortingLayer: 5
   m_SortingOrder: 0
   m_Sprite: {fileID: -1869837458, guid: 0ba7c2af437044098939ad6d978c3c47, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
