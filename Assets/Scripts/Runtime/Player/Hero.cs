@@ -13,6 +13,7 @@ using TriInspector;
 
 namespace Core.Player
 {
+	[SelectionBase]
     public class Hero : MonoBehaviour, IDieable, IPlayerEventsHandler
 	{
 		private const float GrapplingActivationDistance = 50f;
