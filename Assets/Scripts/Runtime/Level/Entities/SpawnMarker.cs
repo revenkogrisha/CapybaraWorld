@@ -38,20 +38,20 @@ namespace Core.Level
         private void OnValidate() =>
             gameObject.name = string.Format(NameFormat, _entityKind.ToString());
 
-        public bool IsEmpty()
-        {
-            if (_product == null)
-                return true;
-
-            return _product.activeSelf == false;
-        }
-
         public void SetProduct(GameObject product)
         {
             if (product == null || product.activeSelf == false)
                 throw new ArgumentNullException("Spawn Marker: null product given!");
 
             _product = product;
+        }
+
+        private bool IsEmpty()
+        {
+            if (_product == null)
+                return true;
+
+            return _product.activeSelf == false;
         }
     }
 }
