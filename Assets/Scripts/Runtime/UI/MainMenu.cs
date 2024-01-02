@@ -26,11 +26,11 @@ namespace Core.UI
         [SerializeField] private TMP_Text _levelTMP;
         [SerializeField] private TMP_Text _locationTMP;
 
-#if REVENKO_DEVELOP
         [Header("Dev Buttons")] 
         [SerializeField] private UIButton _devLocationButton;
         [SerializeField] private UIButton _devLevelButton;
 
+#if REVENKO_DEVELOP
         private PlaythroughHandler _playthroughHandler;
 #endif
         private ILocationsHandler _locationsHandler;
