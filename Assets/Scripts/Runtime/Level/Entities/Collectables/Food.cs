@@ -1,4 +1,3 @@
-using System;
 using Core.Other;
 using DG.Tweening;
 using NTC.Pool;

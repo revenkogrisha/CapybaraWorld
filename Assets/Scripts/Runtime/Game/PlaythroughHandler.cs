@@ -4,7 +4,6 @@ using Core.Level;
 using Core.Player;
 using Core.Saving;
 using UniRx;
-using UnityEngine;
 using Zenject;
 
 namespace Core.Game
