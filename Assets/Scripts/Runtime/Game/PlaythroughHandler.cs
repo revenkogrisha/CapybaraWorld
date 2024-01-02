@@ -10,13 +10,16 @@ namespace Core.Game
     public class PlaythroughHandler : IPlaythroughProgressHandler, IGameEventsHandler, IDisposable
     {
         private const int WinScore = 135;
+        
         private readonly ILocationsHandler _locationsHandler;
         private readonly GameNavigation _navigation;
         private readonly Score _score;
         private readonly CompositeDisposable _disposable = new();
 
         public ReactiveCommand GameWinCommand { get; } = new();
-        public float PlaythroughProgress => (float)_score.PlaythroughScore.Value / (float)WinScore;
+        
+        // Casts to float are necessary because of operating with int values. Not working without them
+        public float Progress => (float)_score.PlaythroughScore.Value / (float)WinScore;
 
         [Inject]
         public PlaythroughHandler(
@@ -45,7 +48,7 @@ namespace Core.Game
         public void Dispose() => 
             _disposable.Clear();
 
-        private void FinishGame(GameResult result)
+        public void FinishGame(GameResult result)
         {
             switch (result)
             {

@@ -13,7 +13,7 @@ namespace Core.UI
         protected IPlaythroughProgressHandler _playthrough;
 
         private void Start() => 
-            SetProgressBarValue(_playthrough.PlaythroughProgress);
+            SetProgressBarValue(_playthrough.Progress);
 
         [Inject]
         private void Construct(IPlaythroughProgressHandler playthrough) =>        

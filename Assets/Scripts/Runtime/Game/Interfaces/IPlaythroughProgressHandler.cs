@@ -2,6 +2,6 @@ namespace Core.Game
 {
     public interface IPlaythroughProgressHandler
     {
-        public float PlaythroughProgress { get; }
+        public float Progress { get; }
     }
 }

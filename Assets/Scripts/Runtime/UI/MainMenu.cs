@@ -1,6 +1,7 @@
 #if REVENKO_DEVELOP
 using Core.Editor.Debugger;
 #endif
+using Core.Game;
 using Core.Infrastructure;
 using Core.Level;
 using Core.Player;
@@ -28,8 +29,10 @@ namespace Core.UI
 #if REVENKO_DEVELOP
         [Header("Dev Buttons")] 
         [SerializeField] private UIButton _devLocationButton;
-#endif
+        [SerializeField] private UIButton _devLevelButton;
 
+        private PlaythroughHandler _playthroughHandler;
+#endif
         private ILocationsHandler _locationsHandler;
         private PlayerData _playerData;
         private GameNavigation _navigation;
@@ -44,6 +47,7 @@ namespace Core.UI
 
 #if REVENKO_DEVELOP
             _devLocationButton.OnClicked += UpdateLocation;
+            _devLevelButton.OnClicked += CompleteLevel;
 #endif
         }
 
@@ -54,6 +58,7 @@ namespace Core.UI
 
 #if REVENKO_DEVELOP
             _devLocationButton.OnClicked -= UpdateLocation;
+            _devLevelButton.OnClicked -= CompleteLevel;
 #endif
         }
 
@@ -67,10 +72,16 @@ namespace Core.UI
 
         [Inject]
         private void Construct(
+#if REVENKO_DEVELOP
+            PlaythroughHandler playthroughHandler,
+#endif
             ILocationsHandler locationsHandler,
             PlayerData playerData,
             GameNavigation navigation)
         {
+#if REVENKO_DEVELOP
+            _playthroughHandler = playthroughHandler;
+#endif
             _locationsHandler = locationsHandler;
             _playerData = playerData;
             _navigation = navigation;
@@ -108,12 +119,17 @@ namespace Core.UI
             
             DisplayLevelNumber();
             DisplayLocationName();
-            
-            RDebug.Log("Location updated");
+            RDebug.Log($"{nameof(MainMenu)}: Location updated");
             
             _navigation.Generate<MainMenuState>();
-            
-            RDebug.Log("Regenerated!");
+            RDebug.Log($"{nameof(MainMenu)}: Regenerated!");
+        }
+
+        private void CompleteLevel()
+        {
+            _navigation.ToGameplay();
+            _playthroughHandler.FinishGame(GameResult.Win);
+            RDebug.Log($"{nameof(MainMenu)}: Level completed");
         }
 #endif
     }
