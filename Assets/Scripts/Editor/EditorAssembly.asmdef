@@ -2,7 +2,8 @@
     "name": "Editor",
     "rootNamespace": "Core.Editor",
     "references": [
-        "GUID:0a0471484b079be408cb3a0d7fe94736"
+        "GUID:0a0471484b079be408cb3a0d7fe94736",
+        "GUID:eb93ca4cb9e1b415599be277d42b16bf"
     ],
     "includePlatforms": [
         "Editor"

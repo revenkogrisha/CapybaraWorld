@@ -3,6 +3,7 @@
     "rootNamespace": "Core.Editor.Debugger",
     "references": [],
     "includePlatforms": [
+        "Android",
         "Editor"
     ],
     "excludePlatforms": [],
