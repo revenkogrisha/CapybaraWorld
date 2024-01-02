@@ -18,7 +18,7 @@ namespace Core.Player
         
         public int Cost => _cost;
         public int HeroLevel => _heroLevel;
-        public bool CanUpgradeHero => _playerData.CoinsAmount > _cost;
+        public bool CanUpgradeHero => _playerData.CoinsAmount >= _cost;
 
         [Inject]
         public PlayerUpgrade(PlayerData playerData, PlayerUpgradeConfig config)
