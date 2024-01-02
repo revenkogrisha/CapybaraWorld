@@ -11,8 +11,10 @@ namespace Core.Common
 {
     public class GoogleUserReviewService : IUserReviewService
     {
+        public bool IsFake { get; } = false;
+
         private ReviewManager _manager;
-        
+
         public void Initialize() => 
             _manager = new();
 

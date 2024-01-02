@@ -2,7 +2,9 @@ using System;
 using Core.Infrastructure;
 using Core.Level;
 using Core.Player;
+using Core.Saving;
 using UniRx;
+using UnityEngine;
 using Zenject;
 
 namespace Core.Game
@@ -70,6 +72,8 @@ namespace Core.Game
             GameWinCommand.Execute();
             _locationsHandler.UpdateLocation();
             _navigation.ToWin();
+
+            PlayerPrefsUtility.LevelsWon++;
         }
 
         private void OnGameLost() =>
