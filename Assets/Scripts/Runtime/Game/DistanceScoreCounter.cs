@@ -56,7 +56,7 @@ namespace Core.Game
                     await UniTaskUtility.Delay(UpdateFrequency, token);
                 }
             }
-            catch (OperationCanceledException ex) {  }
+            catch (OperationCanceledException) {  }
             catch (Exception ex)
             {
                 RDebug.Warning($"{nameof(DistanceScoreCounter)}::{nameof(Count)}: {ex.Message} \n{ex.StackTrace}");
