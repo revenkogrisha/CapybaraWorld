@@ -22,11 +22,9 @@ namespace Core.UI
         [Space] 
         [SerializeField] private TMP_Text _costTMP;
         [SerializeField] private TMP_Text _heroLevelTMP;
-
-#if REVENKO_DEVELOP
+        
         [Header("Dev Buttons")] 
         [SerializeField] private UIButton _devUpgradeButton;
-#endif
         
         private MainMenuRoot _root;
         private PlayerUpgrade _playerUpgrade;
