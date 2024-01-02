@@ -3,6 +3,7 @@ using UnityEngine;
 
 namespace Core.Level
 {
+    [SelectionBase]
     public class GrapplingJoint : MonoBehaviour
     {
         private const float GrappledScaleMultiplier = 0.8f;
