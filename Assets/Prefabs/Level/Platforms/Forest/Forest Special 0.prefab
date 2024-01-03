@@ -600,6 +600,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da0286adbb0e14f6287b56b20c1a510d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _worldCanvas: {fileID: 0}
   _spawnMarkers:
   - {fileID: 191320831276688224}
   - {fileID: 5822661826903379333}

@@ -1,4 +1,3 @@
-using System;
 using System.Threading;
 using Cinemachine;
 using Core.Common;

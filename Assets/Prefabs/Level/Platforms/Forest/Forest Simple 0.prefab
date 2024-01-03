@@ -48,6 +48,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 55439a66834b647d3a5a6095de5c9448, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _worldCanvas: {fileID: 0}
+  _spawnMarkers: []
 --- !u!1001 &487115734825256894
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -187,6 +187,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 55439a66834b647d3a5a6095de5c9448, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _worldCanvas: {fileID: 4843441753864680165}
   _spawnMarkers: []
 --- !u!1 &5308867725554875156
 GameObject:

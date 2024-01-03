@@ -9,10 +9,23 @@ namespace Core.Level
     {
         public const float Length = 120f;
 
+        [Tooltip("Can be null, if not - hides on Start, shows on Gameplay State enter")]
+        [SerializeField] private Canvas _worldCanvas;
+
         [ListDrawerSettings(AlwaysExpanded = true, HideAddButton = true)]
+        [Space]
         [SerializeField] private SpawnMarker[] _spawnMarkers;
 
+
         public SpawnMarker[] SpawnMarkers => _spawnMarkers;
+
+        #region MonoBehaviour
+
+        private void Start()
+        {
+            if (_worldCanvas != null)
+                _worldCanvas.gameObject.SetActive(false);
+        }
 
         [Conditional("UNITY_EDITOR")]
         protected void OnDrawGizmos()
@@ -34,6 +47,11 @@ namespace Core.Level
             Gizmos.DrawLine(leftTop, rightTop);
             Gizmos.DrawLine(leftBottom, rightBottom);
         }
+        
+        #endregion
+
+        public Canvas GetWorldCanvasIfHas() =>
+            _worldCanvas ?? null;
 
         [Button(ButtonSizes.Large), GUIColor(255, 153, 153), Group("Buttons")]
         private void ClearMarkers() =>
