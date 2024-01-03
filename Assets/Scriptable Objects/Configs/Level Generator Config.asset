@@ -18,6 +18,7 @@ MonoBehaviour:
   _platformsY: -2
   _locations:
   - {fileID: 11400000, guid: cd611eb7806cc4f11be36cc699b8cbe4, type: 2}
+  - {fileID: 11400000, guid: 8dac0bda198da46a9bf8a937f708593e, type: 2}
   - {fileID: 11400000, guid: 390591acfff2e4571beeff1d3f3e41ef, type: 2}
   _backgroundPrefab: {fileID: 1260117884632274307, guid: aa3b4763dc96a4681a5fde6896e4dbc9, type: 3}
   _backgroundPosition: {x: 0, y: 2.5}
