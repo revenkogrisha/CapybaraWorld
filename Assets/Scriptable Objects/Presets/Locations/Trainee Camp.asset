@@ -18,5 +18,5 @@ MonoBehaviour:
   _simplePlatforms:
   - {fileID: 8222899738712285114, guid: 9a4bc38c88f2a452dadfaffa48d55105, type: 3}
   _specialPlatforms:
-  - {fileID: 1280936354804307747, guid: 138f329feb51f41fba1b8a43fc3b0155, type: 3}
-  - {fileID: 1280936354804307747, guid: 2b538548f12ff4fc99b6dabbf7ee53c6, type: 3}
+  - {fileID: 1280936354804307747, guid: e59ba5019429b4badac2d2c99e46b48e, type: 3}
+  - {fileID: 1280936354804307747, guid: f6d6d0e695b4e4719adb8a4296918d27, type: 3}
