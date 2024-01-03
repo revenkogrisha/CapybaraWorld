@@ -33,15 +33,11 @@ namespace Core.Player
             set => _cinemachine.m_Lens.OrthographicSize = value;
         }
 
-        #region MonoBehaviour
-
         public void Dispose()
         {
             _disposable.Clear();
             _shake.Dispose();
         }
-
-        #endregion
 
         public void Initialize(Hero hero)
         {
@@ -103,8 +99,7 @@ namespace Core.Player
 
         private void SubscribeUpdate()
         {
-            IObservable<Unit> update = this.UpdateAsObservable();
-            update
+            this.UpdateAsObservable()
                 .Where(_ => _hero != null)
                 .Subscribe(_ => SetHeroMiddleObject())
                 .AddTo(_disposable);
