@@ -146,7 +146,7 @@ GameObject:
   - component: {fileID: 4968046977922858085}
   - component: {fileID: 8222899738712285114}
   m_Layer: 0
-  m_Name: Camp Simple 0
+  m_Name: Flower Simple 0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -223,7 +223,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -59.4, y: -5.4}
+  m_AnchoredPosition: {x: -57.72, y: -4.1}
   m_SizeDelta: {x: 11.6591, y: 2.9148}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &412630911764946264
@@ -254,7 +254,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: HOLD for grapple and swing forward
+  m_text: '>>> Jump forward >>>'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 21e766cf20a8e4f8cbf4b1ea831c9320, type: 2}
   m_sharedMaterial: {fileID: 2100000, guid: 74e74d52455ca4b74b99514a23573787, type: 2}
@@ -477,7 +477,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 1.4574}
+  m_AnchoredPosition: {x: 0, y: 3.74}
   m_SizeDelta: {x: 11.6591, y: 2.9148}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5488404587660732958
@@ -611,7 +611,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -31.85, y: 1.4574}
+  m_AnchoredPosition: {x: -31.85, y: 2.54}
   m_SizeDelta: {x: 11.6591, y: 2.9148}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5406609870006656027
@@ -745,7 +745,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 72.45, y: -3.85}
+  m_AnchoredPosition: {x: 72.27, y: -3.66}
   m_SizeDelta: {x: 11.6591, y: 2.9148}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &825515585199326313
@@ -776,7 +776,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Incredible Capy! Here you go!
+  m_text: Awesome buddy! Keep going!
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 21e766cf20a8e4f8cbf4b1ea831c9320, type: 2}
   m_sharedMaterial: {fileID: 2100000, guid: 74e74d52455ca4b74b99514a23573787, type: 2}
@@ -859,11 +859,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7437639906120788173, guid: 8d0d6b4995b794ac3b056a8b4fcbc1c3, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -14.2
+      value: -15.44
       objectReference: {fileID: 0}
     - target: {fileID: 7437639906120788173, guid: 8d0d6b4995b794ac3b056a8b4fcbc1c3, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 4
+      value: 10.04
       objectReference: {fileID: 0}
     - target: {fileID: 7437639906120788173, guid: 8d0d6b4995b794ac3b056a8b4fcbc1c3, type: 3}
       propertyPath: m_LocalPosition.z
@@ -921,11 +921,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7437639906120788173, guid: 8d0d6b4995b794ac3b056a8b4fcbc1c3, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 15.9
+      value: 17.43
       objectReference: {fileID: 0}
     - target: {fileID: 7437639906120788173, guid: 8d0d6b4995b794ac3b056a8b4fcbc1c3, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 4
+      value: 7.52
       objectReference: {fileID: 0}
     - target: {fileID: 7437639906120788173, guid: 8d0d6b4995b794ac3b056a8b4fcbc1c3, type: 3}
       propertyPath: m_LocalPosition.z
@@ -1057,7 +1057,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7437639906120788173, guid: 8d0d6b4995b794ac3b056a8b4fcbc1c3, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 4.36
+      value: 5.61
       objectReference: {fileID: 0}
     - target: {fileID: 7437639906120788173, guid: 8d0d6b4995b794ac3b056a8b4fcbc1c3, type: 3}
       propertyPath: m_LocalPosition.z
@@ -1181,7 +1181,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7437639906120788173, guid: 8d0d6b4995b794ac3b056a8b4fcbc1c3, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 5.8
+      value: 8.0826
       objectReference: {fileID: 0}
     - target: {fileID: 7437639906120788173, guid: 8d0d6b4995b794ac3b056a8b4fcbc1c3, type: 3}
       propertyPath: m_LocalPosition.z
@@ -1243,7 +1243,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7437639906120788173, guid: 8d0d6b4995b794ac3b056a8b4fcbc1c3, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 5.8
+      value: 6.43
       objectReference: {fileID: 0}
     - target: {fileID: 7437639906120788173, guid: 8d0d6b4995b794ac3b056a8b4fcbc1c3, type: 3}
       propertyPath: m_LocalPosition.z
