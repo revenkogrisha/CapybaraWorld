@@ -1,11 +1,12 @@
 using System.Diagnostics;
+using NTC.Pool;
 using TriInspector;
 using UnityEngine;
 
 namespace Core.Level
 {
     [DeclareHorizontalGroup("Buttons")]
-    public abstract class Platform : MonoBehaviour
+    public abstract class Platform : MonoBehaviour, ISpawnable
     {
         public const float Length = 120f;
 
@@ -21,20 +22,14 @@ namespace Core.Level
 
         #region MonoBehaviour
 
-        private void Start()
-        {
-            if (_worldCanvas != null)
-                _worldCanvas.gameObject.SetActive(false);
-        }
-
         [Conditional("UNITY_EDITOR")]
         protected void OnDrawGizmos()
         {
-            float halfWidth = Length * 0.5f;
+            if (transform == null)
+                return;
 
-            Color gizmosColor = Color.red;
-
-            Gizmos.color = gizmosColor;
+            const float halfWidth = Length * 0.5f;
+            Gizmos.color = Color.red;
 
             Vector3 center = transform.position;
             Vector3 leftTop = center + Vector3.left * halfWidth + Vector3.up;
@@ -49,6 +44,12 @@ namespace Core.Level
         }
         
         #endregion
+
+        public void OnSpawn()
+        {
+            if (_worldCanvas != null)
+                _worldCanvas.gameObject.SetActive(false);
+        }
 
         public Canvas GetWorldCanvasIfHas() =>
             _worldCanvas ?? null;

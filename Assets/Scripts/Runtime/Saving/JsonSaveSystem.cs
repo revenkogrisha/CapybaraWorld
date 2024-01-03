@@ -26,6 +26,8 @@ namespace Core.Saving
                 }
                 
                 File.Delete(FilePath);
+                PlayerPrefsUtility.ClearData();
+                
                 EditorUtility.DisplayDialog("Succeeded", "Your save data was deleted", "Okay");
             }
         }

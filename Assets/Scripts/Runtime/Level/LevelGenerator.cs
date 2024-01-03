@@ -63,13 +63,16 @@ namespace Core.Level
 
         public void Dispose()
         {
+            // Called on the end of gameplay. Hides labels & end observing center position
             _cts.Clear();
+
             _areaLabelsService.Dispose();
             _labelContainer.gameObject.SelfDestroy();
         }
 
         public void Clean()
         {
+            // Called on level regeneration. Cleans spawned platform & collected data
             _platformNumber = 0;
             _lastGeneratedPlatformX = 0f;
 
@@ -115,7 +118,7 @@ namespace Core.Level
             else if (_locationIndex < _config.Locations.Length - 1)
             {
                 _locationIndex++;
-                _currentLocation = _config.Locations[_locationIndex];
+                SetLocationByIndex();
             }
             else
             {
@@ -124,10 +127,10 @@ namespace Core.Level
             }
         }
 
-        public void ShowWorldCanvases()
+        public void SetActiveWorldCanvases(bool state)
         {
             foreach (Canvas canvas in _platformCanvases)
-                canvas.gameObject.SetActive(true);
+                canvas.gameObject.SetActive(state);
         }
 
         private void SetRandomLocation()
@@ -205,6 +208,9 @@ namespace Core.Level
                 _cts = null;
             }
         }
+
+        private void SetLocationByIndex() =>
+            SetLocationByIndex(_locationIndex);
 
         private void SetLocationByIndex(int index)
         {

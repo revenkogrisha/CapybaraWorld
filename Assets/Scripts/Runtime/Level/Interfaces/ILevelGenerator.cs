@@ -10,6 +10,6 @@ namespace Core.Level
         public void Generate();
         public void InitializeLabels(AreaLabelContainer container);
         public void Initialize(Transform center);
-        public void ShowWorldCanvases();
+        public void SetActiveWorldCanvases(bool state);
     }
 }
