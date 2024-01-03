@@ -24,6 +24,7 @@ namespace Core.Level
         private readonly EntitySpawner _entitySpawner;
         private readonly IPlatformFactory<Platform> _platformFactory;
         private readonly BackgroundHandler _backgroundHandler;
+        private readonly List<Canvas> _platformCanvases;
         private AreaLabelsService _areaLabelsService;
         private AreaLabelContainer _labelContainer;
         private CancellationTokenSource _cts;
@@ -51,6 +52,7 @@ namespace Core.Level
             _entitySpawner = entitySpawner;
             _lastGeneratedPlatformX = _config.XtartPoint;
             _platformsOnLevel = new();
+            _platformCanvases = new();
 
             _areaLabels = areaLabels;
 
@@ -64,6 +66,20 @@ namespace Core.Level
             _cts.Clear();
             _areaLabelsService.Dispose();
             _labelContainer.gameObject.SelfDestroy();
+        }
+
+        public void Clean()
+        {
+            _platformNumber = 0;
+            _lastGeneratedPlatformX = 0f;
+
+            foreach (Platform platform in _platformsOnLevel)
+                NightPool.Despawn(platform);
+                
+            _platformsOnLevel.Clear();
+            _backgroundHandler.Dispose();
+
+            _platformCanvases.Clear();
         }
 
         public void InitializeLabels(AreaLabelContainer container)
@@ -108,6 +124,12 @@ namespace Core.Level
             }
         }
 
+        public void ShowWorldCanvases()
+        {
+            foreach (Canvas canvas in _platformCanvases)
+                canvas.gameObject.SetActive(true);
+        }
+
         private void SetRandomLocation()
         {
             int index = _config.Locations.GetRandomIndex();
@@ -124,18 +146,6 @@ namespace Core.Level
             CreateBackground();
         }
 
-        public void Clean()
-        {
-            _platformNumber = 0;
-            _lastGeneratedPlatformX = 0f;
-
-            foreach (Platform platform in _platformsOnLevel)
-                NightPool.Despawn(platform);
-                
-            _platformsOnLevel.Clear();
-            _backgroundHandler.Dispose();
-        }
-
         private void SpawnStartPlatform()
         {
             Platform platform = _platformFactory.Create(CurrentLocation.StartPlatform);
@@ -143,6 +153,8 @@ namespace Core.Level
             Vector2 newPosition = platform.GetPosition();
             newPosition.y = _config.PlatformsY;
             platform.SetPosition(newPosition);
+
+            SetupPlatform(platform);
 
             UpdateGenerationData(platform);
         }
@@ -224,16 +236,14 @@ namespace Core.Level
         private Platform GenerateSimplePlatform(Vector2 position)
         {
             Platform platform = _platformFactory.CreateSimple(position);
-            _entitySpawner.SpawnEntities(platform);
-            return platform;
+            return SetupPlatform(platform);
         }
 
 
         private Platform GenerateSpecialPlatform(Vector2 position)
         {
             Platform platform = _platformFactory.CreateSpecial(position);
-            _entitySpawner.SpawnEntities(platform);
-            return platform;
+            return SetupPlatform(platform);
         }
 
 
@@ -242,6 +252,17 @@ namespace Core.Level
             _lastGeneratedPlatformX += Platform.Length;
             _platformNumber++;
             _platformsOnLevel.Enqueue(platform);
+        }
+
+        private Platform SetupPlatform(Platform platform)
+        {
+            _entitySpawner.SpawnEntities(platform);
+
+            Canvas worldCanvas = platform.GetWorldCanvasIfHas();
+            if (worldCanvas != null)
+                _platformCanvases.Add(worldCanvas);
+                
+            return platform;
         }
 
         private void DespawnOldestPlatform() => 

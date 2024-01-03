@@ -72,6 +72,7 @@ namespace Core.Infrastructure
             _playthroughHandler.Initialize(hero);
 
             _levelGenerator.Initialize(heroTransform);
+            _levelGenerator.ShowWorldCanvases();
 
             CreateUI(hero);
         }
