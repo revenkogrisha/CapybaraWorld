@@ -685,7 +685,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 48.8, y: -0.05}
+  m_AnchoredPosition: {x: 47.38, y: -0.05}
   m_SizeDelta: {x: 12.7447, y: 3.1862}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5354148256882659279
@@ -743,12 +743,12 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 0.8
+  m_fontSize: 0.7
   m_fontSizeBase: 1
   m_fontWeight: 400
   m_enableAutoSizing: 1
   m_fontSizeMin: 0.5
-  m_fontSizeMax: 0.8
+  m_fontSizeMax: 0.7
   m_fontStyle: 0
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
@@ -987,7 +987,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 38.33, y: 3.24}
+  m_AnchoredPosition: {x: 35.05, y: 4.29}
   m_SizeDelta: {x: 12.7447, y: 3.1862}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8822289079877183289
@@ -2060,7 +2060,8 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 8561308049385647434, guid: 3b42c7b27d08b49629088c2f93985fc2, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3b42c7b27d08b49629088c2f93985fc2, type: 3}
@@ -2281,7 +2282,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 4349478594990580883, guid: 6f49c11a7abd145ca88a92d551a38fcc, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 47.85
+      value: 50.01
       objectReference: {fileID: 0}
     - target: {fileID: 4349478594990580883, guid: 6f49c11a7abd145ca88a92d551a38fcc, type: 3}
       propertyPath: m_LocalPosition.y
@@ -2619,9 +2620,7 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects:
-    - {fileID: 2409246290271454880, guid: 3b42c7b27d08b49629088c2f93985fc2, type: 3}
-    - {fileID: 8561308049385647434, guid: 3b42c7b27d08b49629088c2f93985fc2, type: 3}
+    m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3b42c7b27d08b49629088c2f93985fc2, type: 3}
