@@ -26,6 +26,7 @@ namespace Core.Infrastructure
             
             _levelGenerator.Clean();
             _levelGenerator.Generate();
+            
             FiniteStateMachine.ChangeState(_stateToMoveOn);
         }
 

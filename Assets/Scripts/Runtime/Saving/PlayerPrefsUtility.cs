@@ -25,5 +25,8 @@ namespace Core.Saving
             }
             set => PlayerPrefs.SetInt(HasRequestedReviewKey, Convert.ToInt32(value));
         }
+
+        public static void ClearData() =>
+            PlayerPrefs.DeleteAll();
     }
 }

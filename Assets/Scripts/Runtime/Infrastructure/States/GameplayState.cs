@@ -72,13 +72,15 @@ namespace Core.Infrastructure
             _playthroughHandler.Initialize(hero);
 
             _levelGenerator.Initialize(heroTransform);
-            _levelGenerator.ShowWorldCanvases();
+            _levelGenerator.SetActiveWorldCanvases(true);
 
             CreateUI(hero);
         }
 
         public override void Exit()
         {
+            _levelGenerator.SetActiveWorldCanvases(false);
+
             _saveService.Save();
             
             foreach (IDisposable disposable in _disposables)
@@ -126,12 +128,6 @@ namespace Core.Infrastructure
             IScoreCounter scoreCounter = new DistanceScoreCounter(heroTransform, _score);
             scoreCounter.StartCount();
             _disposables.Add(scoreCounter);
-        }
-
-        private void InitializeLevelGenerator(Transform heroTransform)
-        {
-            
-
         }
 
         private void CreateUI(Hero hero) => 
