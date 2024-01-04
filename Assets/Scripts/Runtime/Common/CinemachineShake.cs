@@ -26,13 +26,12 @@ namespace Core.Common
         public async UniTaskVoid Shake(float intensity, float duration)
         {
             _cts = new();
-            CancellationToken token = _cts.Token;
 
             try
             {
                 _perlinNoise.m_AmplitudeGain = intensity;
 
-                await UniTaskUtility.Delay(duration, token);
+                await UniTaskUtility.Delay(duration, _cts.Token);
                 Reset();
             }
             catch (OperationCanceledException) {  }

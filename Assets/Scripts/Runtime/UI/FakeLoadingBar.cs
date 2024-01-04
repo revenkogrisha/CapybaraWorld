@@ -22,14 +22,13 @@ namespace Core.UI
 
         private async UniTaskVoid Imitate()
         {
-            CancellationToken token = destroyCancellationToken;
             while (_slider.value < _slider.maxValue)
             {
                 _slider.value += _loadingSpeed;
                 if (_displayPercentage == true)
                     DisplayPercentage();
 
-                await UniTask.NextFrame(token);
+                await UniTask.NextFrame(destroyCancellationToken);
             }
         }
 

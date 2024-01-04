@@ -232,7 +232,6 @@ namespace Core.Player
                 if (IsJumping == true || IsDashing == true)
                     return;
 
-                CancellationToken token = _hero.destroyCancellationToken;
                 Rigidbody2D rigidbody2D = _hero.Rigidbody2D;
                 float duration = _hero.Config.JumpDuration;
 
@@ -250,12 +249,12 @@ namespace Core.Player
                 
                     elapsedTime += Time.deltaTime;
                 
-                    await UniTask.NextFrame(token);
+                    await UniTask.NextFrame(_hero.destroyCancellationToken);
                 }
 
                 await UniTask.WaitUntil(
                     () => Mathf.Approximately(rigidbody2D.velocity.y, 0f) == true,
-                    cancellationToken: token);
+                    cancellationToken: _hero.destroyCancellationToken);
 
                 IsJumping = false;
             }

@@ -59,7 +59,6 @@ namespace Core.Level
         private async UniTaskVoid Follow()
         {
             _cts = new();
-            CancellationToken token = _cts.Token;
 
             try
             {
@@ -68,7 +67,7 @@ namespace Core.Level
                     Vector3 movedPosition = GetMovedPosition();
                     _thisTransform.position = movedPosition;
 
-                    await UniTaskUtility.Delay(_updateIntervalInSeconds, token);
+                    await UniTaskUtility.Delay(_updateIntervalInSeconds, _cts.Token);
                 }
             }
             catch (OperationCanceledException) {  }

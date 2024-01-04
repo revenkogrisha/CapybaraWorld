@@ -38,7 +38,6 @@ namespace Core.Level
         private async UniTaskVoid StartLookingForTarget()
 		{
 			_cts = new();
-			CancellationToken token = _cts.Token;
 
 			try
 			{
@@ -54,7 +53,7 @@ namespace Core.Level
 
 					ChangeDirection();
 
-					await UniTaskUtility.Delay(_enemy.SearchPreset.SpotInterval, token);
+					await UniTaskUtility.Delay(_enemy.SearchPreset.SpotInterval, _cts.Token);
 				}
 			}
 			catch (OperationCanceledException) {  }
