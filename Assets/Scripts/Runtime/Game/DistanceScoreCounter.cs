@@ -34,7 +34,6 @@ namespace Core.Game
         private async UniTaskVoid Count()
         {
             _cts = new();
-            CancellationToken token = _cts.Token;
 
             try
             {
@@ -47,13 +46,7 @@ namespace Core.Game
 
                     _score.PlaythroughScore.Value = playthroughDistance;
 
-                    if (token.IsCancellationRequested == true)
-                    {
-                        _cts?.Dispose();
-                        _cts = null;
-                    }
-
-                    await UniTaskUtility.Delay(UpdateFrequency, token);
+                    await UniTaskUtility.Delay(UpdateFrequency, _cts.Token);
                 }
             }
             catch (OperationCanceledException) {  }

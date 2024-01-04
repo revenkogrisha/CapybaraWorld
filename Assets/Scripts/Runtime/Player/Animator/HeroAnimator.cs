@@ -121,7 +121,6 @@ namespace Core.Player
 
         private async UniTaskVoid StartRotatingBody(Transform targetJoint)
         {
-            CancellationToken token = destroyCancellationToken;
             _shouldRotateBody = true;
 
             while (_shouldRotateBody == true)
@@ -131,7 +130,7 @@ namespace Core.Player
                     targetJoint,
                     _config.BodyRotationSpeed);
 
-                await UniTask.NextFrame(token);
+                await UniTask.NextFrame(destroyCancellationToken);
             }
         }
 
@@ -140,7 +139,6 @@ namespace Core.Player
             _animator.SetBool(HeroAnimatorConfig.FreeFallingHash, false);
             _animator.enabled = false;
 
-            CancellationToken token = destroyCancellationToken;
             _shouldRotateHand = true;
 
             while (_shouldRotateHand == true)
@@ -150,7 +148,7 @@ namespace Core.Player
                     targetJoint,
                     _config.HandRotationSpeed);
 
-                await UniTask.NextFrame(token);
+                await UniTask.NextFrame(destroyCancellationToken);
             }
         }
 

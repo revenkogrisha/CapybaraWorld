@@ -178,7 +178,6 @@ namespace Core.Level
         private async UniTaskVoid CheckCenterPosition()
         {
             _cts = new();
-            CancellationToken token = _cts.Token;
 
             try
             {
@@ -194,7 +193,7 @@ namespace Core.Level
                     int landPlatformNumber = _config.SpecialPlatformSequentialNumber;
                     _areaLabelsService.CheckDistance(positionX, landPlatformNumber);
 
-                    await UniTaskUtility.Delay(PositionCheckInterval, token);
+                    await UniTaskUtility.Delay(PositionCheckInterval, _cts.Token);
                 }
             }
             catch (OperationCanceledException) {  }

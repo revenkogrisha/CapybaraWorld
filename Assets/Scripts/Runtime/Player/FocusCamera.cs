@@ -120,7 +120,6 @@ namespace Core.Player
 
         private async UniTaskVoid ChangeFov(float targetFov, float duration)
         {
-            CancellationToken token = destroyCancellationToken;
             float currentFov = CinemachineFov;
 
             float elapsedTime = 0f;
@@ -130,7 +129,7 @@ namespace Core.Player
                 CinemachineFov = Mathf.Lerp(currentFov, targetFov, delta);
                 
                 elapsedTime += Time.deltaTime;
-                await UniTask.NextFrame(token);
+                await UniTask.NextFrame(destroyCancellationToken);
             }
         }
 

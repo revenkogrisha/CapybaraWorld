@@ -46,7 +46,6 @@ namespace Core.Level
         private async UniTaskVoid ChaseTarget()
 		{
 			_cts = new();
-			CancellationToken token = _cts.Token;
 			
 			float elapsedTime = 0f;
 			try
@@ -68,7 +67,7 @@ namespace Core.Level
 
 					elapsedTime += Time.deltaTime;
 
-					await UniTask.NextFrame(token);
+					await UniTask.NextFrame(_cts.Token);
 				}
 			}
 			catch (OperationCanceledException) {  }

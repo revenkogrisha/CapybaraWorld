@@ -59,13 +59,12 @@ namespace Core.Common
         {
             try
             {
-                CancellationToken token = destroyCancellationToken;
                 while (true)
                 {
                     if (ShouldFlip == true)
                         Flip();
 
-                    await UniTaskUtility.Delay(CheckFrequency, token);
+                    await UniTaskUtility.Delay(CheckFrequency, destroyCancellationToken);
                 }
             }
             catch (OperationCanceledException) {  }
@@ -92,7 +91,6 @@ namespace Core.Common
 
         private async UniTaskVoid LerpFlip(Vector2 flipped)
         {
-            CancellationToken token = destroyCancellationToken;
             StartFlipping?.Invoke();
 
             float elapsedTime = 0f;
@@ -109,7 +107,7 @@ namespace Core.Common
 
                 elapsedTime += Time.deltaTime;
 
-                await UniTask.NextFrame(token);
+                await UniTask.NextFrame(destroyCancellationToken);
             }
         }
     }
