@@ -1203,7 +1203,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_text: "Enemy ahead! Be carefull! It will follow you, you can dodge it or defeat
-    by dashing trough it. \nDraw your sword!!!"
+    by dashing through it. \nDraw your sword!!!"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 21e766cf20a8e4f8cbf4b1ea831c9320, type: 2}
   m_sharedMaterial: {fileID: 2100000, guid: 74e74d52455ca4b74b99514a23573787, type: 2}
