@@ -44,11 +44,11 @@ namespace Core.UI
             
             _skinsPresenter.Enable();
 
-            //_heroUpgradeButton.OnClicked += UpgradeHero;
+            _heroUpgradeButton.OnClicked += UpgradeHero;
             _backButton.OnClicked += ToMainMenu;
 
 #if REVENKO_DEVELOP
-            //_devUpgradeButton.OnClicked += ForceUpgrade;
+            _devUpgradeButton.OnClicked += ForceUpgrade;
 #endif
 
             UpdateView();
@@ -58,11 +58,11 @@ namespace Core.UI
         {
             _skinsPresenter.Disable();
 
-            //_heroUpgradeButton.OnClicked -= UpgradeHero;
+            _heroUpgradeButton.OnClicked -= UpgradeHero;
             _backButton.OnClicked -= ToMainMenu;
             
 #if REVENKO_DEVELOP
-            //_devUpgradeButton.OnClicked -= ForceUpgrade;
+            _devUpgradeButton.OnClicked -= ForceUpgrade;
 #endif
         }
 
@@ -102,7 +102,7 @@ namespace Core.UI
         private void UpdateView()
         {
             UpdateDisplayedData();
-            //ValidateButton();
+            ValidateButton();
         }
 
         private void ToMainMenu()
@@ -115,8 +115,8 @@ namespace Core.UI
         {
             _resourcePanel.DisplayResources();
             
-            //_costTMP.SetText(string.Format(CostFormat, _playerUpgrade.Cost));
-            //_heroLevelTMP.SetText(string.Format(HeroLevelFormat, _playerUpgrade.HeroLevel));
+            _costTMP.SetText(string.Format(CostFormat, _playerUpgrade.Cost));
+            _heroLevelTMP.SetText(string.Format(HeroLevelFormat, _playerUpgrade.HeroLevel));
         }
         
         private void ValidateButton() => 
