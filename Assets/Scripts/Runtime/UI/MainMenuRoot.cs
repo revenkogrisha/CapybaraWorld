@@ -10,7 +10,7 @@ namespace Core.UI
         [SerializeField] private RectTransform _rectTransform;
         
         private MainMenu _mainMenu;
-        private UpgradeMenu _upgradeMenu;
+        private HeroMenu _upgradeMenu;
         private UIProvider _uiProvider;
 
         [Inject]

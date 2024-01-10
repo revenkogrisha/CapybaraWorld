@@ -32,17 +32,17 @@ namespace Core.Factories
             return mainMenu;
         }
         
-        public UpgradeMenu CreateUpgradeMenu(RectTransform parent = null)
+        public HeroMenu CreateUpgradeMenu(RectTransform parent = null)
         {
             if (parent == null)
                 parent = _root.RectTransform;
             
-            UpgradeMenu upgradeMenu = _diContainer
-                .InstantiatePrefabForComponent<UpgradeMenu>(
-                    _collection.UpgradeMenuPrefab,
+            HeroMenu heroMenu = _diContainer
+                .InstantiatePrefabForComponent<HeroMenu>(
+                    _collection.HeroMenuPrefab,
                     parent);
             
-            return upgradeMenu;
+            return heroMenu;
         }
         
         public MainMenuRoot CreateMainMenuRoot()

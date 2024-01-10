@@ -11,11 +11,15 @@ namespace Core.Installers
         [Space]
         [SerializeField] private PlayerUpgradeConfig _upgradeConfig;
 
+        [Space]
+        [SerializeField] private SkinPreset[] _skinPresets;
+
         public override void InstallBindings()
         {
             BindPlayerData();
             BindCamera();
             BindUpgrade();
+            BindHeroSkins();
         }
 
         private void BindPlayerData()
@@ -44,6 +48,16 @@ namespace Core.Installers
                 .FromNew()
                 .AsSingle()
                 .WithArguments(_upgradeConfig)
+                .Lazy();
+        }
+        
+        private void BindHeroSkins()
+        {
+            Container
+                .Bind<HeroSkins>()
+                .FromNew()
+                .AsSingle()
+                .WithArguments(_skinPresets)
                 .Lazy();
         }
     }

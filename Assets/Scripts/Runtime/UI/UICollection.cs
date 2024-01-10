@@ -11,7 +11,7 @@ namespace Core.UI
         [SerializeField] private GameWinMenu _gameWinMenuPrefab;
         [SerializeField] private GameLostMenu _gameOverMenuPrefab;
         [SerializeField] private LoadingScreen _loadingScreenCanvasPrefab;
-        [SerializeField] private UpgradeMenu _upgradeMenuPrefab;
+        [SerializeField] private HeroMenu _heroMenuPrefab;
 
         [Header("Common")]
         [SerializeField] private DashRecoveryDisplay _dashRecoveryDisplay;
@@ -26,7 +26,7 @@ namespace Core.UI
         public DashRecoveryDisplay DashRecoveryDisplay => _dashRecoveryDisplay;
         public AreaLabelContainer AreaLabelContainer => _areaLabelContainer;
 
-        public UpgradeMenu UpgradeMenuPrefab => _upgradeMenuPrefab;
+        public HeroMenu HeroMenuPrefab => _heroMenuPrefab;
         public MainMenuRoot MainMenuRootPrefab => _mainMenuRootPrefab;
     }
 }

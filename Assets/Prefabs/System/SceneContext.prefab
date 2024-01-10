@@ -119,6 +119,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _focusCamera: {fileID: 0}
   _upgradeConfig: {fileID: 11400000, guid: 24d21497a5e7d4ddfa127fb8cf64b8ed, type: 2}
+  _skinPresets:
+  - {fileID: 11400000, guid: 38772ac0764aa4f6587dd14a9e2ec2f0, type: 2}
+  - {fileID: 11400000, guid: d25c7d4a470124ec69008a2780c9f7f8, type: 2}
+  - {fileID: 11400000, guid: 22350e36383ba44d8a68da5f02f33fbc, type: 2}
+  - {fileID: 11400000, guid: 237c3492042094b508e271d74b38560f, type: 2}
+  - {fileID: 11400000, guid: b24ba8802692e486aa819ced375aa421, type: 2}
+  - {fileID: 11400000, guid: 7225fb7933c22495583d84598e6a921b, type: 2}
+  - {fileID: 11400000, guid: fbf399848072b4bbfa4384eb2fab283c, type: 2}
 --- !u!114 &8120219910018482654
 MonoBehaviour:
   m_ObjectHideFlags: 0

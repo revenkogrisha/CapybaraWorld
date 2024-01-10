@@ -21,6 +21,7 @@ namespace Core.UI
         [Space]
         [SerializeField] private UIButton _playButton;
         [SerializeField] private UIButton _upgradeButton;
+        [SerializeField] private UIButton _skinsButton;
         
         [Space]
         [SerializeField] private TMP_Text _levelTMP;

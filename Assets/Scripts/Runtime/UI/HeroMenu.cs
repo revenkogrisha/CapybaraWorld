@@ -8,10 +8,14 @@ using Zenject;
 
 namespace Core.UI
 {
-    public class UpgradeMenu : AnimatedUI
+    public class HeroMenu : AnimatedUI
     {
         private const string CostFormat = "{0}";
         private const string HeroLevelFormat = "Hero Level: {0}";
+        
+        [Header("Skins UI")]
+        [SerializeField] private SkinsPanel _skinsPanel;
+        [SerializeField] private SkinPlacementPanel _skinPlacement;
         
         [Header("Upgrade UI")]
         [SerializeField] private ResourcePanel _resourcePanel;
@@ -29,66 +33,62 @@ namespace Core.UI
         private MainMenuRoot _root;
         private PlayerUpgrade _playerUpgrade;
         private ISaveService _saveService;
+        private HeroSkins _heroSkins;
+        private SkinsMenuPresenter _skinsPresenter;
 
         #region MonoBehaviour
 
         private void OnEnable()
         {
-            _heroUpgradeButton.OnClicked += UpgradeHero;
+            _skinsPanel.CreateItems(_heroSkins.Presets);
+            
+            _skinsPresenter.Enable();
+
+            //_heroUpgradeButton.OnClicked += UpgradeHero;
             _backButton.OnClicked += ToMainMenu;
 
 #if REVENKO_DEVELOP
-            _devUpgradeButton.OnClicked += ForceUpgrade;
+            //_devUpgradeButton.OnClicked += ForceUpgrade;
 #endif
 
-            UpdateDisplayedData();
-            ValidateButton();
+            UpdateView();
         }
 
         private void OnDisable()
         {
-            _heroUpgradeButton.OnClicked -= UpgradeHero;
+            _skinsPresenter.Disable();
+
+            //_heroUpgradeButton.OnClicked -= UpgradeHero;
             _backButton.OnClicked -= ToMainMenu;
             
 #if REVENKO_DEVELOP
-            _devUpgradeButton.OnClicked -= ForceUpgrade;
+            //_devUpgradeButton.OnClicked -= ForceUpgrade;
 #endif
         }
-
-        private void Start() => 
-            UpdateDisplayedData();
 
         #endregion
 
         [Inject]
-        private void Construct(PlayerUpgrade playerUpgrade, ISaveService saveService)
+        private void Construct(PlayerUpgrade playerUpgrade,
+            ISaveService saveService,
+            HeroSkins heroSkins)
         {
             _playerUpgrade = playerUpgrade;
             _saveService = saveService;
+            _heroSkins = heroSkins;
+
+            _skinsPresenter = new(_heroSkins, _skinsPanel, _skinPlacement);
         }
         
         public void InitializeRoot(MainMenuRoot root) =>
             _root = root;
-
-        private void ValidateButton() => 
-            _heroUpgradeButton.OriginalButton.interactable = _playerUpgrade.CanUpgradeHero;
-
-        private void UpdateDisplayedData()
-        {
-            _resourcePanel.DisplayResources();
-            
-            _costTMP.SetText(string.Format(CostFormat, _playerUpgrade.Cost));
-            _heroLevelTMP.SetText(string.Format(HeroLevelFormat, _playerUpgrade.HeroLevel));
-        }
 
         private void UpgradeHero()
         {
             _playerUpgrade.UpgradeHero();
             _saveService.Save();
             
-            UpdateDisplayedData();
-            
-            ValidateButton();
+            UpdateView();
         }
 
         private void ForceUpgrade()
@@ -96,9 +96,13 @@ namespace Core.UI
             _playerUpgrade.UpgradeHero(true);
             _saveService.Save();
             
+            UpdateView();
+        }
+
+        private void UpdateView()
+        {
             UpdateDisplayedData();
-            
-            ValidateButton();
+            //ValidateButton();
         }
 
         private void ToMainMenu()
@@ -106,5 +110,16 @@ namespace Core.UI
             Conceal(disable: true).Forget();
             _root.ShowMainMenu();
         }
+
+        private void UpdateDisplayedData()
+        {
+            _resourcePanel.DisplayResources();
+            
+            //_costTMP.SetText(string.Format(CostFormat, _playerUpgrade.Cost));
+            //_heroLevelTMP.SetText(string.Format(HeroLevelFormat, _playerUpgrade.HeroLevel));
+        }
+        
+        private void ValidateButton() => 
+            _heroUpgradeButton.OriginalButton.interactable = _playerUpgrade.CanUpgradeHero;
     }
 }
