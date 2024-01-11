@@ -8,6 +8,7 @@ namespace Core.Infrastructure
 {
     public class DataInitializationState : State
     {
+        private readonly HeroSkins _heroSkins;
         private readonly ILocationsHandler _locationsHandler;
         private readonly ISaveService _saveService;
         private readonly GameNavigation _navigation;
@@ -16,12 +17,14 @@ namespace Core.Infrastructure
 
         [Inject]
         public DataInitializationState(
+            HeroSkins heroSkins,
             ILocationsHandler locationsHandler,
             ISaveService saveService,
             GameNavigation navigation,
             PlayerData data, 
             PlayerUpgrade upgrade)
         {
+            _heroSkins = heroSkins;
             _locationsHandler = locationsHandler;
             _saveService = saveService;
             _navigation = navigation;
@@ -42,6 +45,7 @@ namespace Core.Infrastructure
             _saveService.Register(_locationsHandler);
             _saveService.Register(_data);
             _saveService.Register(_upgrade);
+            _saveService.Register(_heroSkins);
         }
     }
 }

@@ -9,11 +9,9 @@ namespace Core.Player
         private readonly ISaveService _saveService;
         private readonly PlayerData _playerData;
         private readonly SkinPreset[] _presets;
-        private SkinPreset _current;
-
-        public SkinPreset Current => _current;
-
         private SkinName _boughtSkins;
+
+        public SkinPreset Current { get; private set; }
 
         [Inject]
         public HeroSkins(ISaveService saveService, PlayerData playerData, SkinPreset[] presets)
@@ -21,27 +19,31 @@ namespace Core.Player
             _saveService = saveService;
             _playerData = playerData;
             _presets = presets;
-            _current = GetByName(SkinName.Capy);
         }
 
         public void Save(SaveData data)
         {
-
+            data.BoughtHeroSkins = _boughtSkins;
+            data.CurrentHeroSkin = Current.Name;
         }
 
         public void Load(SaveData data)
         {
-
+            _boughtSkins = data.BoughtHeroSkins;
+            Current = GetByName(data.CurrentHeroSkin);
         }
 
-        public void SetCurrent(SkinPreset preset) => 
-            _current = preset;
+        public void SetCurrent(SkinPreset preset)
+        {
+            Current = preset;
+            _saveService.Save();
+        }
 
         public SkinPreset[] GetSortedPresets()
         {
             return _presets
                 .OrderBy(item => item.FoodCost)
-                .ThenByDescending(item => item.Name == _boughtSkins)
+                .ThenByDescending(item => _boughtSkins.HasFlag(item.Name) == true)
                 .ThenByDescending(item => item.Name == Current.Name)
                 .ToArray();
         }
@@ -57,7 +59,7 @@ namespace Core.Player
 
         public SkinAvailability GetAvailability(SkinName skinName)
         {
-            if (skinName != _boughtSkins)
+            if (_boughtSkins.HasFlag(skinName) == false)
                 return SkinAvailability.Buyable;
             else if (skinName == Current.Name)
                 return SkinAvailability.Selected;
