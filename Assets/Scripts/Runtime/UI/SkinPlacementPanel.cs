@@ -39,7 +39,7 @@ namespace Core.UI
 
         public void SetBuyState(int cost, bool canBuy)
         {
-            _selectButton.gameObject.SetActive(false);
+            HideSelectButton();
             _buyButton.gameObject.SetActive(true);
 
             _buyButton.Interactable = canBuy;
@@ -49,14 +49,14 @@ namespace Core.UI
 
         public void SetSelectableState()
         {
-            _buyButton.gameObject.SetActive(false);
-            _selectButton.gameObject.SetActive(true);
+            HideBuyButton();
+            ShowSelectButton();
         }
 
         public void SetSelectedState()
         {
-            _buyButton.gameObject.SetActive(false);
-            _selectButton.gameObject.SetActive(false);
+            HideSelectButton();
+            HideBuyButton();
         }
 
         public void SetAvailability(bool state)
@@ -73,5 +73,23 @@ namespace Core.UI
         
         private void InvokeSelectButtonEvent() =>
             SelectButtonCommand.Execute();
+
+        private void ShowSelectButton()
+        {
+            _selectButton.gameObject.SetActive(true);
+            _selectButton.Interactable = true;
+        }
+        
+        private void HideBuyButton()
+        {
+            _buyButton.Interactable = false;
+            _buyButton.gameObject.SetActive(false);
+        }
+
+        private void HideSelectButton()
+        {
+            _selectButton.Interactable = false;
+            _selectButton.gameObject.SetActive(false);
+        }
     }
 }
