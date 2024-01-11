@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _name: 1
   _menuItem: {fileID: -1502508099, guid: 432073e9bcecf4764b7d700a1e528d87, type: 3}
+  _accentColor: {r: 1, g: 0.6681841, b: 0.1462264, a: 1}
   _foodCost: 15
   _head: {fileID: -1502508099, guid: 432073e9bcecf4764b7d700a1e528d87, type: 3}
   _body: {fileID: 1421904575, guid: 432073e9bcecf4764b7d700a1e528d87, type: 3}
