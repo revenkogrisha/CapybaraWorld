@@ -1,11 +1,13 @@
 ﻿using System;
+using Core.UI;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 
 namespace UnityTools.Buttons
 {
-    public class UIButton : MonoBehaviour
+    public class UIButton : TweenClickable
     {
         [Header("Components")]
         [SerializeField] private Button _button;
@@ -36,6 +38,18 @@ namespace UnityTools.Buttons
             _button.onClick.RemoveAllListeners();
 
         #endregion
+
+        public override void OnPointerDown(PointerEventData eventData)
+        {
+            if (Interactable == true)
+                base.OnPointerDown(eventData);
+        }
+
+        public override void OnPointerUp(PointerEventData eventData)
+        {
+            if (Interactable == true)
+                base.OnPointerUp(eventData);
+        }
 
         private void InvokeOnClicked() => 
             OnClicked?.Invoke();

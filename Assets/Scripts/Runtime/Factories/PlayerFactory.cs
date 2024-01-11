@@ -1,8 +1,6 @@
 using Core.Editor.Debugger;
 using Core.Other;
 using Core.Player;
-using UnityEngine;
-using UnityTools;
 using Zenject;
 
 namespace Core.Factories
