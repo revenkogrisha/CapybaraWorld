@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aeaf56b7a8c074611aed77ec482cffc1, type: 3}
   m_Name: Greenbara
   m_EditorClassIdentifier: 
-  _name: 1
+  _name: 2
   _menuItem: {fileID: 1969311795, guid: c86753f294eae46f8a80029c3f512b97, type: 3}
   _foodCost: 15
   _head: {fileID: 1969311795, guid: c86753f294eae46f8a80029c3f512b97, type: 3}

@@ -1,3 +1,4 @@
+using TriInspector;
 using UnityEngine;
 
 namespace Core.Player
@@ -5,22 +6,23 @@ namespace Core.Player
     [CreateAssetMenu(fileName = "New Skin", menuName = "Presets/Hero Skin")]
     public class SkinPreset : ScriptableObject
     {
-        [Header("General")]
+        [Title("General")]
+        [InfoBox("Supposed to be single value and not 'Nothing'!")]
         [SerializeField] private SkinName _name;
         [SerializeField] private Sprite _menuItem;
 
         [Space]
         [SerializeField, Min(0)] private int _foodCost = 15;
         
-        [Header("General Sprites")]
+        [Title("General Sprites")]
         [SerializeField] private Sprite _head;
         [SerializeField] private Sprite _body;
 
-        [Header("Arm Sprites")]
+        [Title("Arm Sprites")]
         [SerializeField] private Sprite _leftArm;
         [SerializeField] private Sprite _rightArm;
 
-        [Header("Leg Sprite")]
+        [Title("Leg Sprite")]
         [SerializeField] private Sprite _leg;
 
 

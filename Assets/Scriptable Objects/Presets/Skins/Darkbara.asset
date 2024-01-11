@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aeaf56b7a8c074611aed77ec482cffc1, type: 3}
   m_Name: Darkbara
   m_EditorClassIdentifier: 
-  _name: 4
+  _name: 16
   _menuItem: {fileID: 317021763, guid: c86753f294eae46f8a80029c3f512b97, type: 3}
   _foodCost: 30
   _head: {fileID: 317021763, guid: c86753f294eae46f8a80029c3f512b97, type: 3}
