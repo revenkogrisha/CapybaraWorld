@@ -1,4 +1,3 @@
-using System.Threading;
 using Cinemachine;
 using Core.Common;
 using Cysharp.Threading.Tasks;
