@@ -42,9 +42,9 @@ namespace Core.Player
         public SkinPreset[] GetSortedPresets()
         {
             return _presets
-                .OrderBy(item => item.FoodCost)
+                .OrderByDescending(item => item.Name == Current.Name)
                 .ThenByDescending(item => _boughtSkins.HasFlag(item.Name) == true)
-                .ThenByDescending(item => item.Name == Current.Name)
+                .ThenBy(item => item.FoodCost)
                 .ToArray();
         }
 
