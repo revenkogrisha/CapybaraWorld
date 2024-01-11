@@ -77,7 +77,7 @@ namespace Core.UI
             _saveService = saveService;
             _heroSkins = heroSkins;
 
-            _skinsPresenter = new(_heroSkins, _skinsPanel, _skinPlacement);
+            _skinsPresenter = new(_heroSkins, _skinsPanel, _skinPlacement, _resourcePanel);
         }
         
         public void InitializeRoot(MainMenuRoot root) =>

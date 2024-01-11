@@ -40,11 +40,11 @@ namespace Core.UI
         public void InvokeItemDisplay(SkinName skinName) =>
             ItemDisplayCommand.Execute(skinName);
 
-        public void SetSelected(SkinName skinName)
+        public void SetSelected(SkinName skinName, bool state)
         {
             _items
                 .Single(item => item.Name == skinName)
-                .SetSelected(true);
+                .SetSelected(state);
         }
 
         private void ClearItems()

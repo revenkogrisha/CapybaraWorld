@@ -8,16 +8,20 @@ namespace Core.UI
         private readonly HeroSkins _heroSkins;
         private readonly SkinsPanel _panel;
         private readonly SkinPlacementPanel _placement;
+        private readonly ResourcePanel _resourcePanel;
         private readonly CompositeDisposable _disposable = new();
         private SkinPreset _displayedPreset;
+        private SkinPreset _selectedPreset;
 
         public SkinsMenuPresenter(HeroSkins heroSkins,
             SkinsPanel panel,
-            SkinPlacementPanel placement)
+            SkinPlacementPanel placement,
+            ResourcePanel resourcePanel)
         {
             _heroSkins = heroSkins;
             _panel = panel;
             _placement = placement;
+            _resourcePanel = resourcePanel;
         }
 
         public void Enable()
@@ -60,7 +64,13 @@ namespace Core.UI
 
                 case SkinAvailability.Selected:
                     _placement.SetSelectedState();
-                    _panel.SetSelected(_displayedPreset.Name);
+
+                    if (_selectedPreset != null)
+                        _panel.SetSelected(_selectedPreset.Name, false);
+
+                    _selectedPreset = _displayedPreset;
+
+                    _panel.SetSelected(_displayedPreset.Name, true);
                     break;
 
                 default:
@@ -69,8 +79,13 @@ namespace Core.UI
             }
         }
 
-        private void OnBuyButtonClicked() => 
+        private void OnBuyButtonClicked()
+        {
             _heroSkins.Buy(_displayedPreset);
+            _resourcePanel.DisplayResources();
+            
+            SetPanelsByAvailability(_displayedPreset);
+        }
 
         private void OnSelectButtonClicked()
         {
