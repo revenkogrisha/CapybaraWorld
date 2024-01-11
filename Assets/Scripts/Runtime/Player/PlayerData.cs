@@ -72,10 +72,10 @@ namespace Core.Player
             FoodAmount = newAmount;
         }
 
-        private void AddCoin() =>
+        public void AddCoin() =>
             CoinsAmount += CoinsReward;
 
-        private void AddFood() =>
+        public void AddFood() =>
             FoodAmount += FoodReward;
 
         private void IncreaseLevelNumber() => 
