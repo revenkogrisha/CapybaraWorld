@@ -1,4 +1,6 @@
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using Core.Player;
 using NTC.Pool;
 using UniRx;
@@ -17,10 +19,10 @@ namespace Core.UI
         
         public readonly ReactiveCommand<SkinName> ItemDisplayCommand = new();
 
-        public void CreateItems(SkinPreset[] presets)
+        public void CreateItems(IEnumerable<SkinPreset> presets)
         {
             if (_items == null)
-                _items = new(presets.Length);
+                _items = new(presets.Count());
             else if (_items.Count > 0)
                 ClearItems();
 

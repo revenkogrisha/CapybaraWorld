@@ -11,7 +11,6 @@ namespace Core.Player
         private readonly SkinPreset[] _presets;
         private SkinPreset _current;
 
-        public SkinPreset[] Presets => _presets;
         public SkinPreset Current => _current;
 
         private SkinName _boughtSkins;
@@ -37,6 +36,15 @@ namespace Core.Player
 
         public void SetCurrent(SkinPreset preset) => 
             _current = preset;
+
+        public SkinPreset[] GetSortedPresets()
+        {
+            return _presets
+                .OrderBy(item => item.FoodCost)
+                .ThenByDescending(item => item.Name == _boughtSkins)
+                .ThenByDescending(item => item.Name == Current.Name)
+                .ToArray();
+        }
 
         public void Buy(SkinPreset preset)
         {

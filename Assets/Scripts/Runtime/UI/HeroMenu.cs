@@ -40,7 +40,7 @@ namespace Core.UI
 
         private void OnEnable()
         {
-            _skinsPanel.CreateItems(_heroSkins.Presets);
+            _skinsPanel.CreateItems(_heroSkins.GetSortedPresets());
             
             _skinsPresenter.Enable();
 
