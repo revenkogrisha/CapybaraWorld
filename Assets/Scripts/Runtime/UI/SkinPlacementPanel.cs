@@ -42,7 +42,7 @@ namespace Core.UI
             _selectButton.gameObject.SetActive(false);
             _buyButton.gameObject.SetActive(true);
 
-            _buyButton.OriginalButton.interactable = canBuy;
+            _buyButton.Interactable = canBuy;
 
             _costTMP.text = cost.ToString();
         }
@@ -61,7 +61,7 @@ namespace Core.UI
 
         public void SetAvailability(bool state)
         {
-            _buyButton.OriginalButton.interactable = state;
+            _buyButton.Interactable = state;
             if (state == true)
                 _costTMP.color = _costAvailableColor;
             else

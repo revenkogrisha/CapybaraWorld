@@ -120,6 +120,6 @@ namespace Core.UI
         }
         
         private void ValidateButton() => 
-            _heroUpgradeButton.OriginalButton.interactable = _playerUpgrade.CanUpgradeHero;
+            _heroUpgradeButton.Interactable = _playerUpgrade.CanUpgradeHero;
     }
 }

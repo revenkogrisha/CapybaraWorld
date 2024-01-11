@@ -10,13 +10,10 @@ namespace UnityTools.Buttons
         [Header("Components")]
         [SerializeField] private Button _button;
 
-        [Header("Audio")]
-        [Tooltip("If required (Can be null; no exception)")]
-        [SerializeField] private AudioSource _audio;
+        public bool IsLocked { get; private set; }
 
         public Button OriginalButton => _button;
-        public bool IsLocked { get; private set; }
-        public bool IsInteractable
+        public bool Interactable
         {
             get => _button.interactable;
             set
@@ -32,44 +29,15 @@ namespace UnityTools.Buttons
 
         #region MonoBehaviour
 
-        private void OnEnable()
-        {
-            _button.onClick.AddListener(PlaySound);
+        private void OnEnable() => 
             _button.onClick.AddListener(InvokeOnClicked);
-        }
 
-        private void OnDisable()
-        {
+        private void OnDisable() => 
             _button.onClick.RemoveAllListeners();
-        }
 
         #endregion
 
-        public void Lock()
-        {
-            IsInteractable = false;
-            IsLocked = true;
-        }
-
-        public void Unlock()
-        {
-            IsLocked = false;
-        }
-
-        public void UnlockWithInteraction()
-        {
-            Unlock();
-            IsInteractable = true;
-        }
-
-        private void PlaySound()
-        {
-            if (_audio == null)
-                return;
-
-            _audio.Play();
-        }
-
-        private void InvokeOnClicked() => OnClicked?.Invoke();
+        private void InvokeOnClicked() => 
+            OnClicked?.Invoke();
     }
 }
