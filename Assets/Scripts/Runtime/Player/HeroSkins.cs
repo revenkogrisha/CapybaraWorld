@@ -68,7 +68,6 @@ namespace Core.Player
         }
 
         public bool CanBuy(SkinPreset preset) =>
-
             preset.FoodCost <= _playerData.FoodAmount;
 
         public SkinPreset GetByName(SkinName skinName) => 
