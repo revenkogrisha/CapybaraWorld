@@ -41,8 +41,8 @@ namespace Core.UI
         private void OnEnable()
         {
             _skinsPanel.CreateItems(_heroSkins.GetSortedPresets());
-            
             _skinsPresenter.Enable();
+            _skinsPanel.InvokeItemDisplay(_heroSkins.Current.Name);
 
             _heroUpgradeButton.OnClicked += UpgradeHero;
             _backButton.OnClicked += ToMainMenu;

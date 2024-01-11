@@ -31,12 +31,21 @@ namespace Core.UI
                 SkinItemView item = NightPool.Spawn(_itemPrefab, _itemsRoot);
 
                 item.Initialize(this, preset.Name, preset.MenuItem);
+                item.SetSelected(false);
+
                 _items.Add(item);
             }
         }
 
         public void InvokeItemDisplay(SkinName skinName) =>
             ItemDisplayCommand.Execute(skinName);
+
+        public void SetSelected(SkinName skinName)
+        {
+            _items
+                .Single(item => item.Name == skinName)
+                .SetSelected(true);
+        }
 
         private void ClearItems()
         {

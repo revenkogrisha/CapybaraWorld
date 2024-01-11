@@ -16,7 +16,7 @@ namespace Core.UI
         [SerializeField] private Image _image;
         [SerializeField] private TMP_Text _nameTMP;
 
-        private SkinName _skinName;
+        public SkinName Name { get; private set; }
 
         public void OnPointerClick(PointerEventData eventData)
         {
@@ -26,17 +26,17 @@ namespace Core.UI
                 return;
             }
 
-            _panel.InvokeItemDisplay(_skinName);
+            _panel.InvokeItemDisplay(Name);
         }
 
         public void Initialize(SkinsPanel panel, SkinName skinName, Sprite menuItem)
         {
             _panel = panel;
 
-            _skinName = skinName;
+            Name = skinName;
 
             _image.sprite = menuItem;
-            _nameTMP.SetText(_skinName.ToString());
+            _nameTMP.SetText(Name.ToString());
         }
 
         public void SetSelected(bool value) => 

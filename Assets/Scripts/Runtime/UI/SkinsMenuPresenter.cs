@@ -42,8 +42,13 @@ namespace Core.UI
         {
             SkinPreset preset = _heroSkins.GetByName(skinName);
             _displayedPreset = preset;
-            
-            switch (_heroSkins.GetAvailability(skinName))
+
+            SetPanelsByAvailability(preset);
+        }
+
+        private void SetPanelsByAvailability(SkinPreset preset)
+        {
+            switch (_heroSkins.GetAvailability(preset.Name))
             {
                 case SkinAvailability.Buyable:
                     _placement.SetBuyState(preset.FoodCost, _heroSkins.CanBuy(_displayedPreset));
@@ -55,6 +60,11 @@ namespace Core.UI
 
                 case SkinAvailability.Selected:
                     _placement.SetSelectedState();
+                    _panel.SetSelected(_displayedPreset.Name);
+                    break;
+
+                default:
+                    _placement.SetSelectedState();
                     break;
             }
         }
@@ -62,7 +72,10 @@ namespace Core.UI
         private void OnBuyButtonClicked() => 
             _heroSkins.Buy(_displayedPreset);
 
-        private void OnSelectButtonClicked() => 
+        private void OnSelectButtonClicked()
+        {
             _heroSkins.SetCurrent(_displayedPreset);
+            SetPanelsByAvailability(_displayedPreset);
+        }
     }
 }
