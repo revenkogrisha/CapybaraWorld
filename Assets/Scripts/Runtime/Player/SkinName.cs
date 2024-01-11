@@ -1,5 +1,8 @@
+using System;
+
 namespace Core.Player
 {
+    [Flags]
     public enum SkinName
     {
         Capy = 0,
