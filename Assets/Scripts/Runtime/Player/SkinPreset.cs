@@ -12,6 +12,9 @@ namespace Core.Player
         [SerializeField] private Sprite _menuItem;
 
         [Space]
+        [SerializeField] private Color _accentColor = Color.yellow;
+
+        [Space]
         [SerializeField, Min(0)] private int _foodCost = 15;
         
         [Title("General Sprites")]
@@ -29,6 +32,9 @@ namespace Core.Player
         public SkinName Name => _name;
         public Sprite Head => _head;
         public Sprite MenuItem => _menuItem;
+
+        public Color AccentColor => _accentColor;
+        
         public int FoodCost => _foodCost;
 
         public Sprite Body => _body;

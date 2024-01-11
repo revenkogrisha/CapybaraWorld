@@ -15,6 +15,7 @@ namespace Core.Player
     {
         [Header("Components")]
         [SerializeField] private Slider _slider;
+        [SerializeField] private Image _fillImage;
         [SerializeField] private AnimatedUI _animatedUI;
         [SerializeField] private Canvas _canvas;
 
@@ -45,8 +46,16 @@ namespace Core.Player
             _canvas.worldCamera = Camera.main;
 
             _cancellationToken = destroyCancellationToken;
+
+            SetupSliderColor();
             
             Subscribe();
+        }
+
+        private void SetupSliderColor()
+        {
+            if (_hero.TryGetComponent(out AccentColorHandler colorHandler))
+                _fillImage.color = colorHandler.AccentColor;
         }
 
         private void Subscribe()

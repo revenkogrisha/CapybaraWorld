@@ -74,6 +74,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1958151402100894485}
   - component: {fileID: 8836314981861172948}
+  - component: {fileID: 5352428368410077759}
   m_Layer: 8
   m_Name: Trail Renderer
   m_TagString: Untagged
@@ -209,6 +210,20 @@ TrailRenderer:
   m_Autodestruct: 0
   m_Emitting: 1
   m_ApplyActiveColorSpace: 1
+--- !u!114 &5352428368410077759
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 613620449834570531}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 089daf9e710f945709866f9705241981, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _renderer: {fileID: 8836314981861172948}
+  _accentColorHandler: {fileID: 3617954058890877254}
 --- !u!1 &1158999582092598504
 GameObject:
   m_ObjectHideFlags: 0
@@ -1375,6 +1390,7 @@ GameObject:
   - component: {fileID: 5395183055495763638}
   - component: {fileID: 3471678057017077053}
   - component: {fileID: 6713505149132829822}
+  - component: {fileID: 3617954058890877254}
   m_Layer: 8
   m_Name: Hero
   m_TagString: Untagged
@@ -1582,6 +1598,18 @@ MonoBehaviour:
   _rightArm: {fileID: 8684368077590230840}
   _leftLeg: {fileID: 9202130884262782929}
   _rightLeg: {fileID: 1334809941764558628}
+--- !u!114 &3617954058890877254
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7266856433574884410}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c1f899dbc53bb43ebb52f16bf0dfe959, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &7785680583913415663
 GameObject:
   m_ObjectHideFlags: 0
