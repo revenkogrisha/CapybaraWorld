@@ -1,11 +1,10 @@
 using UnityEngine;
-using UnityTools.Buttons;
 
 namespace Core.Common
 {
-    public class DevButtonsHandler : MonoBehaviour
+    public class DevObjectsHandler : MonoBehaviour
     {
-        [SerializeField] private UIButton[] _buttons;
+        [SerializeField] private GameObject[] _objects;
 
         private bool _isDevEnvironment;
 
@@ -21,8 +20,8 @@ namespace Core.Common
 
         private void Setup()
         {
-            foreach (UIButton button in _buttons) 
-                button.gameObject.SetActive(_isDevEnvironment);
+            foreach (GameObject item in _objects) 
+                item.SetActive(_isDevEnvironment);
         }
     }
 }
