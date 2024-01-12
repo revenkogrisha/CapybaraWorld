@@ -1,3 +1,4 @@
+using Core.Player;
 using TMPro;
 using UniRx;
 using UnityEngine;
@@ -7,6 +8,9 @@ namespace Core.UI
 {
     public class SkinPlacementPanel : MonoBehaviour
     {
+        [Header("Hero Placement")]
+        [SerializeField] private HeroSkinSetter _placementSkinSetter;
+        
         [Header("Buttons")]
         [SerializeField] private UIButton _buyButton;
         [SerializeField] private UIButton _selectButton;
@@ -58,6 +62,9 @@ namespace Core.UI
             HideSelectButton();
             HideBuyButton();
         }
+
+        public void DisplayPreset(SkinPreset preset) => 
+            _placementSkinSetter.Set(preset);
 
         public void SetAvailability(bool state)
         {

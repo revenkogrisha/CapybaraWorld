@@ -14,7 +14,7 @@ namespace Core.Player
         [SerializeField] private Animator _animator;
 
         [Header("General")]
-        [SerializeField] private bool _enabled = true;
+        [SerializeField] private bool _alwaysIdle = false;
         [SerializeField] private HeroAnimatorConfig _config;
         
         [Header("Arms")]
@@ -29,12 +29,6 @@ namespace Core.Player
         private bool _shouldRotateHand;
         private bool _shouldRotateBody;
 
-        public bool Enabled 
-        {
-            get => _enabled;
-            set => _enabled = value;
-        }
-
         public bool HeroRaising => 
             _hero.Rigidbody2D.velocity.y > _config.HeroRaisingVelocityMinimum;
 
@@ -47,11 +41,23 @@ namespace Core.Player
         private void Awake() => 
             _thisTransform = transform;
 
-        private void Start() =>
+        private void Start()
+        {
+            if (_alwaysIdle == true)
+                return;
+
             SubscribeUpdate();
+        }
 
         private void OnEnable()
         {
+            if (_alwaysIdle == true)
+            {
+                PerformLanding();
+                SetRunning(false);
+                return;
+            }
+
             _hero.GrappledJoint   
                 .Where(joint => joint != null)
                 .Subscribe(OnJointGrappled)

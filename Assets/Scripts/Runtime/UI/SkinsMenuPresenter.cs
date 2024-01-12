@@ -47,6 +47,7 @@ namespace Core.UI
             SkinPreset preset = _heroSkins.GetByName(skinName);
             _displayedPreset = preset;
 
+            _placement.DisplayPreset(preset);
             SetPanelsByAvailability(preset);
         }
 
