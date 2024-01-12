@@ -477,6 +477,7 @@ MonoBehaviour:
   _restartButton: {fileID: 1572187841843604769}
   _menuButton: {fileID: 4047141766865675157}
   _progressBar: {fileID: 2694025250603712031}
+  _heroImage: {fileID: 1775237631576624176}
 --- !u!1 &6324103370661953687
 GameObject:
   m_ObjectHideFlags: 0
