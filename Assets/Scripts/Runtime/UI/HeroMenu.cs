@@ -11,7 +11,7 @@ namespace Core.UI
     public class HeroMenu : AnimatedUI
     {
         private const string CostFormat = "{0}";
-        private const string HeroLevelFormat = "Hero Level: {0}";
+        private const string HeroLevelFormat = "Common Hero Level: {0}";
         
         [Header("Skins UI")]
         [SerializeField] private SkinsPanel _skinsPanel;
@@ -26,6 +26,10 @@ namespace Core.UI
         [Space] 
         [SerializeField] private TMP_Text _costTMP;
         [SerializeField] private TMP_Text _heroLevelTMP;
+
+        [Space]
+        [SerializeField] private Color _costAvailableColor = Color.white;
+        [SerializeField] private Color _costLockedColor = Color.red;
         
         [Header("Dev Buttons")] 
         [SerializeField] private UIButton _devUpgradeButton;
@@ -118,8 +122,14 @@ namespace Core.UI
             _costTMP.SetText(string.Format(CostFormat, _playerUpgrade.Cost));
             _heroLevelTMP.SetText(string.Format(HeroLevelFormat, _playerUpgrade.HeroLevel));
         }
-        
-        private void ValidateButton() => 
+
+        private void ValidateButton()
+        {
             _heroUpgradeButton.Interactable = _playerUpgrade.CanUpgradeHero;
+            if (_playerUpgrade.CanUpgradeHero == true)
+                _costTMP.color = _costAvailableColor;
+            else
+                _costTMP.color = _costLockedColor;
+        }
     }
 }

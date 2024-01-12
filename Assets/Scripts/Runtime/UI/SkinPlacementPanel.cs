@@ -48,6 +48,11 @@ namespace Core.UI
 
             _buyButton.Interactable = canBuy;
 
+            if (canBuy == true)
+                _costTMP.color = _costAvailableColor;
+            else
+                _costTMP.color = _costLockedColor;
+
             _costTMP.text = cost.ToString();
         }
 
