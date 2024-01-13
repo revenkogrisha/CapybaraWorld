@@ -18,9 +18,11 @@ MonoBehaviour:
   _onGrappledVelocityVector: {x: 1, y: 0.8}
   _runSpeed: 12
   _accelerationTime: 0.15
-  _dashForce: 30
+  _dashForce: 20
   _dashDuration: 0.3
-  _dashCooldown: 2
+  _dashCooldown: 4
+  _defaultGravityScale: 1.9
+  _dashGravityScale: 0
   _jumpProgression:
     serializedVersion: 2
     m_Curve:

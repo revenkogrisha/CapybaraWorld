@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Player Upgrade Config
   m_EditorClassIdentifier: 
   _dashCooldownStep: 0.1
-  _dashCooldownMax: 2
+  _dashCooldownMax: 4
   _dashSpeedStep: 0.05
   _dashSpeedMax: 1.5

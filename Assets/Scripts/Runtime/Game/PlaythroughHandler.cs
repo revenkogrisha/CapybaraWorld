@@ -10,7 +10,7 @@ namespace Core.Game
 {
     public class PlaythroughHandler : IPlaythroughProgressHandler, IGameEventsHandler, IDisposable
     {
-        private const int WinScore = 105;
+        private const int WinScore = 108;
         
         private readonly ILocationsHandler _locationsHandler;
         private readonly GameNavigation _navigation;
