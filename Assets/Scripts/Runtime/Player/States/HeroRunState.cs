@@ -129,7 +129,9 @@ namespace Core.Player
             try
             {
                 float accelerationTime = _hero.Config.AccelerationTime;
-                float maximum = (float)_direction;
+
+                // Acceleration is in range 0f - 1f or -1f; This is to auto determine direction
+                float target = (float)_direction;
 
                 _hero.IsRunning.Value = true;
 
@@ -137,13 +139,13 @@ namespace Core.Player
                 while (elapsedTime < accelerationTime)
                 {
                     float delta = elapsedTime / accelerationTime;
-                    _acceleration = Mathf.Lerp(0f, maximum, delta);
+                    _acceleration = Mathf.Lerp(0f, target, delta);
                     elapsedTime += Time.deltaTime;
 
                     await UniTask.NextFrame(token);
                 }
 
-                _acceleration = maximum;
+                _acceleration = target;
             }
             catch (OperationCanceledException) {  }
             catch (Exception ex)
@@ -160,18 +162,19 @@ namespace Core.Player
 
                 _hero.IsRunning.Value = false;
                 float original = _acceleration;
+                float target = 0f;
 
                 float elapsedTime = 0;
                 while (elapsedTime < accelerationTime)
                 {
                     float delta = elapsedTime / accelerationTime;
-                    _acceleration = Mathf.Lerp(original, 0f, delta);
+                    _acceleration = Mathf.Lerp(original, target, delta);
                     elapsedTime += Time.deltaTime;
 
                     await UniTask.NextFrame(token);
                 }
 
-                _acceleration = 0f;
+                _acceleration = target;
             }
             catch (OperationCanceledException) {  }
             catch (Exception ex)
