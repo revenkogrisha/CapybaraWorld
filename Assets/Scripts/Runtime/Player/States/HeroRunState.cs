@@ -1,5 +1,6 @@
 using System;
 using System.Threading;
+using System.Threading.Tasks;
 using Core.Common;
 using Core.Editor.Debugger;
 using Core.Game.Input;
@@ -198,7 +199,8 @@ namespace Core.Player
                 if (Time.time < _nextDashTime || IsDashing == true)
                     return;
 
-                _hero.DashedCommand.Execute(_hero.Config.DashCooldown / _upgrade.DashCooldownBonus.Multiplier);
+                _hero.DashedCommand.Execute(_hero.Config.DashCooldown
+                    / _upgrade.DashCooldownBonus.Multiplier);
 
                 StartDash();
 
@@ -215,7 +217,8 @@ namespace Core.Player
             }
             finally
             {
-                EndDash();
+                if (IsDashing == true)
+                    EndDash();
             }
         }
 
@@ -226,29 +229,9 @@ namespace Core.Player
                 if (IsJumping == true || IsDashing == true)
                     return;
 
-                Rigidbody2D rigidbody2D = _hero.Rigidbody2D;
-                float duration = _hero.Config.JumpDuration;
-
-                IsJumping = true;
-
-                float elapsedTime = 0f;
-                while (elapsedTime < duration)
-                {
-                    float delta = elapsedTime / duration;
-                    float progress = _hero.Config.JumpProgression.Evaluate(delta);
-                
-                    Vector2 jumpVector = GetJumpVector();
-                    Vector2 velocity = GetJumpVelocity(jumpVector, progress);
-                    rigidbody2D.velocity = velocity;
-                
-                    elapsedTime += Time.deltaTime;
-                
-                    await UniTask.NextFrame(_hero.destroyCancellationToken);
-                }
-
-                await UniTask.WaitUntil(
-                    () => Mathf.Approximately(rigidbody2D.velocity.y, 0f) == true,
-                    cancellationToken: _hero.destroyCancellationToken);
+                CancellationToken token = _hero.destroyCancellationToken;
+                await StartJump(token);
+                await WaitUntilLanded(token);
 
                 IsJumping = false;
             }
@@ -259,7 +242,7 @@ namespace Core.Player
             }
             finally
             {
-                
+                IsJumping = false;
             }
         }
 
@@ -299,6 +282,34 @@ namespace Core.Player
         {
             _hero.Rigidbody2D.gravityScale = _hero.Config.DefaultGravityScale;
             IsDashing = false;
+        }
+
+        private async UniTask StartJump(CancellationToken token)
+        {
+            IsJumping = true;
+
+            float elapsedTime = 0f;
+            float duration = _hero.Config.JumpDuration;
+            while (elapsedTime < duration)
+            {
+                float delta = elapsedTime / duration;
+                float progress = _hero.Config.JumpProgression.Evaluate(delta);
+
+                Vector2 jumpVector = GetJumpVector();
+                Vector2 velocity = GetJumpVelocity(jumpVector, progress);
+                _hero.Rigidbody2D.velocity = velocity;
+
+                elapsedTime += Time.deltaTime;
+
+                await UniTask.NextFrame(token);
+            }
+        }
+
+        private async Task WaitUntilLanded(CancellationToken token)
+        {
+            await UniTask.WaitUntil(
+                () => Mathf.Approximately(_hero.Rigidbody2D.velocity.y, 0f) == true,
+                cancellationToken: token);
         }
 
         private Vector2 GetJumpVelocity(Vector2 jumpVector, float progress)
