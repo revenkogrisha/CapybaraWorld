@@ -10,6 +10,7 @@ using UnityTools;
 using Core.Other;
 using Zenject;
 using TriInspector;
+using Core.Editor.Debugger;
 
 namespace Core.Player
 {
@@ -64,6 +65,8 @@ namespace Core.Player
 		{
 			InitializeComponents();
 			InitializeStateMachine();
+
+			SetGravityScale();
 		}
 
 		private void Start()
@@ -116,6 +119,14 @@ namespace Core.Player
 			_stateMachine.AddState<HeroGrapplingState>(grapplingState);
 			_stateMachine.AddState<HeroRunState>(runState);
 			_stateMachine.AddState<InactiveState>(inactiveState);
+		}
+
+		private void SetGravityScale()
+		{
+			if (_config.DefaultGravityScale != _rigidbody2D.gravityScale)
+				RDebug.Warning($"{nameof(Hero)}: Gravity scale differs in config and in rigidbody component on object.");
+				
+			_rigidbody2D.gravityScale = _config.DefaultGravityScale;
 		}
 
 		private void SubscribeUpdate()
