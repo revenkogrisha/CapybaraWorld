@@ -15,7 +15,7 @@ namespace Core.Saving
 
         public bool IsLocationRandomSelectionEnabled = false;
         
-        public SkinName BoughtHeroSkins = SkinName.Capy;
-        public SkinName CurrentHeroSkin = SkinName.Capy;
+        public SkinName BoughtHeroSkins = SkinName.Capybuddy;
+        public SkinName CurrentHeroSkin = SkinName.Capybuddy;
     }
 }

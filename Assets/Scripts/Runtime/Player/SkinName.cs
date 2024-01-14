@@ -5,7 +5,7 @@ namespace Core.Player
     [Flags]
     public enum SkinName
     {
-        Capy = 1 << 0,
+        Capybuddy = 1 << 0,
         Greenbara = 1 << 1,
         Purplebara = 1 << 2,
         Pinkbara = 1 << 3,
