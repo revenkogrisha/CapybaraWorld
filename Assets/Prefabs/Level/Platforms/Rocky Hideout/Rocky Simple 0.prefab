@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4968046977922858085}
   - component: {fileID: 8222899738712285114}
   m_Layer: 0
-  m_Name: Forest Simple 0
+  m_Name: Rocky Simple 0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
