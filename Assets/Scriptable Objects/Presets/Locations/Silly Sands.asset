@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4aacc6b655ef143388a507d5d7ba5cf5, type: 3}
+  m_Name: Silly Sands
+  m_EditorClassIdentifier: 
+  _name: Silly Sands
+  _backgroundPreset: {fileID: 11400000, guid: 3c53c8de28f0b436ca98aec9597e8ec5, type: 2}
+  _startPlatform: {fileID: 1280936354804307747, guid: f3a48bc00fd2e4938a6b0e6575f5b18f, type: 3}
+  _simplePlatforms:
+  - {fileID: 8222899738712285114, guid: f34333fa7d8bd438b9223eb46e04530d, type: 3}
+  _specialPlatforms:
+  - {fileID: 1280936354804307747, guid: 25a9efbce471c4438844c59a73896e93, type: 3}
+  - {fileID: 1280936354804307747, guid: ad0953539a0a2450e89e4f791e39b0a8, type: 3}
