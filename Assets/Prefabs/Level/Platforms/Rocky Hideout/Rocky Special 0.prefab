@@ -691,7 +691,7 @@ MonoBehaviour:
   _worldCanvas: {fileID: 0}
   _spawnMarkers:
   - {fileID: 8672130577685797436}
-  - {fileID: 0}
+  - {fileID: 961423094357162541}
 --- !u!1 &3665352642673583955
 GameObject:
   m_ObjectHideFlags: 0
@@ -2036,6 +2036,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3b6f859f201ac4367a13f598c6c24eb5, type: 3}
+--- !u!114 &961423094357162541 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3343981192178428938, guid: 3b6f859f201ac4367a13f598c6c24eb5, type: 3}
+  m_PrefabInstance: {fileID: 2539920344796501543}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ce05fcc2c2acf406d89b202b10246b8b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &2882044713501671346 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 342423642575808917, guid: 3b6f859f201ac4367a13f598c6c24eb5, type: 3}
