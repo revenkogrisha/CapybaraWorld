@@ -20,6 +20,7 @@ namespace Core.Level
 
 		private readonly CompositeDisposable _disposable = new();
 
+        public LookingDirection Direction { get; set; }
         public Rigidbody2D Rigidbody2D => _rigidbody2D;
         public SearchEnemyPreset SearchPreset => _searchPreset;
 
@@ -31,8 +32,12 @@ namespace Core.Level
             InitializeStates();
 		}
 
-        public void OnSpawn() => 
+        public void OnSpawn()
+        {
             StateMachine.ChangeState<EnemySearchingState>();
+            transform.localScale = Vector2.one;
+            Direction = LookingDirection.Left;
+        }
 
         public void OnDespawn() => 
             StateMachine.ChangeState<InactiveState>();

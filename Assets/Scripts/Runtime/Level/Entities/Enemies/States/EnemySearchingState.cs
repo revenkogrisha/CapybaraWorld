@@ -13,7 +13,6 @@ namespace Core.Level
 		private readonly Transform _thisTransform;
         private readonly State<Vector2> _stateOnTrigger;
         private readonly SearchEnemyBase _enemy;
-		private LookingDirection _direction;
 		private CancellationTokenSource _cts;
 
 		public EnemySearchingState(SearchEnemyBase enemy, State<Vector2> stateOnTrigger)
@@ -65,7 +64,7 @@ namespace Core.Level
 
 		private void ChangeDirection()
 		{
-			_direction = _direction == LookingDirection.Left
+			_enemy.Direction = _enemy.Direction == LookingDirection.Left
 				? LookingDirection.Right
 				: LookingDirection.Left;
 		}
@@ -86,6 +85,6 @@ namespace Core.Level
 		}
 
 		private Vector2 GetDirection() =>
-			Vector2.left * (float)_direction;
+			Vector2.left * (float)_enemy.Direction;
     }
 }
