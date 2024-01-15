@@ -174,6 +174,11 @@ namespace Core.Player
 				.Subscribe(collision => 
 					Tools.InvokeIfNotNull<Enemy>(collision, PerformDeath))
 				.AddTo(_disposable);
+			
+			onCollisionEnter2D
+				.Subscribe(collision => 
+					Tools.InvokeIfNotNull<DeadlyForPlayerObject>(collision, PerformDeath))
+				.AddTo(_disposable);
 
 			onCollisionEnter2D
 				.Subscribe(collision => 
