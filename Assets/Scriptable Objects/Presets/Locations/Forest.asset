@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Forest
   m_EditorClassIdentifier: 
   _name: Forest
-  _backgroundPreset: {fileID: 11400000, guid: 3c53c8de28f0b436ca98aec9597e8ec5, type: 2}
+  _backgroundPreset: {fileID: 11400000, guid: 0990166c9b5d64afeb1b540322172ae6, type: 2}
   _startPlatform: {fileID: 1280936354804307747, guid: 5eb9e6e240f59445da70c2fd93ddcbea, type: 3}
   _simplePlatforms:
   - {fileID: 8222899738712285114, guid: 256a30b11d259466ab5d58c3d3fc1534, type: 3}

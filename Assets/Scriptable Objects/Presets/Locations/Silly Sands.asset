@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Silly Sands
   m_EditorClassIdentifier: 
   _name: Silly Sands
-  _backgroundPreset: {fileID: 11400000, guid: 3c53c8de28f0b436ca98aec9597e8ec5, type: 2}
+  _backgroundPreset: {fileID: 11400000, guid: 9dd35dfdb921f4559b01dad0ddb0b4d6, type: 2}
   _startPlatform: {fileID: 1280936354804307747, guid: f3a48bc00fd2e4938a6b0e6575f5b18f, type: 3}
   _simplePlatforms:
   - {fileID: 8222899738712285114, guid: f34333fa7d8bd438b9223eb46e04530d, type: 3}
