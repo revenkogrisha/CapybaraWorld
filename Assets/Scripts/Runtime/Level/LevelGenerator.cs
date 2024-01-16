@@ -106,6 +106,7 @@ namespace Core.Level
         public void Load(SaveData data)
         {
             SetLocationByIndex(data.LocationIndex);
+            _locationIndex = data.LocationIndex;
             _isLocationRandomSelectionEnabled = data.IsLocationRandomSelectionEnabled;
         }
 
