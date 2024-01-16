@@ -8,6 +8,7 @@ namespace Core.Level
         [SerializeField, Tooltip("Sky Pattern")] private SpriteRenderer[] _layer1;
         [SerializeField, Tooltip("Middle, main decor")] private SpriteRenderer[] _layer2;
         [SerializeField, Tooltip("Middle-Fore Pattern")] private SpriteRenderer[] _layer3;
+        [SerializeField] private SpriteRenderer[] _undercover;
 
         public void ApplyPreset(BackgroundPreset preset)
         {
@@ -22,6 +23,9 @@ namespace Core.Level
 
             foreach (SpriteRenderer renderer in _layer3)
                 renderer.sprite = preset.Layer3;
+
+            foreach (SpriteRenderer renderer in _undercover)
+                renderer.color = preset.UndercoverColor;
         }
     }
 }
