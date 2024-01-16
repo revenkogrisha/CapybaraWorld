@@ -10,11 +10,12 @@ namespace Core.Editor
     public static class BuildHelper
     {
         private const string DevDirective = "REVENKO_DEVELOP";
+        private const string DebugDirective = "CUSTOM_DEBUG";
         private const string ReleaseDirective = "REVENKO_RELEASE";
         
         private const string FileNameFormat = "rel{0}.apk";
         private const string DevFileNameFormat = "dev{0}.apk";
-        private const string ReleaseFileNameFormat = "CapybaraWorld{0}.aab";
+        private const string ReleaseFileNameFormat = "Release{0}.aab";
         
         private const string RelativeOutputFolder = "Documents/GameProjects/Capybara World/Builds";
 
@@ -22,6 +23,7 @@ namespace Core.Editor
         public static void SetDefaultState()
         {
             RemoveScriptingDefineSymbol(DevDirective);
+            RemoveScriptingDefineSymbol(DebugDirective);
             RemoveScriptingDefineSymbol(ReleaseDirective);
         }
         
@@ -29,6 +31,7 @@ namespace Core.Editor
         public static void SetDevState()
         {
             AddScriptingDefineSymbol(DevDirective);
+            AddScriptingDefineSymbol(DebugDirective);
             RemoveScriptingDefineSymbol(ReleaseDirective);
         }
         
@@ -37,6 +40,7 @@ namespace Core.Editor
         {
             AddScriptingDefineSymbol(ReleaseDirective);
             RemoveScriptingDefineSymbol(DevDirective);
+            RemoveScriptingDefineSymbol(DebugDirective);
         }
 
 #if UNITY_ANDROID
