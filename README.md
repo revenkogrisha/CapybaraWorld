@@ -8,7 +8,7 @@
    <img src="https://img.shields.io/badge/Engine-Unity%202022.3.16f1-blueviolet?style=&logo=unity" alt="Engine">
    <img src="https://img.shields.io/badge/Platform-Android 7+%20-brightgreen?style=&logo=android" alt="Platform">
    <img src="https://img.shields.io/badge/Play_Market-Available%20-brightgreen?style=&logo=google play" alt="Distribution">
-   <img src="https://img.shields.io/badge/Version-0.3.0-blue" alt="Game Version">
+   <img src="https://img.shields.io/badge/Version-0.6.1-blue" alt="Game Version">
    <img src="https://img.shields.io/badge/Release Date-3.12.2023-red" alt="Release Date">
    <img src="https://img.shields.io/badge/License-Apache--2.0%20-yellow?style=&logo=apache" alt="License">
 </p>
@@ -35,7 +35,7 @@ You have many capybaras in your team to achive any goals and find all hidden che
 * [UniTask](https://github.com/Cysharp/UniTask) - better async/await for Unity
 * [UniRx](https://github.com/neuecc/UniRx) - reactive extensions for Unity
 * [Universal RP](https://unity.com/ru/srp/universal-render-pipeline) - scriptable render pipeline made by Unity
-* [Cinemachine](https://unity.com/unity/features/editor/art-and-design/cinemachine) - Advanced camera for Unity
+* [Cinemachine](https://unity.com/unity/features/editor/art-and-design/cinemachine) - advanced camera for Unity
 * [DOTween](http://dotween.demigiant.com/) - animation engine for Unity
 * [NightPool](https://github.com/MeeXaSiK/NightPool) - fast object pool for Unity
 * [Google Play Core](https://developer.android.com/reference/com/google/android/play/core/release-notes) - Google SDKs for Android & Unity to use Google Play API 
