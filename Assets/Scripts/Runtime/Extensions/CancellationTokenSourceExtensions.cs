@@ -25,7 +25,7 @@ namespace Core.Other
             {
                 if (cts.IsCancellationRequested == false && Time.time >= timeoutTime)
                 {
-                    cts.Cancel();
+                    cts.Clear();
                     return;
                 }
 

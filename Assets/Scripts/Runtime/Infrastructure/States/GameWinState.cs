@@ -13,7 +13,6 @@ namespace Core.Infrastructure
         private const int LevelsWonToRequestReview = 3;
         
         private readonly UIProvider _uiProvider;
-        private readonly IUserReviewService _reviewService;
         private GameWinMenu _gameWinMenu;
         private CancellationTokenSource _cts;
 

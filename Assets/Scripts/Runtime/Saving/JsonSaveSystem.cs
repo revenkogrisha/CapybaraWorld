@@ -12,6 +12,7 @@ namespace Core.Saving
 
         private static string FilePath = Application.persistentDataPath + SaveFileFormat;
 
+#region Editor
 #if UNITY_EDITOR
         [MenuItem("Tools/CapybaraWorld/Delete Save Data", false, 20)]
         public static void DeleteSaveData()
@@ -32,6 +33,7 @@ namespace Core.Saving
             }
         }
 #endif
+#endregion
 
         public void Save(SaveData data)
         {
