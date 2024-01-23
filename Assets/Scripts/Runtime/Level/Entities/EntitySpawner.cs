@@ -29,62 +29,31 @@ namespace Core.Level
 
         private void SpawnFood(Platform platform)
         {
-            SpawnMarker[] markers = platform.SpawnMarkers;
-            Transform root = platform.transform;
-
-            SpawnMarker[] filtered = SpawnMarker.FilterByKind(markers, EntityKind.Food);
+            SpawnMarker[] filtered = SpawnMarker.FilterByKind(platform.SpawnMarkers, 
+                EntityKind.Food);
+                
             foreach (SpawnMarker marker in filtered)
             {
-                Food food = NightPool.Spawn(_entityAssets.FoodPrefab, root);
+                Food food = NightPool.Spawn(_entityAssets.FoodPrefab, platform.transform);
                 SetupProduct(food, marker);
             }
         }
 
         private void SpawnChests(Platform platform)
         {
-            SpawnMarker[] markers = platform.SpawnMarkers;
-            Transform root = platform.transform;
+            SpawnMarker[] filtered = SpawnMarker.FilterByKind(platform.SpawnMarkers,
+                EntityKind.Chest);
 
-            SpawnMarker[] filtered = SpawnMarker.FilterByKind(markers, EntityKind.Chest);
-            SpawnMarker[] simpleChests = filtered
-                .Where(marker => marker.ChestKind == ChestKind.Simple)
-                .ToArray();
-
-            SpawnMarker[] treasureChests = filtered
-                .Where(marker => marker.ChestKind == ChestKind.Treasure)
-                .ToArray();
-
-            Chest simpleChestPrefab = _entityAssets.Chests[ChestKind.Simple];
-            foreach (SpawnMarker marker in simpleChests)
-            {
-                Chest chest = NightPool.Spawn(simpleChestPrefab, root);
-                SetupProduct(chest, marker);
-            }
-
-            Chest treasureChestPrefab = _entityAssets.Chests[ChestKind.Treasure];
-            foreach (SpawnMarker marker in treasureChests)
-            {
-                Chest chest = NightPool.Spawn(treasureChestPrefab, root);
-                SetupProduct(chest, marker);
-            }
+            SpawnSimpleChests(platform, filtered);
+            SpawnTreasureChests(platform, filtered);
         }
 
         private void SpawnEnemies(Platform platform)
         {
-            SpawnMarker[] markers = platform.SpawnMarkers;
-            Transform root = platform.transform;
-
-            SpawnMarker[] filtered = SpawnMarker.FilterByKind(markers, EntityKind.Enemy);
-            SpawnMarker[] cactopusMarkers = filtered
-                .Where(marker => marker.EnemyKind == EnemyKind.Cactopus)
-                .ToArray();
-
-            Enemy cactopusPrefab = _enemyAssets.Enemies[EnemyKind.Cactopus];
-            foreach (SpawnMarker marker in cactopusMarkers)
-            {
-                Enemy enemy = NightPool.Spawn(cactopusPrefab, root);
-                SetupProduct(enemy, marker);
-            }
+            SpawnMarker[] filtered = SpawnMarker.FilterByKind(platform.SpawnMarkers,
+                EntityKind.Enemy);
+                
+            SpawnCactopuses(platform, filtered);
         }
 
         private void SetupProduct(Entity product, SpawnMarker marker)
@@ -92,6 +61,48 @@ namespace Core.Level
             Vector3 localPosition = marker.GetLocalPosition();
             product.SetLocalPosition(localPosition);
             marker.SetProduct(product.gameObject);
+        }
+
+        private void SpawnSimpleChests(Platform platform, SpawnMarker[] filtered)
+        {
+            SpawnMarker[] simpleChests = filtered
+                .Where(marker => marker.ChestKind == ChestKind.Simple)
+                .ToArray();
+
+            Chest simpleChestPrefab = _entityAssets.Chests[ChestKind.Simple];
+            foreach (SpawnMarker marker in simpleChests)
+            {
+                Chest chest = NightPool.Spawn(simpleChestPrefab, platform.transform);
+                SetupProduct(chest, marker);
+            }
+        }
+
+        private void SpawnTreasureChests(Platform platform, SpawnMarker[] filtered)
+        {
+            SpawnMarker[] treasureChests = filtered
+                .Where(marker => marker.ChestKind == ChestKind.Treasure)
+                .ToArray();
+
+            Chest treasureChestPrefab = _entityAssets.Chests[ChestKind.Treasure];
+            foreach (SpawnMarker marker in treasureChests)
+            {
+                Chest chest = NightPool.Spawn(treasureChestPrefab, platform.transform);
+                SetupProduct(chest, marker);
+            }
+        }
+
+        private void SpawnCactopuses(Platform platform, SpawnMarker[] filtered)
+        {
+            SpawnMarker[] cactopusMarkers = filtered
+                .Where(marker => marker.EnemyKind == EnemyKind.Cactopus)
+                .ToArray();
+
+            Enemy cactopusPrefab = _enemyAssets.Enemies[EnemyKind.Cactopus];
+            foreach (SpawnMarker marker in cactopusMarkers)
+            {
+                Enemy enemy = NightPool.Spawn(cactopusPrefab, platform.transform);
+                SetupProduct(enemy, marker);
+            }
         }
     }
 }

@@ -13,7 +13,8 @@ MonoBehaviour:
   m_Name: Level Generator Config
   m_EditorClassIdentifier: 
   _specialPlatformSequentialNumber: 2
-  _platformsStartAmount: 5
+  _platformsStartAmount: 2
+  _platformsLimit: 5
   _xStartPoint: 0
   _platformsY: -2
   _locations:

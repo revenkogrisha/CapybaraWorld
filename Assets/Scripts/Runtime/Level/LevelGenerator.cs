@@ -187,7 +187,9 @@ namespace Core.Level
                     if (IsLevelMidPointXLessHeroX == true)
                     {
                         DespawnOldestPlatform();
-                        GenerateRandomPlatform();
+
+                        if (_platformsOnLevel.Count < _config.PlatformsLimit)
+                            GenerateRandomPlatform();
                     }
 
                     float positionX = _centerTransform.position.x;
