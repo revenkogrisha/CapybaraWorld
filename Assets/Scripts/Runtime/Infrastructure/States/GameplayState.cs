@@ -27,6 +27,7 @@ namespace Core.Infrastructure
         private readonly PlayerData _playerData;
         private readonly ISaveService _saveService;
         private readonly PlaythroughHandler _playthroughHandler;
+        private readonly ParticlesHelper _particlesHelper;
 
         [Inject]
         public GameplayState(
@@ -39,7 +40,8 @@ namespace Core.Infrastructure
             Score score,
             UIProvider uiProvider,
             PlayerData playerData,
-            ISaveService saveService)
+            ISaveService saveService,
+            ParticlesHelper particlesHelper)
         {
             _inputHandler = inputHandler;
             _levelGenerator = levelGenerator;
@@ -51,6 +53,7 @@ namespace Core.Infrastructure
             _uiProvider = uiProvider;
             _playerData = playerData;
             _saveService = saveService;
+            _particlesHelper = particlesHelper;
         }
 
         public override void Enter()
@@ -107,6 +110,7 @@ namespace Core.Infrastructure
             _disposables.Add(_playthroughHandler);
             _disposables.Add(_levelGenerator);
             _disposables.Add(_playerData);
+            _disposables.Add(_particlesHelper);
         }
 
         private Hero CreateHero()

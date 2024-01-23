@@ -967,10 +967,6 @@ PrefabInstance:
       propertyPath: _focusCamera
       value: 
       objectReference: {fileID: 880517168}
-    - target: {fileID: 1565301931456708923, guid: fadc316bc82bb44eb90b851900532d13, type: 3}
-      propertyPath: _focusCameraReference
-      value: 
-      objectReference: {fileID: 880517168}
     - target: {fileID: 2296395771366000912, guid: fadc316bc82bb44eb90b851900532d13, type: 3}
       propertyPath: _uiRoot
       value: 
