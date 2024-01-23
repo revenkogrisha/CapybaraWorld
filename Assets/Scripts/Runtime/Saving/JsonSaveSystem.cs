@@ -1,4 +1,5 @@
 using System.IO;
+using System.Text;
 using Unity.Plastic.Newtonsoft.Json;
 
 #if UNITY_EDITOR
@@ -14,7 +15,8 @@ namespace Core.Saving
 
         private static string FilePath = Application.persistentDataPath + SaveFileFormat;
 
-#region Editor
+        #region Editor
+
 #if UNITY_EDITOR
         [MenuItem("Tools/CapybaraWorld/Delete Save Data", false, 20)]
         public static void DeleteSaveData()
@@ -35,13 +37,15 @@ namespace Core.Saving
             }
         }
 #endif
-#endregion
+
+        #endregion
 
         public void Save(SaveData data)
         {
+            const int bufferSize = 2048;
             string json = JsonConvert.SerializeObject(data);
 
-            using StreamWriter writer = new(FilePath);
+            using StreamWriter writer = new(FilePath, false, Encoding.UTF8, bufferSize);
             writer.Write(json);
         }
 
@@ -50,12 +54,7 @@ namespace Core.Saving
             if (File.Exists(FilePath) == false)
                 return new SaveData();
 
-            string json = "";
-            using StreamReader reader = new(FilePath);
-
-            string line = "";
-            while ((line = reader.ReadLine()) != null)
-                json += line;
+            string json = File.ReadAllText(FilePath, Encoding.UTF8);
 
             if (string.IsNullOrEmpty(json) == true)
                 return new SaveData();
