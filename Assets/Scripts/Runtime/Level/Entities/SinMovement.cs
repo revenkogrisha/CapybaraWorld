@@ -31,7 +31,7 @@ namespace Core.Level
 			float theta = Mathf.PI * 2 * age / _config.WaveFriquency;
 			float sinTheta = Mathf.Sin(theta);
 
-			movement.y = _startY + _config.WaveWidth * sinTheta - 1f;
+			movement.y = _config.WaveWidth * sinTheta - 1f;
 			movement.x = _config.Speed;
 
 			_rigidbody2D.velocity = movement;

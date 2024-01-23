@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b6809a320c58b4829bd871a0c056deb5, type: 3}
-  m_Name: Flying Enemy Config
+  m_Name: Cactopace
   m_EditorClassIdentifier: 
-  _speed: -12
-  _waveFriquency: 3
+  _speed: -6
+  _waveFriquency: 4
   _waveWidth: 5
-  _lifetime: 40
+  _lifetime: 18
