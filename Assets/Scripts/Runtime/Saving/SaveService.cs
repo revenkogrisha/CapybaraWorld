@@ -28,37 +28,23 @@ namespace Core.Saving
 
         public void Save()
         {
-            try
-            {
-                SaveData data = new();
-                foreach (ISaveable saveable in _saveables)
-                    saveable.Save(data);
+            SaveData data = new();
+            foreach (ISaveable saveable in _saveables)
+                saveable.Save(data);
 
-                _saveSystem.Save(data);
+            _saveSystem.Save(data);
 
-                RDebug.Info($"{nameof(SaveService)}: Data was saved");
-            }
-            catch (Exception ex)
-            {
-                RDebug.Error($"{nameof(SaveService)}::{nameof(Save)} Failed to save data: {ex.Message} \n {ex.StackTrace}", true);
-            }
+            RDebug.Info($"{nameof(SaveService)}: Data was saved");
         }
 
         public void Load()
         {
-            try
-            {
-                SaveData data = _saveSystem.Load();
+            SaveData data = _saveSystem.Load();
 
-                foreach (ISaveable saveable in _saveables)
-                    saveable.Load(data);
-                
-                RDebug.Info($"{nameof(SaveService)}: Data was loaded");
-            }
-            catch (Exception ex)
-            {
-                RDebug.Error($"{nameof(SaveService)}::{nameof(Load)} Failed to load data: {ex.Message} \n {ex.StackTrace}", true);
-            }
+            foreach (ISaveable saveable in _saveables)
+                saveable.Load(data);
+            
+            RDebug.Info($"{nameof(SaveService)}: Data was loaded");
         }
     }
 }

@@ -1,5 +1,7 @@
+using System;
 using System.IO;
 using System.Text;
+using Core.Editor.Debugger;
 using Unity.Plastic.Newtonsoft.Json;
 
 #if UNITY_EDITOR
@@ -42,24 +44,43 @@ namespace Core.Saving
 
         public void Save(SaveData data)
         {
-            const int bufferSize = 2048;
-            string json = JsonConvert.SerializeObject(data);
+            try
+            {
+                JsonSerializerSettings serializerSettings = new()
+                {
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+                };
 
-            using StreamWriter writer = new(FilePath, false, Encoding.UTF8, bufferSize);
-            writer.Write(json);
+                File.WriteAllText(FilePath,
+                    JsonConvert.SerializeObject(data, Formatting.Indented, serializerSettings),
+                    Encoding.UTF8);
+            }
+            catch (Exception ex)
+            {
+                RDebug.Error($"{nameof(JsonSaveSystem)}::{nameof(Save)} Failed to save data: {ex.Message} \n {ex.StackTrace}", true);
+            }
         }
 
         public SaveData Load()
         {
-            if (File.Exists(FilePath) == false)
-                return new SaveData();
+            try
+            {
+                if (File.Exists(FilePath) == false)
+                    return new SaveData();
 
-            string json = File.ReadAllText(FilePath, Encoding.UTF8);
+                string json = File.ReadAllText(FilePath, Encoding.UTF8);
 
-            if (string.IsNullOrEmpty(json) == true)
+                if (string.IsNullOrEmpty(json) == true)
+                    return new SaveData();
+                
+                return JsonConvert.DeserializeObject<SaveData>(json);
+            }
+            catch (Exception ex)
+            {
+                RDebug.Error($"{nameof(JsonSaveSystem)}::{nameof(Load)} Failed to load data: {ex.Message} \n {ex.StackTrace}", true);
+
                 return new SaveData();
-            
-            return JsonConvert.DeserializeObject<SaveData>(json);
+            }
         }
     }
 }
