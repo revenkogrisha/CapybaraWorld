@@ -1,4 +1,6 @@
 using System.IO;
+using Unity.Plastic.Newtonsoft.Json;
+
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
@@ -37,9 +39,9 @@ namespace Core.Saving
 
         public void Save(SaveData data)
         {
-            string json = JsonUtility.ToJson(data);
-            using StreamWriter writer = new(FilePath);
+            string json = JsonConvert.SerializeObject(data);
 
+            using StreamWriter writer = new(FilePath);
             writer.Write(json);
         }
 
@@ -55,10 +57,10 @@ namespace Core.Saving
             while ((line = reader.ReadLine()) != null)
                 json += line;
 
-            if (string.IsNullOrEmpty(json))
+            if (string.IsNullOrEmpty(json) == true)
                 return new SaveData();
             
-            return JsonUtility.FromJson<SaveData>(json);
+            return JsonConvert.DeserializeObject<SaveData>(json);
         }
     }
 }
