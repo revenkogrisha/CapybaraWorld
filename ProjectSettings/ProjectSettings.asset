@@ -807,7 +807,7 @@ PlayerSettings:
   webGLMemoryGeometricGrowthCap: 96
   webGLPowerPreference: 2
   scriptingDefineSymbols:
-    Android: REVENKO_RELEASE
+    Android: REVENKO_DEVELOP;CUSTOM_DEBUG
   additionalCompilerArguments: {}
   platformArchitecture: {}
   scriptingBackend:
