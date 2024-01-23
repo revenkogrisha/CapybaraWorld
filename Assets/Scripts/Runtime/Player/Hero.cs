@@ -105,7 +105,7 @@ namespace Core.Player
 			_particles = particles;
 		}
 
-        public void PlayParticles()
+        public void PlayJumpParticles()
         {
             _particles
 				.Spawn(_config.JumpParticlesName, transform.position + _particlesOffset)

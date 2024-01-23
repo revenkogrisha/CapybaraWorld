@@ -23,18 +23,15 @@ namespace Core.Level
                 Setup();
         }
 
-        public void OnSpawn()
-        {
+        public void OnSpawn() =>
             Setup();
-        }
 
         public void Open()
         {
             if (_canOpen == false)
                 return;
 
-            for (int i = 0; i < _preset.CoinsInside; i++)
-                PushOutCoin();
+            ReleaseCoins();
 
             _canOpen = false;
 
@@ -51,6 +48,12 @@ namespace Core.Level
             _coinFactory = new(_preset.CoinPrefab);
             transform.localScale = Vector2.one;
             _canOpen = true;
+        }
+
+        private void ReleaseCoins()
+        {
+            for (int i = 0; i < _preset.CoinsInside; i++)
+                PushOutCoin();
         }
         
         private void PushOutCoin()
