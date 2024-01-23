@@ -1,3 +1,4 @@
+using Core.Common;
 using TriInspector;
 using UnityEngine;
 
@@ -34,6 +35,9 @@ namespace Core.Player
         [SerializeField, Min(0f)] private float _jumpForce = 18f;
         [SerializeField, Min(0f)] private float _descendDuration = 1f;
 
+        [Space]
+        [SerializeField] private ParticlesName _jumpParticlesName = ParticlesName.Dust;
+
         [Title("Collisions")]
         [SerializeField] private LayerMask _groundLayer;
         [SerializeField] private LayerMask _jointLayer;
@@ -59,6 +63,8 @@ namespace Core.Player
         public float JumpDuration => _jumpDuration;
         public float JumpForce => _jumpForce;
         public float DescendDuration => _descendDuration;
+
+        public ParticlesName JumpParticlesName => _jumpParticlesName;
         
         public LayerMask GroundLayer => _groundLayer;
         public LayerMask JointLayer => _jointLayer;

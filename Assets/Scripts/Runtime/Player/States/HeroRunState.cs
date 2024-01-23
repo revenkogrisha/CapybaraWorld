@@ -233,6 +233,9 @@ namespace Core.Player
                     return;
 
                 CancellationToken token = _hero.destroyCancellationToken;
+
+                _hero.PlayParticles();
+
                 await StartJump(token);
                 await WaitUntilLanded(token);
 

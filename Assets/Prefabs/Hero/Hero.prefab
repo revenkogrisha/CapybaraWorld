@@ -1542,6 +1542,7 @@ MonoBehaviour:
   _rope: {fileID: 5236527769357152947}
   _collider2D: {fileID: 7266856433574884422}
   _config: {fileID: 11400000, guid: 19f87217513ed4f248f07f7c16d76846, type: 2}
+  _particlesOffset: {x: 0, y: -1, z: 0}
 --- !u!114 &5395183055495763638
 MonoBehaviour:
   m_ObjectHideFlags: 0

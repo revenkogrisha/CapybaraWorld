@@ -28,14 +28,16 @@ namespace Core.Player
 
 		[Title("Configuration")]
 		[SerializeField] private HeroConfig _config;
+        [SerializeField] private Vector3 _particlesOffset = Vector2.down;
 
 		private readonly CompositeDisposable _disposable = new();
 		private IFiniteStateMachine _stateMachine;
 		private GroundChecker _groundChecker;
 		private InputHandler _inputHandler;
 		private PlayerUpgrade _upgrade;
+        private ParticlesHelper _particles;
 
-		[HideInInspector] public ReactiveProperty<bool> IsDead { get; } = new(false);
+        [HideInInspector] public ReactiveProperty<bool> IsDead { get; } = new(false);
 		[HideInInspector] public readonly ReactiveProperty<Transform> GrappledJoint = new();
 		[HideInInspector] public readonly ReactiveProperty<bool> IsRunning = new();
 		[HideInInspector] public readonly ReactiveProperty<bool> IsJumping = new();
@@ -94,13 +96,23 @@ namespace Core.Player
 		#endregion
 
 		[Inject]
-		private void Construct(InputHandler inputHandler, PlayerUpgrade upgrade)
+		private void Construct(InputHandler inputHandler,
+			PlayerUpgrade upgrade,
+			ParticlesHelper particles)
 		{
 			_inputHandler = inputHandler;
 			_upgrade = upgrade;
+			_particles = particles;
 		}
 
-		private void InitializeComponents()
+        public void PlayParticles()
+        {
+            _particles
+				.Spawn(_config.JumpParticlesName, transform.position + _particlesOffset)
+				.Forget();
+        }
+
+        private void InitializeComponents()
 		{
 			LayerMask groundLayer = _config.GroundLayer;
 			_groundChecker = new(transform, GrapplingActivationDistance, groundLayer);
