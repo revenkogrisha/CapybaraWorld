@@ -69,10 +69,7 @@ namespace Core.Player
 			InitializeStateMachine();
 
 			SetGravityScale();
-		}
 
-		private void Start()
-		{
 			SubscribeUpdate();
 			SubscribePhysicsCallbacks();
 		}

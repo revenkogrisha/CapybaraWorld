@@ -15,8 +15,11 @@ namespace Core.Infrastructure
         public GameLostState(UIProvider uiProvider) => 
             _uiProvider = uiProvider;
 
-        public override void Enter() => 
+        public override void Enter()
+        {
             _gameOverMenu = _uiProvider.CreateGameLostMenu();
+            HapticHelper.VibrateHeavy();
+        }
 
         public override void Exit() => 
             _gameOverMenu.gameObject.SelfDestroy();

@@ -1,4 +1,3 @@
-using System;
 using Core.Common;
 using Core.Level;
 using Core.Player;
