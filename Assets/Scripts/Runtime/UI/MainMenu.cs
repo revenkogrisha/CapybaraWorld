@@ -1,5 +1,8 @@
 #if REVENKO_DEVELOP
 using Core.Editor.Debugger;
+    #if UNITY_ANDROID && !UNITY_EDITOR
+    using Core.Common.Notifications;
+    #endif
 #endif
 using Core.Game;
 using Core.Infrastructure;
@@ -29,9 +32,13 @@ namespace Core.UI
         [Header("Dev Buttons")] 
         [SerializeField] private UIButton _devLocationButton;
         [SerializeField] private UIButton _devLevelButton;
+        [SerializeField] private UIButton _devNotificationButton;
 
 #if REVENKO_DEVELOP
         private PlaythroughHandler _playthroughHandler;
+    #if UNITY_ANDROID && !UNITY_EDITOR
+        private Notifications _notifications;
+    #endif
 #endif
         private ILocationsHandler _locationsHandler;
         private PlayerData _playerData;
@@ -48,6 +55,9 @@ namespace Core.UI
 #if REVENKO_DEVELOP
             _devLocationButton.OnClicked += UpdateLocation;
             _devLevelButton.OnClicked += CompleteLevel;
+    #if UNITY_ANDROID && !UNITY_EDITOR
+            _devNotificationButton.OnClicked += SendNotification;
+    #endif
 #endif
         }
 
@@ -59,6 +69,9 @@ namespace Core.UI
 #if REVENKO_DEVELOP
             _devLocationButton.OnClicked -= UpdateLocation;
             _devLevelButton.OnClicked -= CompleteLevel;
+    #if UNITY_ANDROID && !UNITY_EDITOR
+            _devNotificationButton.OnClicked -= SendNotification;
+    #endif
 #endif
         }
 
@@ -74,6 +87,9 @@ namespace Core.UI
         private void Construct(
 #if REVENKO_DEVELOP
             PlaythroughHandler playthroughHandler,
+    #if UNITY_ANDROID && !UNITY_EDITOR
+            Notifications notifications,
+    #endif
 #endif
             ILocationsHandler locationsHandler,
             PlayerData playerData,
@@ -81,6 +97,9 @@ namespace Core.UI
         {
 #if REVENKO_DEVELOP
             _playthroughHandler = playthroughHandler;
+    #if UNITY_ANDROID && !UNITY_EDITOR
+            _notifications = notifications,
+    #endif
 #endif
             _locationsHandler = locationsHandler;
             _playerData = playerData;
@@ -131,6 +150,11 @@ namespace Core.UI
             _playthroughHandler.FinishGame(GameResult.Win);
             RDebug.Log($"{nameof(MainMenu)}: Level completed");
         }
+
+    #if UNITY_ANDROID && !UNITY_EDITOR
+        private void SendNotification() =>
+            _notifications.Send(_notifications.Collection.Test);
+    #endif
 #endif
     }
 }

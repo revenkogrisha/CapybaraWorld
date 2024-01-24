@@ -12,4 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a7e2669473dfb450ca32df3f4c6f5dda, type: 3}
   m_Name: Notifications Collection
   m_EditorClassIdentifier: 
+  _test: {fileID: 11400000, guid: 3180f81a6b8f3441f85b33e01d97f781, type: 2}
   _playReminder: {fileID: 11400000, guid: 2b9f72be53b3a49b2ae42373724e9b86, type: 2}
+  _locations: {fileID: 11400000, guid: fa87c46fa6063434c87ccff70c4e470e, type: 2}
