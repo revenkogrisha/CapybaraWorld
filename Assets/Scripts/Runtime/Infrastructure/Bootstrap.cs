@@ -1,4 +1,5 @@
-#if !UNITY_EDITOR && UNITY_ANDROID
+#if UNITY_ANDROID && !UNITY_EDITOR
+using Core.Common.Notifications;
 using System.Threading;
 using Core.Common;
 using Core.Other;
@@ -12,6 +13,9 @@ namespace Core.Infrastructure
 {
     public class Bootstrap : MonoBehaviour
     {
+#if UNITY_ANDROID && !UNITY_EDITOR
+        private Notifications _notifications;
+#endif
         private IGameStateMachine _stateMachine;
         private DataInitializationState _dataInitializationState;
         private GenerationState _generationState;
@@ -23,8 +27,9 @@ namespace Core.Infrastructure
 
         private void Awake()
         {
-#if !UNITY_EDITOR && UNITY_ANDROID
+#if UNITY_ANDROID && !UNITY_EDITOR
             HandleAppUpdate().Forget();
+            ScheduleAndroidNotifications();
 #endif
             
             AddGameStatesToMachine();
@@ -33,6 +38,9 @@ namespace Core.Infrastructure
 
         [Inject]
         private void Construct(
+#if UNITY_ANDROID && !UNITY_EDITOR
+            Notifications notifications,
+#endif
             IGameStateMachine stateMachine,
             DataInitializationState dataInitializationState,
             GenerationState generationState,
@@ -42,6 +50,9 @@ namespace Core.Infrastructure
             GameLostState gameOverState,
             GameNavigation navigation)
         {
+#if UNITY_ANDROID && !UNITY_EDITOR
+            _notifications = notifications;
+#endif
             _stateMachine = stateMachine;
             _dataInitializationState = dataInitializationState;
             _generationState = generationState;
@@ -52,7 +63,7 @@ namespace Core.Infrastructure
             _navigation = navigation;
         }
 
-#if !UNITY_EDITOR && UNITY_ANDROID
+#if UNITY_ANDROID && !UNITY_EDITOR
         private async UniTaskVoid HandleAppUpdate()
         {
             const float requestTimeout = 60f;
@@ -66,6 +77,12 @@ namespace Core.Infrastructure
 
             if (result == UpdateAvailability.UpdateAvailable)
                 await updateService.Request(cts.Token);
+        }
+
+        private void ScheduleAndroidNotifications()
+        {
+            _notifications.Send(_notifications.Collection.PlayReminder);
+            _notifications.Send(_notifications.Collection.Locations);
         }
 #endif
 
