@@ -1,4 +1,5 @@
 ﻿using System;
+using Core.Common;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -10,19 +11,10 @@ namespace Core.UI
         [Header("Components")]
         [SerializeField] private Button _button;
 
-        public bool IsLocked { get; private set; }
-
-        public Button OriginalButton => _button;
         public bool Interactable
         {
             get => _button.interactable;
-            set
-            {
-                if (IsLocked)
-                    return;
-
-                _button.interactable = value;
-            }
+            set => _button.interactable = value;
         }
 
         public event Action OnClicked;
@@ -52,7 +44,7 @@ namespace Core.UI
         private void PerformClick()
         {
             OnClicked?.Invoke();
-            
+            HapticHelper.VibrateLight();
         }
     }
 }
