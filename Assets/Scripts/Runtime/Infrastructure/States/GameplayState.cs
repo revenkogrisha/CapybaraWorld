@@ -77,6 +77,8 @@ namespace Core.Infrastructure
             _levelGenerator.Initialize(heroTransform);
             _levelGenerator.SetActiveWorldCanvases(true);
 
+            _particlesHelper.Initialize();
+
             CreateUI(hero);
         }
 

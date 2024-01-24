@@ -14,8 +14,9 @@ namespace Core.Common
     {
         private const float Duration = 5f;
 
-        private Dictionary<ParticlesName, ParticleSystem> _particles;
-        private CancellationTokenSource _cts;
+        private readonly Dictionary<ParticlesName, ParticleSystem> _particles;
+        private readonly List<ParticleSystem> _spawnedParticles = new();
+        private CancellationTokenSource _commonCTS;
 
         public ParticlesHelper(ParticlesCollection collection)
         {
@@ -23,8 +24,16 @@ namespace Core.Common
                 .ToDictionary(item => item.Name, item => item.ParticlePrefab);
         }
 
-        public void Dispose() => 
-            _cts.Clear();
+        public void Initialize() =>
+            _commonCTS = new();
+
+        public void Dispose()
+        {
+            _commonCTS.Clear();
+
+            foreach (ParticleSystem particles in _spawnedParticles.ToList())
+                Despawn(particles);
+        }
 
         public async UniTaskVoid Spawn(ParticlesName name,
             Vector3 position, 
@@ -32,30 +41,33 @@ namespace Core.Common
         {
             try
             {
-                _cts = new();
                 ParticleSystem particle = NightPool.Spawn(_particles[name],
                     position,
                     Quaternion.identity);
 
                 particle.Play();
 
-                await UniTaskUtility.Delay(duration, _cts.Token);
-                
-                particle.Stop();
-                particle.Clear();
+                _spawnedParticles.Add(particle);
 
-                NightPool.Despawn(particle);
+                await UniTaskUtility.Delay(duration, _commonCTS.Token);
+                
+                Despawn(particle);
             }
             catch (OperationCanceledException) {  }
             catch (Exception ex)
             {
                 RDebug.Warning($"{nameof(ParticlesHelper)}::{nameof(Spawn)}: {ex.Message} \n {ex.StackTrace}");
             }
-            finally
-            {
-                _cts.Clear();
-                _cts = null;
-            }
+        }
+
+        private void Despawn(ParticleSystem particle)
+        {
+            particle.Stop();
+            particle.Clear();
+
+            NightPool.Despawn(particle);
+
+            _spawnedParticles.Remove(particle);
         }
     }
 }
