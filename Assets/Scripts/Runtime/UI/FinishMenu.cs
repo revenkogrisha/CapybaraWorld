@@ -1,6 +1,5 @@
 using Core.Infrastructure;
 using UnityEngine;
-using UnityTools.Buttons;
 using Zenject;
 
 namespace Core.UI

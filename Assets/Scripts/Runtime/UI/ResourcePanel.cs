@@ -1,7 +1,6 @@
 using Core.Player;
 using TMPro;
 using UnityEngine;
-using UnityTools.Buttons;
 using Zenject;
 
 namespace Core.UI

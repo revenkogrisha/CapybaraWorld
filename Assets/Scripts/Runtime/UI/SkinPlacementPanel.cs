@@ -2,7 +2,6 @@ using Core.Player;
 using TMPro;
 using UniRx;
 using UnityEngine;
-using UnityTools.Buttons;
 
 namespace Core.UI
 {

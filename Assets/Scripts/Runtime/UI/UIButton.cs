@@ -1,11 +1,9 @@
 ﻿using System;
-using Core.UI;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-
-namespace UnityTools.Buttons
+namespace Core.UI
 {
     public class UIButton : TweenClickable
     {
@@ -32,7 +30,7 @@ namespace UnityTools.Buttons
         #region MonoBehaviour
 
         private void OnEnable() => 
-            _button.onClick.AddListener(InvokeOnClicked);
+            _button.onClick.AddListener(PerformClick);
 
         private void OnDisable() => 
             _button.onClick.RemoveAllListeners();
@@ -51,7 +49,10 @@ namespace UnityTools.Buttons
                 base.OnPointerUp(eventData);
         }
 
-        private void InvokeOnClicked() => 
+        private void PerformClick()
+        {
             OnClicked?.Invoke();
+            
+        }
     }
 }
