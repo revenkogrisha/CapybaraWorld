@@ -159,11 +159,12 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.burst": {
-      "version": "1.8.11",
+      "version": "1.8.12",
       "depth": 3,
       "source": "registry",
       "dependencies": {
-        "com.unity.mathematics": "1.2.1"
+        "com.unity.mathematics": "1.2.1",
+        "com.unity.modules.jsonserialize": "1.0.0"
       },
       "url": "https://packages.unity.com"
     },
@@ -229,7 +230,7 @@
       "dependencies": {
         "com.unity.mobile.android-logcat": "1.4.0",
         "com.unity.adaptiveperformance": "4.0.1",
-        "com.unity.mobile.notifications": "2.3.0"
+        "com.unity.mobile.notifications": "2.3.1"
       }
     },
     "com.unity.ide.rider": {
@@ -288,7 +289,7 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.mobile.notifications": {
-      "version": "2.3.0",
+      "version": "2.3.1",
       "depth": 1,
       "source": "registry",
       "dependencies": {
