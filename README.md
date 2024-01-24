@@ -5,7 +5,7 @@
 </p> -->
 
 <p align="center">
-   <img src="https://img.shields.io/badge/Engine-Unity%202022.3.17f1-blueviolet?style=&logo=unity" alt="Engine">
+   <img src="https://img.shields.io/badge/Engine-Unity%202022.3.18f1-blueviolet?style=&logo=unity" alt="Engine">
    <img src="https://img.shields.io/badge/Platform-Android 7+%20-brightgreen?style=&logo=android" alt="Platform">
    <img src="https://img.shields.io/badge/Play_Market-Available%20-brightgreen?style=&logo=google play" alt="Distribution">
    <img src="https://img.shields.io/badge/Version-0.6.2-blue" alt="Game Version">
@@ -27,7 +27,7 @@ You have many capybaras in your team to achive any goals and find all hidden che
 
 * **Release Date:** December 3, 2023
 * Project was made with **[Unity Engine](https://unity.com/)**
-* **Engine Version:** 2022.3.11f1 --> 2022.3.17f1
+* **Engine Version:** 2022.3.11f1 --> 2022.3.18f1
 
 ### Built With
 
@@ -49,7 +49,7 @@ You have many capybaras in your team to achive any goals and find all hidden che
 ## Authors
 
 * **[Grisha Revenko](https://github.com/revenkogrisha)** - *Game, UI, graphics design, Code, Mediation, Publishing*
-* **[Kristina](https://t.me/krisdvg_10)** - *Graphics design*
+* **[Kristina](https://t.me/krisdvg_10)** - *Graphics, characters, game design*
 
 See the list of [contributors](https://github.com/revenkogrisha/CapybaraWorld/contributors) who and how participated in this project.  
 **Extra thanks to all** of those who was helping to test the game during its development! Love you!
