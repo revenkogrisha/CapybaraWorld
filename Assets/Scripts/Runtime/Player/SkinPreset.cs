@@ -17,7 +17,7 @@ namespace Core.Player
         [Space]
         [SerializeField, Min(0)] private int _foodCost = 15;
         
-        [Title("General Sprites")]
+        [Title("Upper Body Sprites")]
         [SerializeField] private Sprite _head;
         [SerializeField] private Sprite _body;
 
@@ -26,8 +26,10 @@ namespace Core.Player
         [SerializeField] private Sprite _rightArm;
 
         [Title("Leg Sprite")]
-        [SerializeField] private Sprite _leg;
+        [SerializeField, HideLabel] private Sprite _leg;
 
+        [Title("Sword Sprite")]
+        [SerializeField, HideLabel] private Sprite _sword;
 
         public SkinName Name => _name;
         public Sprite Head => _head;
@@ -42,5 +44,6 @@ namespace Core.Player
         public Sprite RightArm => _rightArm;
 
         public Sprite Leg => _leg;
+        public Sprite Sword => _sword;
     }
 }

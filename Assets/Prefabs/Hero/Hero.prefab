@@ -1599,6 +1599,7 @@ MonoBehaviour:
   _rightArm: {fileID: 8684368077590230840}
   _leftLeg: {fileID: 9202130884262782929}
   _rightLeg: {fileID: 1334809941764558628}
+  _sword: {fileID: 3064719943449707496}
 --- !u!114 &3617954058890877254
 MonoBehaviour:
   m_ObjectHideFlags: 0

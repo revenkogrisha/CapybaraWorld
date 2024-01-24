@@ -199,12 +199,18 @@ namespace Core.Player
 		{
 			_stateMachine.ChangeState<HeroGrapplingState>();
 			StateChangedCommand.Execute(typeof(HeroGrapplingState));
+
+			// Called here for simplicity. Should be in special class-manager or ~HeroFeedbackHalder
+            HapticHelper.VibrateLight();
 		}
 
 		private void SwitchToRunState()
 		{
 			_stateMachine.ChangeState<HeroRunState>();
 			StateChangedCommand.Execute(typeof(HeroRunState));
+			
+			// Called here for simplicity. Should be in special class-manager or ~HeroFeedbackHalder
+            HapticHelper.VibrateLight();
 		}
 
 		private void PerformDeath()
