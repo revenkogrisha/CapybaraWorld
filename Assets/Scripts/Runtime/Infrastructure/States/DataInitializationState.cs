@@ -1,3 +1,4 @@
+using System;
 using Core.Common;
 using Core.Level;
 using Core.Player;
@@ -38,6 +39,8 @@ namespace Core.Infrastructure
             _saveService.Load();
 
             _navigation.Generate<MainMenuState>();
+
+            AssingFromPlayerPrefs();
         }
 
         private void RegisterSaveables()
@@ -47,5 +50,8 @@ namespace Core.Infrastructure
             _saveService.Register(_upgrade);
             _saveService.Register(_heroSkins);
         }
+
+        private void AssingFromPlayerPrefs() => 
+            HapticHelper.Enabled = PlayerPrefsUtility.HapticFeedbackEnabled;
     }
 }
