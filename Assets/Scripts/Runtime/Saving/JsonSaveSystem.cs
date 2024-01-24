@@ -2,7 +2,7 @@ using System;
 using System.IO;
 using System.Text;
 using Core.Editor.Debugger;
-using Unity.Plastic.Newtonsoft.Json;
+using Newtonsoft.Json;
 
 #if UNITY_EDITOR
 using UnityEditor;
