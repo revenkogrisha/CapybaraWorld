@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "57433975420",
+    "project_id": "capybara-treasure-world",
+    "storage_bucket": "capybara-treasure-world.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:57433975420:android:aaed7c96acea70201ef7f9",
+        "android_client_info": {
+          "package_name": "com.Revenko.org.CapybaraTreasureWorld"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB5JLHqFQ3tADcVfEDY_buhhMRk8SZ2QTo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

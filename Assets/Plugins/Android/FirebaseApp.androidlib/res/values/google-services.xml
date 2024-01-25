@@ -1,0 +1,9 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources xmlns:tools="http://schemas.android.com/tools" tools:keep="@string/gcm_defaultSenderId,@string/google_storage_bucket,@string/project_id,@string/google_api_key,@string/google_crash_reporting_api_key,@string/google_app_id">
+  <string name="gcm_defaultSenderId" translatable="false">57433975420</string>
+  <string name="google_storage_bucket" translatable="false">capybara-treasure-world.appspot.com</string>
+  <string name="project_id" translatable="false">capybara-treasure-world</string>
+  <string name="google_api_key" translatable="false">AIzaSyB5JLHqFQ3tADcVfEDY_buhhMRk8SZ2QTo</string>
+  <string name="google_crash_reporting_api_key" translatable="false">AIzaSyB5JLHqFQ3tADcVfEDY_buhhMRk8SZ2QTo</string>
+  <string name="google_app_id" translatable="false">1:57433975420:android:aaed7c96acea70201ef7f9</string>
+</resources>
