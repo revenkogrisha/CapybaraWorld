@@ -152,8 +152,11 @@ namespace Core.UI
         }
 
     #if UNITY_ANDROID && !UNITY_EDITOR
-        private void SendNotification() =>
+        private void SendNotification()
+        {
             _notifications.Send(_notifications.Collection.Test);
+            _notifications.Send(_notifications.Collection.DelayedTest);
+        }
     #endif
 #endif
     }

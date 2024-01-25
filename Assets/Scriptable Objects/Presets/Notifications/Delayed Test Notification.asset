@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bfae92397be574791a643e15e7b25dbf, type: 3}
+  m_Name: Delayed Test Notification
+  m_EditorClassIdentifier: 
+  _id: 23998
+  _title: Capybuddy is calling!
+  _text: This is an delayed repetable notification! See you soon again!
+  _hoursSendDelay: 0.1
+  _hoursRepeatInterval: 0.5
