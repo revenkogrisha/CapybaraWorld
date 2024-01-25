@@ -6,6 +6,7 @@ using Core.Other;
 using Cysharp.Threading.Tasks;
 using Google.Play.AppUpdate;
 #endif
+using Core.Common.ThirdParty;
 using UnityEngine;
 using Zenject;
 
@@ -27,6 +28,8 @@ namespace Core.Infrastructure
 
         private void Awake()
         {
+            FirebaseService.Initialize().Forget();
+            
 #if UNITY_ANDROID && !UNITY_EDITOR
             HandleAppUpdate().Forget();
             ScheduleAndroidNotifications();

@@ -43,8 +43,8 @@ namespace Core.UI
 
         private void PerformClick()
         {
-            OnClicked?.Invoke();
             HapticHelper.VibrateLight();
+            OnClicked?.Invoke();
         }
     }
 }

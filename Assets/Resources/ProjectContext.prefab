@@ -75,3 +75,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _touchInputCollection: {fileID: 11400000, guid: 5ed76028779ea48efafdd126612db3d4, type: 2}
+  _firebasePrefab: {fileID: 7022113137429875469, guid: 9c7edc0c4f1f244aab77ff82f4318d70, type: 3}

@@ -1,4 +1,5 @@
 #if REVENKO_DEVELOP
+using Core.Common.ThirdParty;
 using Core.Editor.Debugger;
     #if UNITY_ANDROID && !UNITY_EDITOR
     using Core.Common.Notifications;
@@ -9,6 +10,7 @@ using Core.Infrastructure;
 using Core.Level;
 using Core.Player;
 using Cysharp.Threading.Tasks;
+using Firebase.Analytics;
 using TMPro;
 using UnityEngine;
 using Zenject;
@@ -33,6 +35,7 @@ namespace Core.UI
         [SerializeField] private UIButton _devLocationButton;
         [SerializeField] private UIButton _devLevelButton;
         [SerializeField] private UIButton _devNotificationButton;
+        [SerializeField] private UIButton _devTestEventButton;
 
 #if REVENKO_DEVELOP
         private PlaythroughHandler _playthroughHandler;
@@ -55,6 +58,7 @@ namespace Core.UI
 #if REVENKO_DEVELOP
             _devLocationButton.OnClicked += UpdateLocation;
             _devLevelButton.OnClicked += CompleteLevel;
+            _devTestEventButton.OnClicked += LogTestEvent;
     #if UNITY_ANDROID && !UNITY_EDITOR
             _devNotificationButton.OnClicked += SendNotification;
     #endif
@@ -69,6 +73,7 @@ namespace Core.UI
 #if REVENKO_DEVELOP
             _devLocationButton.OnClicked -= UpdateLocation;
             _devLevelButton.OnClicked -= CompleteLevel;
+            _devTestEventButton.OnClicked -= LogTestEvent;
     #if UNITY_ANDROID && !UNITY_EDITOR
             _devNotificationButton.OnClicked -= SendNotification;
     #endif
@@ -150,6 +155,9 @@ namespace Core.UI
             _playthroughHandler.FinishGame(GameResult.Win);
             RDebug.Log($"{nameof(MainMenu)}: Level completed");
         }
+
+        private void LogTestEvent() =>
+            FirebaseService.LogEvent(EventName.Test);
 
     #if UNITY_ANDROID && !UNITY_EDITOR
         private void SendNotification()
