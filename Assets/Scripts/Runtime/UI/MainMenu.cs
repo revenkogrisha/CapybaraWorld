@@ -98,7 +98,7 @@ namespace Core.UI
 #if REVENKO_DEVELOP
             _playthroughHandler = playthroughHandler;
     #if UNITY_ANDROID && !UNITY_EDITOR
-            _notifications = notifications,
+            _notifications = notifications;
     #endif
 #endif
             _locationsHandler = locationsHandler;
