@@ -39,6 +39,7 @@ You have many capybaras in your team to achive any goals and find all hidden che
 * [DOTween](http://dotween.demigiant.com/) - animation engine for Unity
 * [NightPool](https://github.com/MeeXaSiK/NightPool) - fast object pool for Unity
 * [Google Play Core](https://developer.android.com/reference/com/google/android/play/core/release-notes) - Google SDKs for Android & Unity to use Google Play API 
+* [Firebase](https://firebase.google.com/) - set of [Firebase Unity SDKs](https://github.com/firebase/firebase-unity-sdk): *Analytics*, *Crashlytics*, *Cloud Messaging*
 * [Toolbar Extender](https://github.com/marijnz/unity-toolbar-extender) - tool for creating custom editor buttons on toolbar 
 * [Tri-Inspector](https://github.com/codewriter-packages/Tri-Inspector) - tool for customising Unity Inspector (like **Odin**)
 
@@ -62,6 +63,9 @@ See the list of [contributors](https://github.com/revenkogrisha/CapybaraWorld/co
 ## License
 
 This project is licensed under the Apache-2.0 License - see the [LICENSE](LICENSE) file for details
+  
+>[!WARNING]
+>Usage of **graphical, audio, and other assets** in ALL purposes is **strictly forbidden**! 
 
 ## Acknowledgments
 
