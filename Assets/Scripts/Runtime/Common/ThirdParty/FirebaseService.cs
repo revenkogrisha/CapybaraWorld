@@ -8,7 +8,6 @@ using Firebase.Analytics;
 using Firebase.Crashlytics;
 using Firebase.Extensions;
 using UnityEngine;
-using static Core.Common.ThirdParty.ParameterName;
 
 namespace Core.Common.ThirdParty
 {

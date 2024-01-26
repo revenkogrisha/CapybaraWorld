@@ -1,4 +1,6 @@
+using Core.Common.ThirdParty;
 using Core.Saving;
+using Firebase.Analytics;
 using Zenject;
 
 namespace Core.Player
@@ -7,7 +9,8 @@ namespace Core.Player
     {
         private const int StartHeroLevel = 1;
         private const int CostUpgradeIncrease = 15;
-        
+
+        private readonly ISaveService _saveService;
         private readonly PlayerData _playerData;
         private readonly UpgradableStat[] _upgradableStats;
         private int _heroLevel = StartHeroLevel;
@@ -21,8 +24,12 @@ namespace Core.Player
         public bool CanUpgradeHero => _playerData.CoinsAmount >= _cost;
 
         [Inject]
-        public PlayerUpgrade(PlayerData playerData, PlayerUpgradeConfig config)
+        public PlayerUpgrade(
+            ISaveService saveService, 
+            PlayerData playerData, 
+            PlayerUpgradeConfig config)
         {
+            _saveService = saveService;
             _playerData = playerData;
 
             DashCooldownBonus = new(config.DashCooldownStep, config.DashCooldownMax);
@@ -59,7 +66,13 @@ namespace Core.Player
             
             _heroLevel++;
 
+            _saveService.Save();
+
             UpgradeAllStats();
+
+            FirebaseService.LogEvent(EventName.HeroUpgrade,
+                new Parameter(ParameterName.HeroLevel.ToString(), HeroLevel)
+            );
         }
 
         private void RestoreStats()

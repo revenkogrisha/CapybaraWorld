@@ -2,8 +2,10 @@ namespace Core.Common.ThirdParty
 {
     public enum ParameterName
     {
-        BuildType = 0,
-        BuildVersion = 1,
-        BuildPlatform = 2,
+        HeroLevel = 0,
+        Skin = 1,
+        HaveSkins = 2,
+        LevelsFinished = 3,
+        LocationName = 4
     }
 }

@@ -1,8 +1,10 @@
 using System;
+using Core.Common.ThirdParty;
 using Core.Infrastructure;
 using Core.Level;
 using Core.Player;
 using Core.Saving;
+using Firebase.Analytics;
 using UniRx;
 using Zenject;
 
@@ -11,7 +13,8 @@ namespace Core.Game
     public class PlaythroughHandler : IPlaythroughProgressHandler, IGameEventsHandler, IDisposable
     {
         private const int WinScore = 108;
-        
+
+        private readonly PlayerData _playerData;
         private readonly ILocationsHandler _locationsHandler;
         private readonly GameNavigation _navigation;
         private readonly Score _score;
@@ -24,10 +27,12 @@ namespace Core.Game
 
         [Inject]
         public PlaythroughHandler(
+            PlayerData playerData,
             ILocationsHandler locationsHandler,
             GameNavigation navigation,
             Score score)
         {
+            _playerData = playerData;
             _locationsHandler = locationsHandler; 
             _navigation = navigation;
             _score = score;
@@ -64,6 +69,11 @@ namespace Core.Game
                 default:
                     throw new ArgumentException("Unknown GameResult value was gotten!");
             }
+
+            FirebaseService.LogEvent(EventName.GameFinished,
+                new Parameter(ParameterName.LevelsFinished.ToString(), _playerData.LevelNumber),
+                new Parameter(ParameterName.LocationName.ToString(), _locationsHandler.CurrentLocation.Name)
+            );
         }
 
         private void OnGameWon()

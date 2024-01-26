@@ -89,7 +89,6 @@ namespace Core.UI
         private void UpgradeHero()
         {
             _playerUpgrade.UpgradeHero();
-            _saveService.Save();
             
             UpdateView();
         }
@@ -97,7 +96,6 @@ namespace Core.UI
         private void ForceUpgrade()
         {
             _playerUpgrade.UpgradeHero(true);
-            _saveService.Save();
             
             UpdateView();
         }

@@ -1,5 +1,7 @@
 using System.Linq;
+using Core.Common.ThirdParty;
 using Core.Saving;
+using Firebase.Analytics;
 using Zenject;
 
 namespace Core.Player
@@ -55,6 +57,11 @@ namespace Core.Player
             _playerData.RemoveFood(preset.FoodCost);
 
             _saveService.Save();
+
+            FirebaseService.LogEvent(EventName.SkinBought,
+                new Parameter(ParameterName.Skin.ToString(), preset.Name.ToString()),
+                new Parameter(ParameterName.HaveSkins.ToString(), _boughtSkins.ToString())
+            );
         }
 
         public SkinAvailability GetAvailability(SkinName skinName)
