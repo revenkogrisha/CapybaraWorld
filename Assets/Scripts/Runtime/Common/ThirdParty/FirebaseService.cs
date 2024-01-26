@@ -60,18 +60,8 @@ namespace Core.Common.ThirdParty
         public static void LogEvent(EventName name) => 
             LogEvent(name.ToString(), null);
 
-        public static void LogEvent<T>(EventName name, IDictionary<ParameterName, T> parameters) 
-            where T : IConvertible
-        {
-            Parameter[] parametersArray = new Parameter[parameters.Count];
-            for (int i = 0; i < parameters.Count; i++)
-            {
-                KeyValuePair<ParameterName, T> pair = parameters.ElementAt(i);
-                parametersArray[i] = new(pair.Key.ToString(), pair.Value.ToString());
-            }
-            
-            LogEvent(name.ToString(), parametersArray);
-        }
+        public static void LogEvent(EventName name, params Parameter[] parameters) => 
+            LogEvent(name.ToString(), parameters);
 
         private static void InitializeAnalytics()
         {
@@ -100,40 +90,22 @@ namespace Core.Common.ThirdParty
                     return;
                 }
     
-                Parameter[] commonParameters = GetCommonParameters();
-    
                 if (parameters == null)
                 {
-                    FirebaseAnalytics.LogEvent(name, commonParameters);
-                    RDebug.Info($"Event {name} was successfully logged!");
+                    FirebaseAnalytics.LogEvent(name);
+                    RDebug.Info($"Event '{name}' was successfully logged!");
                     return;
                 }
     
-                FirebaseAnalytics.LogEvent(name, commonParameters.Concat(parameters).ToArray());
+                FirebaseAnalytics.LogEvent(name, parameters.ToArray());
 
-                RDebug.Info($"Event {name} was successfully logged!");
+                RDebug.Info($"Event '{name}' was successfully logged!");
             }
             catch (Exception ex)
             {
                 RDebug.Error($"{nameof(FirebaseService)}::{nameof(LogEvent)}: {ex.Message} \n {ex.StackTrace}");
                 _firebaseInstance = null;
             }
-        }
-
-        private static Parameter[] GetCommonParameters()
-        {
-#if REVENKO_DEVELOP || UNITY_EDITOR
-            const string buildType = "DEV";
-#else
-            const string buildType = "RELEASE";
-#endif
-
-            return new[]
-            {
-                new Parameter(BuildType.ToString(), buildType),
-                new Parameter(BuildVersion.ToString(), Application.version),
-                new Parameter(BuildPlatform.ToString(), Application.platform.ToString())
-            };
         }
     }
 }
