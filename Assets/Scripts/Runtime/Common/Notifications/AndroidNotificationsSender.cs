@@ -1,6 +1,9 @@
 #if UNITY_ANDROID && !UNITY_EDITOR
 using System;
+using System.Threading;
 using Core.Editor.Debugger;
+using Core.Other;
+using Cysharp.Threading.Tasks;
 using Unity.Notifications.Android;
 using static Core.Common.Notifications.NotificationsData;
 
@@ -8,10 +11,24 @@ namespace Core.Common.Notifications
 {
     public static class AndroidNotificationsSender
     {
-        public static void Initialize()
+        private static PermissionStatus _permissionStatus = PermissionStatus.NotRequested;
+
+        private static bool CanNotify => _permissionStatus == PermissionStatus.Allowed;
+        
+        public static async UniTaskVoid Initialize()
         {
             try
             {
+                const float requestTimeout = 120f;
+
+                CancellationTokenSource cts = new();
+                cts.CancelByTimeout(requestTimeout).Forget();
+
+                _permissionStatus = await RequestPermission(cts.Token);
+
+                if (CanNotify == false)
+                    return;
+
                 AndroidNotificationCenter.CancelAllDisplayedNotifications();
                 
                 AndroidNotificationCenter.RegisterNotificationChannelGroup(new()
@@ -38,7 +55,8 @@ namespace Core.Common.Notifications
         public static void SendDefaultChannel(int id, string title, string text,
             double hoursSendDelay, double hoursRepeatInterval = -1)
         {
-            Send(id, title, text, DefaultChannelId, hoursSendDelay, hoursRepeatInterval);
+            if (CanNotify == true)
+                Send(id, title, text, DefaultChannelId, hoursSendDelay, hoursRepeatInterval);
         }
 
         private static void Send(int id, string title, string text, string channelId,
@@ -67,6 +85,16 @@ namespace Core.Common.Notifications
             {
                 RDebug.Error($"{nameof(AndroidNotificationsSender)}::{nameof(Send)}: {ex.Message} \n {ex.StackTrace}");
             }
+        }
+
+        private static async UniTask<PermissionStatus> RequestPermission(CancellationToken token)
+        {
+            PermissionRequest request = new();
+
+            await UniTask.WaitWhile(() => request.Status == PermissionStatus.RequestPending, 
+                cancellationToken: token);
+            
+            return request.Status;
         }
     }
 }

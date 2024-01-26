@@ -12,7 +12,7 @@ namespace Core.Common.Notifications
         {
             Collection = collection;
 
-            AndroidNotificationsSender.Initialize();
+            AndroidNotificationsSender.Initialize().Forget();
         }
 
         public void Send(NotificationPreset preset)
