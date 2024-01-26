@@ -5,6 +5,7 @@ using Core.Editor.Debugger;
 using Cysharp.Threading.Tasks;
 using Firebase;
 using Firebase.Analytics;
+using Firebase.Crashlytics;
 using Firebase.Extensions;
 using UnityEngine;
 using static Core.Common.ThirdParty.ParameterName;
@@ -14,6 +15,8 @@ namespace Core.Common.ThirdParty
     public static class FirebaseService
     {
         private const bool IsAnalyticsCollectionEnabled = true;
+        private const bool IsCrashlyticsCollectionEnabled = true;
+        private const bool IsReportUncaughtAsFatal = true;
         
         private static FirebaseApp _firebaseInstance = null;
 
@@ -29,7 +32,12 @@ namespace Core.Common.ThirdParty
                 {
                     if (task.Result == DependencyStatus.Available) 
                     {
+                        _firebaseInstance = FirebaseApp.DefaultInstance;
+
                         InitializeAnalytics();
+                        InitializeCrashlytics();
+
+                        RDebug.Info($"Firebase services were successfully initialized!");
                     } 
                     else 
                     {
@@ -67,14 +75,19 @@ namespace Core.Common.ThirdParty
 
         private static void InitializeAnalytics()
         {
-            _firebaseInstance = FirebaseApp.DefaultInstance;
-            
             FirebaseAnalytics.SetAnalyticsCollectionEnabled(IsAnalyticsCollectionEnabled);
 
             if (Social.localUser != null)
                 FirebaseAnalytics.SetUserId(Social.localUser.id);
-            
-            RDebug.Info($"Firebase services were successfully initialized!");
+        }
+
+        private static void InitializeCrashlytics()
+        {
+            Crashlytics.IsCrashlyticsCollectionEnabled = IsCrashlyticsCollectionEnabled;
+            Crashlytics.ReportUncaughtExceptionsAsFatal = IsReportUncaughtAsFatal;
+
+            if (Social.localUser != null)
+                FirebaseAnalytics.SetUserId(Social.localUser.id);
         }
 
         private static void LogEvent(string name, IEnumerable<Parameter> parameters)
