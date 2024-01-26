@@ -1,16 +1,15 @@
 #if REVENKO_DEVELOP
 using Core.Common.ThirdParty;
 using Core.Editor.Debugger;
-    #if UNITY_ANDROID && !UNITY_EDITOR
+#if UNITY_ANDROID && !UNITY_EDITOR
     using Core.Common.Notifications;
-    #endif
+#endif
 #endif
 using Core.Game;
 using Core.Infrastructure;
 using Core.Level;
 using Core.Player;
 using Cysharp.Threading.Tasks;
-using Firebase.Analytics;
 using TMPro;
 using UnityEngine;
 using Zenject;

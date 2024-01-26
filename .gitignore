@@ -508,3 +508,16 @@ crashlytics-build.properties
 /[Aa]ssets/[Ss]treamingAssets/aa/*
 
 # End of https://www.toptal.com/developers/gitignore/api/unity,macos,csharp,git
+Assets/Firebase/Plugins/x86_64/FirebaseCppAnalytics.bundle
+Assets/Firebase/Plugins/x86_64/FirebaseCppAnalytics.bundle.meta
+Assets/Firebase/Plugins/x86_64/FirebaseCppAnalytics.dll
+Assets/Firebase/Plugins/x86_64/FirebaseCppAnalytics.dll.meta
+Assets/Firebase/Plugins/x86_64/FirebaseCppAnalytics.so
+Assets/Firebase/Plugins/x86_64/FirebaseCppAnalytics.so.meta
+Assets/Firebase/Plugins/x86_64/FirebaseCppApp-11_6_0.bundle
+Assets/Firebase/Plugins/x86_64/FirebaseCppApp-11_6_0.bundle.meta
+Assets/Firebase/Plugins/x86_64/FirebaseCppApp-11_6_0.dll
+Assets/Firebase/Plugins/x86_64/FirebaseCppApp-11_6_0.dll.meta
+Assets/Firebase/Plugins/x86_64/FirebaseCppApp-11_6_0.so
+Assets/Firebase/Plugins/x86_64/FirebaseCppApp-11_6_0.so.meta
+Assets/Firebase/Plugins/x86_64.meta

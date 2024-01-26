@@ -1,7 +1,5 @@
 using System;
 using UniRx;
-using Core.Game;
-using Zenject;
 using Core.Saving;
 
 namespace Core.Player
@@ -11,16 +9,11 @@ namespace Core.Player
         private const int CoinsReward = 1;
         private const int FoodReward = 1;
         
-        private readonly IGameEventsHandler _gameEvents;
         private readonly CompositeDisposable _disposable = new();
 
         public int CoinsAmount { get; private set; } = 0;
         public int FoodAmount { get; private set; } = 0;
         public int LevelNumber { get; private set; } = 1;
-
-        [Inject]
-        public PlayerData(IGameEventsHandler gameEvents) =>
-            _gameEvents = gameEvents;
 
         public void Save(SaveData saveData)
         {
@@ -41,10 +34,6 @@ namespace Core.Player
 
         public void InitializeEvents(IPlayerEventsHandler playerEvents)
         {
-            _gameEvents.GameWinCommand
-                .Subscribe(_ => IncreaseLevelNumber())
-                .AddTo(_disposable);
-
             playerEvents.CoinCollectedCommand
                 .Subscribe(_ => AddCoin())
                 .AddTo(_disposable);
@@ -78,7 +67,7 @@ namespace Core.Player
         public void AddFood() =>
             FoodAmount += FoodReward;
 
-        private void IncreaseLevelNumber() => 
+        public void IncreaseLevelNumber() => 
             LevelNumber++;
     }
 }

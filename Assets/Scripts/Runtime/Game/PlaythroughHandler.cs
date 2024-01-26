@@ -10,7 +10,7 @@ using Zenject;
 
 namespace Core.Game
 {
-    public class PlaythroughHandler : IPlaythroughProgressHandler, IGameEventsHandler, IDisposable
+    public class PlaythroughHandler : IPlaythroughProgressHandler, IDisposable
     {
         private const int WinScore = 108;
 
@@ -19,8 +19,6 @@ namespace Core.Game
         private readonly GameNavigation _navigation;
         private readonly Score _score;
         private readonly CompositeDisposable _disposable = new();
-
-        public ReactiveCommand GameWinCommand { get; } = new();
         
         // Casts to float are necessary because of operating with int values. Not working without them
         public float Progress => (float)_score.PlaythroughScore.Value / (float)WinScore;
@@ -78,7 +76,7 @@ namespace Core.Game
 
         private void OnGameWon()
         {
-            GameWinCommand.Execute();
+            _playerData.IncreaseLevelNumber();
             _locationsHandler.UpdateLocation();
             _navigation.ToWin();
 
