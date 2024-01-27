@@ -8,15 +8,17 @@ namespace Core.Level
 	{
         [SerializeField] private bool _isImmortal = false;
         
-        public void PerformDeath()
+        public bool TryPerformDeath()
         {
             if (_isImmortal == true)
-                return;
+                return false;
             
             gameObject.SelfDespawn();
             
             // Called here for simplicity. Should be in special class-manager or ~EnemyFeedbackHalder
             HapticHelper.VibrateMedium();
+
+            return true;         
         }
     }
 }

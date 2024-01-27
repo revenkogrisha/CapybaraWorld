@@ -175,7 +175,7 @@ namespace Core.Player
 			onCollisionEnter2D
 				.Where(_ => IsDashing.Value == true)
 				.Subscribe(collision => 
-					Tools.InvokeIfNotNull<Enemy>(collision, OnEnemyCollision))
+					Tools.InvokeIfNotNull<Enemy>(collision, OnDashIntoEnemy))
 				.AddTo(_disposable);
 
 			onCollisionEnter2D
@@ -219,9 +219,16 @@ namespace Core.Player
 			_stateMachine.ChangeState<InactiveState>();
 		}
 
-		private void OnEnemyCollision(Enemy enemy)
+		private void OnDashIntoEnemy(Enemy enemy)
 		{
-			enemy.PerformDeath();
+			bool isDefeated = enemy.TryPerformDeath();
+
+			if (isDefeated == false)
+			{
+				PerformDeath();
+				return;
+			}
+			
 			HitCommand.Execute();
 		}
 

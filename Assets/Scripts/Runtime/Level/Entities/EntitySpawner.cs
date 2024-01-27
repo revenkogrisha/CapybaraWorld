@@ -54,6 +54,7 @@ namespace Core.Level
                 EntityKind.Enemy);
                 
             SpawnCactopuses(platform, filtered);
+            SpawnStoneys(platform, filtered);
         }
 
         private void SetupProduct(Entity product, SpawnMarker marker)

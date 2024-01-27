@@ -671,7 +671,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _rigidbody2D: {fileID: 7526498526326060918}
-  _minimumVelocityToFlip: 5
+  _minimumVelocityToFlip: 2
   _startDirection: -1
   _lerpFlipping: 1
   _lerpDuration: 0.4
