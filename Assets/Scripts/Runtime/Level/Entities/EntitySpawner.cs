@@ -104,5 +104,19 @@ namespace Core.Level
                 SetupProduct(enemy, marker);
             }
         }
+
+        private void SpawnStoneys(Platform platform, SpawnMarker[] filtered)
+        {
+            SpawnMarker[] stoneyMarkers = filtered
+                .Where(marker => marker.EnemyKind == EnemyKind.Stoney)
+                .ToArray();
+
+            Enemy stoneyPrefab = _enemyAssets.Enemies[EnemyKind.Stoney];
+            foreach (SpawnMarker marker in stoneyMarkers)
+            {
+                Enemy enemy = NightPool.Spawn(stoneyPrefab, platform.transform);
+                SetupProduct(enemy, marker);
+            }
+        }
     }
 }

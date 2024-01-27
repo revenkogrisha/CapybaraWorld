@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: acb98cb418d304253a792d3b19c457b6, type: 3}
-  m_Name: Cactopus
+  m_Name: Stoney
   m_EditorClassIdentifier: 
-  _spotRadius: 10
-  _spotInterval: 0.5
+  _spotRadius: 11
+  _spotInterval: 0.4
   _targetLayer:
     serializedVersion: 2
     m_Bits: 256
-  _speed: 5
+  _speed: 6

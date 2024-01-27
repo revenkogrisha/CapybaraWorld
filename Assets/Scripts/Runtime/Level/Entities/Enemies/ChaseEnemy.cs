@@ -4,9 +4,9 @@ namespace Core.Level
 {
     public class ChaseEnemy : SearchEnemyBase
 	{
-		[SerializeField] private ChaseEnemyPreset _preset;
+		[SerializeField] private ChaseEnemyPreset _chasePreset;
 
-		public ChaseEnemyPreset Preset => _preset;
+		public ChaseEnemyPreset Preset => _chasePreset;
 		
         protected override void InitializeStates()
         {

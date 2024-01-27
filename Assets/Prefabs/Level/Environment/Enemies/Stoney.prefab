@@ -73,7 +73,7 @@ SpriteRenderer:
   m_SortingLayerID: 391632439
   m_SortingLayer: 3
   m_SortingOrder: 0
-  m_Sprite: {fileID: 545172540, guid: 432073e9bcecf4764b7d700a1e528d87, type: 3}
+  m_Sprite: {fileID: -1251312244, guid: 432073e9bcecf4764b7d700a1e528d87, type: 3}
   m_Color: {r: 0.8018868, g: 0.8018868, b: 0.8018868, a: 1}
   m_FlipX: 1
   m_FlipY: 0
@@ -189,7 +189,7 @@ SpriteRenderer:
   m_SortingLayerID: 391632439
   m_SortingLayer: 3
   m_SortingOrder: 2
-  m_Sprite: {fileID: 545172540, guid: 432073e9bcecf4764b7d700a1e528d87, type: 3}
+  m_Sprite: {fileID: -1251312244, guid: 432073e9bcecf4764b7d700a1e528d87, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -273,7 +273,7 @@ SpriteRenderer:
   m_SortingLayerID: 391632439
   m_SortingLayer: 3
   m_SortingOrder: 1
-  m_Sprite: {fileID: -141575678, guid: 432073e9bcecf4764b7d700a1e528d87, type: 3}
+  m_Sprite: {fileID: -852875692, guid: 432073e9bcecf4764b7d700a1e528d87, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -357,7 +357,7 @@ SpriteRenderer:
   m_SortingLayerID: 391632439
   m_SortingLayer: 3
   m_SortingOrder: 2
-  m_Sprite: {fileID: -108928689, guid: 432073e9bcecf4764b7d700a1e528d87, type: 3}
+  m_Sprite: {fileID: -90547380, guid: 432073e9bcecf4764b7d700a1e528d87, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -475,7 +475,7 @@ SpriteRenderer:
   m_SortingLayerID: 391632439
   m_SortingLayer: 3
   m_SortingOrder: 0
-  m_Sprite: {fileID: 1093640960, guid: 432073e9bcecf4764b7d700a1e528d87, type: 3}
+  m_Sprite: {fileID: -2040336138, guid: 432073e9bcecf4764b7d700a1e528d87, type: 3}
   m_Color: {r: 0.7735849, g: 0.7735849, b: 0.7735849, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -534,7 +534,7 @@ GameObject:
   - component: {fileID: 5113066286868496435}
   - component: {fileID: 1212399070827414878}
   m_Layer: 0
-  m_Name: Cactopus
+  m_Name: Stoney
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -654,10 +654,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Preloaded: 0
-  _isImmortal: 0
+  _isImmortal: 1
   _rigidbody2D: {fileID: 7526498526326060918}
-  _searchPreset: {fileID: 11400000, guid: d4bbea5d29669471ea771cb1fac4f1d2, type: 2}
-  _chasePreset: {fileID: 11400000, guid: d4bbea5d29669471ea771cb1fac4f1d2, type: 2}
+  _searchPreset: {fileID: 11400000, guid: aba7ed21f9ae940d0ba4cad8e5befd19, type: 2}
+  _chasePreset: {fileID: 11400000, guid: aba7ed21f9ae940d0ba4cad8e5befd19, type: 2}
 --- !u!114 &5113066286868496435
 MonoBehaviour:
   m_ObjectHideFlags: 0
