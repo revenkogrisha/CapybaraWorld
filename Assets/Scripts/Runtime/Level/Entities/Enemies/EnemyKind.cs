@@ -4,6 +4,7 @@ namespace Core.Level
     {
         None = 0,
         Cactopus = 1,
-        Stoney = 2
+        Stoney = 2,
+        Cactoculus = 3
     }
 }

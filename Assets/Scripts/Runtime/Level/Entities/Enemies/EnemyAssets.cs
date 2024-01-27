@@ -8,6 +8,7 @@ namespace Core.Level
     {
         [SerializeField] private Enemy _cactopusPrefab;
         [SerializeField] private Enemy _stoneyPrefab;
+        [SerializeField] private Enemy _cactoculusPrefab;
 
         public readonly Dictionary<EnemyKind, Enemy> Enemies = new();
 
@@ -15,6 +16,7 @@ namespace Core.Level
         {
             Enemies[EnemyKind.Cactopus] = _cactopusPrefab;
             Enemies[EnemyKind.Stoney] = _stoneyPrefab;
+            Enemies[EnemyKind.Cactoculus] = _cactoculusPrefab;
         }
     }
 }

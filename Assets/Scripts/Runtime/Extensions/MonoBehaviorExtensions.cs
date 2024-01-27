@@ -16,6 +16,12 @@ namespace Core.Other
         public static Vector3 GetPosition(this MonoBehaviour behaviour) =>
             behaviour.transform.position;
 
+        public static Vector3 GetLocalScale(this MonoBehaviour behaviour) =>
+            behaviour.transform.localScale;
+
+        public static Vector3 SetLocalScale(this MonoBehaviour behaviour, Vector3 scale) =>
+            behaviour.transform.localScale = scale;
+
         public static Vector3 GetLocalPosition(this MonoBehaviour behaviour) =>
             behaviour.transform.localPosition;
 

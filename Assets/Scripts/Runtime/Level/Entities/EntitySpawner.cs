@@ -55,6 +55,7 @@ namespace Core.Level
                 
             SpawnCactopuses(platform, filtered);
             SpawnStoneys(platform, filtered);
+            SpawnCactoculuses(platform, filtered);
         }
 
         private void SetupProduct(Entity product, SpawnMarker marker)
@@ -116,6 +117,21 @@ namespace Core.Level
             foreach (SpawnMarker marker in stoneyMarkers)
             {
                 Enemy enemy = NightPool.Spawn(stoneyPrefab, platform.transform);
+                SetupProduct(enemy, marker);
+            }
+        }
+
+        private void SpawnCactoculuses(Platform platform, SpawnMarker[] filtered)
+        {
+            SpawnMarker[] cactoculusMarkers = filtered
+                .Where(marker => marker.EnemyKind == EnemyKind.Cactoculus)
+                .ToArray();
+
+            Enemy cactoculusPrefab = _enemyAssets.Enemies[EnemyKind.Cactoculus];
+            foreach (SpawnMarker marker in cactoculusMarkers)
+            {
+                Enemy enemy = NightPool.Spawn(cactoculusPrefab, platform.transform);
+                enemy.SetLocalScale(cactoculusPrefab.GetLocalScale());
                 SetupProduct(enemy, marker);
             }
         }
