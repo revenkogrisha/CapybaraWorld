@@ -13,3 +13,4 @@ MonoBehaviour:
   m_Name: Enemy Assets
   m_EditorClassIdentifier: 
   _cactopusPrefab: {fileID: -5329986148902828575, guid: fb65d8fd5118044a895a06e96dd21524, type: 3}
+  _stoneyPrefab: {fileID: -5329986148902828575, guid: 07dec10d7f8b54844bd4bcd9963d310e, type: 3}
