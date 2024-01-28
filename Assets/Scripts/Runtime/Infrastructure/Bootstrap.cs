@@ -1,11 +1,3 @@
-#if UNITY_ANDROID && !UNITY_EDITOR
-using Core.Common.Notifications;
-using System.Threading;
-using Core.Common;
-using Core.Other;
-using Cysharp.Threading.Tasks;
-using Google.Play.AppUpdate;
-#endif
 using Core.Common.ThirdParty;
 using UnityEngine;
 using Zenject;
@@ -14,9 +6,7 @@ namespace Core.Infrastructure
 {
     public class Bootstrap : MonoBehaviour
     {
-#if UNITY_ANDROID && !UNITY_EDITOR
-        private Notifications _notifications;
-#endif
+        private ThirdPartyInitializer _thirdParty;
         private IGameStateMachine _stateMachine;
         private DataInitializationState _dataInitializationState;
         private GenerationState _generationState;
@@ -26,21 +16,9 @@ namespace Core.Infrastructure
         private GameLostState _gameLostState;
         private GameNavigation _navigation;
 
-#pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
-        private async void Awake()
-#pragma warning restore CS1998
+        private void Awake()
         {
-            // Should add separated third party handler & keep this clean
-#if UNITY_ANDROID && !UNITY_EDITOR
-            SignInService.Authenticate().Forget();
-#endif
-
-            FirebaseService.Initialize().Forget();
-            
-#if UNITY_ANDROID && !UNITY_EDITOR
-            HandleAppUpdate().Forget();
-            ScheduleAndroidNotifications();
-#endif
+            _thirdParty.InitializeAll().Forget();
             
             AddGameStatesToMachine();
             _navigation.ToLoadingData();
@@ -48,9 +26,7 @@ namespace Core.Infrastructure
 
         [Inject]
         private void Construct(
-#if UNITY_ANDROID && !UNITY_EDITOR
-            Notifications notifications,
-#endif
+            ThirdPartyInitializer thirdParty,
             IGameStateMachine stateMachine,
             DataInitializationState dataInitializationState,
             GenerationState generationState,
@@ -60,9 +36,7 @@ namespace Core.Infrastructure
             GameLostState gameOverState,
             GameNavigation navigation)
         {
-#if UNITY_ANDROID && !UNITY_EDITOR
-            _notifications = notifications;
-#endif
+            _thirdParty = thirdParty;
             _stateMachine = stateMachine;
             _dataInitializationState = dataInitializationState;
             _generationState = generationState;
@@ -72,29 +46,6 @@ namespace Core.Infrastructure
             _gameLostState = gameOverState;
             _navigation = navigation;
         }
-
-#if UNITY_ANDROID && !UNITY_EDITOR
-        private async UniTaskVoid HandleAppUpdate()
-        {
-            const float requestTimeout = 60f;
-            CancellationTokenSource cts = new();
-
-            IAppUpdateService updateService = new AppUpdateService();
-            updateService.Initialize();
-            
-            cts.CancelByTimeout(requestTimeout).Forget();
-            UpdateAvailability result = await updateService.StartUpdateCheck(cts.Token);
-
-            if (result == UpdateAvailability.UpdateAvailable)
-                await updateService.Request(cts.Token);
-        }
-
-        private void ScheduleAndroidNotifications()
-        {
-            _notifications.Send(_notifications.Collection.PlayReminder);
-            _notifications.Send(_notifications.Collection.Locations);
-        }
-#endif
 
         private void AddGameStatesToMachine()
         {

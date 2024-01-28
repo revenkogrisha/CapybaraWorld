@@ -1,4 +1,4 @@
-namespace Core.Common.Notifications
+namespace Core.Common.GameNotification
 {
     public static class NotificationsData
     {

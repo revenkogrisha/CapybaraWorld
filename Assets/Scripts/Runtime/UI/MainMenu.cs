@@ -2,7 +2,7 @@
 using Core.Common.ThirdParty;
 using Core.Editor.Debugger;
 #if UNITY_ANDROID && !UNITY_EDITOR
-    using Core.Common.Notifications;
+    using Core.Common.GameNotification;
 #endif
 #endif
 using Core.Game;

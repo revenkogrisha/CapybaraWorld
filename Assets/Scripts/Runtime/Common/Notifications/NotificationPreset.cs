@@ -1,7 +1,7 @@
 using TriInspector;
 using UnityEngine;
 
-namespace Core.Common.Notifications
+namespace Core.Common.GameNotification
 {
     [CreateAssetMenu(fileName = "Notification", menuName = "Presets/Notification")]
     public class NotificationPreset : ScriptableObject

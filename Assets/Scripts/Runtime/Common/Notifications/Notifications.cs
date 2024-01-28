@@ -1,7 +1,7 @@
 #if UNITY_ANDROID && !UNITY_EDITOR
 using Zenject;
 
-namespace Core.Common.Notifications
+namespace Core.Common.GameNotification
 {
     public class Notifications
     {

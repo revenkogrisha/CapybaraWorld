@@ -1,5 +1,4 @@
 #if !UNITY_EDITOR && UNITY_ANDROID
-
 using System;
 using System.Collections;
 using System.Threading;
@@ -9,7 +8,7 @@ using Google.Play.AppUpdate;
 using Google.Play.Common;
 using UnityEngine;
 
-namespace Core.Common
+namespace Core.Common.ThirdParty
 {
     public class AppUpdateService : IAppUpdateService
     {

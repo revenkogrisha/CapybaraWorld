@@ -5,9 +5,9 @@ using Core.Editor.Debugger;
 using Core.Other;
 using Cysharp.Threading.Tasks;
 using Unity.Notifications.Android;
-using static Core.Common.Notifications.NotificationsData;
+using static Core.Common.GameNotification.NotificationsData;
 
-namespace Core.Common.Notifications
+namespace Core.Common.GameNotification
 {
     public static class AndroidNotificationsSender
     {

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Core.Common.Notifications
+namespace Core.Common.GameNotification
 {
     [CreateAssetMenu(fileName = "Notifications Collection", menuName = "Collections/Notifications")]
     public class NotificationCollection : ScriptableObject

@@ -12,7 +12,7 @@ namespace Core.Common.ThirdParty
         public static bool IsAuthenticated => PlayGamesPlatform.Instance.IsAuthenticated();
         public static string UserId => PlayGamesPlatform.Instance.GetUserId();
 
-        public static async UniTaskVoid Authenticate()
+        public static async UniTask Authenticate()
         {
             try
             {

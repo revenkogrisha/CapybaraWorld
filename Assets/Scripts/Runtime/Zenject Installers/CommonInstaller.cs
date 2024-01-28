@@ -1,7 +1,8 @@
-using Core.Common.Notifications;
+using Core.Common.GameNotification;
 using Core.Common;
 using UnityEngine;
 using Zenject;
+using Core.Common.ThirdParty;
 
 namespace Core.Installers
 {
@@ -14,10 +15,21 @@ namespace Core.Installers
 
         public override void InstallBindings()
         {
+            BindThirdPartyInitializer();
+
 #if UNITY_ANDROID && !UNITY_EDITOR
             BindNotifications();
 #endif
             BindParticlesHelper();
+        }
+
+        private void BindThirdPartyInitializer()
+        {
+            Container   
+                .Bind<ThirdPartyInitializer>()
+                .FromNew()
+                .AsSingle()
+                .Lazy();
         }
 
 #if UNITY_ANDROID && !UNITY_EDITOR
