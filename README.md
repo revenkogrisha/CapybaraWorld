@@ -31,17 +31,17 @@ You have many capybaras in your team to achive any goals and find all hidden che
 
 ### Built With
 
+* [Google Play Core](https://developer.android.com/reference/com/google/android/play/core/release-notes) - Google SDKs for Android & Unity to use Google Play API 
+* [Google Play Games](https://github.com/playgameservices/play-games-plugin-for-unity) - Google SDK for Unity to use Google Play Games API 
+* [Firebase](https://firebase.google.com/) - set of [Firebase Unity SDKs](https://github.com/firebase/firebase-unity-sdk): *Analytics*, *Crashlytics*, *Cloud Messaging*
 * [Extenject](https://github.com/Mathijs-Bakker/Extenject) - dependency injection container for Unity
 * [UniTask](https://github.com/Cysharp/UniTask) - better async/await for Unity
 * [UniRx](https://github.com/neuecc/UniRx) - reactive extensions for Unity
+* [DOTween](http://dotween.demigiant.com/) - animation engine for Unity
+* [Tri-Inspector](https://github.com/codewriter-packages/Tri-Inspector) - tool for customising Unity Inspector (like **Odin**)
 * [Universal RP](https://unity.com/ru/srp/universal-render-pipeline) - scriptable render pipeline made by Unity
 * [Cinemachine](https://unity.com/unity/features/editor/art-and-design/cinemachine) - advanced camera for Unity
-* [DOTween](http://dotween.demigiant.com/) - animation engine for Unity
-* [NightPool](https://github.com/MeeXaSiK/NightPool) - fast object pool for Unity
-* [Google Play Core](https://developer.android.com/reference/com/google/android/play/core/release-notes) - Google SDKs for Android & Unity to use Google Play API 
-* [Firebase](https://firebase.google.com/) - set of [Firebase Unity SDKs](https://github.com/firebase/firebase-unity-sdk): *Analytics*, *Crashlytics*, *Cloud Messaging*
 * [Toolbar Extender](https://github.com/marijnz/unity-toolbar-extender) - tool for creating custom editor buttons on toolbar 
-* [Tri-Inspector](https://github.com/codewriter-packages/Tri-Inspector) - tool for customising Unity Inspector (like **Odin**)
 
 >[!NOTE]
 >Some of the systems implemented in the project may seem over-engineered for this project size - it's true, I was practicing my skills, don't worry :)  
@@ -73,3 +73,4 @@ This project is licensed under the Apache-2.0 License - see the [LICENSE](LICENS
 * [Freesound.org](https://freesound.org/) - taken some sounds from there
 * [DALLE-2](https://openai.com/product/dall-e-2) - used for creating some UI assets
 * [Microsoft Image Generator](https://www.bing.com/create) - used for creating promo images & design
+* [NightPool](https://github.com/MeeXaSiK/NightPool) - fast object pool for Unity
