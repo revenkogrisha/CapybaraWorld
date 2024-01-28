@@ -20,7 +20,13 @@ namespace Core.Common.ThirdParty
     
                 if (Application.internetReachability == NetworkReachability.NotReachable)
                     return;
-    
+                
+#if REVENKO_DEVELOP
+                PlayGamesPlatform.DebugLogEnabled = true;
+#else
+                PlayGamesPlatform.DebugLogEnabled = false;
+#endif
+
                 PlayGamesPlatform.Activate();
                 PlayGamesPlatform.Instance.Authenticate(status =>
                 {
