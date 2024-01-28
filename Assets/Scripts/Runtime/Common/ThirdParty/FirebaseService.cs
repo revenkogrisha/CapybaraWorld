@@ -7,7 +7,6 @@ using Firebase;
 using Firebase.Analytics;
 using Firebase.Crashlytics;
 using Firebase.Extensions;
-using UnityEngine;
 
 namespace Core.Common.ThirdParty
 {
@@ -66,17 +65,18 @@ namespace Core.Common.ThirdParty
         {
             FirebaseAnalytics.SetAnalyticsCollectionEnabled(IsAnalyticsCollectionEnabled);
 
-            if (Social.localUser != null)
-                FirebaseAnalytics.SetUserId(Social.localUser.id);
+            // Better to move to some UserIDProvider, which will manually provide such data
+            // Also provide custom saveable id if not authorized
+#if UNITY_ANDROID && !UNITY_EDITOR
+            if (SignInService.IsAuthenticated == true)
+                FirebaseAnalytics.SetUserId(SignInService.UserId);
+#endif
         }
 
         private static void InitializeCrashlytics()
         {
             Crashlytics.IsCrashlyticsCollectionEnabled = IsCrashlyticsCollectionEnabled;
             Crashlytics.ReportUncaughtExceptionsAsFatal = IsReportUncaughtAsFatal;
-
-            if (Social.localUser != null)
-                FirebaseAnalytics.SetUserId(Social.localUser.id);
         }
 
         private static void LogEvent(string name, IEnumerable<Parameter> parameters)

@@ -26,8 +26,15 @@ namespace Core.Infrastructure
         private GameLostState _gameLostState;
         private GameNavigation _navigation;
 
-        private void Awake()
+#pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
+        private async void Awake()
+#pragma warning restore CS1998
         {
+            // Should add separated third party handler & keep this clean
+#if UNITY_ANDROID && !UNITY_EDITOR
+            SignInService.Authenticate().Forget();
+#endif
+
             FirebaseService.Initialize().Forget();
             
 #if UNITY_ANDROID && !UNITY_EDITOR
