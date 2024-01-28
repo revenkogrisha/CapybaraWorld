@@ -68,7 +68,7 @@ namespace Core.Level
         private void SpawnChests(Platform platform, SpawnMarker[] filtered, ChestKind kind)
         {
             SpawnMarker[] markers = filtered
-                .Where(marker => marker.ChestKind == ChestKind.Simple)
+                .Where(marker => marker.ChestKind == kind)
                 .ToArray();
 
             Chest prefab = _entityAssets.Chests[kind];
@@ -90,6 +90,7 @@ namespace Core.Level
             {
                 Enemy enemy = NightPool.Spawn(prefab, platform.transform);
                 enemy.SetLocalScale(prefab.GetLocalScale());
+                
                 SetupProduct(enemy, marker);
             }
         }
