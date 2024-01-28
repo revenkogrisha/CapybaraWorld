@@ -29,33 +29,63 @@ namespace Core.Level
 
         private void SpawnFood(Platform platform)
         {
-            SpawnMarker[] filtered = SpawnMarker.FilterByKind(platform.SpawnMarkers, 
-                EntityKind.Food);
-                
-            foreach (SpawnMarker marker in filtered)
-            {
-                Food food = NightPool.Spawn(_entityAssets.FoodPrefab, platform.transform);
-                SetupProduct(food, marker);
-            }
+            SpawnMarker[] filtered = GetFiltered(platform, EntityKind.Food);
+            SpawnAllMarkers(filtered, _entityAssets.FoodPrefab, platform.transform);
         }
 
         private void SpawnChests(Platform platform)
         {
-            SpawnMarker[] filtered = SpawnMarker.FilterByKind(platform.SpawnMarkers,
-                EntityKind.Chest);
+            SpawnMarker[] filtered = GetFiltered(platform, EntityKind.Chest);
 
-            SpawnChests(platform, filtered, ChestKind.Simple);
-            SpawnChests(platform, filtered, ChestKind.Treasure);
+            Transform parent = platform.transform;
+            SpawnChests(parent, filtered, ChestKind.Simple);
+            SpawnChests(parent, filtered, ChestKind.Treasure);
         }
 
         private void SpawnEnemies(Platform platform)
         {
-            SpawnMarker[] filtered = SpawnMarker.FilterByKind(platform.SpawnMarkers,
-                EntityKind.Enemy);
+            SpawnMarker[] filtered = GetFiltered(platform, EntityKind.Enemy);
                 
-            SpawnEnemies(platform, filtered, EnemyKind.Cactopus);
-            SpawnEnemies(platform, filtered, EnemyKind.Stoney);
-            SpawnEnemies(platform, filtered, EnemyKind.Cactoculus);
+            Transform parent = platform.transform;
+            SpawnEnemies(parent, filtered, EnemyKind.Cactopus);
+            SpawnEnemies(parent, filtered, EnemyKind.Stoney);
+            SpawnEnemies(parent, filtered, EnemyKind.Cactoculus);
+        }
+
+        private SpawnMarker[] GetFiltered(Platform platform, EntityKind kind) =>
+            SpawnMarker.FilterByKind(platform.SpawnMarkers, kind);
+
+        private void SpawnChests(Transform parent, SpawnMarker[] filtered, ChestKind kind)
+        {
+            SpawnMarker[] markers = filtered
+                .Where(marker => marker.ChestKind == kind)
+                .ToArray();
+
+            Chest prefab = _entityAssets.Chests[kind];
+            SpawnAllMarkers(markers, prefab, parent);
+        }
+
+        private void SpawnEnemies(Transform parent, SpawnMarker[] filtered, EnemyKind kind)
+        {
+            SpawnMarker[] markers = filtered
+                .Where(marker => marker.EnemyKind == kind)
+                .ToArray();
+
+            Enemy prefab = _enemyAssets.Enemies[kind];
+            SpawnAllMarkers(markers, prefab, parent);
+        }
+
+        private void SpawnAllMarkers<TEntity>(SpawnMarker[] markers, 
+            TEntity prefab, 
+            Transform parent) where TEntity : Entity
+        {
+            foreach (SpawnMarker marker in markers)
+            {
+                TEntity entity = NightPool.Spawn(prefab, parent);
+                entity.SetLocalScale(prefab.GetLocalScale());
+
+                SetupProduct(entity, marker);
+            }
         }
 
         private void SetupProduct(Entity product, SpawnMarker marker)
@@ -63,36 +93,6 @@ namespace Core.Level
             Vector3 localPosition = marker.GetLocalPosition();
             product.SetLocalPosition(localPosition);
             marker.SetProduct(product.gameObject);
-        }
-
-        private void SpawnChests(Platform platform, SpawnMarker[] filtered, ChestKind kind)
-        {
-            SpawnMarker[] markers = filtered
-                .Where(marker => marker.ChestKind == kind)
-                .ToArray();
-
-            Chest prefab = _entityAssets.Chests[kind];
-            foreach (SpawnMarker marker in markers)
-            {
-                Chest chest = NightPool.Spawn(prefab, platform.transform);
-                SetupProduct(chest, marker);
-            }
-        }
-
-        private void SpawnEnemies(Platform platform, SpawnMarker[] filtered, EnemyKind kind)
-        {
-            SpawnMarker[] markers = filtered
-                .Where(marker => marker.EnemyKind == kind)
-                .ToArray();
-
-            Enemy prefab = _enemyAssets.Enemies[kind];
-            foreach (SpawnMarker marker in markers)
-            {
-                Enemy enemy = NightPool.Spawn(prefab, platform.transform);
-                enemy.SetLocalScale(prefab.GetLocalScale());
-                
-                SetupProduct(enemy, marker);
-            }
         }
     }
 }
