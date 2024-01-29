@@ -1,4 +1,10 @@
 #if UNITY_ANDROID && !UNITY_EDITOR
+#define ANDROID_RUNTIME
+#else
+#undef ANDROID_RUNTIME
+#endif
+
+#if ANDROID_RUNTIME
 using Core.Common.GameNotification;
 using System.Threading;
 using Core.Common;
@@ -14,7 +20,7 @@ namespace Core.Common.ThirdParty
 
     public class ThirdPartyInitializer
     {
-#if UNITY_ANDROID && !UNITY_EDITOR
+#if ANDROID_RUNTIME
         private Notifications _notifications;
 
         [Inject]
@@ -28,7 +34,7 @@ namespace Core.Common.ThirdParty
         {
             FirebaseService.Initialize().Forget();
             
-#if UNITY_ANDROID && !UNITY_EDITOR
+#if ANDROID_RUNTIME
             await SignInService.Authenticate();
 
             ScheduleAndroidNotifications();
@@ -38,7 +44,7 @@ namespace Core.Common.ThirdParty
             RDebug.Info($"{nameof(ThirdPartyInitializer)}: Initialization complete!");
         }
 
-#if UNITY_ANDROID && !UNITY_EDITOR
+#if ANDROID_RUNTIME
         private async UniTask HandleAppUpdate()
         {
             const float requestTimeout = 60f;
