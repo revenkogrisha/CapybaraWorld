@@ -7,6 +7,7 @@
     "com.nighttraincode.nightpool": "https://github.com/MeeXaSiK/NightPool.git",
     "com.unity.adaptiveperformance.google.android": "1.2.1",
     "com.unity.adaptiveperformance.samsung.android": "5.0.0",
+    "com.unity.ads": "4.4.2",
     "com.unity.cinemachine": "2.9.7",
     "com.unity.collab-proxy": "2.2.0",
     "com.unity.device-simulator.devices": "1.0.0",
