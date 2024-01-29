@@ -1,5 +1,7 @@
 using System.Threading;
 using Core.Common;
+using Core.Common.ThirdParty;
+using Core.Editor.Debugger;
 using Core.Factories;
 using Core.Other;
 using Core.Saving;
@@ -46,7 +48,7 @@ namespace Core.Infrastructure
 #endif
             
             if (reviewService.IsFake == true)
-                return;
+                RDebug.Info($"User review request will be faked");
             
             _cts = new();
             _cts.CancelByTimeout(reviewTimeout).Forget();

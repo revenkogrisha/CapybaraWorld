@@ -1,15 +1,19 @@
 using System.Threading;
+using Core.Editor.Debugger;
 using Cysharp.Threading.Tasks;
 
-namespace Core.Common
+namespace Core.Common.ThirdParty
 {
     public class FakeUserReviewService : IUserReviewService
     {
         public bool IsFake { get; } = true;
-        public void Initialize() {  }
+        public void Initialize() =>
+            RDebug.Info($"{nameof(FakeUserReviewService)}::{nameof(Initialize)}");
 
-#pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
-        public async UniTaskVoid Request(CancellationToken token) {  }
-#pragma warning restore CS1998
+        public async UniTaskVoid Request(CancellationToken token) 
+        {
+            await UniTask.NextFrame();
+            RDebug.Info($"{nameof(FakeUserReviewService)}::{nameof(Request)}");
+        }
     }
 }

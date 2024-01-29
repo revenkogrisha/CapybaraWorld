@@ -2,7 +2,7 @@ using System.Threading;
 using Cysharp.Threading.Tasks;
 using Google.Play.AppUpdate;
 
-namespace Core.Common
+namespace Core.Common.ThirdParty
 {
     public interface IAppUpdateService
     {

@@ -7,7 +7,7 @@ using Cysharp.Threading.Tasks;
 using Google.Play.Common;
 using Google.Play.Review;
 
-namespace Core.Common
+namespace Core.Common.ThirdParty
 {
     public class GoogleUserReviewService : IUserReviewService
     {

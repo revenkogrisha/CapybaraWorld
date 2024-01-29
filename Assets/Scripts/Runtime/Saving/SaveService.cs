@@ -4,7 +4,6 @@ using Zenject;
 
 namespace Core.Saving
 {
-    // Save-load workflow is simplified due to MVP version & project size. Final version can differ.
     public class SaveService : ISaveService
     {
         private readonly ISaveSystem _saveSystem;
@@ -16,14 +15,6 @@ namespace Core.Saving
 
         public void Register(ISaveable saveable) =>
             _saveables.Add(saveable);
-
-        public void ResetProcess()
-        {
-            SaveData emptyData = new();
-            _saveSystem.Save(emptyData);
-
-            Load();
-        }
 
         public void Save()
         {
