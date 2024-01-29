@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4aacc6b655ef143388a507d5d7ba5cf5, type: 3}
+  m_Name: Fertile Cliffs
+  m_EditorClassIdentifier: 
+  _name: Fertile Cliffs
+  _backgroundPreset: {fileID: 11400000, guid: be16bf9bc4e4f4eb9b0461201dfdc532, type: 2}
+  _startPlatform: {fileID: 1280936354804307747, guid: 9dfeb7dfe27034237ad9534e34a2bf69, type: 3}
+  _simplePlatforms:
+  - {fileID: 8222899738712285114, guid: 7efa9a074a7e6439e8f38108fea07391, type: 3}
+  - {fileID: 8222899738712285114, guid: e6161538a8be54741850de7911a95cfe, type: 3}
+  - {fileID: 8222899738712285114, guid: 4814b0bf1e5db471890f64436b34b17b, type: 3}
+  _specialPlatforms:
+  - {fileID: 1280936354804307747, guid: 4742b54e183964469bbf730d9c2570c6, type: 3}
+  - {fileID: 1280936354804307747, guid: 6796cd3806ac944d1947347d3d5bde3c, type: 3}
+  - {fileID: 1280936354804307747, guid: 8bb689e6bc5cb4ddf9228b6f5e50c8e0, type: 3}
