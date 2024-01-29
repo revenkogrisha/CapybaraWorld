@@ -165,8 +165,12 @@ namespace Core.UI
         private void LogTestEvent() =>
             FirebaseService.LogEvent(EventName.Test);
 
-        private void ShowAd() =>
-            _mediationService.ShowInterstitial();
+        private void ShowAd()
+        {
+
+            RDebug.Log($"{nameof(MainMenu)}: Tried to show ad!");
+            _mediationService.ShowInterstitialForce();
+        }
 
     #if UNITY_ANDROID && !UNITY_EDITOR
         private void SendNotification()
