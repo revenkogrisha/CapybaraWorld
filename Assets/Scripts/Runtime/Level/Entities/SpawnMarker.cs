@@ -21,7 +21,7 @@ namespace Core.Level
         [SerializeField] private ChestKind _chestKind;
 
         [Title("Enemy Spawn Settings")]
-        [ShowIf(nameof(_entityKind), EntityKind.Enemy), EnumToggleButtons]
+        [ShowIf(nameof(_entityKind), EntityKind.Enemy)]
         [InfoBox("Choose Enemy to be spawned")]
         [SerializeField] private EnemyKind _enemyKind;
 
