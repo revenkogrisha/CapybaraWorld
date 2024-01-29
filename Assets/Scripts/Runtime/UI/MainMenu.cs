@@ -8,6 +8,7 @@ using Core.Editor.Debugger;
 using Core.Game;
 using Core.Infrastructure;
 using Core.Level;
+using Core.Mediation;
 using Core.Player;
 using Cysharp.Threading.Tasks;
 using TMPro;
@@ -35,8 +36,10 @@ namespace Core.UI
         [SerializeField] private UIButton _devLevelButton;
         [SerializeField] private UIButton _devNotificationButton;
         [SerializeField] private UIButton _devTestEventButton;
+        [SerializeField] private UIButton _devShowAdButton;
 
 #if REVENKO_DEVELOP
+        private IMediationService _mediationService;
         private PlaythroughHandler _playthroughHandler;
     #if UNITY_ANDROID && !UNITY_EDITOR
         private Notifications _notifications;
@@ -58,6 +61,7 @@ namespace Core.UI
             _devLocationButton.OnClicked += UpdateLocation;
             _devLevelButton.OnClicked += CompleteLevel;
             _devTestEventButton.OnClicked += LogTestEvent;
+            _devShowAdButton.OnClicked += ShowAd;
     #if UNITY_ANDROID && !UNITY_EDITOR
             _devNotificationButton.OnClicked += SendNotification;
     #endif
@@ -73,6 +77,7 @@ namespace Core.UI
             _devLocationButton.OnClicked -= UpdateLocation;
             _devLevelButton.OnClicked -= CompleteLevel;
             _devTestEventButton.OnClicked -= LogTestEvent;
+            _devShowAdButton.OnClicked -= ShowAd;
     #if UNITY_ANDROID && !UNITY_EDITOR
             _devNotificationButton.OnClicked -= SendNotification;
     #endif
@@ -90,6 +95,7 @@ namespace Core.UI
         [Inject]
         private void Construct(
 #if REVENKO_DEVELOP
+            IMediationService mediationService,
             PlaythroughHandler playthroughHandler,
     #if UNITY_ANDROID && !UNITY_EDITOR
             Notifications notifications,
@@ -100,6 +106,7 @@ namespace Core.UI
             GameNavigation navigation)
         {
 #if REVENKO_DEVELOP
+            _mediationService = mediationService;
             _playthroughHandler = playthroughHandler;
     #if UNITY_ANDROID && !UNITY_EDITOR
             _notifications = notifications;
@@ -157,6 +164,9 @@ namespace Core.UI
 
         private void LogTestEvent() =>
             FirebaseService.LogEvent(EventName.Test);
+
+        private void ShowAd() =>
+            _mediationService.ShowInterstitial();
 
     #if UNITY_ANDROID && !UNITY_EDITOR
         private void SendNotification()

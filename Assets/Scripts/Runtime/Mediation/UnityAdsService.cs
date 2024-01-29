@@ -16,6 +16,8 @@ namespace Core.Mediation.UnityAds
         {
             UnityAdsInitializer.Initialize(this);
             _nextAdShow = UnityAdsData.AdShowStartupDelay;
+
+            LoadInterstitial();
         }
 
         public void ShowInterstitial()
@@ -23,6 +25,15 @@ namespace Core.Mediation.UnityAds
             if (CanShow == false)
                 return;
             
+#if UNITY_ANDROID || UNITY_EDITOR
+            Advertisement.Show(UnityAdsData.AndroidInterstitialId, this);
+#else
+            Advertisement.Show(UnityAdsData.IOSInterstitialId, this);
+#endif
+        }
+
+        public void ShowInterstitialForce()
+        {
 #if UNITY_ANDROID || UNITY_EDITOR
             Advertisement.Show(UnityAdsData.AndroidInterstitialId, this);
 #else
@@ -60,11 +71,18 @@ namespace Core.Mediation.UnityAds
         public void OnUnityAdsShowClick(string placementId) {  }
 
         public void OnUnityAdsShowComplete(string placementId, UnityAdsShowCompletionState showCompletionState) 
-        {  
+        {
             if (IsInterstitial(placementId) == true)
+            {
                 _nextAdShow += UnityAdsData.AdShowInterval;
+                RDebug.Info($"{nameof(UnityAdsService)}: Interstitial showed!");
+                
+                LoadInterstitial();
+            }
             else if (IsRewarded(placementId) == true)
-                RDebug.Log("Rewarded ad");
+            {
+                RDebug.Info($"{nameof(UnityAdsService)}: Rewarded showed!");
+            }
         }
 
         #endregion
@@ -79,6 +97,15 @@ namespace Core.Mediation.UnityAds
         {
             return placementId.Equals(UnityAdsData.AndroidRewardedId) == true
                 || placementId.Equals(UnityAdsData.IOSRewardedId) == true;
+        }
+
+        private void LoadInterstitial()
+        {
+#if UNITY_ANDROID || UNITY_EDITOR
+            Advertisement.Load(UnityAdsData.AndroidRewardedId, this);
+#else
+            Advertisement.Load(UnityAdsData.IOSRewardedId, this);
+#endif
         }
     }
 }

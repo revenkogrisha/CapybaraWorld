@@ -6,6 +6,7 @@ namespace Core.Mediation
         
         public void Initialize();
         public void ShowInterstitial(); 
+        public void ShowInterstitialForce(); 
         public void ShowRewarded();
     }
 }

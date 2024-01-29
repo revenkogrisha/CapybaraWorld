@@ -1,4 +1,5 @@
 using Core.Common.ThirdParty;
+using Core.Mediation;
 using UnityEngine;
 using Zenject;
 
@@ -6,6 +7,7 @@ namespace Core.Infrastructure
 {
     public class Bootstrap : MonoBehaviour
     {
+        private IMediationService _mediationService;
         private ThirdPartyInitializer _thirdParty;
         private IGameStateMachine _stateMachine;
         private DataInitializationState _dataInitializationState;
@@ -19,6 +21,7 @@ namespace Core.Infrastructure
         private void Awake()
         {
             _thirdParty.InitializeAll().Forget();
+            _mediationService.Initialize();
             
             AddGameStatesToMachine();
             _navigation.ToLoadingData();
@@ -26,6 +29,7 @@ namespace Core.Infrastructure
 
         [Inject]
         private void Construct(
+            IMediationService mediationService,
             ThirdPartyInitializer thirdParty,
             IGameStateMachine stateMachine,
             DataInitializationState dataInitializationState,
@@ -36,6 +40,7 @@ namespace Core.Infrastructure
             GameLostState gameOverState,
             GameNavigation navigation)
         {
+            _mediationService = mediationService;
             _thirdParty = thirdParty;
             _stateMachine = stateMachine;
             _dataInitializationState = dataInitializationState;
