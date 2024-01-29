@@ -2,8 +2,8 @@ namespace Core.Saving
 {
     public interface ISaveSystem
     {
-        void Save(SaveData data);
+        public void Save(SaveData data);
 
-        SaveData Load();
+        public SaveData Load();
     }
 }

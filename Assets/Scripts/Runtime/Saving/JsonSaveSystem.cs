@@ -1,21 +1,20 @@
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
 using System;
 using System.IO;
 using System.Text;
 using Core.Editor.Debugger;
 using Newtonsoft.Json;
-
-#if UNITY_EDITOR
-using UnityEditor;
-#endif
 using UnityEngine;
 
 namespace Core.Saving
 {
     public class JsonSaveSystem : ISaveSystem
     {
-        public const string SaveFileFormat = "/CapybaraWorld.json";
+        public const string SaveFileFormat = "/" + ISaveService.SaveFileName + ".json";
 
-        private static string FilePath = Application.persistentDataPath + SaveFileFormat;
+        public static string FilePath = Application.persistentDataPath + SaveFileFormat;
 
         #region Editor
 
@@ -42,17 +41,22 @@ namespace Core.Saving
 
         #endregion
 
+        public static string Serialize(SaveData data)
+        {
+            JsonSerializerSettings serializerSettings = new()
+            {
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+            };
+
+            return JsonConvert.SerializeObject(data, Formatting.Indented, serializerSettings);
+        }
+
         public void Save(SaveData data)
         {
             try
             {
-                JsonSerializerSettings serializerSettings = new()
-                {
-                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore
-                };
-
                 File.WriteAllText(FilePath,
-                    JsonConvert.SerializeObject(data, Formatting.Indented, serializerSettings),
+                    Serialize(data),
                     Encoding.UTF8);
             }
             catch (Exception ex)
