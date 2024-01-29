@@ -1,4 +1,6 @@
 using Core.Game.Input;
+using Core.Mediation;
+using Core.Mediation.UnityAds;
 using Core.Saving;
 using UnityEngine;
 using Zenject;
@@ -17,6 +19,8 @@ namespace Core.Installers
             BindSaveService();
             
             BindInputHandler();
+
+            BindMediationService();
         }
 
         private void BindSaveSystem()
@@ -62,6 +66,16 @@ namespace Core.Installers
                 .AsSingle()
                 .WithArguments(_touchInputCollection)
                 .NonLazy();
+        }
+
+        private void BindMediationService()
+        {
+            Container
+                .Bind<IMediationService>()
+                .To<UnityAdsService>()
+                .FromNew()
+                .AsSingle()
+                .Lazy();
         }
     }
 }
