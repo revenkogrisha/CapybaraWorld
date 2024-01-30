@@ -6,8 +6,11 @@ namespace Core.Mediation.UnityAds
 {
     public class UnityAdsService : IMediationService, IUnityAdsInitializationListener, IUnityAdsLoadListener, IUnityAdsShowListener
     {
+        private const int LoadAtemptsRowMax = 3;
+        
         private bool _isRewardedAvailable = false;
         private float _nextAdShow;
+        private int _loadAtemptsRow = 0;
 
         public bool IsRewardedAvailable => _isRewardedAvailable;
         public bool CanShow => Time.time > _nextAdShow;
@@ -16,6 +19,7 @@ namespace Core.Mediation.UnityAds
         {
             UnityAdsInitializer.Initialize(this);
             _nextAdShow = UnityAdsData.AdShowStartupDelay;
+            _loadAtemptsRow = 0;
 
             LoadInterstitial();
         }
@@ -58,22 +62,29 @@ namespace Core.Mediation.UnityAds
         public void OnInitializationFailed(UnityAdsInitializationError error, string message) => 
             RDebug.Error($"Unity Ads initialization failed: E: {error} \n M: {message}!");
 
-        public void OnUnityAdsFailedToLoad(string placementId, UnityAdsLoadError error, string message) => 
-            RDebug.Error($"Unity Ads load failed: E: {error} \n M: {message}!");
-
-        public void OnUnityAdsShowFailure(string placementId, UnityAdsShowError error, string message) => 
-            RDebug.Error($"Unity Ads show failed: E: {error} \n M: {message}!");
-
         public void OnUnityAdsAdLoaded(string placementId) {  }
 
         public void OnUnityAdsShowStart(string placementId) {  }
 
         public void OnUnityAdsShowClick(string placementId) {  }
 
+        public void OnUnityAdsFailedToLoad(string placementId, UnityAdsLoadError error, string message)
+        {
+            RDebug.Error($"Unity Ads load failed: E: {error} \n M: {message}!");
+            LoadInterstitial();
+        }
+
+        public void OnUnityAdsShowFailure(string placementId, UnityAdsShowError error, string message)
+        {
+            RDebug.Error($"Unity Ads show failed: E: {error} \n M: {message}!");
+            LoadInterstitial();
+        }
+
         public void OnUnityAdsShowComplete(string placementId, UnityAdsShowCompletionState showCompletionState) 
         {
             if (IsInterstitial(placementId) == true)
             {
+                _loadAtemptsRow = 0;
                 _nextAdShow += UnityAdsData.AdShowInterval;
                 RDebug.Info($"{nameof(UnityAdsService)}: Interstitial showed!");
                 
@@ -101,6 +112,11 @@ namespace Core.Mediation.UnityAds
 
         private void LoadInterstitial()
         {
+            if (_loadAtemptsRow >= LoadAtemptsRowMax)
+                return;
+                
+            _loadAtemptsRow++;
+
 #if UNITY_ANDROID || UNITY_EDITOR
             Advertisement.Load(UnityAdsData.AndroidRewardedId, this);
 #else
