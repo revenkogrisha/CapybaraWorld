@@ -361,7 +361,7 @@ MonoBehaviour:
   m_text: 'Location: Test'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 21e766cf20a8e4f8cbf4b1ea831c9320, type: 2}
-  m_sharedMaterial: {fileID: 2100000, guid: 74e74d52455ca4b74b99514a23573787, type: 2}
+  m_sharedMaterial: {fileID: 2100000, guid: 038f3e24230ed4722ad0b97c90a31add, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -1483,7 +1483,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5597964246356206690, guid: 08e78e0dbe3d84bd1a2bde32e00807a7, type: 3}
       propertyPath: m_fontSize
-      value: 89.2
+      value: 82.95
       objectReference: {fileID: 0}
     - target: {fileID: 5597964246356206690, guid: 08e78e0dbe3d84bd1a2bde32e00807a7, type: 3}
       propertyPath: m_margin.w
@@ -1535,11 +1535,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6638240458759770542, guid: 08e78e0dbe3d84bd1a2bde32e00807a7, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 348.5647
+      value: 325
       objectReference: {fileID: 0}
     - target: {fileID: 6638240458759770542, guid: 08e78e0dbe3d84bd1a2bde32e00807a7, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 142.1853
+      value: 135
       objectReference: {fileID: 0}
     - target: {fileID: 6638240458759770542, guid: 08e78e0dbe3d84bd1a2bde32e00807a7, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1571,11 +1571,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6638240458759770542, guid: 08e78e0dbe3d84bd1a2bde32e00807a7, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0.25569
+      value: -0.226
       objectReference: {fileID: 0}
     - target: {fileID: 6638240458759770542, guid: 08e78e0dbe3d84bd1a2bde32e00807a7, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 233.95001
+      value: 237
       objectReference: {fileID: 0}
     - target: {fileID: 6638240458759770542, guid: 08e78e0dbe3d84bd1a2bde32e00807a7, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
