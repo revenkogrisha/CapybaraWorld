@@ -20,7 +20,7 @@ namespace Core.UI
     public class MainMenu : AnimatedUI
     {
         private const string LevelTextFormat = "Level {0}";
-        private const string LocationTextFormat = "Location: {0}";
+        private const string LocationTextFormat = "Location: <b><color=#D978E9>{0}</color></b>";
         
         [Space]
         [SerializeField] private UIButton _playButton;

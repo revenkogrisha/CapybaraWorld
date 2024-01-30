@@ -10,7 +10,7 @@ namespace Core.UI
     public class HeroMenu : AnimatedUI
     {
         private const string CostFormat = "{0}";
-        private const string HeroLevelFormat = "Common Hero Level: {0}";
+        private const string LevelFormat = "Common Hero Level: <b><color=#D978E9>{0}</color></b>";
         
         [Header("Skins UI")]
         [SerializeField] private SkinsPanel _skinsPanel;
@@ -117,7 +117,7 @@ namespace Core.UI
             _resourcePanel.DisplayResources();
             
             _costTMP.SetText(string.Format(CostFormat, _playerUpgrade.Cost));
-            _heroLevelTMP.SetText(string.Format(HeroLevelFormat, _playerUpgrade.HeroLevel));
+            _heroLevelTMP.SetText(string.Format(LevelFormat, _playerUpgrade.HeroLevel));
         }
 
         private void ValidateButton()

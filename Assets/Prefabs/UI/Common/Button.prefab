@@ -237,7 +237,7 @@ MonoBehaviour:
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
     m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
+    m_DisabledColor: {r: 1, g: 1, b: 1, a: 1}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
   m_SpriteState:
@@ -269,4 +269,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _button: {fileID: 924850703915851603}
-  _audio: {fileID: 0}
+  _image: {fileID: 4976447482627161834}
+  _tmp: {fileID: 5597964246356206690}
+  _normalSprite: {fileID: 21300000, guid: 1d5cb729593f0462cbea30cb1653e16d, type: 3}
+  _disabledSprite: {fileID: 21300000, guid: b874e64f02dd642fc9850c9e5c07d4ee, type: 3}
+  _textNormalColor: {r: 1, g: 1, b: 1, a: 1}
+  _textDisabledColor: {r: 0.8396226, g: 0.8396226, b: 0.8396226, a: 1}
