@@ -6,6 +6,7 @@ namespace Core.Common.ThirdParty
         Skin = 1,
         HaveSkins = 2,
         LevelsFinished = 3,
-        LocationName = 4
+        LocationName = 4,
+        GameResult = 5
     }
 }
