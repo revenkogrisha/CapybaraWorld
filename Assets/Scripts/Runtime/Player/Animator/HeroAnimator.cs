@@ -20,6 +20,7 @@ namespace Core.Player
         [Header("Arms")]
         [SerializeField] private Transform _armWithHook;
         [SerializeField] private GameObject _sword;
+        [SerializeField] private GameObject _slash;
 
         [Header("Legs")]
         [SerializeField] private Transform[] _legs;
@@ -216,6 +217,8 @@ namespace Core.Player
 
         private void StartGrappling()
         {
+            print("gf");
+            _slash.SetActive(false);
             _sword.SetActive(false);
             _animator.SetBool(HeroAnimatorConfig.GrapplingHash, true);
         }
@@ -226,10 +229,17 @@ namespace Core.Player
             _animator.SetBool(HeroAnimatorConfig.RunningHash, value);
         }
 
-        private void SetJumping(bool value) => 
+        private void SetJumping(bool value)
+        {
+            _slash.SetActive(!value);
             _animator.SetBool(HeroAnimatorConfig.JumpingHash, value);
+        }
 
-        private void PerformDash() =>
+        private void PerformDash()
+        {
+            print("dt");
+            _slash.SetActive(true);
             _animator.SetTrigger(HeroAnimatorConfig.DashedHash);
+        }
     }
 }
