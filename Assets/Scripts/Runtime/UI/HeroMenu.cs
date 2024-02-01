@@ -1,3 +1,4 @@
+using Core.Mediation;
 using Core.Player;
 using Core.Saving;
 using Cysharp.Threading.Tasks;
@@ -34,6 +35,7 @@ namespace Core.UI
         [SerializeField] private UIButton _devUpgradeButton;
         
         private MainMenuRoot _root;
+        private IMediationService _mediationService;
         private PlayerUpgrade _playerUpgrade;
         private ISaveService _saveService;
         private HeroSkins _heroSkins;
@@ -47,7 +49,7 @@ namespace Core.UI
             _skinsPresenter.Enable();
             _skinsPanel.InvokeItemDisplay(_heroSkins.Current.Name);
 
-            _heroUpgradeButton.OnClicked += UpgradeHero;
+            _heroUpgradeButton.OnClicked += OnUpgradeButtonClicked;
             _backButton.OnClicked += ToMainMenu;
 
 #if REVENKO_DEVELOP
@@ -61,7 +63,7 @@ namespace Core.UI
         {
             _skinsPresenter.Disable();
 
-            _heroUpgradeButton.OnClicked -= UpgradeHero;
+            _heroUpgradeButton.OnClicked -= OnUpgradeButtonClicked;
             _backButton.OnClicked -= ToMainMenu;
             
 #if REVENKO_DEVELOP
@@ -72,10 +74,13 @@ namespace Core.UI
         #endregion
 
         [Inject]
-        private void Construct(PlayerUpgrade playerUpgrade,
+        private void Construct(
+            IMediationService mediationService,
+            PlayerUpgrade playerUpgrade,
             ISaveService saveService,
             HeroSkins heroSkins)
         {
+            _mediationService = mediationService;
             _playerUpgrade = playerUpgrade;
             _saveService = saveService;
             _heroSkins = heroSkins;
@@ -86,11 +91,10 @@ namespace Core.UI
         public void InitializeRoot(MainMenuRoot root) =>
             _root = root;
 
-        private void UpgradeHero()
+        private void OnUpgradeButtonClicked()
         {
-            _playerUpgrade.UpgradeHero();
-            
-            UpdateView();
+            UpgradeHero();
+            _mediationService.ShowInterstitial();
         }
 
         private void ForceUpgrade()
@@ -110,6 +114,13 @@ namespace Core.UI
         {
             Conceal(disable: true).Forget();
             _root.ShowMainMenu();
+        }
+
+        private void UpgradeHero()
+        {
+            _playerUpgrade.UpgradeHero();
+            
+            UpdateView();
         }
 
         private void UpdateDisplayedData()

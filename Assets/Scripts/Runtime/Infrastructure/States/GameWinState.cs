@@ -3,7 +3,6 @@ using Core.Common;
 using Core.Common.ThirdParty;
 using Core.Editor.Debugger;
 using Core.Factories;
-using Core.Mediation;
 using Core.Other;
 using Core.Saving;
 using Core.UI;
@@ -16,22 +15,16 @@ namespace Core.Infrastructure
         private const int LevelsWonToRequestReview = 3;
         
         private readonly UIProvider _uiProvider;
-        private readonly IMediationService _mediationService;
         private GameWinMenu _gameWinMenu;
         private CancellationTokenSource _cts;
 
         [Inject]
-        public GameWinState(UIProvider uiProvider, IMediationService mediationService)
-        {
+        public GameWinState(UIProvider uiProvider) => 
             _uiProvider = uiProvider;
-            _mediationService = mediationService;
-        }
 
         public override void Enter()
         {
             _gameWinMenu = _uiProvider.CreateGameWinMenu();
-            
-            _mediationService.ShowInterstitial();
             
             if (PlayerPrefsUtility.LevelsWon >= LevelsWonToRequestReview 
                 && PlayerPrefsUtility.HasRequestedReview == false)

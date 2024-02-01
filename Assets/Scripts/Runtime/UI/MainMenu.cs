@@ -5,10 +5,8 @@ using Core.Editor.Debugger;
     using Core.Common.GameNotification;
 #endif
 #endif
-using Core.Game;
 using Core.Infrastructure;
 using Core.Level;
-using Core.Mediation;
 using Core.Player;
 using Cysharp.Threading.Tasks;
 using TMPro;

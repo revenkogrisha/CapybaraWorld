@@ -22,7 +22,7 @@ namespace Core.UI
 
         private GameNavigation _navigation;
 
-        private void OnEnable()
+        protected virtual void OnEnable()
         {
             _restartButton.OnClicked += RestartGame;
             _menuButton.OnClicked += ReturnToMenu;
@@ -30,7 +30,7 @@ namespace Core.UI
             TweenElements();
         }
 
-        private void OnDisable()
+        protected virtual void OnDisable()
         {
             _restartButton.OnClicked -= RestartGame;
             _menuButton.OnClicked -= ReturnToMenu;

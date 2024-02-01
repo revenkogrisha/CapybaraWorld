@@ -1,4 +1,5 @@
 using Core.Game;
+using Core.Mediation;
 using Core.Player;
 using UnityEngine;
 using UnityEngine.UI;
@@ -14,6 +15,13 @@ namespace Core.UI
 
         protected IPlaythroughProgressHandler _playthrough;
         private HeroSkins _heroSkins;
+        private IMediationService _mediationService;
+
+        protected override void OnEnable()
+        {
+            _mediationService.ShowInterstitial();
+            base.OnEnable();
+        }
 
         private void Start()
         {
@@ -22,10 +30,14 @@ namespace Core.UI
         }
 
         [Inject]
-        private void Construct(IPlaythroughProgressHandler playthrough, HeroSkins heroSkins)
+        private void Construct(
+            IPlaythroughProgressHandler playthrough,
+            HeroSkins heroSkins,
+            IMediationService mediationService)
         {
             _playthrough = playthrough;
             _heroSkins = heroSkins;
+            _mediationService = mediationService;
         }
 
         private void SetProgressBarValue(float delta) => 
