@@ -1,4 +1,6 @@
 using Core.Infrastructure;
+using DG.Tweening;
+using TriInspector;
 using UnityEngine;
 using Zenject;
 
@@ -6,7 +8,15 @@ namespace Core.UI
 {
     public class FinishMenu : MonoBehaviour
     {
-        [Header("Buttons")]
+        private const float TitleTweenDuration = 0.5f;
+        private const float ButtonShakeDelayByTitle = 0.5f;
+        
+        [Title("Buttons")]
+        [SerializeField] private Transform _title;
+        [SerializeField] private bool _tween = true;
+        [SerializeField, ShowIf(nameof(_tween))] private float _finalScale = 1f;
+        
+        [Title("Buttons")]
         [SerializeField] private UIButton _restartButton;
         [SerializeField] private UIButton _menuButton;
 
@@ -16,6 +26,8 @@ namespace Core.UI
         {
             _restartButton.OnClicked += RestartGame;
             _menuButton.OnClicked += ReturnToMenu;
+
+            TweenElements();
         }
 
         private void OnDisable()
@@ -33,5 +45,17 @@ namespace Core.UI
 
         private void ReturnToMenu() => 
             _navigation.Generate<MainMenuState>();
+
+        private void TweenElements()
+        {
+            if (_tween == true)
+            {
+                _title.localScale = Vector2.zero;
+                DOTween.Sequence()
+                    .Append(_title.DOScale(_finalScale, TitleTweenDuration))
+                    .AppendInterval(ButtonShakeDelayByTitle)
+                    .AppendCallback(() => _restartButton.Shake());
+            }
+        }
     }
 }

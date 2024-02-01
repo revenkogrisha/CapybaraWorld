@@ -66,8 +66,12 @@ namespace Core.UI
             if (Interactable == true)
                 base.OnPointerUp(eventData);
             else
-                transform.DOShakePosition(LockShakeDuration, LockShakeStrength, LockShakeVibration);
+                Shake();
         }
+
+        public void Shake() =>
+            transform.DOShakePosition(LockShakeDuration, LockShakeStrength, LockShakeVibration);
+
 
         private void PerformClick()
         {
