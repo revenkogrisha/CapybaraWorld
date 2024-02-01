@@ -1,6 +1,7 @@
 using Core.Common;
 using Core.Other;
 using UnityEngine;
+using Zenject;
 
 namespace Core.Level
 {
@@ -8,12 +9,22 @@ namespace Core.Level
 	{
         [SerializeField] private bool _isImmortal = false;
         
+        private ParticlesHelper _particlesHelper;
+
+        [Inject]
+        private void BaseConstruct(ParticlesHelper particlesHelper) =>
+            _particlesHelper = particlesHelper;
+        
         public bool TryPerformDeath()
         {
             if (_isImmortal == true)
                 return false;
             
-            gameObject.SelfDespawn();
+            _particlesHelper
+                .Spawn(ParticlesName.EnemyDeath, transform.position)
+                .Forget();
+
+            gameObject.SelfDestroy();
             
             // Called here for simplicity. Should be in special class-manager or ~EnemyFeedbackHalder
             HapticHelper.VibrateMedium();

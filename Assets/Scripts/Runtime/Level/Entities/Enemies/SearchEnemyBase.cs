@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace Core.Level
 {
-    public abstract class SearchEnemyBase : Enemy, ISpawnable, IDespawnable
+    public abstract class SearchEnemyBase : Enemy
     {
         [SerializeField] private Rigidbody2D _rigidbody2D;
 
@@ -32,18 +32,18 @@ namespace Core.Level
             InitializeStates();
 		}
 
-        public void OnSpawn()
+        public void OnEnable()
         {
             StateMachine.ChangeState<EnemySearchingState>();
             transform.localScale = Vector2.one;
             Direction = LookingDirection.Left;
         }
 
-        public void OnDespawn() => 
+        private void OnDisable()
+        {
             StateMachine.ChangeState<InactiveState>();
-
-        private void OnDisable() => 
-			_disposable.Clear();
+            _disposable.Clear();
+        }
 
         #endregion
 

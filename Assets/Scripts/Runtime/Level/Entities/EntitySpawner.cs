@@ -8,14 +8,17 @@ namespace Core.Level
 {
     public class EntitySpawner
     {
+        private readonly DiContainer _diContainer;
         private readonly EntityAssets _entityAssets;
         private readonly EnemyAssets _enemyAssets;
 
         [Inject]
         public EntitySpawner(
+            DiContainer diContainer,
             EntityAssets entityAssets,
             EnemyAssets enemyAssets)
         {
+            _diContainer = diContainer;
             _entityAssets = entityAssets;
             _enemyAssets = enemyAssets;
         }
@@ -81,7 +84,10 @@ namespace Core.Level
         {
             foreach (SpawnMarker marker in markers)
             {
-                TEntity entity = NightPool.Spawn(prefab, parent);
+                TEntity entity = prefab.Poolable == true
+                    ? NightPool.Spawn(prefab, parent)
+                    : _diContainer.InstantiatePrefabForComponent<TEntity>(prefab, parent);
+                
                 entity.SetLocalScale(prefab.GetLocalScale());
 
                 SetupProduct(entity, marker);

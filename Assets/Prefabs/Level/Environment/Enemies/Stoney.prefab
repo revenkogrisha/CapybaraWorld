@@ -654,6 +654,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Preloaded: 0
+  _poolable: 0
   _isImmortal: 1
   _rigidbody2D: {fileID: 7526498526326060918}
   _searchPreset: {fileID: 11400000, guid: aba7ed21f9ae940d0ba4cad8e5befd19, type: 2}
