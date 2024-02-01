@@ -118,6 +118,7 @@ namespace Core.Infrastructure
         private Hero CreateHero()
         {
             Hero hero = _playerFactory.Create();
+
             _destroyables.Add(hero.gameObject);
             return hero;
         }
@@ -126,6 +127,7 @@ namespace Core.Infrastructure
         {
             FollowerObject playerDeadline = _playerDeadlineFactory.Create();
             playerDeadline.BeginFollowing(heroTransform);
+
             _disposables.Add(playerDeadline);
         }
 
@@ -133,9 +135,11 @@ namespace Core.Infrastructure
         {
             IScoreCounter scoreCounter = new DistanceScoreCounter(heroTransform, _score);
             scoreCounter.StartCount();
+
             _disposables.Add(scoreCounter);
         }
 
+        // Supposed to add more UI, so methods are seperated
         private void CreateUI(Hero hero) => 
             CreateDashRecoveryDisplay(hero);
 
@@ -143,6 +147,7 @@ namespace Core.Infrastructure
         {
             DashRecoveryDisplay display = _uiProvider.CreateDashRecoveryDisplay();
             display.Initialize(hero);
+            
             _destroyables.Add(display.gameObject);
         }
     }

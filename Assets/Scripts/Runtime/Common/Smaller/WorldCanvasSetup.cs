@@ -6,7 +6,7 @@ namespace Core.Other
     {
         [SerializeField] private Canvas _canvas;
         
-        private void Awake() => 
+        private void Start() => 
             _canvas.worldCamera = Camera.main;
     }
 }

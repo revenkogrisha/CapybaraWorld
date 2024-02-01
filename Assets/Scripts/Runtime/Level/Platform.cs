@@ -1,12 +1,11 @@
 using System.Diagnostics;
-using NTC.Pool;
 using TriInspector;
 using UnityEngine;
 
 namespace Core.Level
 {
     [DeclareHorizontalGroup("Buttons")]
-    public abstract class Platform : MonoBehaviour, ISpawnable
+    public abstract class Platform : MonoBehaviour
     {
         public const float Length = 120f;
 
@@ -44,12 +43,6 @@ namespace Core.Level
         }
         
         #endregion
-
-        public void OnSpawn()
-        {
-            if (_worldCanvas != null)
-                _worldCanvas.gameObject.SetActive(false);
-        }
 
         public Canvas GetWorldCanvasIfHas() =>
             _worldCanvas ?? null;
