@@ -811,7 +811,7 @@ PlayerSettings:
   webGLMemoryGeometricGrowthCap: 96
   webGLPowerPreference: 2
   scriptingDefineSymbols:
-    Android: REVENKO_RELEASE
+    Android: CUSTOM_DEBUG;REVENKO_DEVELOP
   additionalCompilerArguments: {}
   platformArchitecture: {}
   scriptingBackend:
@@ -900,7 +900,13 @@ PlayerSettings:
   XboxOneOverrideIdentityName: 
   XboxOneOverrideIdentityPublisher: 
   vrEditorSettings: {}
-  cloudServicesEnabled: {}
+  cloudServicesEnabled:
+    Build: 0
+    Game Performance: 0
+    Legacy Analytics: 0
+    Purchasing: 0
+    UDP: 0
+    Unity Ads: 0
   luminIcon:
     m_Name: 
     m_ModelFolderPath: 
@@ -920,10 +926,10 @@ PlayerSettings:
   apiCompatibilityLevel: 6
   activeInputHandler: 2
   windowsGamepadBackendHint: 0
-  cloudProjectId: e479e580-2e03-49fc-a432-7ee6efddf939
+  cloudProjectId: e30575d3-0d7f-495a-b5a4-9342b5ba7828
   framebufferDepthMemorylessMode: 0
   qualitySettingsNames: []
-  projectName: CapybaraWorld
+  projectName: Capybara! Treasure World
   organizationId: grisharevenko
   cloudEnabled: 0
   legacyClampBlendShapeWeights: 0
