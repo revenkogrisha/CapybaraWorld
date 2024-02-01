@@ -22,9 +22,8 @@ namespace Core.Mediation.UnityAds
                 
             UnityAdsInitializer.Initialize(this);
             _nextAdShow = UnityAdsData.AdShowStartupDelay;
-            _loadAttemptsRow = 0;
 
-            LoadInterstitial();
+            _loadAttemptsRow = 0;
         }
 
         public void ShowInterstitial()
@@ -56,16 +55,20 @@ namespace Core.Mediation.UnityAds
             Advertisement.Show(UnityAdsData.IOSRewardedId, this);
 #endif
         }
-        
+
         #region Callbacks
 
-        public void OnInitializationComplete() => 
-            RDebug.Info($"Unity Ads successfully initialized!");
+        public void OnInitializationComplete()
+        {
+            RDebug.Info($"{nameof(UnityAdsService)}: successfully initialized!");
+            LoadInterstitial();
+        }
 
         public void OnInitializationFailed(UnityAdsInitializationError error, string message) => 
-            RDebug.Error($"Unity Ads initialization failed: E: {error} \n M: {message}!");
+            RDebug.Error($"{nameof(UnityAdsService)}: initialization failed: E: {error} \n M: {message}!");
 
-        public void OnUnityAdsAdLoaded(string placementId) {  }
+        public void OnUnityAdsAdLoaded(string placementId) => 
+            RDebug.Log($"{nameof(UnityAdsService)}: Ad was loaded: PID: {placementId}!");
 
         public void OnUnityAdsShowStart(string placementId) {  }
 
@@ -88,15 +91,14 @@ namespace Core.Mediation.UnityAds
             if (IsInterstitial(placementId) == true)
             {
                 _nextAdShow += UnityAdsData.AdShowInterval;
-                RDebug.Info($"{nameof(UnityAdsService)}: Interstitial showed!");
                 
                 LoadInterstitial();
             }
             else if (IsRewarded(placementId) == true)
             {
-                RDebug.Info($"{nameof(UnityAdsService)}: Rewarded showed!");
             }
 
+            RDebug.Info($"{nameof(UnityAdsService)}: {placementId} ad showed!");
             _loadAttemptsRow = 0;
         }
 
@@ -125,11 +127,11 @@ namespace Core.Mediation.UnityAds
             _loadAttemptsRow++;
 
 #if UNITY_ANDROID || UNITY_EDITOR
-            RDebug.Log($"{nameof(UnityAdsService)}: Android load attempt");
-            Advertisement.Load(UnityAdsData.AndroidRewardedId, this);
+            RDebug.Log($"{nameof(UnityAdsService)}: Android {nameof(UnityAdsData.AndroidInterstitialId)} load attempt");
+            Advertisement.Load(UnityAdsData.AndroidInterstitialId, this);
 #else
-            RDebug.Log($"{nameof(UnityAdsService)}: <platform> load attempt");
-            Advertisement.Load(UnityAdsData.IOSRewardedId, this);
+            RDebug.Log($"{nameof(UnityAdsService)}: {nameof(UnityAdsData.AndroidInterstitialId)} load attempt");
+            Advertisement.Load(UnityAdsData.IOSInterstitialId, this);
 #endif
         }
     }
