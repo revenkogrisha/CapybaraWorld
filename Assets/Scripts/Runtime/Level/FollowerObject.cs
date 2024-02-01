@@ -46,7 +46,9 @@ namespace Core.Level
 
         public void Dispose()
         {
-            Object.Destroy(_thisTransform.gameObject);
+            if (_thisTransform != null && _thisTransform.gameObject != null)
+                Object.Destroy(_thisTransform.gameObject);
+                
             _cts.Clear();
         }
 
