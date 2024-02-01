@@ -7,6 +7,7 @@ using Firebase;
 using Firebase.Analytics;
 using Firebase.Crashlytics;
 using Firebase.Extensions;
+using UnityEngine;
 
 namespace Core.Common.ThirdParty
 {
@@ -22,6 +23,9 @@ namespace Core.Common.ThirdParty
 
         public static async UniTaskVoid Initialize()
         {
+            if (Application.internetReachability == NetworkReachability.NotReachable)
+                return;
+                
             try
             {
                 _firebaseInstance = null;

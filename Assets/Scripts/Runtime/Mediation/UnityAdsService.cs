@@ -10,16 +10,19 @@ namespace Core.Mediation.UnityAds
         
         private bool _isRewardedAvailable = false;
         private float _nextAdShow;
-        private int _loadAtemptsRow = 0;
+        private int _loadAttemptsRow = 0;
 
         public bool IsRewardedAvailable => _isRewardedAvailable;
-        public bool CanShow => Time.time > _nextAdShow;
+        public bool CanShow => Advertisement.isInitialized && Time.time > _nextAdShow;
 
         public void Initialize()
         {
+            if (Application.internetReachability == NetworkReachability.NotReachable)
+                return;
+                
             UnityAdsInitializer.Initialize(this);
             _nextAdShow = UnityAdsData.AdShowStartupDelay;
-            _loadAtemptsRow = 0;
+            _loadAttemptsRow = 0;
 
             LoadInterstitial();
         }
@@ -70,13 +73,13 @@ namespace Core.Mediation.UnityAds
 
         public void OnUnityAdsFailedToLoad(string placementId, UnityAdsLoadError error, string message)
         {
-            RDebug.Error($"Unity Ads load failed: E: {error} \n M: {message}!");
+            RDebug.Error($"{nameof(UnityAdsService)}: load failed: E: {error} \n M: {message}!");
             LoadInterstitial();
         }
 
         public void OnUnityAdsShowFailure(string placementId, UnityAdsShowError error, string message)
         {
-            RDebug.Error($"Unity Ads show failed: E: {error} \n M: {message}!");
+            RDebug.Error($"{nameof(UnityAdsService)}: show failed: E: {error} \n M: {message}!");
             LoadInterstitial();
         }
 
@@ -84,7 +87,6 @@ namespace Core.Mediation.UnityAds
         {
             if (IsInterstitial(placementId) == true)
             {
-                _loadAtemptsRow = 0;
                 _nextAdShow += UnityAdsData.AdShowInterval;
                 RDebug.Info($"{nameof(UnityAdsService)}: Interstitial showed!");
                 
@@ -94,6 +96,8 @@ namespace Core.Mediation.UnityAds
             {
                 RDebug.Info($"{nameof(UnityAdsService)}: Rewarded showed!");
             }
+
+            _loadAttemptsRow = 0;
         }
 
         #endregion
@@ -112,14 +116,19 @@ namespace Core.Mediation.UnityAds
 
         private void LoadInterstitial()
         {
-            if (_loadAtemptsRow >= LoadAtemptsRowMax)
+            if (_loadAttemptsRow >= LoadAtemptsRowMax)
+            {
+                RDebug.Log($"{nameof(UnityAdsService)}: Load returned. Too many attempts= {_loadAttemptsRow} >= maxValue= {LoadAtemptsRowMax}");
                 return;
+            }
                 
-            _loadAtemptsRow++;
+            _loadAttemptsRow++;
 
 #if UNITY_ANDROID || UNITY_EDITOR
+            RDebug.Log($"{nameof(UnityAdsService)}: Android load attempt");
             Advertisement.Load(UnityAdsData.AndroidRewardedId, this);
 #else
+            RDebug.Log($"{nameof(UnityAdsService)}: <platform> load attempt");
             Advertisement.Load(UnityAdsData.IOSRewardedId, this);
 #endif
         }
