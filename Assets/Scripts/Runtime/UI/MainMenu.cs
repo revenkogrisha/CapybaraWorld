@@ -1,6 +1,8 @@
 #if REVENKO_DEVELOP
 using Core.Common.ThirdParty;
 using Core.Editor.Debugger;
+using Core.Game;
+using Core.Mediation;
 #if UNITY_ANDROID && !UNITY_EDITOR
     using Core.Common.GameNotification;
 #endif

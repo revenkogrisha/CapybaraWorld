@@ -11,7 +11,7 @@ namespace Core.Mediation.UnityAds
         public const string AndroidRewardedId = "Rewarded_Android";
         public const string IOSRewardedId = "Rewarded_iOS";
 
-        public const float AdShowStartupDelay = 60f;
+        public const float AdShowStartupDelay = 80f;
         public const float AdShowInterval = 120f;
     }
 }
