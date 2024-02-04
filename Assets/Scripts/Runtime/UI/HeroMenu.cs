@@ -1,4 +1,6 @@
+using System.Threading;
 using Core.Mediation;
+using Core.Other;
 using Core.Player;
 using Core.Saving;
 using Cysharp.Threading.Tasks;
@@ -8,7 +10,7 @@ using Zenject;
 
 namespace Core.UI
 {
-    public class HeroMenu : AnimatedUI
+    public class HeroMenu : AnimatedUI, IAdRewardWaiter
     {
         private const string CostFormat = "{0}";
         private const string LevelFormat = "Common Hero Level: <b><color=#D978E9>{0}</color></b>";
@@ -21,6 +23,7 @@ namespace Core.UI
         [SerializeField] private ResourcePanel _resourcePanel;
         
         [SerializeField] private UIButton _heroUpgradeButton;
+        [SerializeField] private UIButton _resetCostAdButton;
         [SerializeField] private UIButton _backButton;
 
         [Space] 
@@ -37,9 +40,9 @@ namespace Core.UI
         private MainMenuRoot _root;
         private IMediationService _mediationService;
         private PlayerUpgrade _playerUpgrade;
-        private ISaveService _saveService;
         private HeroSkins _heroSkins;
         private SkinsMenuPresenter _skinsPresenter;
+        private CancellationTokenSource _rewardedAdCTS;
 
         #region MonoBehaviour
 
@@ -51,20 +54,29 @@ namespace Core.UI
 
             _heroUpgradeButton.OnClicked += OnUpgradeButtonClicked;
             _backButton.OnClicked += ToMainMenu;
+            _resetCostAdButton.OnClicked += ShowAdToResetCost;
 
 #if REVENKO_DEVELOP
             _devUpgradeButton.OnClicked += ForceUpgrade;
 #endif
 
             UpdateView();
+
+            _resetCostAdButton.SetActive(_mediationService.IsRewardedAvailable);
+            if (_mediationService.IsRewardedAvailable == false)
+                LoadRewardedAds().Forget();
         }
 
         private void OnDisable()
         {
             _skinsPresenter.Disable();
 
+            _rewardedAdCTS.Clear();
+            _rewardedAdCTS = null;
+
             _heroUpgradeButton.OnClicked -= OnUpgradeButtonClicked;
             _backButton.OnClicked -= ToMainMenu;
+            _resetCostAdButton.OnClicked -= ShowAdToResetCost;
             
 #if REVENKO_DEVELOP
             _devUpgradeButton.OnClicked -= ForceUpgrade;
@@ -77,17 +89,21 @@ namespace Core.UI
         private void Construct(
             IMediationService mediationService,
             PlayerUpgrade playerUpgrade,
-            ISaveService saveService,
             HeroSkins heroSkins)
         {
             _mediationService = mediationService;
             _playerUpgrade = playerUpgrade;
-            _saveService = saveService;
             _heroSkins = heroSkins;
 
             _skinsPresenter = new(_heroSkins, _skinsPanel, _skinPlacement, _resourcePanel);
         }
-        
+
+        public void OnRewardGranted()
+        {
+            _playerUpgrade.ResetCost();
+            UpdateView();
+        }
+
         public void InitializeRoot(MainMenuRoot root) =>
             _root = root;
 
@@ -107,7 +123,28 @@ namespace Core.UI
         private void UpdateView()
         {
             UpdateDisplayedData();
-            ValidateButton();
+            ValidateUpgradeButton();
+        }
+
+        private async UniTaskVoid LoadRewardedAds()
+        {
+            const float loadTimeout = 30f;
+            
+            _rewardedAdCTS.Clear();
+            _rewardedAdCTS = new();
+
+            _mediationService.LoadRewarded();
+
+            _rewardedAdCTS.CancelByTimeout(loadTimeout).Forget();
+            
+            await UniTask.WaitUntil(
+                () => _mediationService.IsRewardedAvailable == true, 
+                cancellationToken: _rewardedAdCTS.Token);
+
+            _resetCostAdButton.SetActive(_mediationService.IsRewardedAvailable);
+
+            _rewardedAdCTS.Clear();
+            _rewardedAdCTS = null;
         }
 
         private void ToMainMenu()
@@ -123,6 +160,12 @@ namespace Core.UI
             UpdateView();
         }
 
+        private void ShowAdToResetCost()
+        {
+            _resetCostAdButton.SetActive(false);
+            _mediationService.ShowRewarded(this);
+        }
+
         private void UpdateDisplayedData()
         {
             _resourcePanel.DisplayResources();
@@ -131,7 +174,7 @@ namespace Core.UI
             _heroLevelTMP.SetText(string.Format(LevelFormat, _playerUpgrade.HeroLevel));
         }
 
-        private void ValidateButton()
+        private void ValidateUpgradeButton()
         {
             _heroUpgradeButton.Interactable = _playerUpgrade.CanUpgradeHero;
             if (_playerUpgrade.CanUpgradeHero == true)

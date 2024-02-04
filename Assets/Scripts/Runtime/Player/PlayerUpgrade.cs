@@ -9,6 +9,7 @@ namespace Core.Player
     {
         private const int StartHeroLevel = 1;
         private const int CostUpgradeIncrease = 15;
+        private const int DefaultCost = 15;
 
         private readonly ISaveService _saveService;
         private readonly PlayerData _playerData;
@@ -54,6 +55,12 @@ namespace Core.Player
             _heroLevel = data.HeroLevel;
 
             RestoreStats();
+        }
+
+        public void ResetCost()
+        {
+            _cost = DefaultCost;
+            _saveService.Save();
         }
 
         public void UpgradeHero(bool force = false)
