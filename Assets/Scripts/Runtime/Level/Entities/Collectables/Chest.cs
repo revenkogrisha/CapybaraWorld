@@ -39,7 +39,7 @@ namespace Core.Level
             if (_canOpen == false)
                 return;
 
-            if (_kind == ChestKind.Simple)
+            if (_kind == ChestKind.Simple && Preloaded == false)
             {
                 _particlesHelper
                     .Spawn(ParticlesName.SimpleChestBreak, transform.position)

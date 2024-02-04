@@ -62,9 +62,16 @@ namespace Core.UI
 
             UpdateView();
 
-            _resetCostAdButton.SetActive(_mediationService.IsRewardedAvailable);
-            if (_mediationService.IsRewardedAvailable == false)
-                LoadRewardedAds().Forget();
+            if (_playerUpgrade.IsCostIncreased == true)
+            {
+                _resetCostAdButton.SetActive(_mediationService.IsRewardedAvailable);
+                if (_mediationService.IsRewardedAvailable == false)
+                    LoadRewardedAds().Forget();
+            }
+            else
+            {
+                _resetCostAdButton.SetActive(false);
+            }
         }
 
         private void OnDisable()
