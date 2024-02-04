@@ -33,7 +33,6 @@ namespace Core.Player
 
 		[Title("Death Tweening")]
         [SerializeField] private float _deathTweenDuration = 0.3f;
-        [SerializeField] private Vector2 _scaleVectorOne = new(1f, 0.7f);
 
 		private readonly CompositeDisposable _disposable = new();
 		private IFiniteStateMachine _stateMachine;
@@ -228,13 +227,7 @@ namespace Core.Player
 		{
 			_stateMachine.ChangeState<InactiveState>();
 
-			float direction = Mathf.Clamp(transform.localScale.x, -1f, 1f);
-            _scaleVectorOne.x *= direction;
-            
-            transform.localScale = new Vector2(direction, 1f);
-
             DOTween.Sequence()
-                .Append(transform.DOScale(_scaleVectorOne, _deathTweenDuration))
                 .Append(transform.DOScale(Vector2.zero, _deathTweenDuration))
                 .AppendCallback(() => IsDead.Value = true);
 		}
