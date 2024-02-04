@@ -25,7 +25,7 @@ namespace Core.Level
             CanCollect = false;
             DOTween.Sequence()
                 .Append(transform.DOScale(Vector2.zero, _fadeDuration))
-                .AppendCallback(Despawn);
+                .AppendCallback(() => gameObject.SelfDespawn());
         }
 
         private void Setup()
@@ -33,8 +33,5 @@ namespace Core.Level
             transform.localScale = Vector2.one;
             CanCollect = true;
         }
-
-        private void Despawn() =>
-            gameObject.SelfDespawn();
     }
 }

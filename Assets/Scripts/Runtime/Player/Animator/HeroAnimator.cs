@@ -217,7 +217,6 @@ namespace Core.Player
 
         private void StartGrappling()
         {
-            print("gf");
             _slash.SetActive(false);
             _sword.SetActive(false);
             _animator.SetBool(HeroAnimatorConfig.GrapplingHash, true);
@@ -237,7 +236,6 @@ namespace Core.Player
 
         private void PerformDash()
         {
-            print("dt");
             _slash.SetActive(true);
             _animator.SetTrigger(HeroAnimatorConfig.DashedHash);
         }

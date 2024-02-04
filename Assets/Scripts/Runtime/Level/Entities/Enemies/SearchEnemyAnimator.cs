@@ -13,7 +13,7 @@ namespace Core.Level
 
         private void OnEnable()
         {
-            _enemy.Triggered
+            _enemy.IsTriggered
                 .Subscribe(value => _animator.SetBool(_triggeredHash, value))
                 .AddTo(_disposable);
         }

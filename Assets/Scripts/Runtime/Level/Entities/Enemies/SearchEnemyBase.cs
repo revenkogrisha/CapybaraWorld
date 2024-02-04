@@ -7,19 +7,17 @@ namespace Core.Level
 {
     public abstract class SearchEnemyBase : Enemy
     {
+        [Header("Search Base Components")]
         [SerializeField] private Rigidbody2D _rigidbody2D;
-
-        [Space]
         [SerializeField] private SearchEnemyPreset _searchPreset;
 
-        [HideInInspector] public readonly ReactiveProperty<bool> Triggered = new();
+        [HideInInspector] public readonly ReactiveProperty<bool> IsTriggered = new();
 
         protected State<Vector2> StateOnTrigger;
 		protected IFiniteStateMachine StateMachine;
 
 		private readonly CompositeDisposable _disposable = new();
 
-        public LookingDirection Direction { get; set; }
         public Rigidbody2D Rigidbody2D => _rigidbody2D;
         public SearchEnemyPreset SearchPreset => _searchPreset;
 

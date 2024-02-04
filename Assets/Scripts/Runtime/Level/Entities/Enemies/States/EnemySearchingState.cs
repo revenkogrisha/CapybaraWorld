@@ -4,6 +4,7 @@ using Core.Common;
 using Core.Editor.Debugger;
 using Core.Other;
 using Cysharp.Threading.Tasks;
+using UniRx;
 using UnityEngine;
 
 namespace Core.Level
@@ -14,8 +15,9 @@ namespace Core.Level
         private readonly State<Vector2> _stateOnTrigger;
         private readonly SearchEnemyBase _enemy;
 		private CancellationTokenSource _cts;
+        private CompositeDisposable _disposable;
 
-		public EnemySearchingState(SearchEnemyBase enemy, State<Vector2> stateOnTrigger)
+        public EnemySearchingState(SearchEnemyBase enemy, State<Vector2> stateOnTrigger)
 		{
 			_enemy = enemy;
 			_thisTransform = enemy.transform;
@@ -24,14 +26,21 @@ namespace Core.Level
 
 		public override void Enter()
 		{
-			_enemy.Triggered.Value = false;
+			_enemy.IsTriggered.Value = false;
 			StartLookingForTarget().Forget();
+
+			_disposable = new();
+			_enemy.IsDead
+				.Where(value => value == true)
+				.Subscribe(_ => _cts.Clear())
+				.AddTo(_disposable);
 		}
 
         public override void Exit()
         {
 	        _cts.Clear();
 	        _cts = null;
+			_disposable.Clear();
         }
 
         private async UniTaskVoid StartLookingForTarget()

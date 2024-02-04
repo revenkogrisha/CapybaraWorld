@@ -4,6 +4,7 @@ using Core.Common;
 using Core.Editor.Debugger;
 using Core.Other;
 using Cysharp.Threading.Tasks;
+using UniRx;
 using UnityEngine;
 
 namespace Core.Level
@@ -17,6 +18,8 @@ namespace Core.Level
 		private CancellationTokenSource _cts;
 		private Vector3 _targetPosition;
 		private Vector2 _directionToTarget;
+		private CompositeDisposable _disposable;
+
 
 		public EnemyChaseState(ChaseEnemy enemy)
 		{
@@ -32,22 +35,30 @@ namespace Core.Level
 
         public override void Enter()
         {
-			_enemy.Triggered.Value = true;
+			_enemy.IsTriggered.Value = true;
             ChaseTarget().Forget();
+
+			_disposable = new();
+			_enemy.IsDead
+				.Where(value => value == true)
+				.Subscribe(_ => _cts.Clear())
+				.AddTo(_disposable);
         }
 
         public override void Exit()
         {
 			StopMoving();
+
 			_cts.Clear();
 			_cts = null;
+			_disposable.Clear();
         }
 
         private async UniTaskVoid ChaseTarget()
 		{
 			_cts = new();
-			
 			float elapsedTime = 0f;
+
 			try
 			{
 				while (true)

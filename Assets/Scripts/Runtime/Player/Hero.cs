@@ -179,9 +179,9 @@ namespace Core.Player
 				.AddTo(_disposable);
 
 			onCollisionEnter2D
-				.Where(_ => IsDashing.Value == false)
+				.Where(_ => IsDashing.Value == false) 
 				.Subscribe(collision => 
-					Tools.InvokeIfNotNull<Enemy>(collision, PerformDeath))
+					Tools.InvokeIfNotNull<Enemy>(collision, OnEnemyCollision))
 				.AddTo(_disposable);
 			
 			onCollisionEnter2D
@@ -211,6 +211,12 @@ namespace Core.Player
 			
 			// Called here for simplicity. Should be in special class-manager or ~HeroFeedbackHalder
             HapticHelper.VibrateLight();
+		}
+
+		private void OnEnemyCollision(Enemy enemy)
+		{
+			if (enemy.IsDead.Value == false)
+				PerformDeath();
 		}
 
 		private void PerformDeath()
