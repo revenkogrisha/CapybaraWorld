@@ -131,7 +131,7 @@ namespace Core.Level
         public void SetActiveWorldCanvases(bool state)
         {
             foreach (Canvas canvas in _platformCanvases)
-                canvas.gameObject.SetActive(state);
+                canvas.SetActive(state);
         }
 
         private void SetRandomLocation()

@@ -1,3 +1,4 @@
+using Core.Other;
 using Core.Player;
 using TMPro;
 using UniRx;
@@ -43,7 +44,7 @@ namespace Core.UI
         public void SetBuyState(int cost, bool canBuy)
         {
             HideSelectButton();
-            _buyButton.gameObject.SetActive(true);
+            _buyButton.SetActive(true);
 
             _buyButton.Interactable = canBuy;
 
@@ -87,20 +88,20 @@ namespace Core.UI
 
         private void ShowSelectButton()
         {
-            _selectButton.gameObject.SetActive(true);
+            _selectButton.SetActive(true);
             _selectButton.Interactable = true;
         }
         
         private void HideBuyButton()
         {
             _buyButton.Interactable = false;
-            _buyButton.gameObject.SetActive(false);
+            _buyButton.SetActive(false);
         }
 
         private void HideSelectButton()
         {
             _selectButton.Interactable = false;
-            _selectButton.gameObject.SetActive(false);
+            _selectButton.SetActive(false);
         }
     }
 }
