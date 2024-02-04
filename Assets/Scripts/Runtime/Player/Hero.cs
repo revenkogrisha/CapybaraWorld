@@ -11,6 +11,7 @@ using Core.Other;
 using Zenject;
 using TriInspector;
 using Core.Editor.Debugger;
+using DG.Tweening;
 
 namespace Core.Player
 {
@@ -29,6 +30,10 @@ namespace Core.Player
 		[Title("Configuration")]
 		[SerializeField] private HeroConfig _config;
         [SerializeField] private Vector3 _particlesOffset = Vector2.down;
+
+		[Title("Death Tweening")]
+        [SerializeField] private float _deathTweenDuration = 0.3f;
+        [SerializeField] private Vector2 _scaleVectorOne = new(1f, 0.7f);
 
 		private readonly CompositeDisposable _disposable = new();
 		private IFiniteStateMachine _stateMachine;
@@ -221,8 +226,17 @@ namespace Core.Player
 
 		private void PerformDeath()
 		{
-			IsDead.Value = true;
 			_stateMachine.ChangeState<InactiveState>();
+
+			float direction = Mathf.Clamp(transform.localScale.x, -1f, 1f);
+            _scaleVectorOne.x *= direction;
+            
+            transform.localScale = new Vector2(direction, 1f);
+
+            DOTween.Sequence()
+                .Append(transform.DOScale(_scaleVectorOne, _deathTweenDuration))
+                .Append(transform.DOScale(Vector2.zero, _deathTweenDuration))
+                .AppendCallback(() => IsDead.Value = true);
 		}
 
 		private void OnDashIntoEnemy(Enemy enemy)
