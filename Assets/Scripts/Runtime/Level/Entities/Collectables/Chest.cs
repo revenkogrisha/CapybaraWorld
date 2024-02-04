@@ -1,8 +1,10 @@
+using Core.Common;
 using Core.Factories;
 using Core.Other;
 using DG.Tweening;
 using NTC.Pool;
 using UnityEngine;
+using Zenject;
 using Random = UnityEngine.Random;
 
 namespace Core.Level
@@ -11,9 +13,11 @@ namespace Core.Level
     {
         private const float DespawnDelay = 2f;
         
+        [SerializeField] private ChestKind _kind = ChestKind.Simple; 
         [SerializeField] private ChestPreset _preset;
         [SerializeField] private ParticleSystem[] _particles;
         
+        private ParticlesHelper _particlesHelper;
         private CoinFactory _coinFactory;
         private bool _canOpen = true;
 
@@ -26,10 +30,21 @@ namespace Core.Level
         public void OnSpawn() =>
             Setup();
 
+        [Inject]
+        private void Construct(ParticlesHelper particlesHelper) =>
+            _particlesHelper = particlesHelper;
+
         public void Open()
         {
             if (_canOpen == false)
                 return;
+
+            if (_kind == ChestKind.Simple)
+            {
+                _particlesHelper
+                    .Spawn(ParticlesName.SimpleChestBreak, transform.position)
+                    .Forget();
+            }
 
             ReleaseCoins();
 

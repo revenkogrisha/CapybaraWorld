@@ -84,9 +84,16 @@ namespace Core.Level
         {
             foreach (SpawnMarker marker in markers)
             {
-                TEntity entity = prefab.Poolable == true
-                    ? NightPool.Spawn(prefab, parent)
-                    : _diContainer.InstantiatePrefabForComponent<TEntity>(prefab, parent);
+                TEntity entity;
+                if (prefab.Poolable == true)
+                {
+                    entity = NightPool.Spawn(prefab, parent);
+                    _diContainer.Inject(entity);
+                }
+                else
+                {
+                    entity = _diContainer.InstantiatePrefabForComponent<TEntity>(prefab, parent);
+                }
                 
                 entity.SetLocalScale(prefab.GetLocalScale());
 
