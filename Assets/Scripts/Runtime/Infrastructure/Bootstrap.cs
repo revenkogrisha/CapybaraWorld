@@ -1,5 +1,4 @@
 using Core.Common.ThirdParty;
-using Core.Mediation;
 using UnityEngine;
 using Zenject;
 
@@ -7,21 +6,14 @@ namespace Core.Infrastructure
 {
     public class Bootstrap : MonoBehaviour
     {
-        private IMediationService _mediationService;
         private ThirdPartyInitializer _thirdParty;
         private IGameStateMachine _stateMachine;
-        private DataInitializationState _dataInitializationState;
-        private GenerationState _generationState;
-        private MainMenuState _mainMenuState;
-        private GameplayState _gameplayState;
-        private GameWinState _gameWinState;
-        private GameLostState _gameLostState;
+        private GameStatesProvider _statesProvider;
         private GameNavigation _navigation;
 
         private void Awake()
         {
             _thirdParty.InitializeAll().Forget();
-            _mediationService.Initialize();
             
             AddGameStatesToMachine();
             _navigation.ToLoadingData();
@@ -29,37 +21,25 @@ namespace Core.Infrastructure
 
         [Inject]
         private void Construct(
-            IMediationService mediationService,
             ThirdPartyInitializer thirdParty,
             IGameStateMachine stateMachine,
-            DataInitializationState dataInitializationState,
-            GenerationState generationState,
-            MainMenuState mainMenuState,
-            GameplayState gameplayState,
-            GameWinState gameWinState,
-            GameLostState gameOverState,
+            GameStatesProvider statesProvider,
             GameNavigation navigation)
         {
-            _mediationService = mediationService;
             _thirdParty = thirdParty;
             _stateMachine = stateMachine;
-            _dataInitializationState = dataInitializationState;
-            _generationState = generationState;
-            _mainMenuState = mainMenuState;
-            _gameplayState = gameplayState;
-            _gameWinState = gameWinState;
-            _gameLostState = gameOverState;
+            _statesProvider = statesProvider;
             _navigation = navigation;
         }
 
         private void AddGameStatesToMachine()
         {
-            _stateMachine.AddState<DataInitializationState>(_dataInitializationState);
-            _stateMachine.AddState<GenerationState>(_generationState);
-            _stateMachine.AddState<MainMenuState>(_mainMenuState);
-            _stateMachine.AddState<GameplayState>(_gameplayState);
-            _stateMachine.AddState<GameWinState>(_gameWinState);
-            _stateMachine.AddState<GameLostState>(_gameLostState);
+            _stateMachine.AddState<DataInitializationState>(_statesProvider.DataInitializationState);
+            _stateMachine.AddState<GenerationState>(_statesProvider.GenerationState);
+            _stateMachine.AddState<MainMenuState>(_statesProvider.MainMenuState);
+            _stateMachine.AddState<GameplayState>(_statesProvider.GameplayState);
+            _stateMachine.AddState<GameWinState>(_statesProvider.GameWinState);
+            _stateMachine.AddState<GameLostState>(_statesProvider.GameLostState);
         }
     }
 }

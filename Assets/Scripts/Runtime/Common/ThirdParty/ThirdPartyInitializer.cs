@@ -10,9 +10,10 @@ using System.Threading;
 using Core.Common;
 using Core.Other;
 using Google.Play.AppUpdate;
-using Zenject;
 #endif
+using Zenject;
 using Core.Editor.Debugger;
+using Core.Mediation;
 using Cysharp.Threading.Tasks;
 
 namespace Core.Common.ThirdParty
@@ -20,13 +21,23 @@ namespace Core.Common.ThirdParty
 
     public class ThirdPartyInitializer
     {
+        private readonly IMediationService _mediationService;
 #if ANDROID_RUNTIME
-        private Notifications _notifications;
+        private readonly Notifications _notifications;
+#endif
 
         [Inject]
-        public ThirdPartyInitializer(Notifications notifications) =>
+        public ThirdPartyInitializer(
+#if ANDROID_RUNTIME
+            Notifications notifications,
+#endif
+            IMediationService mediationService)
+        {
+#if ANDROID_RUNTIME
             _notifications = notifications;
 #endif
+            _mediationService = mediationService;
+        }
 
 #pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
         public async UniTaskVoid InitializeAll()
@@ -40,6 +51,8 @@ namespace Core.Common.ThirdParty
             ScheduleAndroidNotifications();
             await HandleAppUpdate();
 #endif
+
+            _mediationService.Initialize();
 
             RDebug.Info($"{nameof(ThirdPartyInitializer)}: Initialization complete!");
         }

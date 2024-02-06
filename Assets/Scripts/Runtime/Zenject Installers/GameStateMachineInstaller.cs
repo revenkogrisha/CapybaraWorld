@@ -1,3 +1,4 @@
+using System;
 using Core.Infrastructure;
 using Zenject;
 
@@ -9,6 +10,7 @@ namespace Core.Installers
         {
             BindStateMachine();
             BindStates();
+            BindStatesProvider();
 
             BindNavigation();
         }
@@ -33,6 +35,15 @@ namespace Core.Installers
             
             BindGameWinState();
             BindGameLostState();
+        }
+
+        private void BindStatesProvider()
+        {
+            Container
+                .Bind<GameStatesProvider>()
+                .FromNew()
+                .AsSingle()
+                .Lazy();
         }
 
         private void BindNavigation()
