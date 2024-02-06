@@ -13,7 +13,8 @@ namespace Core.UI
         private SkinPreset _displayedPreset;
         private SkinPreset _selectedPreset;
 
-        public SkinsMenuPresenter(HeroSkins heroSkins,
+        public SkinsMenuPresenter(
+            HeroSkins heroSkins,
             SkinsPanel panel,
             SkinPlacementPanel placement,
             ResourcePanel resourcePanel)

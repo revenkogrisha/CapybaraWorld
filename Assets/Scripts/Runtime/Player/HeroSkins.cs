@@ -10,17 +10,17 @@ namespace Core.Player
     {
         private readonly ISaveService _saveService;
         private readonly PlayerData _playerData;
-        private readonly SkinPreset[] _presets;
+        private readonly SkinsCollection _skins;
         private SkinName _boughtSkins;
 
         public SkinPreset Current { get; private set; }
 
         [Inject]
-        public HeroSkins(ISaveService saveService, PlayerData playerData, SkinPreset[] presets)
+        public HeroSkins(ISaveService saveService, PlayerData playerData, SkinsCollection skins)
         {
             _saveService = saveService;
             _playerData = playerData;
-            _presets = presets;
+            _skins = skins;
         }
 
         public void Save(SaveData data)
@@ -43,7 +43,7 @@ namespace Core.Player
 
         public SkinPreset[] GetSortedPresets()
         {
-            return _presets
+            return _skins.Presets
                 .OrderByDescending(item => item.Name == Current.Name)
                 .ThenByDescending(item => _boughtSkins.HasFlag(item.Name) == true)
                 .ThenBy(item => item.FoodCost)
@@ -78,6 +78,6 @@ namespace Core.Player
             preset.FoodCost <= _playerData.FoodAmount;
 
         public SkinPreset GetByName(SkinName skinName) => 
-            _presets.Single(preset => preset.Name == skinName);
+            _skins.Presets.Single(preset => preset.Name == skinName);
     }
 }

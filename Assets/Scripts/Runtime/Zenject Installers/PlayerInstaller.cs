@@ -12,7 +12,7 @@ namespace Core.Installers
         [SerializeField] private PlayerUpgradeConfig _upgradeConfig;
 
         [Space]
-        [SerializeField] private SkinPreset[] _skinPresets;
+        [SerializeField] private SkinsCollection _skins;
 
         public override void InstallBindings()
         {
@@ -57,7 +57,7 @@ namespace Core.Installers
                 .Bind<HeroSkins>()
                 .FromNew()
                 .AsSingle()
-                .WithArguments(_skinPresets)
+                .WithArguments(_skins)
                 .Lazy();
         }
     }
