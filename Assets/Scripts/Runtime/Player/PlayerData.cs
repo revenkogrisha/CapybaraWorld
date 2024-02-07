@@ -56,7 +56,7 @@ namespace Core.Player
         {
             int newAmount = FoodAmount - amount;
             if (newAmount < 0)
-                throw new ArgumentException($"{nameof(PlayerData)}::{nameof(RemoveFood)}: Not enough food to remove!");
+                throw new ArgumentException($"{nameof(PlayerData)}::{nameof(RemoveFood)}: Not enough food to remove - {newAmount}");
 
             FoodAmount = newAmount;
         }

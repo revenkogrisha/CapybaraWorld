@@ -80,9 +80,12 @@ namespace Core.UI
                 _costTMP.color = _costLockedColor;
         }
 
-        private void InvokeBuyButtonEvent() =>
+        private void InvokeBuyButtonEvent()
+        {
+            print("btn");
             BuyButtonCommand.Execute();
-        
+        }
+
         private void InvokeSelectButtonEvent() =>
             SelectButtonCommand.Execute();
 

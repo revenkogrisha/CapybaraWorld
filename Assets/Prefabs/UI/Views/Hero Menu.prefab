@@ -1351,9 +1351,9 @@ MonoBehaviour:
   _canvasGroup: {fileID: 2479641822178267508}
   _revealSpeed: 0.05
   _concealSpeed: 0.05
+  _resourcePanel: {fileID: 5550679460303382921}
   _skinsPanel: {fileID: 4327665432780837616}
   _skinPlacement: {fileID: 5799785756416325106}
-  _resourcePanel: {fileID: 5550679460303382921}
   _heroUpgradeButton: {fileID: 8307592902499987880}
   _resetCostAdButton: {fileID: 8056595845372163311}
   _backButton: {fileID: 2105733345654078283}

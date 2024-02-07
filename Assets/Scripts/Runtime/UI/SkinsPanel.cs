@@ -36,14 +36,15 @@ namespace Core.UI
             }
         }
 
-        public void InvokeItemDisplay(SkinName skinName) =>
+        public void CommandItemDisplay(SkinName skinName) => 
             ItemDisplayCommand.Execute(skinName);
 
         public void SetSelected(SkinName skinName, bool state)
         {
-            _items
-                .Single(item => item.Name == skinName)
-                .SetSelected(state);
+            SkinItemView selected = _items.Single(item => item.Name == skinName);
+
+            selected.SetSelected(state);
+            selected.transform.SetAsFirstSibling();
         }
 
         private void ClearItems()

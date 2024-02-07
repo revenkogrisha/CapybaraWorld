@@ -117,7 +117,7 @@ namespace Core.UI
             _navigation = navigation;
         }
 
-        public void InitializeRoot(MainMenuRoot root) => 
+        public void Initialize(MainMenuRoot root) => 
             _root = root;
 
         private void StartGame() => 
@@ -126,7 +126,7 @@ namespace Core.UI
         private void ToUpgradeMenu()
         {
             Conceal(disable: true).Forget();
-            _root.ShowUpgradeMenu();
+            _root.ShowHeroMenu();
         }
 
         private void DisplayLevelNumber()

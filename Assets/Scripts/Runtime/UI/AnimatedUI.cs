@@ -15,7 +15,9 @@ namespace Core.UI
         [SerializeField] private float _revealSpeed = 0.05f;
         [SerializeField] private float _concealSpeed = 0.05f;
 
-        public async UniTask Reveal(CancellationToken token = default, bool enable = false)
+        public virtual async UniTask Reveal(
+            CancellationToken token = default,
+             bool enable = false)
         {
             try
             {
@@ -38,7 +40,9 @@ namespace Core.UI
             }
         }
 
-        public async UniTask Conceal(CancellationToken token = default, bool disable = false)
+        public virtual async UniTask Conceal(
+            CancellationToken token = default,
+            bool disable = false)
         {
             try
             {

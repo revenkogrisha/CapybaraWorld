@@ -32,7 +32,7 @@ namespace Core.Factories
             return mainMenu;
         }
         
-        public HeroMenu CreateUpgradeMenu(RectTransform parent = null)
+        public HeroMenu CreateHeroMenu(RectTransform parent = null)
         {
             if (parent == null)
                 parent = _root.RectTransform;

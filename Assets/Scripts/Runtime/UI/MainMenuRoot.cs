@@ -1,4 +1,5 @@
 using Core.Factories;
+using Core.Player;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 using Zenject;
@@ -10,28 +11,28 @@ namespace Core.UI
         [SerializeField] private RectTransform _rectTransform;
         
         private MainMenu _mainMenu;
-        private HeroMenu _upgradeMenu;
-        private UIProvider _uiProvider;
+        private HeroMenu _heroMenu;
 
-        [Inject]
-        private void Construct(UIProvider uiProvider) => 
-            _uiProvider = uiProvider;
+        public RectTransform RectTransform => _rectTransform;
 
-        public void Initialize()
+        public void InitializeMainMenu(MainMenu menu)
         {
-            _mainMenu = _uiProvider.CreateMainMenu(_rectTransform);
-            _mainMenu.InitializeRoot(this);
-            
-            _upgradeMenu = _uiProvider.CreateUpgradeMenu(_rectTransform);
-            _upgradeMenu.InitializeRoot(this);
+            _mainMenu = menu;
+            _mainMenu.Initialize(this);
+        }
 
-            _upgradeMenu.InstantConceal(true);
+        public void InitializeHeroMenu(HeroMenu menu, HeroMenuPresenter presenter)
+        {
+            _heroMenu = menu;
+            _heroMenu.Initialize(this, presenter);
+
+            _heroMenu.InstantConceal(true);
         }
 
         public void ShowMainMenu() => 
             _mainMenu.Reveal(enable: true).Forget();
 
-        public void ShowUpgradeMenu() => 
-            _upgradeMenu.Reveal(enable: true).Forget();
+        public void ShowHeroMenu() => 
+            _heroMenu.Reveal(enable: true).Forget();
     }
 }

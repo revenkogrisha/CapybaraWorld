@@ -23,16 +23,20 @@ namespace Core.UI
 
         #region MonoBehaviour
 
-#if REVENKO_DEVELOP
         private void OnEnable()
         {
+            DisplayResources();
+
+#if REVENKO_DEVELOP
             _devPlusCoinsButton.OnClicked += PlusCoins;
             _devMinusCoinsButton.OnClicked += MinusCoins;
             
             _devPlusFoodButton.OnClicked += PlusFood;
             _devMinusFoodButton.OnClicked += MinusFood;
+#endif
         }
 
+#if REVENKO_DEVELOP
         private void OnDisable()
         {
             _devPlusCoinsButton.OnClicked -= PlusCoins;
@@ -44,9 +48,6 @@ namespace Core.UI
 #endif
 
         #endregion
-
-        private void Start() => 
-            DisplayResources();
 
         [Inject]
         private void Construct(PlayerData playerData) =>

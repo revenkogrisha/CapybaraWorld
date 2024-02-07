@@ -25,7 +25,7 @@ namespace Core.UI
                 return;
             }
 
-            _panel.InvokeItemDisplay(Name);
+            _panel.CommandItemDisplay(Name);
         }
 
         public void Initialize(SkinsPanel panel, SkinName skinName, Sprite menuItem)
