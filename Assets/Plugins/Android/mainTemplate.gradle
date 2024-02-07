@@ -7,7 +7,7 @@ dependencies {
     implementation 'androidx.annotation:annotation:1.1.0' // Assets/Editor/OverrideDependencies.xml:8
     implementation 'androidx.fragment:fragment:1.1.0' // Assets/Editor/OverrideDependencies.xml:7
     implementation 'com.google.android.gms:play-services-base:18.2.0' // Assets/Firebase/Editor/AppDependencies.xml:17
-    implementation 'com.google.android.play:app-update:2.0.0' // Assets/GooglePlayPlugins/com.google.play.appupdate/Editor/Dependencies.xml:3
+    implementation 'com.google.android.play:app-update:2.1.0' // Assets/GooglePlayPlugins/com.google.play.appupdate/Editor/Dependencies.xml:3
     implementation 'com.google.android.play:core-common:2.0.0' // Assets/GooglePlayPlugins/com.google.play.core/Editor/Dependencies.xml:3
     implementation 'com.google.android.play:review:2.0.0' // Assets/GooglePlayPlugins/com.google.play.review/Editor/Dependencies.xml:3
     implementation 'com.google.firebase:firebase-analytics:21.3.0' // Assets/Firebase/Editor/MessagingDependencies.xml:15
