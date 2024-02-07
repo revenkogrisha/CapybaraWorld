@@ -1,10 +1,12 @@
 ﻿using System;
+using Core.Audio;
 using Core.Common;
 using DG.Tweening;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using Zenject;
 
 namespace Core.UI
 {
@@ -26,6 +28,8 @@ namespace Core.UI
         [Space]
         [SerializeField] private Color _textNormalColor = Color.white;
         [SerializeField] private Color _textDisabledColor = Color.grey;
+
+        private IAudioHandler _audioHandler;
 
         public bool Interactable
         {
@@ -55,6 +59,10 @@ namespace Core.UI
 
         #endregion
 
+        [Inject]
+        private void Construct(IAudioHandler audioHandler) =>
+            _audioHandler = audioHandler;
+
         public override void OnPointerDown(PointerEventData eventData)
         {
             if (Interactable == true)
@@ -72,10 +80,12 @@ namespace Core.UI
         public void Shake() =>
             transform.DOShakePosition(LockShakeDuration, LockShakeStrength, LockShakeVibration);
 
-
         private void PerformClick()
         {
             HapticHelper.VibrateLight();
+            if (_audioHandler != null)
+                _audioHandler.PlaySound(AudioName.Button, true);
+            
             OnClicked?.Invoke();
         }
     }
