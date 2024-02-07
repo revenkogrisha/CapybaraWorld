@@ -5,9 +5,9 @@ namespace Core.UI
     public class HeroMenuPresenter
     {
         private readonly HeroSkins _heroSkins;
-        private readonly HeroMenu _view;
+        private readonly HeroMenuView _view;
 
-        public HeroMenuPresenter(HeroSkins heroSkins, HeroMenu view)
+        public HeroMenuPresenter(HeroSkins heroSkins, HeroMenuView view)
         {
             _heroSkins = heroSkins;
             _view = view;

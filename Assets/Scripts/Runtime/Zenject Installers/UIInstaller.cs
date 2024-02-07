@@ -14,6 +14,8 @@ namespace Core.Installers
         {
             BindUIRoot();
             BindUIProvider();
+
+            BindMainMenu();
         }
 
         private void BindUIRoot()
@@ -34,6 +36,23 @@ namespace Core.Installers
                 .AsSingle()
                 .WithArguments(_uiCollection)
                 .Lazy();
+        }
+
+        private void BindMainMenu()
+        {
+            Container
+                .Bind<MainMenu>()
+                .FromNew()
+                .AsSingle()
+                .Lazy();
+
+#if REVENKO_DEVELOP
+            Container
+                .Bind<MainMenuDevHandler>()
+                .FromNew()
+                .AsSingle()
+                .Lazy();
+#endif
         }
     }
 }

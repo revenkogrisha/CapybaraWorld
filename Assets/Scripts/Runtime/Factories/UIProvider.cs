@@ -19,26 +19,26 @@ namespace Core.Factories
             _diContainer = diContainer;
         }
 
-        public MainMenu CreateMainMenu(RectTransform parent = null)
+        public MainMenuView CreateMainMenu(RectTransform parent = null)
         {
             if (parent == null)
                 parent = _root.RectTransform;
             
-            MainMenu mainMenu = _diContainer
-                .InstantiatePrefabForComponent<MainMenu>(
+            MainMenuView mainMenu = _diContainer
+                .InstantiatePrefabForComponent<MainMenuView>(
                     _collection.MainMenuPrefab,
                     parent);
             
             return mainMenu;
         }
         
-        public HeroMenu CreateHeroMenu(RectTransform parent = null)
+        public HeroMenuView CreateHeroMenu(RectTransform parent = null)
         {
             if (parent == null)
                 parent = _root.RectTransform;
             
-            HeroMenu heroMenu = _diContainer
-                .InstantiatePrefabForComponent<HeroMenu>(
+            HeroMenuView heroMenu = _diContainer
+                .InstantiatePrefabForComponent<HeroMenuView>(
                     _collection.HeroMenuPrefab,
                     parent);
             

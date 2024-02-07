@@ -11,7 +11,7 @@ using Zenject;
 
 namespace Core.UI
 {
-    public class HeroMenu : AnimatedUI, IAdRewardWaiter
+    public class HeroMenuView : AnimatedUI, IAdRewardWaiter
     {
         private const string CostFormat = "{0}";
         private const string LevelFormat = "Common Hero Level: <b><color=#D978E9>{0}</color></b>";

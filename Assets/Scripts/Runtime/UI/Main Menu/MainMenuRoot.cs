@@ -1,8 +1,5 @@
-using Core.Factories;
-using Core.Player;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
-using Zenject;
 
 namespace Core.UI
 {
@@ -10,18 +7,18 @@ namespace Core.UI
     {
         [SerializeField] private RectTransform _rectTransform;
         
-        private MainMenu _mainMenu;
-        private HeroMenu _heroMenu;
+        private MainMenuView _mainMenu;
+        private HeroMenuView _heroMenu;
 
         public RectTransform RectTransform => _rectTransform;
 
-        public void InitializeMainMenu(MainMenu menu)
+        public void InitializeMainMenu(MainMenuView menu, MainMenuPresenter presenter)
         {
             _mainMenu = menu;
-            _mainMenu.Initialize(this);
+            _mainMenu.Initialize(this, presenter);
         }
 
-        public void InitializeHeroMenu(HeroMenu menu, HeroMenuPresenter presenter)
+        public void InitializeHeroMenu(HeroMenuView menu, HeroMenuPresenter presenter)
         {
             _heroMenu = menu;
             _heroMenu.Initialize(this, presenter);
