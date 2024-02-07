@@ -3,15 +3,21 @@ using Core.Common;
 using UnityEngine;
 using Zenject;
 using Core.Common.ThirdParty;
+using Core.Audio;
+using TriInspector;
 
 namespace Core.Installers
 {
     public class CommonInstaller : MonoInstaller
     {
+        [Title("Notifications Collection"), HideLabel]
         [SerializeField] private NotificationCollection _notifications;
         
-        [Space]
+        [Title("Particles Collection"), HideLabel]
         [SerializeField] private ParticlesCollection _particles;
+
+        [Title("Audio Handler"), HideLabel]
+        [SerializeField, SceneObjectsOnly] private UnityAudioHandler _audioHandler;
 
         public override void InstallBindings()
         {
@@ -21,6 +27,7 @@ namespace Core.Installers
             BindNotifications();
 #endif
             BindParticlesHelper();
+            BindAudioHandler();
         }
 
         private void BindThirdPartyInitializer()
@@ -52,6 +59,16 @@ namespace Core.Installers
                 .AsSingle()
                 .WithArguments(_particles)
                 .Lazy();
+        }
+
+        private void BindAudioHandler()
+        {
+            Container   
+                .Bind<IAudioHandler>()
+                .To<UnityAudioHandler>()
+                .FromInstance(_audioHandler)
+                .AsSingle()
+                .NonLazy();
         }
     }
 }

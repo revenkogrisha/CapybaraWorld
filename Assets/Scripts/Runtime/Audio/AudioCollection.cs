@@ -2,19 +2,19 @@ using System.Linq;
 using TriInspector;
 using UnityEngine;
 
-namespace Core.Common
+namespace Core.Audio
 {
-    [CreateAssetMenu(fileName = "Particles Collection", menuName = "Collections/Particles")]
-    public class ParticlesCollection : ScriptableObject
+    [CreateAssetMenu(fileName = "Audio Collection", menuName = "Collections/Audio")]
+    public class AudioCollection : ScriptableObject
     {
         [ValidateInput(nameof(ValidateDublicates)), ListDrawerSettings(AlwaysExpanded = true)]
-        [SerializeField] private NamedParticle[] _particles;
+        [SerializeField] private NamedAudio[] _audio;
 
-        public NamedParticle[] Particles => _particles;
+        public NamedAudio[] Audio => _audio;
 
         private TriValidationResult ValidateDublicates()
         {
-            bool isUnique = _particles.GroupBy(x => x.Name).All(grouping => grouping.Count() == 1);
+            bool isUnique = _audio.GroupBy(x => x.Name).All(grouping => grouping.Count() == 1);
 
             if (isUnique == true)
                 return TriValidationResult.Valid;
