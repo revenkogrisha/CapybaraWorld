@@ -43,9 +43,8 @@ namespace Core.UI
         private readonly CompositeDisposable _disposable = new();
         private MainMenuRoot _root;
         private IMediationService _mediationService;
-        private PlayerUpgrade _playerUpgrade;
         private IAudioHandler _audioHandler;
-        private HeroMenuPresenter _skinsPresenter;
+        private HeroMenuPresenter _presenter;
         private CancellationTokenSource _rewardedAdCTS;
         private SkinPreset _displayedSkin;
         private SkinPreset _selectedSkin;
@@ -54,6 +53,10 @@ namespace Core.UI
 
         private void OnEnable()
         {
+
+#if REVENKO_DEVELOP
+            _devUpgradeButton.OnClicked += ForceUpgrade;
+#endif
             _heroUpgradeButton.OnClicked += OnUpgradeButtonClicked;
             _backButton.OnClicked += ToMainMenu;
             _resetCostAdButton.OnClicked += ShowAdToResetCost;
@@ -69,38 +72,21 @@ namespace Core.UI
             _skinPlacement.SelectButtonCommand
                 .Subscribe(_ => OnSelectButtonClicked())
                 .AddTo(_disposable);
-
-            UpdateView();
-
-            if (_playerUpgrade.IsCostIncreased == true)
-            {
-                _resetCostAdButton.SetActive(_mediationService.IsRewardedAvailable);
-                if (_mediationService.IsRewardedAvailable == false)
-                    LoadRewardedAds().Forget();
-            }
-            else
-            {
-                _resetCostAdButton.SetActive(false);
-            }
-
-#if REVENKO_DEVELOP
-            _devUpgradeButton.OnClicked += ForceUpgrade;
-#endif
         }
 
         private void OnDisable()
         {
-            FinilizeAdsCTS();
-
-            _heroUpgradeButton.OnClicked -= OnUpgradeButtonClicked;
-            _backButton.OnClicked -= ToMainMenu;
-            _resetCostAdButton.OnClicked -= ShowAdToResetCost;
-            
-            _disposable.Clear();
             
 #if REVENKO_DEVELOP
             _devUpgradeButton.OnClicked -= ForceUpgrade;
 #endif
+            _heroUpgradeButton.OnClicked -= OnUpgradeButtonClicked;
+            _backButton.OnClicked -= ToMainMenu;
+            _resetCostAdButton.OnClicked -= ShowAdToResetCost;
+
+            FinilizeAdsCTS();
+            
+            _disposable.Clear();
         }
 
         #endregion
@@ -108,32 +94,33 @@ namespace Core.UI
         [Inject]
         private void Construct(
             IMediationService mediationService,
-            PlayerUpgrade playerUpgrade,
             IAudioHandler audioHandler)
         {
             _mediationService = mediationService;
-            _playerUpgrade = playerUpgrade;
             _audioHandler = audioHandler;
         }
 
         public override UniTask Reveal(CancellationToken token = default, bool enable = false)
         {
-            _skinsPresenter.OnViewEnabled();
-            _skinsPresenter.SetPanelsByAvailability(_displayedSkin.Name);
+            _presenter.OnViewReveal();
+            _presenter.SetPanelsByAvailability(_displayedSkin.Name);
+
+            DisplayItem(_displayedSkin.Name);
+            UpdateView();
             
             return base.Reveal(token, enable);
         }
 
         public void OnRewardGranted()
         {
-            _playerUpgrade.ResetCost();
+            _presenter.ResetUpgradeCost();
             UpdateView();
         }
 
         public void Initialize(MainMenuRoot root, HeroMenuPresenter skinsPresenter)
         {
             _root = root;
-            _skinsPresenter = skinsPresenter;
+            _presenter = skinsPresenter;
         }
 
         public void InitializeSkins(SkinPreset current, IEnumerable<SkinPreset> presets)
@@ -143,6 +130,16 @@ namespace Core.UI
             _displayedSkin = current;
             _skinsPanel.CommandItemDisplay(current.Name);
         }
+
+        public void TryEnableRewardedAdButton()
+        {
+            _resetCostAdButton.SetActive(_mediationService.IsRewardedAvailable);
+            if (_mediationService.IsRewardedAvailable == false)
+                LoadRewardedAds().Forget();
+        }
+
+        public void DisableRewardedAdButton() =>
+            _resetCostAdButton.SetActive(false);
 
         public void SetSkinBuyable(bool canBuy) => 
             _skinPlacement.SetBuyState(_displayedSkin.FoodCost, canBuy);
@@ -165,6 +162,22 @@ namespace Core.UI
         public SkinPreset GetDisplayedSkin() =>
             _displayedSkin;
 
+        public void UpdateLevelData(int cost, int heroLevel)
+        {
+            _costTMP.SetText(string.Format(CostFormat, cost));
+            _heroLevelTMP.SetText(string.Format(LevelFormat, heroLevel));
+        }
+
+        public void UpdateUpgradeButton(bool canUpgradeHero)
+        {
+            _heroUpgradeButton.Interactable = canUpgradeHero;
+
+            if (canUpgradeHero == true)
+                _costTMP.color = _costAvailableColor;
+            else
+                _costTMP.color = _costLockedColor;
+        }
+
         private void OnUpgradeButtonClicked()
         {
             _audioHandler.PlaySound(AudioName.CoinsSpent);
@@ -175,7 +188,7 @@ namespace Core.UI
 
         private void ForceUpgrade()
         {
-            _playerUpgrade.UpgradeHero(true);
+            _presenter.UpgradeHero(true);
             
             UpdateView();
         }
@@ -214,7 +227,7 @@ namespace Core.UI
 
         private void UpgradeHero()
         {
-            _playerUpgrade.UpgradeHero();
+            _presenter.UpgradeHero();
             
             UpdateView();
         }
@@ -229,18 +242,11 @@ namespace Core.UI
         {
             _resourcePanel.DisplayResources();
             
-            _costTMP.SetText(string.Format(CostFormat, _playerUpgrade.Cost));
-            _heroLevelTMP.SetText(string.Format(LevelFormat, _playerUpgrade.HeroLevel));
+            _presenter.OnUpdateLevelData();
         }
 
-        private void ValidateUpgradeButton()
-        {
-            _heroUpgradeButton.Interactable = _playerUpgrade.CanUpgradeHero;
-            if (_playerUpgrade.CanUpgradeHero == true)
-                _costTMP.color = _costAvailableColor;
-            else
-                _costTMP.color = _costLockedColor;
-        }
+        private void ValidateUpgradeButton() => 
+            _presenter.ValidateUpgradeButton();
 
         private void FinilizeAdsCTS()
         {
@@ -250,25 +256,23 @@ namespace Core.UI
 
         private void DisplayItem(SkinName name)
         {
-            SkinPreset preset = _skinsPresenter.GetPresetByName(name);
+            SkinPreset preset = _presenter.GetPresetByName(name);
             _displayedSkin = preset;
             
             _skinPlacement.DisplayPreset(preset);
 
-            _skinsPresenter.SetPanelsByAvailability(name);
+            _presenter.SetPanelsByAvailability(name);
         }
 
         private void OnSkinBuyButtonClicked()
         {
             _audioHandler.PlaySound(AudioName.FoodBite);
             
-            _skinsPresenter.OnSkinBuyButtonClicked(_displayedSkin);
+            _presenter.OnSkinBuyButtonClicked(_displayedSkin);
             _resourcePanel.DisplayResources();
         }
 
-        private void OnSelectButtonClicked()
-        {
-            _skinsPresenter.OnSelectButtonClicked(_displayedSkin);
-        }
+        private void OnSelectButtonClicked() => 
+            _presenter.OnSelectButtonClicked(_displayedSkin);
     }
 }

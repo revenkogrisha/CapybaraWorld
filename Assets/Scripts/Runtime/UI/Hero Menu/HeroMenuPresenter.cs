@@ -1,20 +1,34 @@
+using System;
 using Core.Player;
+using UnityEngine;
 
 namespace Core.UI
 {
     public class HeroMenuPresenter
     {
+        private readonly PlayerUpgrade _playerUpgrade;
         private readonly HeroSkins _heroSkins;
         private readonly HeroMenuView _view;
 
-        public HeroMenuPresenter(HeroSkins heroSkins, HeroMenuView view)
+        public HeroMenuPresenter(
+            PlayerUpgrade playerUpgrade, 
+            HeroSkins heroSkins, 
+            HeroMenuView view)
         {
+            _playerUpgrade = playerUpgrade;
             _heroSkins = heroSkins;
             _view = view;
         }
 
-        public void OnViewEnabled() => 
+        public void OnViewReveal()
+        {
             _view.InitializeSkins(_heroSkins.Current, _heroSkins.GetSortedPresets());
+
+            if (_playerUpgrade.IsCostIncreased == true)
+                _view.TryEnableRewardedAdButton();
+            else
+                _view.DisableRewardedAdButton();
+        }
 
         public SkinPreset GetPresetByName(SkinName skinName) => 
             _heroSkins.GetByName(skinName);
@@ -52,5 +66,17 @@ namespace Core.UI
                     break;
             }
         }
+
+        public void ResetUpgradeCost() => 
+            _playerUpgrade.ResetCost();
+
+        public void UpgradeHero(bool force = false) => 
+            _playerUpgrade.UpgradeHero(force);
+
+        public void OnUpdateLevelData() => 
+            _view.UpdateLevelData(_playerUpgrade.Cost, _playerUpgrade.HeroLevel);
+
+        public void ValidateUpgradeButton() =>
+            _view.UpdateUpgradeButton(_playerUpgrade.CanUpgradeHero);
     }
 }

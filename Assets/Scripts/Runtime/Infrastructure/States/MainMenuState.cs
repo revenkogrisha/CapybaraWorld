@@ -9,28 +9,31 @@ namespace Core.Infrastructure
 {
     public class MainMenuState : State
     {
-        private readonly UIProvider _uiProvider;
-        private readonly MainMenu _mainMenu;
 #if REVENKO_DEVELOP
         private readonly MainMenuDevHandler _mainMenuDev;
 #endif
+        private readonly UIProvider _uiProvider;
+        private readonly MainMenu _mainMenu;
+        private readonly PlayerUpgrade _playerUpgrade;
         private readonly HeroSkins _heroSkins;
         private MainMenuRoot _root;
 
         [Inject]
         public MainMenuState(
-            UIProvider uiProvider,
-            MainMenu mainMenu,
 #if REVENKO_DEVELOP
             MainMenuDevHandler mainMenuDev,
 #endif
+            PlayerUpgrade playerUpgrade,
+            UIProvider uiProvider,
+            MainMenu mainMenu,
             HeroSkins heroSkins)
         {
-            _uiProvider = uiProvider;
-            _mainMenu = mainMenu;
 #if REVENKO_DEVELOP
             _mainMenuDev = mainMenuDev;
 #endif
+            _playerUpgrade = playerUpgrade;
+            _uiProvider = uiProvider;
+            _mainMenu = mainMenu;
             _heroSkins = heroSkins;
         }
 
@@ -60,7 +63,7 @@ namespace Core.Infrastructure
                     _mainMenu));
 
             HeroMenuView heroMenu = _uiProvider.CreateHeroMenu(_root.RectTransform);
-            _root.InitializeHeroMenu(heroMenu, new HeroMenuPresenter(_heroSkins, heroMenu));
+            _root.InitializeHeroMenu(heroMenu, new HeroMenuPresenter(_playerUpgrade, _heroSkins, heroMenu));
         }
     }
 }
