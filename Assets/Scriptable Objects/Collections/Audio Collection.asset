@@ -15,3 +15,7 @@ MonoBehaviour:
   _audio:
   - Name: 1
     Clip: {fileID: 8300000, guid: 31e73eedc56fe4bbc86ef567a3674f80, type: 3}
+  - Name: 4
+    Clip: {fileID: 8300000, guid: 2b2505f6e939e4c75b2842a5e6cc2f3c, type: 3}
+  - Name: 5
+    Clip: {fileID: 8300000, guid: 4bc3e2d2bee6d4a639b6444045ab72a9, type: 3}

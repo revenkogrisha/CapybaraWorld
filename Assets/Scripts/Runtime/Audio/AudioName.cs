@@ -8,6 +8,8 @@ namespace Core.Audio
         // SFX
         Button = 1,
         Dash = 2,
-        Jump = 3
+        Jump = 3,
+        GameWin = 4,
+        GameLost = 5,
     }
 }

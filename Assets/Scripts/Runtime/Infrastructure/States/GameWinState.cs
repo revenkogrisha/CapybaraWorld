@@ -1,4 +1,5 @@
 using System.Threading;
+using Core.Audio;
 using Core.Common;
 using Core.Common.ThirdParty;
 using Core.Editor.Debugger;
@@ -15,15 +16,21 @@ namespace Core.Infrastructure
         private const int LevelsWonToRequestReview = 3;
         
         private readonly UIProvider _uiProvider;
+        private readonly IAudioHandler _audioHandler;
         private GameWinMenu _gameWinMenu;
         private CancellationTokenSource _cts;
 
         [Inject]
-        public GameWinState(UIProvider uiProvider) => 
+        public GameWinState(UIProvider uiProvider, IAudioHandler audioHandler)
+        {
             _uiProvider = uiProvider;
+            _audioHandler = audioHandler;
+        }
 
         public override void Enter()
         {
+            _audioHandler.PlaySound(AudioName.GameWin);
+            
             _gameWinMenu = _uiProvider.CreateGameWinMenu();
             
             if (PlayerPrefsUtility.LevelsWon >= LevelsWonToRequestReview 
