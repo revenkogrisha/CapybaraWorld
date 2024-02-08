@@ -1,7 +1,9 @@
+using Core.Audio;
 using Core.Common;
 using Core.Level;
 using Core.Player;
 using Core.Saving;
+using Core.UI;
 using Zenject;
 
 namespace Core.Infrastructure
@@ -14,6 +16,8 @@ namespace Core.Infrastructure
         private readonly GameNavigation _navigation;
         private readonly PlayerData _data;
         private readonly PlayerUpgrade _upgrade;
+        private readonly IAudioHandler _audioHandler;
+        private readonly SettingsMenu _settingsMenu;
 
         [Inject]
         public DataInitializationState(
@@ -22,7 +26,9 @@ namespace Core.Infrastructure
             ISaveService saveService,
             GameNavigation navigation,
             PlayerData data, 
-            PlayerUpgrade upgrade)
+            PlayerUpgrade upgrade,
+            IAudioHandler audioHandler,
+            SettingsMenu settingsMenu)
         {
             _heroSkins = heroSkins;
             _locationsHandler = locationsHandler;
@@ -30,6 +36,8 @@ namespace Core.Infrastructure
             _navigation = navigation;
             _data = data;
             _upgrade = upgrade;
+            _audioHandler = audioHandler;
+            _settingsMenu = settingsMenu;
         }
         
         public override void Enter()
@@ -50,7 +58,16 @@ namespace Core.Infrastructure
             _saveService.Register(_heroSkins);
         }
 
-        private void AssingFromPlayerPrefs() => 
+        private void AssingFromPlayerPrefs()
+        {
             HapticHelper.Enabled = PlayerPrefsUtility.HapticFeedbackEnabled;
+
+            float musicVolume = PlayerPrefsUtility.MusicVolume;
+            float soundsVolume = PlayerPrefsUtility.SoundsVolume;
+            _audioHandler.SetMusicVolume(musicVolume);
+            _audioHandler.SetSoundsVolume(soundsVolume);
+
+            _settingsMenu.InitializeOnDataLoaded(musicVolume, soundsVolume);
+        }
     }
 }

@@ -12,11 +12,13 @@ namespace Core.UI
 {
     public class SettingsMenu
     {
-        private const float MusicOnValue = 0f;
-        private const float MusicOffValue = -80f;
+        private const float VolumeOnValue = 0f;
+        private const float VolumeOffValue = -80f;
         
         private readonly IAudioHandler _audioHandler;
+#pragma warning disable IDE0052 // Remove unread private members
         private readonly ISaveService _saveService;
+#pragma warning restore IDE0052
         private bool _isMusicOn = true;
         private bool _areSoundsOn = true;
 
@@ -30,11 +32,17 @@ namespace Core.UI
             _saveService = saveService;
         }
 
+        public void InitializeOnDataLoaded(float musicVolume, float soundsVolume)
+        {
+            _isMusicOn = musicVolume >= VolumeOnValue;
+            _areSoundsOn = soundsVolume >= VolumeOnValue;
+        }
+
         public bool ToggleMusic()
         {
             _isMusicOn = !_isMusicOn;
 
-            _audioHandler.SetMusicVolume(_isMusicOn == true ? MusicOnValue : MusicOffValue);
+            _audioHandler.SetMusicVolume(_isMusicOn == true ? VolumeOnValue : VolumeOffValue);
             
             return _isMusicOn;
         }
@@ -43,7 +51,7 @@ namespace Core.UI
         {
             _areSoundsOn = !_areSoundsOn;
 
-            _audioHandler.SetSoundsVolume(_areSoundsOn == true ? MusicOnValue : MusicOffValue);
+            _audioHandler.SetSoundsVolume(_areSoundsOn == true ? VolumeOnValue : VolumeOffValue);
             
             return _areSoundsOn;
         }

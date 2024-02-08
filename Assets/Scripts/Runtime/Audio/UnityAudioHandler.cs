@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using Core.Saving;
 using UnityEngine;
 using UnityEngine.Audio;
 
@@ -41,13 +42,20 @@ namespace Core.Audio
                 _soundsSource.PlayOneShot(_clips[name]);
         }
 
-        public void SetMasterVolume(float volume) => 
+        public void SetMasterVolume(float volume) =>
             _masterGroup.audioMixer.SetFloat(_masterGroup.name, volume);
 
-        public void SetMusicVolume(float volume) => 
+        public void SetMusicVolume(float volume)
+        {
             _musicGroup.audioMixer.SetFloat(_musicGroup.name, volume);
+            PlayerPrefsUtility.MusicVolume = volume;
+        }
 
-        public void SetSoundsVolume(float volume) => 
+
+        public void SetSoundsVolume(float volume)
+        {
             _soundsGroup.audioMixer.SetFloat(_soundsGroup.name, volume);
+            PlayerPrefsUtility.SoundsVolume = volume;
+        }
     }
 }
