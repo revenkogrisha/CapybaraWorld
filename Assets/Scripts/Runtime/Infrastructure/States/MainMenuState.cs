@@ -40,15 +40,7 @@ namespace Core.Infrastructure
             {
                 _root = _uiProvider.CreateMainMenuRoot();
 
-                MainMenuView mainMenu = _uiProvider.CreateMainMenu(_root.RectTransform);
-                _root.InitializeMainMenu(mainMenu, new MainMenuPresenter(
-#if REVENKO_DEVELOP
-                    _mainMenuDev,
-#endif
-                    _mainMenu));
-
-                HeroMenuView heroMenu = _uiProvider.CreateHeroMenu(_root.RectTransform);
-                _root.InitializeHeroMenu(heroMenu, new HeroMenuPresenter(_heroSkins, heroMenu));
+                InitializeRoot();
             }
 
             _root.SetActive(true);
@@ -57,5 +49,18 @@ namespace Core.Infrastructure
 
         public override void Exit() => 
             _root.SetActive(false);
+
+        private void InitializeRoot() 
+        {
+            MainMenuView mainMenu = _uiProvider.CreateMainMenu(_root.RectTransform);
+                _root.InitializeMainMenu(mainMenu, new MainMenuPresenter(
+#if REVENKO_DEVELOP
+                    _mainMenuDev,
+#endif
+                    _mainMenu));
+
+            HeroMenuView heroMenu = _uiProvider.CreateHeroMenu(_root.RectTransform);
+            _root.InitializeHeroMenu(heroMenu, new HeroMenuPresenter(_heroSkins, heroMenu));
+        }
     }
 }

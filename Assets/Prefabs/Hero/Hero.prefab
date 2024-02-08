@@ -138,7 +138,7 @@ TrailRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 576322715
   m_SortingLayer: 4
-  m_SortingOrder: 0
+  m_SortingOrder: -10
   m_Time: 0.2
   m_PreviewTimeScale: 1
   m_Parameters:
@@ -1629,7 +1629,6 @@ MonoBehaviour:
   _config: {fileID: 11400000, guid: 19f87217513ed4f248f07f7c16d76846, type: 2}
   _particlesOffset: {x: 0, y: -1, z: 0}
   _deathTweenDuration: 0.25
-  _scaleVectorOne: {x: 1, y: 0.7}
 --- !u!114 &5395183055495763638
 MonoBehaviour:
   m_ObjectHideFlags: 0

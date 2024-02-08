@@ -676,11 +676,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _canvasGroup: {fileID: 2479641822178267508}
-  _revealSpeed: 0.05
-  _concealSpeed: 0.05
+  _revealSpeed: 0.06
+  _concealSpeed: 0.06
   _playButton: {fileID: 7108305162423645167}
   _upgradeButton: {fileID: 9194373283293260732}
-  _skinsButton: {fileID: 0}
   _levelTMP: {fileID: 639683759894122467}
   _locationTMP: {fileID: 8985693959404679996}
   _devLocationButton: {fileID: 2598746230655637240}
