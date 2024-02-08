@@ -11,5 +11,8 @@ namespace Core.Audio
         Jump = 3,
         GameWin = 4,
         GameLost = 5,
+        HeroSpawn = 6,
+        CoinsSpent = 7,
+        FoodBite = 8
     }
 }

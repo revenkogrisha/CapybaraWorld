@@ -19,7 +19,7 @@ namespace Core.UI
         public SkinPreset GetPresetByName(SkinName skinName) => 
             _heroSkins.GetByName(skinName);
 
-        public void OnBuyButtonClicked(SkinPreset skin)
+        public void OnSkinBuyButtonClicked(SkinPreset skin)
         {
             _heroSkins.Buy(skin);
             SetPanelsByAvailability(skin.Name);

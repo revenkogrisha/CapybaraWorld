@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Threading;
+using Core.Audio;
 using Core.Mediation;
 using Core.Other;
 using Core.Player;
@@ -43,6 +44,7 @@ namespace Core.UI
         private MainMenuRoot _root;
         private IMediationService _mediationService;
         private PlayerUpgrade _playerUpgrade;
+        private IAudioHandler _audioHandler;
         private HeroMenuPresenter _skinsPresenter;
         private CancellationTokenSource _rewardedAdCTS;
         private SkinPreset _displayedSkin;
@@ -61,7 +63,7 @@ namespace Core.UI
                 .AddTo(_disposable);
 
             _skinPlacement.BuyButtonCommand
-                .Subscribe(_ => OnBuyButtonClicked())
+                .Subscribe(_ => OnSkinBuyButtonClicked())
                 .AddTo(_disposable);
 
             _skinPlacement.SelectButtonCommand
@@ -104,10 +106,14 @@ namespace Core.UI
         #endregion
 
         [Inject]
-        private void Construct(IMediationService mediationService, PlayerUpgrade playerUpgrade)
+        private void Construct(
+            IMediationService mediationService,
+            PlayerUpgrade playerUpgrade,
+            IAudioHandler audioHandler)
         {
             _mediationService = mediationService;
             _playerUpgrade = playerUpgrade;
+            _audioHandler = audioHandler;
         }
 
         public override UniTask Reveal(CancellationToken token = default, bool enable = false)
@@ -161,6 +167,8 @@ namespace Core.UI
 
         private void OnUpgradeButtonClicked()
         {
+            _audioHandler.PlaySound(AudioName.CoinsSpent);
+            
             UpgradeHero();
             _mediationService.ShowInterstitial();
         }
@@ -250,9 +258,11 @@ namespace Core.UI
             _skinsPresenter.SetPanelsByAvailability(name);
         }
 
-        private void OnBuyButtonClicked()
+        private void OnSkinBuyButtonClicked()
         {
-            _skinsPresenter.OnBuyButtonClicked(_displayedSkin);
+            _audioHandler.PlaySound(AudioName.FoodBite);
+            
+            _skinsPresenter.OnSkinBuyButtonClicked(_displayedSkin);
             _resourcePanel.DisplayResources();
         }
 

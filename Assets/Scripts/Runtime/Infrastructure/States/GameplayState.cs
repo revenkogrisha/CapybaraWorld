@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Core.Audio;
 using Core.Common;
 using Core.Factories;
 using Core.Game;
@@ -28,6 +29,7 @@ namespace Core.Infrastructure
         private readonly ISaveService _saveService;
         private readonly PlaythroughHandler _playthroughHandler;
         private readonly ParticlesHelper _particlesHelper;
+        private readonly IAudioHandler _audioHandler;
 
         [Inject]
         public GameplayState(
@@ -41,7 +43,8 @@ namespace Core.Infrastructure
             UIProvider uiProvider,
             PlayerData playerData,
             ISaveService saveService,
-            ParticlesHelper particlesHelper)
+            ParticlesHelper particlesHelper,
+            IAudioHandler audioHandler)
         {
             _inputHandler = inputHandler;
             _levelGenerator = levelGenerator;
@@ -54,6 +57,7 @@ namespace Core.Infrastructure
             _playerData = playerData;
             _saveService = saveService;
             _particlesHelper = particlesHelper;
+            _audioHandler = audioHandler;
         }
 
         public override void Enter()
@@ -80,6 +84,8 @@ namespace Core.Infrastructure
             _particlesHelper.Initialize();
 
             CreateUI(hero);
+
+            _audioHandler.PlaySound(AudioName.HeroSpawn);
         }
 
         public override void Exit()
