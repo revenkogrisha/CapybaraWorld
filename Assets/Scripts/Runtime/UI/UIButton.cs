@@ -34,6 +34,8 @@ namespace Core.UI
 
         private IAudioHandler _audioHandler;
 
+        public TMP_Text TMP => _tmp;
+
         public bool Interactable
         {
             get => _button.interactable;

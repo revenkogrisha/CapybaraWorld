@@ -53,7 +53,6 @@ namespace Core.UI
 
         private void OnEnable()
         {
-
 #if REVENKO_DEVELOP
             _devUpgradeButton.OnClicked += ForceUpgrade;
 #endif
@@ -76,7 +75,6 @@ namespace Core.UI
 
         private void OnDisable()
         {
-            
 #if REVENKO_DEVELOP
             _devUpgradeButton.OnClicked -= ForceUpgrade;
 #endif
@@ -117,10 +115,10 @@ namespace Core.UI
             UpdateView();
         }
 
-        public void Initialize(MainMenuRoot root, HeroMenuPresenter skinsPresenter)
+        public void Initialize(MainMenuRoot root, HeroMenuPresenter presenter)
         {
             _root = root;
-            _presenter = skinsPresenter;
+            _presenter = presenter;
         }
 
         public void InitializeSkins(SkinPreset current, IEnumerable<SkinPreset> presets)

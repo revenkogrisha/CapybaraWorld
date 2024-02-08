@@ -11,9 +11,10 @@ namespace Core.UI
         private const string LevelTextFormat = "Level {0}";
         private const string LocationTextFormat = "Location: <b><color=#D978E9>{0}</color></b>";
         
-        [Space]
+        [Header("Menu Buttons")] 
         [SerializeField] private UIButton _playButton;
         [SerializeField] private UIButton _upgradeButton;
+        [SerializeField] private UIButton _settingsButton;
         
         [Space]
         [SerializeField] private TMP_Text _levelTMP;
@@ -34,6 +35,7 @@ namespace Core.UI
         {
             _playButton.OnClicked += StartGame;
             _upgradeButton.OnClicked += ToHeroMenu;
+            _settingsButton.OnClicked += ToSettingsMenu;
 
 #if REVENKO_DEVELOP
             _devLocationButton.OnClicked += DevUpdateLocation;
@@ -49,6 +51,7 @@ namespace Core.UI
         {
             _playButton.OnClicked -= StartGame;
             _upgradeButton.OnClicked -= ToHeroMenu;
+            _settingsButton.OnClicked -= ToSettingsMenu;
 
 #if REVENKO_DEVELOP
             _devLocationButton.OnClicked -= DevUpdateLocation;
@@ -83,6 +86,12 @@ namespace Core.UI
         {
             Conceal(disable: true).Forget();
             _root.ShowHeroMenu();
+        }
+
+        private void ToSettingsMenu()
+        {
+            Conceal(disable: true).Forget();
+            _root.ShowSettingsMenu();
         }
 
         private void DisplayLevelNumber()

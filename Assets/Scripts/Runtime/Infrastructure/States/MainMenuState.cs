@@ -16,6 +16,7 @@ namespace Core.Infrastructure
         private readonly MainMenu _mainMenu;
         private readonly PlayerUpgrade _playerUpgrade;
         private readonly HeroSkins _heroSkins;
+        private readonly SettingsMenu _settingsMenu;
         private MainMenuRoot _root;
 
         [Inject]
@@ -26,7 +27,8 @@ namespace Core.Infrastructure
             PlayerUpgrade playerUpgrade,
             UIProvider uiProvider,
             MainMenu mainMenu,
-            HeroSkins heroSkins)
+            HeroSkins heroSkins,
+            SettingsMenu settings)
         {
 #if REVENKO_DEVELOP
             _mainMenuDev = mainMenuDev;
@@ -35,6 +37,7 @@ namespace Core.Infrastructure
             _uiProvider = uiProvider;
             _mainMenu = mainMenu;
             _heroSkins = heroSkins;
+            _settingsMenu = settings;
         }
 
         public override void Enter()
@@ -55,15 +58,23 @@ namespace Core.Infrastructure
 
         private void InitializeRoot() 
         {
-            MainMenuView mainMenu = _uiProvider.CreateMainMenu(_root.RectTransform);
-                _root.InitializeMainMenu(mainMenu, new MainMenuPresenter(
+            MainMenuView mainMenuView = _uiProvider.CreateMainMenu(_root.RectTransform);
+                _root.InitializeMainMenu(mainMenuView, new MainMenuPresenter(
 #if REVENKO_DEVELOP
                     _mainMenuDev,
 #endif
                     _mainMenu));
 
-            HeroMenuView heroMenu = _uiProvider.CreateHeroMenu(_root.RectTransform);
-            _root.InitializeHeroMenu(heroMenu, new HeroMenuPresenter(_playerUpgrade, _heroSkins, heroMenu));
+            HeroMenuView heroMenuView = _uiProvider.CreateHeroMenu(_root.RectTransform);
+            _root.InitializeHeroMenu(heroMenuView, new HeroMenuPresenter(
+                _playerUpgrade,
+                _heroSkins,
+                heroMenuView));
+
+            SettingsMenuView settingsMenuView = _uiProvider.CreateSettingsMenu(_root.RectTransform);
+            _root.InitializeSettingsMenu(settingsMenuView, new SettingsMenuPresenter(
+                _settingsMenu,
+                settingsMenuView));
         }
     }
 }

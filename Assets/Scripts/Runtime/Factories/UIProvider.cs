@@ -45,6 +45,19 @@ namespace Core.Factories
             return heroMenu;
         }
         
+        public SettingsMenuView CreateSettingsMenu(RectTransform parent = null)
+        {
+            if (parent == null)
+                parent = _root.RectTransform;
+            
+            SettingsMenuView settingsMenu = _diContainer
+                .InstantiatePrefabForComponent<SettingsMenuView>(
+                    _collection.SettingsMenuPrefab,
+                    parent);
+            
+            return settingsMenu;
+        }
+        
         public MainMenuRoot CreateMainMenuRoot()
         {
             MainMenuRoot root = _diContainer

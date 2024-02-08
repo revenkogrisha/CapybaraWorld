@@ -16,6 +16,7 @@ namespace Core.Installers
             BindUIProvider();
 
             BindMainMenu();
+            BindSettingsMenu();
         }
 
         private void BindUIRoot()
@@ -53,6 +54,15 @@ namespace Core.Installers
                 .AsSingle()
                 .Lazy();
 #endif
+        }
+
+        private void BindSettingsMenu()
+        {
+            Container
+                .Bind<SettingsMenu>()
+                .FromNew()
+                .AsSingle()
+                .Lazy();
         }
     }
 }
