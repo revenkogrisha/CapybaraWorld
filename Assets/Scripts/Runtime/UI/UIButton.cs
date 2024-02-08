@@ -16,6 +16,9 @@ namespace Core.UI
         private const float LockShakeStrength = 9f;
         private const int LockShakeVibration = 10;
     
+        [Header("Settings")]
+        [SerializeField] private bool _playSound = true;
+    
         [Header("Components")]
         [SerializeField] private Button _button;
         [SerializeField] private Image _image;
@@ -83,7 +86,7 @@ namespace Core.UI
         private void PerformClick()
         {
             HapticHelper.VibrateLight();
-            if (_audioHandler != null)
+            if (_audioHandler != null && _playSound == true)
                 _audioHandler.PlaySound(AudioName.Button, true);
             
             OnClicked?.Invoke();
