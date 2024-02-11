@@ -6,7 +6,7 @@ using Zenject;
 
 namespace Core.UI
 {
-    public class FinishMenu : MonoBehaviour
+    public class FinishMenu : AnimatedUI
     {
         private const float TitleTweenDuration = 0.5f;
         private const float ButtonShakeDelayByTitle = 0.5f;

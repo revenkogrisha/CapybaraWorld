@@ -21,7 +21,7 @@ namespace Core.Game
         private readonly CompositeDisposable _disposable = new();
         
         // Casts to float are necessary because of operating with int values. Not working without them
-        public float Progress => (float)_score.PlaythroughScore.Value / (float)WinScore;
+        public float ProgressDelta => (float)_score.PlaythroughScore.Value / (float)WinScore;
 
         [Inject]
         public PlaythroughHandler(

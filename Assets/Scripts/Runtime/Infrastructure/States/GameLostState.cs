@@ -1,21 +1,32 @@
 using Core.Audio;
 using Core.Common;
 using Core.Factories;
+using Core.Game;
 using Core.Other;
+using Core.Player;
 using Core.UI;
+using Cysharp.Threading.Tasks;
 using Zenject;
 
 namespace Core.Infrastructure
 {
     public class GameLostState : State
     {
+        private readonly HeroSkins _heroSkins;
+        private readonly IPlaythroughProgressHandler _playthrough;
         private readonly UIProvider _uiProvider;
         private readonly IAudioHandler _audioHandler;
-        private GameLostMenu _gameOverMenu;
+        private GameLostMenuView _menuView;
 
         [Inject]
-        public GameLostState(UIProvider uiProvider, IAudioHandler audioHandler)
+        public GameLostState(
+            HeroSkins heroSkins,
+            IPlaythroughProgressHandler playthrough,
+            UIProvider uiProvider, 
+            IAudioHandler audioHandler)
         {
+            _heroSkins = heroSkins;
+            _playthrough = playthrough;
             _uiProvider = uiProvider;
             _audioHandler = audioHandler;
         }
@@ -24,12 +35,21 @@ namespace Core.Infrastructure
         {
             _audioHandler.PlaySound(AudioName.GameLost);
             
-            _gameOverMenu = _uiProvider.CreateGameLostMenu();
+            if (_menuView == null)
+            {
+                _menuView = _uiProvider.CreateGameLostMenu();
+                _menuView.Initialize(new GameLostMenuPresenter(
+                    _heroSkins,
+                    _playthrough,
+                    _menuView));
+            }
+
+            _menuView.Reveal(enable: true).Forget();
             
             HapticHelper.VibrateHeavy();
         }
 
         public override void Exit() => 
-            _gameOverMenu.gameObject.SelfDestroy();
+            _menuView.SetActive(false);
     }
 }

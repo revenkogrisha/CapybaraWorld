@@ -7,6 +7,7 @@ using Core.Factories;
 using Core.Other;
 using Core.Saving;
 using Core.UI;
+using Cysharp.Threading.Tasks;
 using Zenject;
 
 namespace Core.Infrastructure
@@ -17,7 +18,7 @@ namespace Core.Infrastructure
         
         private readonly UIProvider _uiProvider;
         private readonly IAudioHandler _audioHandler;
-        private GameWinMenu _gameWinMenu;
+        private GameWinMenu _menuView;
         private CancellationTokenSource _cts;
 
         [Inject]
@@ -31,7 +32,10 @@ namespace Core.Infrastructure
         {
             _audioHandler.PlaySound(AudioName.GameWin);
             
-            _gameWinMenu = _uiProvider.CreateGameWinMenu();
+            if (_menuView == null)
+                _menuView = _uiProvider.CreateGameWinMenu();
+
+            _menuView.Reveal(enable: true).Forget();
             
             if (PlayerPrefsUtility.LevelsWon >= LevelsWonToRequestReview 
                 && PlayerPrefsUtility.HasRequestedReview == false)
@@ -40,7 +44,7 @@ namespace Core.Infrastructure
 
         public override void Exit()
         {
-            _gameWinMenu.gameObject.SelfDestroy();
+            _menuView.SetActive(false);
             _cts.Clear();
         }
 
