@@ -29,7 +29,7 @@ namespace Core.UI
         {
             _musicToggleButton.OnClicked += OnToggleMusic;
             _soundsToggleButton.OnClicked += OnToggleSounds;
-            _soundsToggleButton.OnClicked += OnLoadProgress;
+            _loadProgressButton.OnClicked += OnLoadProgress;
             _backButton.OnClicked += ToMainMenu;
         }
         
@@ -37,7 +37,7 @@ namespace Core.UI
         {
             _musicToggleButton.OnClicked -= OnToggleMusic;
             _soundsToggleButton.OnClicked -= OnToggleSounds;
-            _soundsToggleButton.OnClicked -= OnLoadProgress;
+            _loadProgressButton.OnClicked -= OnLoadProgress;
             _backButton.OnClicked -= ToMainMenu;
         }
 
