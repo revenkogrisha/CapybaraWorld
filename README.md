@@ -1,8 +1,8 @@
 # Capybara World
 
-<!-- <p align="center">
+<p align="center">
    <img src="https://github.com/revenkogrisha/CapybaraWorld/blob/main/GameGif.gif">
-</p> -->
+</p>
 
 <p align="center">
    <img src="https://img.shields.io/badge/Engine-Unity%202022.3.19f1-blueviolet?style=&logo=unity" alt="Engine">
