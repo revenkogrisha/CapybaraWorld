@@ -65,7 +65,8 @@ See the list of [contributors](https://github.com/revenkogrisha/CapybaraWorld/co
 This project is licensed under the Apache-2.0 License - see the [LICENSE](LICENSE) file for details
   
 >[!WARNING]
->Usage of **graphical, audio, and other assets** in ALL purposes is **strictly forbidden**! 
+>Usage of **graphical, audio, and other assets** in ALL purposes is **strictly forbidden**!  
+>But you are allowed to use any code samples or systems in any kind of your project.
 
 ## Acknowledgments
 
