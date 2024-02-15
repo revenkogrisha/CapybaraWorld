@@ -7,12 +7,14 @@ namespace Core.Audio
 
         // SFX
         Button = 1,
-        Dash = 2,
-        Jump = 3,
+        HeroDash = 2,
+        HeroJump = 3,
         GameWin = 4,
         GameLost = 5,
         HeroSpawn = 6,
         CoinsSpent = 7,
-        FoodBite = 8
+        FoodBite = 8,
+        EnemyDeath = 9,
+        HeroCollect = 10
     }
 }

@@ -35,7 +35,7 @@ namespace Core.Audio
             _musicSource.PlayOneShot(_clips[name]);
 
         public void PlaySound(AudioName name, bool isUI = false)
-        {
+        {   
             if (isUI == true)
                 _uiSource.PlayOneShot(_clips[name]);
             else

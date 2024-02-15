@@ -12,6 +12,7 @@ using Zenject;
 using TriInspector;
 using Core.Editor.Debugger;
 using DG.Tweening;
+using Core.Audio;
 
 namespace Core.Player
 {
@@ -40,18 +41,20 @@ namespace Core.Player
 		private InputHandler _inputHandler;
 		private PlayerUpgrade _upgrade;
         private ParticlesHelper _particles;
+        private IAudioHandler _audioHandler;
 
         [HideInInspector] public ReactiveProperty<bool> IsDead { get; } = new(false);
 		[HideInInspector] public readonly ReactiveProperty<Transform> GrappledJoint = new();
 		[HideInInspector] public readonly ReactiveProperty<bool> IsRunning = new();
 		[HideInInspector] public readonly ReactiveProperty<bool> IsJumping = new();
-		[HideInInspector] public readonly ReactiveProperty<bool> IsDashing = new();
 		
 		public readonly ReactiveCommand<Type> StateChangedCommand = new();
 		public readonly ReactiveCommand<float> DashedCommand = new();
 		public readonly ReactiveCommand HitCommand = new();
 		public ReactiveCommand CoinCollectedCommand { get; } = new();
         public ReactiveCommand FoodCollectedCommand { get; } = new();
+
+		public bool IsDashing { get; set; } = false;
 
 		public SpringJoint2D SpringJoint2D => _springJoint2D;
 		public Collider2D Collider2D => _collider2D;
@@ -76,6 +79,19 @@ namespace Core.Player
 
 			SubscribeUpdate();
 			SubscribePhysicsCallbacks();
+
+			DashedCommand	
+				.Subscribe(_ => PlayDashSound())
+				.AddTo(_disposable);
+
+			FoodCollectedCommand
+				.Subscribe(_ => PlayCollectSound())
+				.AddTo(_disposable);
+
+			IsJumping
+				.Where(value => value == true)	
+				.Subscribe(_ => PlayJumpSound())
+				.AddTo(_disposable);
 		}
 
         private void OnDestroy()
@@ -97,13 +113,16 @@ namespace Core.Player
 		#endregion
 
 		[Inject]
-		private void Construct(InputHandler inputHandler,
+		private void Construct(
+			InputHandler inputHandler,
 			PlayerUpgrade upgrade,
-			ParticlesHelper particles)
+			ParticlesHelper particles,
+			IAudioHandler audioHandler)
 		{
 			_inputHandler = inputHandler;
 			_upgrade = upgrade;
 			_particles = particles;
+			_audioHandler = audioHandler;
 		}
 
         public void PlayJumpParticles()
@@ -159,7 +178,7 @@ namespace Core.Player
 				.AddTo(_disposable);
 
 			onTriggerEnter2D
-				.Where(_ => IsDashing.Value == true)
+				.Where(_ => IsDashing == true)
 				.Subscribe(collider => 
 					Tools.InvokeIfNotNull<Chest>(collider, chest => chest.Open()))
 				.AddTo(_disposable);
@@ -177,13 +196,13 @@ namespace Core.Player
 				.AddTo(_disposable);
 
 			onCollisionEnter2D
-				.Where(_ => IsDashing.Value == true)
+				.Where(_ => IsDashing == true)
 				.Subscribe(collision => 
 					Tools.InvokeIfNotNull<Enemy>(collision, OnDashIntoEnemy))
 				.AddTo(_disposable);
 
 			onCollisionEnter2D
-				.Where(_ => IsDashing.Value == false) 
+				.Where(_ => IsDashing == false) 
 				.Subscribe(collision => 
 					Tools.InvokeIfNotNull<Enemy>(collision, OnEnemyCollision))
 				.AddTo(_disposable);
@@ -199,7 +218,16 @@ namespace Core.Player
 				.AddTo(_disposable);
 		}
 
-		private void SwitchToGrapplingState()
+        private void PlayDashSound() => 
+			_audioHandler.PlaySound(AudioName.HeroDash);
+
+		private void PlayCollectSound() =>
+			_audioHandler.PlaySound(AudioName.HeroCollect);
+
+        private void PlayJumpSound() => 
+			_audioHandler.PlaySound(AudioName.HeroJump);
+
+        private void SwitchToGrapplingState()
 		{
 			_stateMachine.ChangeState<HeroGrapplingState>();
 			StateChangedCommand.Execute(typeof(HeroGrapplingState));

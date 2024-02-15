@@ -1,3 +1,4 @@
+using Core.Audio;
 using Core.Common;
 using Core.Other;
 using DG.Tweening;
@@ -17,14 +18,18 @@ namespace Core.Level
         [SerializeField] private Vector2 _scaleVectorTwo = new(0.7f, 1f);
         
         private ParticlesHelper _particlesHelper;
+        private IAudioHandler _audioHandler;
 
         public LookingDirection Direction { get; set; }
         [HideInInspector] public ReactiveProperty<bool> IsDead = new();
 
         [Inject]
-        private void BaseConstruct(ParticlesHelper particlesHelper) =>
+        private void BaseConstruct(ParticlesHelper particlesHelper, IAudioHandler audioHandler)
+        {
             _particlesHelper = particlesHelper;
-        
+            _audioHandler = audioHandler;
+        }
+
         public bool TryPerformDeath()
         {
             if (_isImmortal == true)
@@ -51,6 +56,8 @@ namespace Core.Level
                     _particlesHelper
                         .Spawn(ParticlesName.EnemyDeath, transform.position)
                         .Forget();
+                        
+                    _audioHandler.PlaySound(AudioName.EnemyDeath);
 
                     gameObject.SelfDestroy();
 

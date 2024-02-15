@@ -34,8 +34,8 @@ namespace Core.Player
 
         private bool IsDashing
         {
-            get => _hero.IsDashing.Value;
-            set => _hero.IsDashing.Value = value;
+            get => _hero.IsDashing;
+            set => _hero.IsDashing = value;
         }
 
         public HeroRunState(Hero hero, InputHandler inputHandler, PlayerUpgrade upgrade)
