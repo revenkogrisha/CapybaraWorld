@@ -49,8 +49,9 @@ You have many capybaras in your team to achive any goals and find all hidden che
 
 ## Authors
 
-* **[Grisha Revenko](https://github.com/revenkogrisha)** - *Game, UI, graphics design, Code, Mediation, Publishing*
+* **[Grisha Revenko](https://github.com/revenkogrisha)** - *Game, UI, graphics design. Code, mediation, publishing*
 * **[Kristina](https://t.me/krisdvg_10)** - *Graphics, characters, game design*
+* **[Alex](https://t.me/FreeInTheKnowledge36)** - *Music, sounds design & mastering*
 
 See the list of [contributors](https://github.com/revenkogrisha/CapybaraWorld/contributors) who and how participated in this project.  
 **Extra thanks to all** of those who was helping to test the game during its development! Love you!
