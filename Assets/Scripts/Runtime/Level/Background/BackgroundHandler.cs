@@ -27,9 +27,13 @@ namespace Core.Level
         public void CreateBackground(Vector2 startPosition, BackgroundPreset preset)
         {
             _backgroundInstance = Object.Instantiate(_backgroundPrefab);
+            
             _backgroundInstance.transform.SetParent(_root);
             _backgroundInstance.transform.localPosition = startPosition;
+            
             _backgroundInstance.ApplyPreset(preset);
+
+            _camera.backgroundColor = preset.UndercoverColor;
         }
     }
 }
