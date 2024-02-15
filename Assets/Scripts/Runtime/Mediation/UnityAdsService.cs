@@ -22,7 +22,7 @@ namespace Core.Mediation.UnityAds
                 return;
                 
             UnityAdsInitializer.Initialize(this);
-            _nextAdShow = UnityAdsData.AdShowStartupDelay;
+            _nextAdShow = Time.time + UnityAdsData.AdShowStartupDelay;
 
             _isRewardedAvailable = false;
             _rewardWaiter = null;
@@ -122,7 +122,7 @@ namespace Core.Mediation.UnityAds
         {
             if (IsInterstitial(placementId) == true)
             {
-                _nextAdShow += UnityAdsData.AdShowInterval;
+                _nextAdShow = Time.time + UnityAdsData.AdShowInterval;
                 
                 LoadInterstitial();
             }
