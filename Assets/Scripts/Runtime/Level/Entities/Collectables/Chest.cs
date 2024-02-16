@@ -1,3 +1,4 @@
+using Core.Audio;
 using Core.Common;
 using Core.Factories;
 using Core.Other;
@@ -16,7 +17,7 @@ namespace Core.Level
         [SerializeField] private ChestKind _kind = ChestKind.Simple; 
         [SerializeField] private ChestPreset _preset;
         [SerializeField] private ParticleSystem[] _particles;
-        
+        private IAudioHandler _audioHandler;
         private ParticlesHelper _particlesHelper;
         private CoinFactory _coinFactory;
         private bool _canOpen = true;
@@ -31,13 +32,19 @@ namespace Core.Level
             Setup();
 
         [Inject]
-        private void Construct(ParticlesHelper particlesHelper) =>
+        private void Construct(IAudioHandler audioHandler, ParticlesHelper particlesHelper)
+        {
+            _audioHandler = audioHandler;
             _particlesHelper = particlesHelper;
+        }
 
         public void Open()
         {
             if (_canOpen == false)
                 return;
+
+            if (Preloaded == false)
+                _audioHandler.PlaySound(AudioName.ChestBreak);
 
             if (_kind == ChestKind.Simple && Preloaded == false)
             {

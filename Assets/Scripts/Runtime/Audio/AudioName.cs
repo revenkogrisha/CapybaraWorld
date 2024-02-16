@@ -15,6 +15,8 @@ namespace Core.Audio
         CoinsSpent = 7,
         FoodBite = 8,
         EnemyDeath = 9,
-        HeroCollect = 10
+        HeroCollect = 10,
+        ChestBreak = 11,
+        HeroGrapple = 12
     }
 }

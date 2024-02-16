@@ -80,6 +80,7 @@ namespace Core.Player
 			SubscribeUpdate();
 			SubscribePhysicsCallbacks();
 
+			// Could be separated to HeroAudio audio for complexity. 
 			DashedCommand	
 				.Subscribe(_ => PlayDashSound())
 				.AddTo(_disposable);
@@ -91,6 +92,11 @@ namespace Core.Player
 			IsJumping
 				.Where(value => value == true)	
 				.Subscribe(_ => PlayJumpSound())
+				.AddTo(_disposable);
+
+			GrappledJoint
+				.Where(joint => joint != null)
+				.Subscribe(_ => PlayGrappleSound())
 				.AddTo(_disposable);
 		}
 
@@ -226,6 +232,9 @@ namespace Core.Player
 
         private void PlayJumpSound() => 
 			_audioHandler.PlaySound(AudioName.HeroJump);
+
+        private void PlayGrappleSound() => 
+			_audioHandler.PlaySound(AudioName.HeroGrapple);
 
         private void SwitchToGrapplingState()
 		{

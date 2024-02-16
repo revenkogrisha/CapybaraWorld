@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: Audio Config
   m_EditorClassIdentifier: 
   _volumeOffValue: -80
-  _musicVolume: -15
-  _soundsVolume: 0
+  _musicVolume: -10
+  _soundsVolume: -2
