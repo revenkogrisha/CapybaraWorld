@@ -5,10 +5,10 @@
 </p>
 
 <p align="center">
-   <img src="https://img.shields.io/badge/Engine-Unity%202022.3.19f1-blueviolet?style=&logo=unity" alt="Engine">
+   <img src="https://img.shields.io/badge/Engine-Unity%202022.3.20f1-blueviolet?style=&logo=unity" alt="Engine">
    <img src="https://img.shields.io/badge/Platform-Android 7+%20-brightgreen?style=&logo=android" alt="Platform">
    <img src="https://img.shields.io/badge/Play_Market-Available%20-brightgreen?style=&logo=google play" alt="Distribution">
-   <img src="https://img.shields.io/badge/Version-0.7.2-blue" alt="Game Version">
+   <img src="https://img.shields.io/badge/Version-1.0.0-blue" alt="Game Version">
    <img src="https://img.shields.io/badge/Release Date-3.12.2023-red" alt="Release Date">
    <img src="https://img.shields.io/badge/License-Apache--2.0%20-yellow?style=&logo=apache" alt="License">
 </p>
@@ -27,7 +27,7 @@ You have many capybaras in your team to achive any goals and find all hidden che
 
 * **Release Date:** December 3, 2023
 * Project was made with **[Unity Engine](https://unity.com/)**
-* **Engine Version:** 2022.3.11f1 --> 2022.3.19f1
+* **Engine Version:** 2022.3.11f1 --> 2022.3.20f1
 
 ### Built With
 
