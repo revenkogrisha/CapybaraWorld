@@ -22,9 +22,12 @@ namespace Core.Saving
         [MenuItem("Tools/CapybaraWorld/Delete Save Data", false, 20)]
         public static void DeleteSaveData()
         {
-            if (EditorUtility.DisplayDialog("Delete Save Data", "Are you sure that you want to DELETE your SAVE DATA?",
-                    "DELETE MY DATA!", "Cancel"))
+            if (EditorUtility.DisplayDialog("Delete Save Data",
+                "Are you sure that you want to DELETE your SAVE DATA?",
+                "DELETE MY DATA!", "Cancel"))
             {
+                PlayerPrefsUtility.ClearData();
+                
                 if (File.Exists(FilePath) == false)
                 {
                     EditorUtility.DisplayDialog("Failed", "You don't have save data, or the path is incorrect. You also maybe using the wrong 'SaveSystem'", "Okay");
@@ -32,8 +35,6 @@ namespace Core.Saving
                 }
                 
                 File.Delete(FilePath);
-                PlayerPrefsUtility.ClearData();
-                
                 EditorUtility.DisplayDialog("Succeeded", "Your save data was deleted", "Okay");
             }
         }

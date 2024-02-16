@@ -12,13 +12,11 @@ namespace Core.UI
 {
     public class SettingsMenu
     {
-        private const float VolumeOnValue = 0f;
-        private const float VolumeOffValue = -80f;
-        
-        private readonly IAudioHandler _audioHandler;
 #pragma warning disable IDE0052 // Remove unread private members
         private readonly ISaveService _saveService;
 #pragma warning restore IDE0052
+        private readonly IAudioHandler _audioHandler;
+        private AudioConfig _config;
         private bool _isMusicOn = true;
         private bool _areSoundsOn = true;
 
@@ -26,41 +24,64 @@ namespace Core.UI
         public bool AreSoundsOn => _areSoundsOn;
 
         [Inject]
-        public SettingsMenu(IAudioHandler audioHandler, ISaveService saveService)
+        public SettingsMenu(
+            AudioConfig config, 
+            IAudioHandler audioHandler, 
+            ISaveService saveService)
         {
+            _config = config;
             _audioHandler = audioHandler;
             _saveService = saveService;
         }
 
-        public void InitializeOnDataLoaded(float musicVolume, float soundsVolume)
+        public void InitializeOnDataLoaded(bool isMusicOn, bool areSoundsOn)
         {
-            _isMusicOn = musicVolume >= VolumeOnValue;
-            _areSoundsOn = soundsVolume >= VolumeOnValue;
+            _isMusicOn = isMusicOn;
+            _areSoundsOn = areSoundsOn;
+
+            AssignMusic();
+            AssignSounds();
         }
 
         public bool ToggleMusic()
         {
             _isMusicOn = !_isMusicOn;
-
-            _audioHandler.SetMusicVolume(_isMusicOn == true ? VolumeOnValue : VolumeOffValue);
             
+            AssignMusic();
+
+            PlayerPrefsUtility.IsMusicOn = _isMusicOn;
             return _isMusicOn;
         }
 
         public bool ToggleSounds()
         {
             _areSoundsOn = !_areSoundsOn;
-
-            _audioHandler.SetSoundsVolume(_areSoundsOn == true ? VolumeOnValue : VolumeOffValue);
             
+            AssignSounds();
+            
+            PlayerPrefsUtility.AreSoundsOn = _areSoundsOn;
             return _areSoundsOn;
         }
 
         public void TryLoadProgressOrSignIn()
         {
 #if UNITY_ANDROID && !UNITY_EDITOR
-            SignInService.Authenticate().Forget();
+            LoadProgressFromCloud();
 #endif
+        }
+
+        private void AssignMusic()
+        {
+            _audioHandler.SetMusicVolume(_isMusicOn == true 
+                ? _config.MusicVolume 
+                : _config.VolumeOffValue);
+        }
+
+        private void AssignSounds()
+        {
+            _audioHandler.SetSoundsVolume(_areSoundsOn == true 
+                ? _config.SoundsVolume 
+                : _config.VolumeOffValue);
         }
 
 #if UNITY_ANDROID && !UNITY_EDITOR

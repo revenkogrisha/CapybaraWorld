@@ -23,7 +23,7 @@ namespace Core.Audio
 
         private Dictionary<AudioName, AudioClip> _clips;
 
-        private void Awake()
+        public void Initialize()
         {
             _clips = _collection.Audio.ToDictionary(audio => audio.Name, audio => audio.Clip);
 
@@ -31,8 +31,11 @@ namespace Core.Audio
             _soundsSource.loop = false;
         }
 
-        public void StartMusic(AudioName name) => 
-            _musicSource.PlayOneShot(_clips[name]);
+        public void StartMusic(AudioName name)
+        {
+            _musicSource.clip = _clips[name];
+            _musicSource.Play();
+        }
 
         public void PlaySound(AudioName name, bool isUI = false)
         {   
@@ -45,17 +48,11 @@ namespace Core.Audio
         public void SetMasterVolume(float volume) =>
             _masterGroup.audioMixer.SetFloat(_masterGroup.name, volume);
 
-        public void SetMusicVolume(float volume)
-        {
+        public void SetMusicVolume(float volume) => 
             _musicGroup.audioMixer.SetFloat(_musicGroup.name, volume);
-            PlayerPrefsUtility.MusicVolume = volume;
-        }
 
 
-        public void SetSoundsVolume(float volume)
-        {
+        public void SetSoundsVolume(float volume) => 
             _soundsGroup.audioMixer.SetFloat(_soundsGroup.name, volume);
-            PlayerPrefsUtility.SoundsVolume = volume;
-        }
     }
 }

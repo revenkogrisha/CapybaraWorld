@@ -148,6 +148,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _uiRoot: {fileID: 0}
   _uiCollection: {fileID: 11400000, guid: 7c02c1ad1335749acbc204e3058d1414, type: 2}
+  _audioConfig: {fileID: 11400000, guid: 84f2ea94d44e1434fa29982bd39a72ef, type: 2}
 --- !u!114 &8159359394323454955
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -174,3 +175,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _notifications: {fileID: 11400000, guid: 0e29e1fe931bb470584115e50f3fed09, type: 2}
   _particles: {fileID: 11400000, guid: 594b9abacf516452a9e4e06bd69fd594, type: 2}
+  _audioHandler: {fileID: 0}

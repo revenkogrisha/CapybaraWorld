@@ -45,9 +45,11 @@ namespace Core.Infrastructure
             RegisterSaveables();
             _saveService.Load();
 
-            _navigation.Generate<MainMenuState>();
+            _audioHandler.Initialize();
 
             AssingFromPlayerPrefs();
+
+            _navigation.Generate<MainMenuState>();
         }
 
         private void RegisterSaveables()
@@ -62,12 +64,9 @@ namespace Core.Infrastructure
         {
             HapticHelper.Enabled = PlayerPrefsUtility.HapticFeedbackEnabled;
 
-            float musicVolume = PlayerPrefsUtility.MusicVolume;
-            float soundsVolume = PlayerPrefsUtility.SoundsVolume;
-            _audioHandler.SetMusicVolume(musicVolume);
-            _audioHandler.SetSoundsVolume(soundsVolume);
-
-            _settingsMenu.InitializeOnDataLoaded(musicVolume, soundsVolume);
+            _settingsMenu.InitializeOnDataLoaded(
+                PlayerPrefsUtility.IsMusicOn, 
+                PlayerPrefsUtility.AreSoundsOn);
         }
     }
 }

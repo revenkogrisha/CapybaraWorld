@@ -1,4 +1,5 @@
 using Core.Factories;
+using Core.Other;
 using Core.UI;
 using Cysharp.Threading.Tasks;
 using UnityEngine.SceneManagement;
@@ -21,7 +22,9 @@ namespace Core.Common
             Scene gameplayScene = await SceneLoader.LoadGameplay(LoadSceneMode.Additive);
 
             SceneManager.MoveGameObjectToScene(loadingScreen.gameObject, gameplayScene);
+
             await loadingScreen.Conceal();
+            loadingScreen.gameObject.SelfDestroy();
 
             await SceneLoader.UnloadCurrentAsync();
         }

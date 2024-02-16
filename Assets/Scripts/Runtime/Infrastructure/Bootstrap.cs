@@ -12,10 +12,11 @@ namespace Core.Infrastructure
         private GameNavigation _navigation;
 
         private void Awake()
-        {
+        {   
             _thirdParty.InitializeAll().Forget();
             
             AddGameStatesToMachine();
+
             _navigation.ToLoadingData();
         }
 

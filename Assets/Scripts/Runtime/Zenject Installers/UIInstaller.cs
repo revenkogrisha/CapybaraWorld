@@ -1,3 +1,4 @@
+using Core.Audio;
 using Core.Factories;
 using Core.UI;
 using UnityEngine;
@@ -9,6 +10,9 @@ namespace Core.Installers
     {
         [SerializeField] private UIRoot _uiRoot;
         [SerializeField] private UICollection _uiCollection;
+
+        [Space]
+        [SerializeField] private AudioConfig _audioConfig;
 
         public override void InstallBindings()
         {
@@ -62,6 +66,7 @@ namespace Core.Installers
                 .Bind<SettingsMenu>()
                 .FromNew()
                 .AsSingle()
+                .WithArguments(_audioConfig)
                 .Lazy();
         }
     }

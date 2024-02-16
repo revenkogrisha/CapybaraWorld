@@ -1,7 +1,5 @@
 using System.Threading;
-using Core.Game;
 using Core.Mediation;
-using Core.Player;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
