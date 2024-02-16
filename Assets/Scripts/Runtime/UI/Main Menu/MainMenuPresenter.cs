@@ -39,7 +39,7 @@ namespace Core.UI
             _dev.ShowAd();
 #endif
 
-#if UNITY_ANDROID && !UNITY_EDITOR
+#if UNITY_ANDROID && !UNITY_EDITOR && REVENKO_DEVELOP
         public void OnDevSendNotification() =>
             _dev.SendNotification();
 #endif
