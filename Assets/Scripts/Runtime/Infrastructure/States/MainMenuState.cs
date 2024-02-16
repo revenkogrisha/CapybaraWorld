@@ -1,3 +1,4 @@
+using Core.Audio;
 using Core.Common;
 using Core.Factories;
 using Core.Other;
@@ -16,6 +17,7 @@ namespace Core.Infrastructure
         private readonly MainMenu _mainMenu;
         private readonly PlayerUpgrade _playerUpgrade;
         private readonly HeroSkins _heroSkins;
+        private readonly IAudioHandler _audioHandler;
         private readonly SettingsMenu _settingsMenu;
         private MainMenuRoot _root;
 
@@ -28,6 +30,7 @@ namespace Core.Infrastructure
             UIProvider uiProvider,
             MainMenu mainMenu,
             HeroSkins heroSkins,
+            IAudioHandler audioHandler,
             SettingsMenu settings)
         {
 #if REVENKO_DEVELOP
@@ -37,6 +40,7 @@ namespace Core.Infrastructure
             _uiProvider = uiProvider;
             _mainMenu = mainMenu;
             _heroSkins = heroSkins;
+            _audioHandler = audioHandler;
             _settingsMenu = settings;
         }
 
@@ -51,6 +55,8 @@ namespace Core.Infrastructure
 
             _root.SetActive(true);
             _root.ShowMainMenu();
+
+            _audioHandler.StartMusic(AudioName.MainTheme);
         }
 
         public override void Exit() => 
