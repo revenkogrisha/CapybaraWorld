@@ -43,6 +43,8 @@ namespace Core.Common.ThirdParty
         public async UniTaskVoid InitializeAll()
 #pragma warning restore CS1998 
         {
+            _mediationService.Initialize();
+
             FirebaseService.Initialize().Forget();
             
 #if ANDROID_RUNTIME
@@ -51,8 +53,6 @@ namespace Core.Common.ThirdParty
             ScheduleAndroidNotifications();
             await HandleAppUpdate();
 #endif
-
-            _mediationService.Initialize();
 
             RDebug.Info($"{nameof(ThirdPartyInitializer)}: Initialization complete!");
         }
