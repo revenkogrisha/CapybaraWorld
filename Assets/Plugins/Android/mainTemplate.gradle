@@ -4,6 +4,7 @@ apply plugin: 'com.android.library'
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 // Android Resolver Dependencies Start
+    implementation 'androidx.activity:activity:1.6.0' // Assets/Editor/OverrideDependencies.xml:9
     implementation 'androidx.annotation:annotation:1.1.0' // Assets/Editor/OverrideDependencies.xml:8
     implementation 'androidx.fragment:fragment:1.1.0' // Assets/Editor/OverrideDependencies.xml:7
     implementation 'com.google.android.gms:play-services-base:18.2.0' // Assets/Firebase/Editor/AppDependencies.xml:17

@@ -1,5 +1,6 @@
 <dependencies>
   <packages>
+    <package>androidx.activity:activity:1.6.0</package>
     <package>androidx.annotation:annotation:1.1.0</package>
     <package>androidx.fragment:fragment:1.1.0</package>
     <package>com.google.android.gms:play-services-base:18.2.0</package>
