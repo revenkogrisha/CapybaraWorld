@@ -72,7 +72,7 @@ namespace Core.Installers
         {
             Container
                 .Bind<IMediationService>()
-                .To<UnityAdsService>()
+                .To<YGService>()
                 .FromNew()
                 .AsSingle()
                 .Lazy();

@@ -23,9 +23,6 @@ namespace Core.Installers
         {
             BindThirdPartyInitializer();
 
-#if UNITY_ANDROID && !UNITY_EDITOR
-            BindNotifications();
-#endif
             BindParticlesHelper();
             BindAudioHandler();
         }
@@ -38,18 +35,6 @@ namespace Core.Installers
                 .AsSingle()
                 .Lazy();
         }
-
-#if UNITY_ANDROID && !UNITY_EDITOR
-        private void BindNotifications()
-        {
-            Container   
-                .Bind<Notifications>()
-                .FromNew()
-                .AsSingle()
-                .WithArguments(_notifications)
-                .Lazy();
-        }
-#endif
 
         private void BindParticlesHelper()
         {

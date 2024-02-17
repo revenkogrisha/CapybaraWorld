@@ -8,6 +8,7 @@ using Cysharp.Threading.Tasks;
 using TMPro;
 using UniRx;
 using UnityEngine;
+using YG;
 using Zenject;
 
 namespace Core.UI
@@ -49,6 +50,8 @@ namespace Core.UI
         private SkinPreset _displayedSkin;
         private SkinPreset _selectedSkin;
 
+        public int RewardID => 0;
+
         #region MonoBehaviour
 
         private void OnEnable()
@@ -56,6 +59,9 @@ namespace Core.UI
 #if REVENKO_DEVELOP
             _devUpgradeButton.OnClicked += ForceUpgrade;
 #endif
+
+            YandexGame.RewardVideoEvent += OnRewardGranted;
+
             _heroUpgradeButton.OnClicked += OnUpgradeButtonClicked;
             _backButton.OnClicked += ToMainMenu;
             _resetCostAdButton.OnClicked += ShowAdToResetCost;
@@ -78,6 +84,9 @@ namespace Core.UI
 #if REVENKO_DEVELOP
             _devUpgradeButton.OnClicked -= ForceUpgrade;
 #endif
+
+            YandexGame.RewardVideoEvent -= OnRewardGranted;
+            
             _heroUpgradeButton.OnClicked -= OnUpgradeButtonClicked;
             _backButton.OnClicked -= ToMainMenu;
             _resetCostAdButton.OnClicked -= ShowAdToResetCost;
@@ -109,10 +118,13 @@ namespace Core.UI
             return base.Reveal(token, enable);
         }
 
-        public void OnRewardGranted()
+        public void OnRewardGranted(int id)
         {
-            _presenter.ResetUpgradeCost();
-            UpdateView();
+            if (id == RewardID)
+            {
+                _presenter.ResetUpgradeCost();
+                UpdateView();
+            }
         }
 
         public void Initialize(MainMenuRoot root, HeroMenuPresenter presenter)
@@ -176,11 +188,13 @@ namespace Core.UI
                 _costTMP.color = _costLockedColor;
         }
 
-        private void OnUpgradeButtonClicked()
+        private async void OnUpgradeButtonClicked()
         {
             _audioHandler.PlaySound(AudioName.CoinsSpent);
             
             UpgradeHero();
+
+            await UniTaskUtility.Delay(1f, default);
             _mediationService.ShowInterstitial();
         }
 

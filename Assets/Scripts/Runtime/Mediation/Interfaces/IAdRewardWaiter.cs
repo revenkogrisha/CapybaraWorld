@@ -2,6 +2,8 @@ namespace Core.Mediation
 {
     public interface IAdRewardWaiter
     {
-        public void OnRewardGranted();
+        public int RewardID { get; }
+        
+        public void OnRewardGranted(int id);
     }
 }

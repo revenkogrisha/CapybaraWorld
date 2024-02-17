@@ -129,7 +129,7 @@ namespace Core.Mediation.UnityAds
             else if (IsRewarded(placementId) == true)
             {
                 if (_rewardWaiter != null)
-                    _rewardWaiter.OnRewardGranted();
+                    _rewardWaiter.OnRewardGranted(default);
                 else
                     RDebug.Error($"{nameof(UnityAdsService)}::{nameof(OnUnityAdsShowComplete)}: waiter is null!");
                     

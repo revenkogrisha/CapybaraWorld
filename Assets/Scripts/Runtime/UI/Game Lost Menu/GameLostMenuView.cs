@@ -1,5 +1,6 @@
 using System.Threading;
 using Core.Mediation;
+using Core.Other;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
@@ -20,12 +21,14 @@ namespace Core.UI
         private void Construct(IMediationService mediationService) => 
             _mediationService = mediationService;
 
-        public override UniTask Reveal(CancellationToken token = default, bool enable = false)
+        public override async UniTask Reveal(CancellationToken token = default, bool enable = false)
         {
             _presenter.OnViewReveal();
-            _mediationService.ShowInterstitial();
+
+            await base.Reveal(token, enable);
             
-            return base.Reveal(token, enable);
+            await UniTaskUtility.Delay(1f, token);
+            _mediationService.ShowInterstitial();
         }
 
         public void Initialize(GameLostMenuPresenter presenter) =>
