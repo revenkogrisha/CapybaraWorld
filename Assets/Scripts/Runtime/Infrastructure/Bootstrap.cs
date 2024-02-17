@@ -13,7 +13,7 @@ namespace Core.Infrastructure
 
         private void Awake()
         {   
-            _thirdParty.InitializeAll().Forget();
+            _thirdParty.InitializeAll();
             
             AddGameStatesToMachine();
 
