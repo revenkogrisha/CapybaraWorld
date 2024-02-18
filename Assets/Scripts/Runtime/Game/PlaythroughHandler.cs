@@ -5,6 +5,7 @@ using Core.Level;
 using Core.Player;
 using Core.Saving;
 using UniRx;
+using YG;
 using Zenject;
 
 namespace Core.Game
@@ -12,6 +13,7 @@ namespace Core.Game
     public class PlaythroughHandler : IPlaythroughProgressHandler, IDisposable
     {
         private const int WinScore = 108;
+        private const string LeaderboardName = "LevelsWon";
 
         private readonly PlayerData _playerData;
         private readonly ILocationsHandler _locationsHandler;
@@ -75,6 +77,8 @@ namespace Core.Game
             _navigation.ToWin();
 
             PlayerPrefsUtility.LevelsWon++;
+
+            YandexGame.NewLeaderboardScores(LeaderboardName, PlayerPrefsUtility.LevelsWon);
         }
 
         private void OnGameLost() =>
