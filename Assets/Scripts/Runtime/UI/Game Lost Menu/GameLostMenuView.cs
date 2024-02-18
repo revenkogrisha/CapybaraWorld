@@ -27,7 +27,7 @@ namespace Core.UI
 
             await base.Reveal(token, enable);
             
-            await UniTaskUtility.Delay(1f, token);
+            await UniTaskUtility.Delay(0.5f, token);
             _mediationService.ShowInterstitial();
         }
 

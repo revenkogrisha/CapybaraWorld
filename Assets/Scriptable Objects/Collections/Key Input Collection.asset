@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _movementAction: {fileID: -8620110852075228005, guid: 93154840abf8f46f3a1832a547ca2411, type: 3}
   _descendAction: {fileID: 9108837699392087682, guid: 93154840abf8f46f3a1832a547ca2411, type: 3}
-  _dashAction: {fileID: -5275234282751616000, guid: 93154840abf8f46f3a1832a547ca2411, type: 3}
-  _jumpAction: {fileID: -6737195801423244668, guid: 93154840abf8f46f3a1832a547ca2411, type: 3}
+  _dashAction: {fileID: -6737195801423244668, guid: 93154840abf8f46f3a1832a547ca2411, type: 3}
+  _jumpAction: {fileID: -5275234282751616000, guid: 93154840abf8f46f3a1832a547ca2411, type: 3}
