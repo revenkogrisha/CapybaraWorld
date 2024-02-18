@@ -53,14 +53,14 @@ namespace Core.Level
                     .Forget();
             }
 
-            ReleaseCoins();
-
             _canOpen = false;
 
             foreach (ParticleSystem system in _particles)
                 system.Stop();
                 
             transform.DOScale(Vector2.zero, _preset.FadeDuration);
+
+            ReleaseCoins();
 
             Invoke(nameof(Despawn), DespawnDelay);
         }
