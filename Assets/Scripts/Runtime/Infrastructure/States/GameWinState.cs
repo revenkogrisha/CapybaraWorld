@@ -8,7 +8,6 @@ using Core.Other;
 using Core.Saving;
 using Core.UI;
 using Cysharp.Threading.Tasks;
-using YG;
 using Zenject;
 
 namespace Core.Infrastructure

@@ -52,6 +52,9 @@ namespace Core.Saving
             return JsonConvert.SerializeObject(data, Formatting.Indented, serializerSettings);
         }
 
+        public static SaveData Deserialize(string json) => 
+            JsonConvert.DeserializeObject<SaveData>(json);
+
         public void Save(SaveData data)
         {
             try

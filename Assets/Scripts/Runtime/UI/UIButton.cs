@@ -1,6 +1,5 @@
 ﻿using System;
 using Core.Audio;
-using Core.Common;
 using DG.Tweening;
 using TMPro;
 using UnityEngine;

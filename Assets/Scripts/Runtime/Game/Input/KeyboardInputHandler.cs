@@ -12,7 +12,6 @@ namespace Core.Game.Input
 
         public override void Initialize()
         {
-            RDebug.Log(1);
             _collection.MovementAction.action.performed += OnMovementStarted;
             _collection.MovementAction.action.canceled += OnMovementEnded;
 
@@ -23,7 +22,6 @@ namespace Core.Game.Input
 
         public override void Dispose()
         {
-            RDebug.Log(2);
             _collection.MovementAction.action.performed -= OnMovementStarted;
             _collection.MovementAction.action.canceled -= OnMovementEnded;
 
@@ -34,7 +32,6 @@ namespace Core.Game.Input
 
         private void OnMovementStarted(InputAction.CallbackContext context)
         {
-            RDebug.Log(3);
             float axis = context.ReadValue<float>();
             if (axis < 0)
                 MoveLeftCommand.Execute();
@@ -42,10 +39,8 @@ namespace Core.Game.Input
                 MoveRightCommand.Execute();
         }
 
-        private void OnMovementEnded(InputAction.CallbackContext context)
-        {
+        private void OnMovementEnded(InputAction.CallbackContext context) => 
             StopCommand.Execute();
-        }
 
         private void OnDash(InputAction.CallbackContext context)
         {
@@ -59,9 +54,7 @@ namespace Core.Game.Input
             HoldStartCommand.Execute();
         }
 
-        private void OnJumpEnded(InputAction.CallbackContext context)
-        {
+        private void OnJumpEnded(InputAction.CallbackContext context) => 
             HoldEndCommand.Execute();
-        }
     }
 }

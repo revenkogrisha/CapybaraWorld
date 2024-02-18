@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Core.Editor.Debugger;
+using YG;
 using Zenject;
 
 namespace Core.Saving
@@ -15,7 +16,12 @@ namespace Core.Saving
         {
             _saveSystem = saveSystem;
             _cloudSaveSystem = cloudSaveSystem;
+
+            YandexGame.GetDataEvent += Load;
         }
+
+        ~SaveService() =>
+            YandexGame.GetDataEvent -= Load;
 
         public void Register(ISaveable saveable) =>
             _saveables.Add(saveable);

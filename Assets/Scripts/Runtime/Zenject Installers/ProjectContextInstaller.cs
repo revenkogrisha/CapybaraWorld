@@ -26,7 +26,7 @@ namespace Core.Installers
         {
             Container
                 .Bind<ISaveSystem>()
-                .To<JsonSaveSystem>()
+                .To<YGSaveSystem>()
                 .FromNew()
                 .AsTransient()
                 .Lazy();
@@ -36,11 +36,7 @@ namespace Core.Installers
         {
             Container
                 .Bind<ICloudSaveSystem>()
-#if UNITY_ANDROID && !UNITY_EDITOR
-                .To<GooglePlayGamesSaveSystem>()
-#else
                 .To<FakeCloudSaveSystem>()
-#endif
                 .FromNew()
                 .AsTransient()
                 .Lazy();
