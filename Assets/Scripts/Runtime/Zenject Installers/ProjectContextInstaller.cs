@@ -1,6 +1,5 @@
 using Core.Game.Input;
 using Core.Mediation;
-using Core.Mediation.UnityAds;
 using Core.Saving;
 using UnityEngine;
 using Zenject;
@@ -9,7 +8,7 @@ namespace Core.Installers
 {
     public class ProjectContextInstaller : MonoInstaller
     {
-        [SerializeField] private TouchInputCollection _touchInputCollection;
+        [SerializeField] private KeyInputCollection _keyInputCollection;
 
         public override void InstallBindings()
         {
@@ -61,10 +60,10 @@ namespace Core.Installers
         {
             Container
                 .Bind<InputHandler>()
-                .To<TouchInputHandler>()
+                .To<KeyboardInputHandler>()
                 .FromNew()
                 .AsSingle()
-                .WithArguments(_touchInputCollection)
+                .WithArguments(_keyInputCollection)
                 .NonLazy();
         }
 

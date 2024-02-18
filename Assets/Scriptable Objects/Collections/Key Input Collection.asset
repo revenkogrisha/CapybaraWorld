@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b29c715ad79c40a4a150afcfa6a1709, type: 3}
+  m_Name: Key Input Collection
+  m_EditorClassIdentifier: 
+  _movementAction: {fileID: -8620110852075228005, guid: 93154840abf8f46f3a1832a547ca2411, type: 3}
+  _descendAction: {fileID: 9108837699392087682, guid: 93154840abf8f46f3a1832a547ca2411, type: 3}
+  _dashAction: {fileID: -5275234282751616000, guid: 93154840abf8f46f3a1832a547ca2411, type: 3}
+  _jumpAction: {fileID: -6737195801423244668, guid: 93154840abf8f46f3a1832a547ca2411, type: 3}
