@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿#if UNITY_EDITOR
+using UnityEngine;
 using UnityEditor;
 using System.Collections.Generic;
 #if YG_TEXT_MESH_PRO
@@ -128,3 +129,4 @@ namespace YG.Insides
         }
     }
 }
+#endif

@@ -45,8 +45,6 @@ namespace Core.Infrastructure
             }
 
             _menuView.Reveal(enable: true).Forget();
-            
-            HapticHelper.VibrateHeavy();
         }
 
         public override void Exit() => 

@@ -87,7 +87,6 @@ namespace Core.UI
 
         private void PerformClick()
         {
-            HapticHelper.VibrateLight();
             if (_audioHandler != null && _playSound == true)
                 _audioHandler.PlaySound(AudioName.Button, true);
             

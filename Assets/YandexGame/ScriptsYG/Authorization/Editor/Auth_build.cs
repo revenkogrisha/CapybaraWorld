@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿#if UNITY_EDITOR
+using UnityEngine;
 using System.IO;
 
 namespace YG.EditorScr.BuildModify
@@ -19,3 +20,4 @@ namespace YG.EditorScr.BuildModify
         }
     }
 }
+#endif

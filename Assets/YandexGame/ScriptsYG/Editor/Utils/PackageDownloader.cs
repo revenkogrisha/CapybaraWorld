@@ -1,4 +1,5 @@
-﻿using UnityEditor.PackageManager;
+﻿#if UNITY_EDITOR
+using UnityEditor.PackageManager;
 using UnityEngine;
 
 namespace YG.Insides.Utils
@@ -19,3 +20,4 @@ namespace YG.Insides.Utils
         }
     }
 }
+#endif

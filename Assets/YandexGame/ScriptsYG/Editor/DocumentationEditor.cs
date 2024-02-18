@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿#if UNITY_EDITOR
+using UnityEngine;
 using UnityEditor;
 
 namespace YG.EditorScr
@@ -22,3 +23,4 @@ namespace YG.EditorScr
         }
     }
 }
+#endif

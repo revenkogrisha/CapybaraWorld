@@ -1,4 +1,4 @@
-﻿
+﻿#if UNITY_EDITOR
 namespace YG.EditorScr.BuildModify
 {
     public partial class ModifyBuildManager
@@ -19,3 +19,4 @@ namespace YG.EditorScr.BuildModify
         }
     }
 }
+#endif

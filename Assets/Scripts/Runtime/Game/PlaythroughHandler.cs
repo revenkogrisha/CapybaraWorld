@@ -4,7 +4,6 @@ using Core.Infrastructure;
 using Core.Level;
 using Core.Player;
 using Core.Saving;
-using Firebase.Analytics;
 using UniRx;
 using Zenject;
 
@@ -67,12 +66,6 @@ namespace Core.Game
                 default:
                     throw new ArgumentException("Unknown GameResult value was gotten!");
             }
-
-            FirebaseService.LogEvent(EventName.GameFinished,
-                new Parameter(ParameterName.GameResult.ToString(), result.ToString()),
-                new Parameter(ParameterName.LevelsFinished.ToString(), _playerData.LevelNumber),
-                new Parameter(ParameterName.LocationName.ToString(), _locationsHandler.CurrentLocation.Name)
-            );
         }
 
         private void OnGameWon()

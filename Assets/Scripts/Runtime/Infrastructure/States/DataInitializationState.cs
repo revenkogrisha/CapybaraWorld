@@ -62,8 +62,6 @@ namespace Core.Infrastructure
 
         private void AssingFromPlayerPrefs()
         {
-            HapticHelper.Enabled = PlayerPrefsUtility.HapticFeedbackEnabled;
-
             _settingsMenu.InitializeOnDataLoaded(
                 PlayerPrefsUtility.IsMusicOn, 
                 PlayerPrefsUtility.AreSoundsOn);

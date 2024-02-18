@@ -1,6 +1,5 @@
 using Core.Common.ThirdParty;
 using Core.Saving;
-using Firebase.Analytics;
 using Zenject;
 
 namespace Core.Player
@@ -77,10 +76,6 @@ namespace Core.Player
             _saveService.Save();
 
             UpgradeAllStats();
-
-            FirebaseService.LogEvent(EventName.HeroUpgrade,
-                new Parameter(ParameterName.HeroLevel.ToString(), HeroLevel)
-            );
         }
 
         private void RestoreStats()

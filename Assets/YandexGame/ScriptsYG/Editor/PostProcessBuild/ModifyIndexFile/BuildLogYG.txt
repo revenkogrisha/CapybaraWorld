@@ -1,2 +1,2 @@
-Build path: D:/Unity/Release/PluginYG/PluginYG
-Build number: 141
+Build path: /Users/revenkogrisha/Documents/GameProjects/Capybara World/Builds/Web/test0
+Build number: 142

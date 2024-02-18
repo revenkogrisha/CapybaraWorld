@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿#if UNITY_EDITOR
+using System.Collections.Generic;
 using UnityEditor;
 
 namespace YG.Insides.Utils
@@ -58,3 +59,4 @@ namespace YG.Insides.Utils
         }
     }
 }
+#endif

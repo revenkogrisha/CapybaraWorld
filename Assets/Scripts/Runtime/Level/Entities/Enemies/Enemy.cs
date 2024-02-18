@@ -60,9 +60,6 @@ namespace Core.Level
                     _audioHandler.PlaySound(AudioName.EnemyDeath);
 
                     gameObject.SelfDestroy();
-
-                    // Called here for simplicity. Should be in special class-manager or ~EnemyFeedbackHalder
-                    HapticHelper.VibrateMedium();
                 });
             
                 return true;

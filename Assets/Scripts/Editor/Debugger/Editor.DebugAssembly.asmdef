@@ -3,8 +3,8 @@
     "rootNamespace": "Core.Editor.Debugger",
     "references": [],
     "includePlatforms": [
-        "Android",
-        "Editor"
+        "Editor",
+        "WebGL"
     ],
     "excludePlatforms": [],
     "allowUnsafeCode": false,

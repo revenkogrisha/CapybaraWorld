@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿#if UNITY_EDITOR
+using UnityEngine;
 using System.Text.RegularExpressions;
 using System.IO;
 using YG.Utils.Lang;
@@ -320,3 +321,4 @@ namespace YG.Insides
         }
     }
 }
+#endif

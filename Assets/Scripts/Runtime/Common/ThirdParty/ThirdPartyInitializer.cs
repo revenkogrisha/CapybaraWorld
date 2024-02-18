@@ -17,8 +17,6 @@ namespace Core.Common.ThirdParty
         {
             _mediationService.Initialize();
 
-            FirebaseService.Initialize().Forget();
-
             RDebug.Info($"{nameof(ThirdPartyInitializer)}: Initialization complete!");
         }
     }

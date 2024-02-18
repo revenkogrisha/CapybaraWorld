@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿#if UNITY_EDITOR
+using UnityEngine;
 using UnityEditor;
 using YG.Insides.Utils;
 using YG.EditorScr;
@@ -127,3 +128,4 @@ namespace YG.Insides
         }
     }
 }
+#endif

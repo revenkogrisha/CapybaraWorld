@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿#if UNITY_EDITOR
+using System.IO;
 using System.IO.Compression;
 using YG.Insides;
 
@@ -43,3 +44,4 @@ namespace YG.EditorScr.BuildModify
 
 
 
+#endif
