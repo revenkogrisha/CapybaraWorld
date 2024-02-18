@@ -52,11 +52,7 @@ namespace Core.Infrastructure
         {
             const float reviewTimeout = 120f;
         
-#if !UNITY_EDITOR && UNITY_ANDROID
-            IUserReviewService reviewService = new GoogleUserReviewService();
-#else
-            IUserReviewService reviewService = new FakeUserReviewService();
-#endif
+            IUserReviewService reviewService = new YGReviewService();
             
             if (reviewService.IsFake == true)
                 RDebug.Info($"User review request will be faked");
