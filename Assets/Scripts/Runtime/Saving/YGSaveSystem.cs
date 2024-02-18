@@ -7,7 +7,12 @@ namespace Core.Saving
         public void Save(SaveData data) => 
             YandexGame.savesData.SaveDataJSON = JsonSaveSystem.Serialize(data);
 
-        public SaveData Load() => 
-            JsonSaveSystem.Deserialize(YandexGame.savesData.SaveDataJSON);
+        public SaveData Load()
+        {
+            if (string.IsNullOrEmpty(YandexGame.savesData.SaveDataJSON) == true)
+                return new SaveData();
+                
+            return JsonSaveSystem.Deserialize(YandexGame.savesData.SaveDataJSON);
+        }
     }
 }

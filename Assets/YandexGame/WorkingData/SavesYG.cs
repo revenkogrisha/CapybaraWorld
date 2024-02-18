@@ -18,7 +18,7 @@ namespace YG
 
         // Ваши сохранения
 
-        public string SaveDataJSON;
+        public string SaveDataJSON = string.Empty;
 
         // Поля (сохранения) можно удалять и создавать новые. При обновлении игры сохранения ломаться не должны
 
