@@ -43,6 +43,8 @@ namespace Core.Level
             if (_canOpen == false)
                 return;
 
+            _canOpen = false;
+
             if (Preloaded == false)
                 _audioHandler.PlaySound(AudioName.ChestBreak);
 
@@ -53,16 +55,14 @@ namespace Core.Level
                     .Forget();
             }
 
-            ReleaseCoins();
-
-            _canOpen = false;
-
             foreach (ParticleSystem system in _particles)
                 system.Stop();
                 
             transform.DOScale(Vector2.zero, _preset.FadeDuration);
 
             Invoke(nameof(Despawn), DespawnDelay);
+
+            ReleaseCoins();
         }
 
         private void Setup()
