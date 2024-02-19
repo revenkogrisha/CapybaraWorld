@@ -15,7 +15,13 @@ namespace Core.Common
             _groundLayer = groundLayer;
         }
 
-        public bool HaveGroundBelow()
+        public bool HaveGroundBelow() => 
+            Raycast();
+
+        public float GetHeight() => 
+            Raycast().distance;
+
+        private RaycastHit2D Raycast()
         {
             return Physics2D.Raycast(
                 _thisTransform.position,

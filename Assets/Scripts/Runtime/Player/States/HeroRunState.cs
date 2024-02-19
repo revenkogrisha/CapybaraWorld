@@ -229,7 +229,7 @@ namespace Core.Player
         {
             try
             {
-                if (IsJumping == true || IsDashing == true)
+                if (IsJumping == true || IsDashing == true || _hero.CanJump == false)
                     return;
 
                 CancellationToken token = _hero.destroyCancellationToken;

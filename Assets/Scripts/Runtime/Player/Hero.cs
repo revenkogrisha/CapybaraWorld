@@ -20,6 +20,7 @@ namespace Core.Player
     public class Hero : MonoBehaviour, IDieable, IPlayerEventsHandler
 	{
 		private const float GrapplingActivationDistance = 50f;
+		private const float JumpAllowedHeight = 1.1f;
 
 		[Title("Components")]
 		[SerializeField] private SpringJoint2D _springJoint2D;
@@ -62,6 +63,8 @@ namespace Core.Player
 		public Rigidbody2D Rigidbody2D => _rigidbody2D;
 		public HeroConfig Config => _config;
 		public GrapplingRope Rope => _rope;
+
+		public bool CanJump => _groundChecker.GetHeight() <= JumpAllowedHeight;
 
 		private bool ShouldSwitchToGrappling => _groundChecker.HaveGroundBelow() == false 
 			&& _stateMachine.CompareState<HeroGrapplingState>() == false;
