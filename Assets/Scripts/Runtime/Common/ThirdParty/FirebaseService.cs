@@ -21,7 +21,7 @@ namespace Core.Common.ThirdParty
 
         private static bool IsInitialized => _firebaseInstance != null;
 
-        public static async UniTaskVoid Initialize()
+        public static void Initialize()
         {
             if (Application.internetReachability == NetworkReachability.NotReachable)
                 return;
@@ -30,7 +30,7 @@ namespace Core.Common.ThirdParty
             {
                 _firebaseInstance = null;
 
-                await FirebaseApp.CheckAndFixDependenciesAsync().ContinueWithOnMainThread(task => 
+                FirebaseApp.CheckAndFixDependenciesAsync().ContinueWithOnMainThread(task => 
                 {
                     if (task.Result == DependencyStatus.Available) 
                     {

@@ -45,7 +45,7 @@ namespace Core.Common.ThirdParty
         {
             _mediationService.Initialize();
 
-            FirebaseService.Initialize().Forget();
+            FirebaseService.Initialize();
             
 #if ANDROID_RUNTIME
             await SignInService.Authenticate();
