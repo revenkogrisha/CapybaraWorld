@@ -7,6 +7,7 @@
     <package>com.google.android.play:app-update:2.1.0</package>
     <package>com.google.android.play:core-common:2.0.0</package>
     <package>com.google.android.play:review:2.0.0</package>
+    <package>com.google.firebase:firebase-analytics:21.3.0</package>
     <package>com.google.firebase:firebase-analytics:21.5.0</package>
     <package>com.google.firebase:firebase-analytics-unity:11.7.0</package>
     <package>com.google.firebase:firebase-app-unity:11.7.0</package>
