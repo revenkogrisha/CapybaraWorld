@@ -6,11 +6,11 @@ namespace Core.UI
 {
     public class SettingsMenuView : AnimatedUI
     {
-        private const string MusicButtonFormat = "MUSIC:\n<color=#D978E9>{0}</color>";
-        private const string SoundsButtonFormat = "SOUNDS:\n<color=#D978E9>{0}</color>";
+        private const string MusicButtonFormat = "МУЗЫКА:\n<color=#D978E9>{0}</color>";
+        private const string SoundsButtonFormat = "ЗВУКИ:\n<color=#D978E9>{0}</color>";
 
-        private const string On = "ON";
-        private const string Off = "OFF";
+        private const string On = "ВКЛ";
+        private const string Off = "ВЫКЛ";
         
         [Header("Buttons")]
         [SerializeField] private UIButton _musicToggleButton;

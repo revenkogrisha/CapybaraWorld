@@ -8,7 +8,7 @@ namespace Core.UI
         [SerializeField] private TMP_Text _tmp;
 
         [Space]
-        [SerializeField] private string _prefix = "v. ";
+        [SerializeField] private string _prefix = "версия ";
 
         private void Start()
         {
