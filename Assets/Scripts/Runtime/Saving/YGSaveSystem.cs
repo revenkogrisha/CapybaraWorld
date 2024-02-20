@@ -4,8 +4,11 @@ namespace Core.Saving
 {
     public class YGSaveSystem : ISaveSystem
     {
-        public void Save(SaveData data) => 
+        public void Save(SaveData data)
+        {
             YandexGame.savesData.SaveDataJSON = JsonSaveSystem.Serialize(data);
+            YandexGame.SaveProgress();
+        }
 
         public SaveData Load()
         {
