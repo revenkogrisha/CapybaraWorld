@@ -1,0 +1,14 @@
+{
+    "idSave": 4,
+    "isFirstSession": false,
+    "language": "ru",
+    "promptDone": false,
+    "money": 1,
+    "newPlayerName": "Hello!",
+    "openLevels": [
+        false,
+        true,
+        false
+    ],
+    "SaveDataJSON": "{\n  \"CoinsAmount\": 20,\n  \"FoodAmount\": 5,\n  \"LevelNumber\": 2,\n  \"LocationIndex\": 1,\n  \"UpgradeCost\": 30,\n  \"HeroLevel\": 2,\n  \"IsLocationRandomSelectionEnabled\": false,\n  \"BoughtHeroSkins\": 1,\n  \"CurrentHeroSkin\": 1\n}"
+}
