@@ -1,0 +1,12 @@
+Font: Noto Sans Condensed  Style: Black
+Point Size: 61   SP/PD Ratio: 14.8%
+
+Characters included: 256/256
+Missing characters: 0
+Excluded characters: 0
+
+Characters missing from font file:
+----------------------------------------
+
+Characters excluded from packing:
+----------------------------------------
