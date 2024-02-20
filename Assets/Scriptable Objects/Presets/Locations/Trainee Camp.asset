@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4aacc6b655ef143388a507d5d7ba5cf5, type: 3}
   m_Name: Trainee Camp
   m_EditorClassIdentifier: 
-  _name: Trainee Camp
+  _name: "\u041B\u0430\u0433\u0435\u0440\u044C \u0421\u0442\u0430\u0436\u0435\u0440\u043E\u0432"
   _backgroundPreset: {fileID: 11400000, guid: be16bf9bc4e4f4eb9b0461201dfdc532, type: 2}
   _startPlatform: {fileID: 1280936354804307747, guid: a80f14d515af047eea14b227576cbeda, type: 3}
   _simplePlatforms:

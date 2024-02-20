@@ -5,14 +5,14 @@ namespace Core.Player
     [Flags]
     public enum SkinName
     {
-        Capybuddy = 1 << 0,
-        Greenbara = 1 << 1,
-        Purplebara = 1 << 2,
-        Pinkbara = 1 << 3,
-        Darkbara = 1 << 4,
-        Streetbara = 1 << 5,
-        Redbara = 1 << 6,
-        Sorrowbara = 1 << 7,
-        Floralbara = 1 << 8
+        Капибара = 1 << 0,
+        Зеленобара = 1 << 1,
+        Фиолбара = 1 << 2,
+        Розовобара = 1 << 3,
+        Темнобара = 1 << 4,
+        Капибро = 1 << 5,
+        Краснобара = 1 << 6,
+        Грустнобара = 1 << 7,
+        Цветобара = 1 << 8
     }
 }

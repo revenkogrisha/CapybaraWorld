@@ -1,5 +1,5 @@
 {
-    "idSave": 10,
+    "idSave": 15,
     "isFirstSession": false,
     "language": "ru",
     "promptDone": false,
@@ -10,5 +10,5 @@
         true,
         false
     ],
-    "SaveDataJSON": "{\n  \"CoinsAmount\": 5,\n  \"FoodAmount\": 13,\n  \"LevelNumber\": 4,\n  \"LocationIndex\": 3,\n  \"UpgradeCost\": 60,\n  \"HeroLevel\": 4,\n  \"IsLocationRandomSelectionEnabled\": false,\n  \"BoughtHeroSkins\": 1,\n  \"CurrentHeroSkin\": 1\n}"
+    "SaveDataJSON": "{\n  \"CoinsAmount\": 24,\n  \"FoodAmount\": 4,\n  \"LevelNumber\": 4,\n  \"LocationIndex\": 3,\n  \"UpgradeCost\": 60,\n  \"HeroLevel\": 4,\n  \"IsLocationRandomSelectionEnabled\": false,\n  \"BoughtHeroSkins\": 131,\n  \"CurrentHeroSkin\": 128\n}"
 }

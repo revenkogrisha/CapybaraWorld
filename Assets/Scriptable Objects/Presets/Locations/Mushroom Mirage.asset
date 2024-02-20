@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4aacc6b655ef143388a507d5d7ba5cf5, type: 3}
   m_Name: Mushroom Mirage
   m_EditorClassIdentifier: 
-  _name: Mushroom Mirage
+  _name: "\u0413\u0440\u0438\u0431\u043D\u043E\u0439 \u041C\u0438\u0440\u0430\u0436"
   _backgroundPreset: {fileID: 11400000, guid: 9dd35dfdb921f4559b01dad0ddb0b4d6, type: 2}
   _startPlatform: {fileID: 1280936354804307747, guid: ad5c44361877e439ea479db33713b13c, type: 3}
   _simplePlatforms:
