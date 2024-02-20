@@ -246,10 +246,6 @@ namespace Core.Player
             {
                 RDebug.Warning($"{nameof(HeroRunState)}::{nameof(Jump)}: {ex.Message} \n{ex.StackTrace}");
             }
-            finally
-            {
-                IsJumping = false;
-            }
         }
 
         private async UniTaskVoid DescendFromPlaftorm(CancellationToken token)
