@@ -2,7 +2,6 @@ using Core.Game.Input;
 using Core.Mediation;
 using Core.Saving;
 using UnityEngine;
-using UnityEngine.UI;
 using YG;
 using Zenject;
 
@@ -12,6 +11,12 @@ namespace Core.Installers
     {
         [SerializeField] private KeyInputCollection _keyInputCollection;
 
+        private void OnEnable() => 
+            YandexGame.GetDataEvent += BindInputHandler;
+
+        private void OnDisable() => 
+            YandexGame.GetDataEvent -= BindInputHandler;
+
         public override void InstallBindings()
         {
             BindSaveSystem();
@@ -19,7 +24,8 @@ namespace Core.Installers
 
             BindSaveService();
             
-            BindInputHandler();
+            if (YandexGame.SDKEnabled == true)
+                BindInputHandler();
 
             BindMediationService();
         }
@@ -75,7 +81,6 @@ namespace Core.Installers
                     .WithArguments(_keyInputCollection)
                     .NonLazy();
             }
-            
         }
 
         private void BindMediationService()
