@@ -26,6 +26,8 @@ namespace Core.Infrastructure
             
             _levelGenerator.Clean();
             _levelGenerator.Generate();
+
+            _levelGenerator.SetActiveWorldCanvases(false);
             
             FiniteStateMachine.ChangeState(_stateToMoveOn);
         }

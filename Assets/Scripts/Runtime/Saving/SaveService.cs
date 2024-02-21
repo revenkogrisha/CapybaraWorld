@@ -17,6 +17,9 @@ namespace Core.Saving
             _saveSystem = saveSystem;
             _cloudSaveSystem = cloudSaveSystem;
 
+            if (YandexGame.SDKEnabled == true)
+                Load();
+                
             YandexGame.GetDataEvent += Load;
         }
 

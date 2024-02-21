@@ -1,3 +1,5 @@
+using System.Text;
+using Core.Editor.Debugger;
 using YG;
 
 namespace Core.Saving
@@ -6,16 +8,24 @@ namespace Core.Saving
     {
         public void Save(SaveData data)
         {
-            YandexGame.savesData.SaveDataJSON = JsonSaveSystem.Serialize(data);
+            YandexGame.savesData.SaveDataBytes = Encoding.UTF8.GetBytes(
+                JsonSaveSystem.Serialize(data)
+            );
+
+            RDebug.Info("SaveDataJSON: " + YandexGame.savesData.SaveDataBytes);
+
             YandexGame.SaveProgress();
         }
 
         public SaveData Load()
         {
-            if (string.IsNullOrEmpty(YandexGame.savesData.SaveDataJSON) == true)
+            if (YandexGame.savesData.SaveDataBytes == null)
                 return new SaveData();
-                
-            return JsonSaveSystem.Deserialize(YandexGame.savesData.SaveDataJSON);
+            
+            RDebug.Info("SaveDataJSON: " + YandexGame.savesData.SaveDataBytes);
+            return JsonSaveSystem.Deserialize(
+                Encoding.UTF8.GetString(YandexGame.savesData.SaveDataBytes)
+            );
         }
     }
 }
