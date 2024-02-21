@@ -1,4 +1,3 @@
-using Core.Editor.Debugger;
 using UnityEngine.InputSystem;
 
 namespace Core.Game.Input

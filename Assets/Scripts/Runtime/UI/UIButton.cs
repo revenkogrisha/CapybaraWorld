@@ -51,7 +51,9 @@ namespace Core.UI
             }
         }
 
+        public event Action OnClickStarted;
         public event Action OnClicked;
+        public event Action OnClickEnded;
 
         #region MonoBehaviour
 
@@ -70,15 +72,23 @@ namespace Core.UI
         public override void OnPointerDown(PointerEventData eventData)
         {
             if (Interactable == true)
+            {
+                OnClickStarted?.Invoke();
                 base.OnPointerDown(eventData);
+            }
         }
 
         public override void OnPointerUp(PointerEventData eventData)
         {
             if (Interactable == true)
+            {
+                OnClickEnded?.Invoke();
                 base.OnPointerUp(eventData);
+            }
             else
+            {
                 Shake();
+            }
         }
 
         public void Shake() =>

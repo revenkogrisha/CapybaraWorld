@@ -21,3 +21,4 @@ MonoBehaviour:
   _dashRecoveryDisplay: {fileID: 4930987023289001876, guid: 4a1c5f3500af9488eb5ba6430ae9794a, type: 3}
   _areaLabelContainer: {fileID: 460496030546480575, guid: faffa74e4cb89475ea4faa522fabb370, type: 3}
   _mainMenuRootPrefab: {fileID: 8137794271899904982, guid: aa6ad566ca8524a02ab82b991c914e37, type: 3}
+  _buttonsUI: {fileID: 1325787676452505663, guid: 4208e0836873f4bfea154a620f45bfee, type: 3}

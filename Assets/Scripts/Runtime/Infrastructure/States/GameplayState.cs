@@ -9,6 +9,7 @@ using Core.Level;
 using Core.Other;
 using Core.Player;
 using Core.Saving;
+using Core.UI;
 using UnityEngine;
 using Inject = Zenject.InjectAttribute;
 
@@ -65,8 +66,6 @@ namespace Core.Infrastructure
             ClearDisposeLists();
             AddInjectedDisposables();
 
-            _inputHandler.Initialize();
-
             Hero hero = CreateHero();            
             Transform heroTransform = hero.transform;
 
@@ -84,6 +83,8 @@ namespace Core.Infrastructure
             _particlesHelper.Initialize();
 
             CreateUI(hero);
+            
+            _inputHandler.Initialize();
 
             _audioHandler.PlaySound(AudioName.HeroSpawn);
         }
@@ -146,8 +147,13 @@ namespace Core.Infrastructure
         }
 
         // Supposed to add more UI, so methods are seperated
-        private void CreateUI(Hero hero) => 
+        private void CreateUI(Hero hero)
+        {
             CreateDashRecoveryDisplay(hero);
+
+            if (_inputHandler is ButtonsInputHandler buttonsInputHandler)
+                CreateButtonsUI(buttonsInputHandler);
+        }
 
         private void CreateDashRecoveryDisplay(Hero hero)
         {
@@ -155,6 +161,14 @@ namespace Core.Infrastructure
             display.Initialize(hero);
             
             _destroyables.Add(display.gameObject);
+        }
+
+        private void CreateButtonsUI(ButtonsInputHandler buttonsInputHandler)
+        {
+            ButtonsUI buttonsUI = _uiProvider.CreateButtonsUI();
+            buttonsInputHandler.AssignUI(buttonsUI);
+
+            _destroyables.Add(buttonsUI.gameObject);
         }
     }
 }
