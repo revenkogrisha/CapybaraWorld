@@ -236,16 +236,14 @@ namespace YG
 #else
                 Message("Fullscren Ad");
                 FullAdInEditor();
-                return true;
 #endif
+                return true;
             }
             else
             {
                 Message($"До запроса к показу рекламы в середине игры {(infoYG.fullscreenAdInterval - timerShowAd).ToString("00.0")} сек.");
                 return false;
             }
-
-            return false;
         }
 
         public static bool FullscreenShow() => Instance._FullscreenShow();

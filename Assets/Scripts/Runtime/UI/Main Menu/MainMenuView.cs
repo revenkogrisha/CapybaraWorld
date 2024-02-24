@@ -1,4 +1,5 @@
 using System.Threading;
+using Core.Audio;
 using Core.Mediation;
 using Core.Other;
 using Cysharp.Threading.Tasks;
@@ -32,7 +33,7 @@ namespace Core.UI
         private MainMenuRoot _root;
         private MainMenuPresenter _presenter;
         private IMediationService _mediationService;
-
+        private IAudioHandler _audioHandler;
         private bool _triedShowAd = false;
 
         #region MonoBehaviour
@@ -42,6 +43,10 @@ namespace Core.UI
             _playButton.OnClicked += StartGame;
             _upgradeButton.OnClicked += ToHeroMenu;
             _settingsButton.OnClicked += ToSettingsMenu;
+
+            YandexGame.OpenFullAdEvent += TurnOffSounds;
+            YandexGame.CloseFullAdEvent += TurnOnSounds;
+            YandexGame.ErrorFullAdEvent += TurnOnSounds;
 
 #if REVENKO_DEVELOP
             _devLocationButton.OnClicked += DevUpdateLocation;
@@ -58,6 +63,10 @@ namespace Core.UI
             _playButton.OnClicked -= StartGame;
             _upgradeButton.OnClicked -= ToHeroMenu;
             _settingsButton.OnClicked -= ToSettingsMenu;
+
+            YandexGame.OpenFullAdEvent -= TurnOffSounds;
+            YandexGame.CloseFullAdEvent -= TurnOnSounds;
+            YandexGame.ErrorFullAdEvent -= TurnOnSounds;
 
 #if REVENKO_DEVELOP
             _devLocationButton.OnClicked -= DevUpdateLocation;
@@ -82,8 +91,11 @@ namespace Core.UI
         }
 
         [Inject]
-        private void Construct(IMediationService mediationService) =>
+        private void Construct(IMediationService mediationService, IAudioHandler audioHandler)
+        {
             _mediationService = mediationService;
+            _audioHandler = audioHandler;
+        }
 
         public void Initialize(MainMenuRoot root, MainMenuPresenter presenter)
         {
@@ -91,15 +103,28 @@ namespace Core.UI
             _presenter = presenter;
         }
 
-        private async void StartGame()
+        private void StartGame()
         {
-            await UniTaskUtility.Delay(0.5f, default);
             bool shown = _mediationService.ShowInterstitial();
 
             if (shown == true)
                 return;
             
             _presenter.OnStartGame();
+        }
+
+        private void TurnOnSounds()
+        {
+            print("1Unmute");
+            if (_audioHandler is UnityAudioHandler unityAudio)
+                unityAudio.Unmute();
+        }
+
+        private void TurnOffSounds()
+        {
+            print("1Mute");
+            if (_audioHandler is UnityAudioHandler unityAudio)
+                unityAudio.Mute();
         }
 
         private void ToHeroMenu()

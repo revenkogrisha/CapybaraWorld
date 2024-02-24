@@ -7,6 +7,9 @@ namespace Core.Audio
 {
     public class UnityAudioHandler : MonoBehaviour, IAudioHandler
     {
+        private const float DefaultMasterVolume = 0f;
+        private const float MutedVolume = -80f;
+
         [Header("Assets")]
         [SerializeField] private AudioCollection _collection;
 
@@ -21,7 +24,6 @@ namespace Core.Audio
         [SerializeField] private AudioMixerGroup _soundsGroup;
 
         private Dictionary<AudioName, AudioClip> _clips;
-        private float _volumeOnMute = 0f;
 
         public void Initialize()
         {
@@ -56,15 +58,12 @@ namespace Core.Audio
 
         public void Mute()
         {
-            const float turnedOfVolume = -80f;
-
-            _masterGroup.audioMixer.GetFloat(_masterGroup.name, out _volumeOnMute);
-            SetMasterVolume(turnedOfVolume);
+            SetMasterVolume(MutedVolume);
         }
 
         public void Unmute()
         {
-            SetMasterVolume(_volumeOnMute);
+            SetMasterVolume(DefaultMasterVolume);
         }
     }
 }

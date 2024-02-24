@@ -1,7 +1,12 @@
+using System;
+using Core.Audio;
 using Core.Infrastructure;
+using Core.Mediation;
+using Core.Other;
 using DG.Tweening;
 using TriInspector;
 using UnityEngine;
+using YG;
 using Zenject;
 
 namespace Core.UI
@@ -21,11 +26,17 @@ namespace Core.UI
         [SerializeField] private UIButton _menuButton;
 
         private GameNavigation _navigation;
+        private IMediationService _mediationService;
+        private IAudioHandler _audioHandler;
 
         protected virtual void OnEnable()
         {
             _restartButton.OnClicked += RestartGame;
             _menuButton.OnClicked += ReturnToMenu;
+
+            YandexGame.OpenFullAdEvent += TurnOffSounds;
+            YandexGame.CloseFullAdEvent += TurnOnSounds;
+            YandexGame.ErrorFullAdEvent += TurnOnSounds;
 
             TweenElements();
         }
@@ -34,14 +45,45 @@ namespace Core.UI
         {
             _restartButton.OnClicked -= RestartGame;
             _menuButton.OnClicked -= ReturnToMenu;
+            
+            YandexGame.OpenFullAdEvent -= TurnOffSounds;
+            YandexGame.CloseFullAdEvent -= TurnOnSounds;
+            YandexGame.ErrorFullAdEvent -= TurnOnSounds;
         }
 
         [Inject]
-        private void BaseConstruct(GameNavigation navigation) =>
+        private void BaseConstruct(
+            GameNavigation navigation,
+            IMediationService mediationService,
+            IAudioHandler audioHandler) 
+        {
             _navigation = navigation;
+            _mediationService = mediationService;
+            _audioHandler = audioHandler;
+        }
 
-        private void RestartGame() => 
+        private void TurnOnSounds()
+        {
+            print("2Unmute");
+            if (_audioHandler is UnityAudioHandler unityAudio)
+                unityAudio.Unmute();
+        }
+
+        private void TurnOffSounds()
+        {
+            print("2Mute");
+            if (_audioHandler is UnityAudioHandler unityAudio)
+                unityAudio.Mute();
+        }
+
+        private void RestartGame()
+        {
+            bool shown = _mediationService.ShowInterstitial();
+            if (shown == true)
+                return;
+            
             _navigation.Generate<GameplayState>();
+        }
 
         private void ReturnToMenu() => 
             _navigation.Generate<MainMenuState>();
