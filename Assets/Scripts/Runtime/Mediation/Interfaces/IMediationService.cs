@@ -5,7 +5,7 @@ namespace Core.Mediation
         public bool IsRewardedAvailable { get; }
         
         public void Initialize();
-        public void ShowInterstitial(); 
+        public bool ShowInterstitial(); 
         public void ShowInterstitialForce(); 
         public void ShowRewarded(IAdRewardWaiter waiter);
         public void LoadRewarded();

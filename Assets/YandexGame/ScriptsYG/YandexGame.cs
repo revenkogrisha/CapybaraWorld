@@ -5,6 +5,7 @@ using System;
 using UnityEngine.SceneManagement;
 using YG.Utils.LB;
 using YG.Utils.Pay;
+using Unity.Plastic.Antlr3.Runtime.Tree;
 
 namespace YG
 {
@@ -225,7 +226,7 @@ namespace YG
         [DllImport("__Internal")]
         private static extern void FullAdShow();
 
-        public void _FullscreenShow()
+        public bool _FullscreenShow()
         {
             if (!nowAdsShow && timerShowAd >= infoYG.fullscreenAdInterval)
             {
@@ -236,15 +237,17 @@ namespace YG
 #else
                 Message("Fullscren Ad");
                 FullAdInEditor();
+                return true;
 #endif
             }
             else
             {
                 Message($"До запроса к показу рекламы в середине игры {(infoYG.fullscreenAdInterval - timerShowAd).ToString("00.0")} сек.");
+                return false;
             }
         }
 
-        public static void FullscreenShow() => Instance._FullscreenShow();
+        public static bool FullscreenShow() => Instance._FullscreenShow();
 
 #if UNITY_EDITOR
         private void FullAdInEditor()

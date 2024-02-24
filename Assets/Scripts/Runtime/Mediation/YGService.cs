@@ -11,10 +11,12 @@ namespace Core.Mediation
 
         public void LoadRewarded() {  }
 
-        public void ShowInterstitial()
+        public bool ShowInterstitial()
         {
             if (IsEnabled == true)
-                YandexGame.FullscreenShow();
+                return YandexGame.FullscreenShow();
+            
+            return false;
         }
 
         public void ShowInterstitialForce() => 

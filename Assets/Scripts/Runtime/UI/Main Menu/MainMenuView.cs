@@ -4,6 +4,7 @@ using Core.Other;
 using Cysharp.Threading.Tasks;
 using TMPro;
 using UnityEngine;
+using YG;
 using Zenject;
 
 namespace Core.UI
@@ -92,14 +93,11 @@ namespace Core.UI
 
         private async void StartGame()
         {
-            if (_triedShowAd == false)
-            {
-                await UniTaskUtility.Delay(0.5f, default);
-                _mediationService.ShowInterstitial();
+            await UniTaskUtility.Delay(0.5f, default);
+            bool shown = _mediationService.ShowInterstitial();
 
-                _triedShowAd = true;
+            if (shown == true)
                 return;
-            }
             
             _presenter.OnStartGame();
         }

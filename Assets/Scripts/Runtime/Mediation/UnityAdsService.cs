@@ -29,16 +29,18 @@ namespace Core.Mediation.UnityAds
             _loadAttemptsRow = 0;
         }
 
-        public void ShowInterstitial()
+        public bool ShowInterstitial()
         {
             if (CanShow == false)
-                return;
+                return false;
             
 #if UNITY_ANDROID || UNITY_EDITOR
             Advertisement.Show(UnityAdsData.AndroidInterstitialId, this);
 #else
             Advertisement.Show(UnityAdsData.IOSInterstitialId, this);
 #endif
+
+            return true;
         }
 
         public void ShowInterstitialForce()
