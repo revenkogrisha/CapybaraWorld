@@ -1,7 +1,10 @@
 using System.Threading;
+using Core.Mediation;
+using Core.Other;
 using Cysharp.Threading.Tasks;
 using TMPro;
 using UnityEngine;
+using Zenject;
 
 namespace Core.UI
 {
@@ -27,6 +30,9 @@ namespace Core.UI
 
         private MainMenuRoot _root;
         private MainMenuPresenter _presenter;
+        private IMediationService _mediationService;
+
+        private bool _triedShowAd = false;
 
         #region MonoBehaviour
 
@@ -69,8 +75,14 @@ namespace Core.UI
             DisplayLevelNumber();
             DisplayLocationName();
 
+            _triedShowAd = false;
+
             return base.Reveal(token, enable);
         }
+
+        [Inject]
+        private void Construct(IMediationService mediationService) =>
+            _mediationService = mediationService;
 
         public void Initialize(MainMenuRoot root, MainMenuPresenter presenter)
         {
@@ -78,8 +90,19 @@ namespace Core.UI
             _presenter = presenter;
         }
 
-        private void StartGame() => 
+        private async void StartGame()
+        {
+            if (_triedShowAd == false)
+            {
+                await UniTaskUtility.Delay(0.5f, default);
+                _mediationService.ShowInterstitial();
+
+                _triedShowAd = true;
+                return;
+            }
+            
             _presenter.OnStartGame();
+        }
 
         private void ToHeroMenu()
         {

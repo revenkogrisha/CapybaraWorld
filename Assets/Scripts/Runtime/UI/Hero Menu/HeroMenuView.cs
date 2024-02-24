@@ -188,17 +188,16 @@ namespace Core.UI
                 _costTMP.color = _costLockedColor;
         }
 
-        private async void OnUpgradeButtonClicked()
+        private void OnUpgradeButtonClicked()
         {
             _audioHandler.PlaySound(AudioName.CoinsSpent);
             
             UpgradeHero();
-
-            await UniTaskUtility.Delay(1f, default);
-            _mediationService.ShowInterstitial();
         }
 
+#pragma warning disable IDE0051 // Remove unused private members
         private void ForceUpgrade()
+#pragma warning restore IDE0051 
         {
             _presenter.UpgradeHero(true);
             

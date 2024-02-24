@@ -1,6 +1,5 @@
 using System.Threading;
 using Core.Mediation;
-using Core.Other;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
@@ -26,9 +25,6 @@ namespace Core.UI
             _presenter.OnViewReveal();
 
             await base.Reveal(token, enable);
-            
-            await UniTaskUtility.Delay(0.5f, token);
-            _mediationService.ShowInterstitial();
         }
 
         public void Initialize(GameLostMenuPresenter presenter) =>

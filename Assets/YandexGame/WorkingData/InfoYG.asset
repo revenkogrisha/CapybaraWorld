@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   scopes: 1
   playerPhotoSize: 0
-  autoGameReadyAPI: 1
+  autoGameReadyAPI: 0
   playerInfoSimulation:
     authorized: 1
     isMobile: 0

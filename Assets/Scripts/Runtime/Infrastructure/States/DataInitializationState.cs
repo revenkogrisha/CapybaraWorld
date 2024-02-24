@@ -4,6 +4,8 @@ using Core.Level;
 using Core.Player;
 using Core.Saving;
 using Core.UI;
+using UnityEngine;
+using YG;
 using Zenject;
 
 namespace Core.Infrastructure
@@ -50,6 +52,9 @@ namespace Core.Infrastructure
             AssingFromPlayerPrefs();
 
             _navigation.Generate<MainMenuState>();
+
+            YandexGame.GameReadyAPI();
+            Debug.Log("<YG> Game Ready API");
         }
 
         private void RegisterSaveables()
