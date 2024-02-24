@@ -61,6 +61,9 @@ namespace Core.UI
 #endif
 
             YandexGame.RewardVideoEvent += OnRewardGranted;
+            YandexGame.OpenVideoEvent += TurnOffSounds;
+            YandexGame.CloseVideoEvent += TurnOnSounds;
+            YandexGame.ErrorVideoEvent += TurnOnSounds;
 
             _heroUpgradeButton.OnClicked += OnUpgradeButtonClicked;
             _backButton.OnClicked += ToMainMenu;
@@ -86,6 +89,9 @@ namespace Core.UI
 #endif
 
             YandexGame.RewardVideoEvent -= OnRewardGranted;
+            YandexGame.OpenVideoEvent -= TurnOffSounds;
+            YandexGame.CloseVideoEvent -= TurnOnSounds;
+            YandexGame.ErrorVideoEvent -= TurnOnSounds;
             
             _heroUpgradeButton.OnClicked -= OnUpgradeButtonClicked;
             _backButton.OnClicked -= ToMainMenu;
@@ -186,6 +192,20 @@ namespace Core.UI
                 _costTMP.color = _costAvailableColor;
             else
                 _costTMP.color = _costLockedColor;
+        }
+
+        private void TurnOnSounds()
+        {
+            print("Unmute");
+            if (_audioHandler is UnityAudioHandler unityAudio)
+                unityAudio.Unmute();
+        }
+
+        private void TurnOffSounds()
+        {
+            print("Mute");
+            if (_audioHandler is UnityAudioHandler unityAudio)
+                unityAudio.Mute();
         }
 
         private void OnUpgradeButtonClicked()

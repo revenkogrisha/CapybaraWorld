@@ -21,6 +21,7 @@ namespace Core.Audio
         [SerializeField] private AudioMixerGroup _soundsGroup;
 
         private Dictionary<AudioName, AudioClip> _clips;
+        private float _volumeOnMute = 0f;
 
         public void Initialize()
         {
@@ -50,8 +51,20 @@ namespace Core.Audio
         public void SetMusicVolume(float volume) => 
             _musicGroup.audioMixer.SetFloat(_musicGroup.name, volume);
 
-
         public void SetSoundsVolume(float volume) => 
             _soundsGroup.audioMixer.SetFloat(_soundsGroup.name, volume);
+
+        public void Mute()
+        {
+            const float turnedOfVolume = -80f;
+
+            _masterGroup.audioMixer.GetFloat(_masterGroup.name, out _volumeOnMute);
+            SetMasterVolume(turnedOfVolume);
+        }
+
+        public void Unmute()
+        {
+            SetMasterVolume(_volumeOnMute);
+        }
     }
 }

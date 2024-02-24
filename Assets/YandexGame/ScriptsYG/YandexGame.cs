@@ -5,7 +5,6 @@ using System;
 using UnityEngine.SceneManagement;
 using YG.Utils.LB;
 using YG.Utils.Pay;
-using Unity.Plastic.Antlr3.Runtime.Tree;
 
 namespace YG
 {
@@ -245,6 +244,8 @@ namespace YG
                 Message($"До запроса к показу рекламы в середине игры {(infoYG.fullscreenAdInterval - timerShowAd).ToString("00.0")} сек.");
                 return false;
             }
+
+            return false;
         }
 
         public static bool FullscreenShow() => Instance._FullscreenShow();
