@@ -46,7 +46,6 @@ namespace Core.UI
 
             YandexGame.OpenFullAdEvent += TurnOffSounds;
             YandexGame.CloseFullAdEvent += TurnOnSounds;
-            YandexGame.ErrorFullAdEvent += TurnOnSounds;
 
 #if REVENKO_DEVELOP
             _devLocationButton.OnClicked += DevUpdateLocation;
@@ -66,7 +65,6 @@ namespace Core.UI
 
             YandexGame.OpenFullAdEvent -= TurnOffSounds;
             YandexGame.CloseFullAdEvent -= TurnOnSounds;
-            YandexGame.ErrorFullAdEvent -= TurnOnSounds;
 
 #if REVENKO_DEVELOP
             _devLocationButton.OnClicked -= DevUpdateLocation;
@@ -116,7 +114,7 @@ namespace Core.UI
         private void TurnOnSounds()
         {
             print("1Unmute");
-            if (_audioHandler is UnityAudioHandler unityAudio)
+            if (_audioHandler is UnityAudioHandler unityAudio && YandexGame.nowAdsShow == false)
                 unityAudio.Unmute();
         }
 

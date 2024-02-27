@@ -702,11 +702,11 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\u041A\u043B\u0430\u0432\u0438\u0448\u0430 \u0428\u0438\u0444\u0442 \u0447\u0442\u043E\u0431\u044B
-    \u0441\u043E\u0432\u0435\u0440\u0448\u0438\u0442\u044C \u0440\u044B\u0432\u043E\u043A
-    (\u0430\u0442\u0430\u043A\u0443). \u0422\u0430\u043A \u0432\u044B \u0441\u043C\u043E\u0436\u0435\u0442\u0435
-    \u0440\u0430\u0437\u0431\u0438\u0432\u0430\u0442\u044C \u0441\u0443\u043D\u0434\u0443\u043A\u0438
-    \u0438 \u043F\u043E\u0431\u0435\u0436\u0434\u0430\u0442\u044C \u0432\u0440\u0430\u0433\u043E\u0432!"
+  m_text: "\u041F\u0440\u043E\u0431\u0435\u043B \u0447\u0442\u043E\u0431\u044B \u0441\u043E\u0432\u0435\u0440\u0448\u0438\u0442\u044C
+    \u0440\u044B\u0432\u043E\u043A (\u0430\u0442\u0430\u043A\u0443). \u0422\u0430\u043A
+    \u0432\u044B \u0441\u043C\u043E\u0436\u0435\u0442\u0435 \u0440\u0430\u0437\u0431\u0438\u0432\u0430\u0442\u044C
+    \u0441\u0443\u043D\u0434\u0443\u043A\u0438 \u0438 \u043F\u043E\u0431\u0435\u0436\u0434\u0430\u0442\u044C
+    \u0432\u0440\u0430\u0433\u043E\u0432!"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 58395020401494d9ab44c8a099f9e51f, type: 2}
   m_sharedMaterial: {fileID: 2226311982275777392, guid: 58395020401494d9ab44c8a099f9e51f, type: 2}
@@ -733,7 +733,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 0.65
+  m_fontSize: 0.7
   m_fontSizeBase: 1
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -1906,9 +1906,9 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\u041F\u0440\u043E\u0431\u0435\u043B \u0438\u043B\u0438 \u0441\u0442\u0440\u0435\u043B\u043A\u0430
-    \u0432\u0432\u0435\u0440\u0445 \u0438\u043B\u0438 \u043A\u043B\u0430\u0432\u0438\u0448\u0430
-    \u0426 (W) \u0447\u0442\u043E\u0431\u044B \u043F\u0440\u044B\u0433\u043D\u0443\u0442\u044C"
+  m_text: "\u0421\u0442\u0440\u0435\u043B\u043A\u0430 \u0432\u0432\u0435\u0440\u0445
+    \u0438\u043B\u0438 \u043A\u043B\u0430\u0432\u0438\u0448\u0430 \u0426 (W) \u0447\u0442\u043E\u0431\u044B
+    \u043F\u0440\u044B\u0433\u043D\u0443\u0442\u044C"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 58395020401494d9ab44c8a099f9e51f, type: 2}
   m_sharedMaterial: {fileID: 2226311982275777392, guid: 58395020401494d9ab44c8a099f9e51f, type: 2}
@@ -1935,7 +1935,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 0.85
+  m_fontSize: 0.95
   m_fontSizeBase: 1
   m_fontWeight: 400
   m_enableAutoSizing: 1

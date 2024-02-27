@@ -1,2 +1,2 @@
-Build path: /Users/revenkogrisha/Documents/GameProjects/Capybara World/Builds/Web/Release0
-Build number: 156
+Build path: /Users/revenkogrisha/Documents/GameProjects/Capybara World/Builds/Web/Release1
+Build number: 160

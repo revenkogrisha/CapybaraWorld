@@ -36,7 +36,6 @@ namespace Core.UI
 
             YandexGame.OpenFullAdEvent += TurnOffSounds;
             YandexGame.CloseFullAdEvent += TurnOnSounds;
-            YandexGame.ErrorFullAdEvent += TurnOnSounds;
 
             TweenElements();
         }
@@ -48,7 +47,6 @@ namespace Core.UI
             
             YandexGame.OpenFullAdEvent -= TurnOffSounds;
             YandexGame.CloseFullAdEvent -= TurnOnSounds;
-            YandexGame.ErrorFullAdEvent -= TurnOnSounds;
         }
 
         [Inject]
@@ -65,7 +63,7 @@ namespace Core.UI
         private void TurnOnSounds()
         {
             print("2Unmute");
-            if (_audioHandler is UnityAudioHandler unityAudio)
+            if (_audioHandler is UnityAudioHandler unityAudio && YandexGame.nowAdsShow == false)
                 unityAudio.Unmute();
         }
 

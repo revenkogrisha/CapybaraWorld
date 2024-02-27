@@ -16,7 +16,7 @@ namespace Core.UI
     public class HeroMenuView : AnimatedUI, IAdRewardWaiter
     {
         private const string CostFormat = "{0}";
-        private const string LevelFormat = "Общий уровень героя <b><color=#D978E9>{0}</color></b>";
+        private const string LevelFormat = "Общий уровень героев <b><color=#D978E9>{0}</color></b>";
         
         [Header("Resources")]
         [SerializeField] private ResourcePanel _resourcePanel;
