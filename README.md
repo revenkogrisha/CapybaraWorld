@@ -21,7 +21,7 @@ You have many capybaras in your team to achive any goals and find all hidden che
 ## Links
 
 * **[Play Market](https://play.google.com/store/apps/details?id=com.Revenko.org.CapybaraTreasureWorld)**
-* **[Yandex Games](https://yandex.ru/games/app/294270?draft=true&lang=ru)** - *draft, on moderation*
+* **[Yandex Games](https://yandex.ru/games/app/294270?lang=ru)**
 
 ## About the project
 
