@@ -463,7 +463,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &945732107298511128
 RectTransform:
   m_ObjectHideFlags: 0
@@ -699,7 +699,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: DOUBLE-TAP to dash! This way you can break chests and defeat enemies!
+  m_text: By Dash you can break chests and defeat enemies!
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 21e766cf20a8e4f8cbf4b1ea831c9320, type: 2}
   m_sharedMaterial: {fileID: 2100000, guid: 74e74d52455ca4b74b99514a23573787, type: 2}
@@ -953,7 +953,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &3881704911154998389
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1845,7 +1845,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1193358264021659696
 RectTransform:
   m_ObjectHideFlags: 0

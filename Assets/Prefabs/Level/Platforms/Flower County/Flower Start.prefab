@@ -442,7 +442,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1206161683841246068}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
   m_Name: 
@@ -1009,8 +1009,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: DOUBLE-TAP to dash. You can dash or jump at the and of ground to gain more
-    speed for swinging
+  m_text: You can dash or jump at the and of ground to gain more speed for swinging
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 21e766cf20a8e4f8cbf4b1ea831c9320, type: 2}
   m_sharedMaterial: {fileID: 2100000, guid: 74e74d52455ca4b74b99514a23573787, type: 2}
@@ -1037,7 +1036,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 0.65
+  m_fontSize: 0.9
   m_fontSizeBase: 1
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -1536,7 +1535,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &2793273803480190832
 RectTransform:
   m_ObjectHideFlags: 0

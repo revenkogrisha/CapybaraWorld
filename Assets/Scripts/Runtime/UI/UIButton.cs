@@ -1,6 +1,5 @@
 ﻿using System;
 using Core.Audio;
-using Core.Common;
 using DG.Tweening;
 using TMPro;
 using UnityEngine;
@@ -52,7 +51,9 @@ namespace Core.UI
             }
         }
 
+        public event Action OnClickStarted;
         public event Action OnClicked;
+        public event Action OnClickEnded;
 
         #region MonoBehaviour
 
@@ -71,15 +72,23 @@ namespace Core.UI
         public override void OnPointerDown(PointerEventData eventData)
         {
             if (Interactable == true)
+            {
+                OnClickStarted?.Invoke();
                 base.OnPointerDown(eventData);
+            }
         }
 
         public override void OnPointerUp(PointerEventData eventData)
         {
             if (Interactable == true)
+            {
+                OnClickEnded?.Invoke();
                 base.OnPointerUp(eventData);
+            }
             else
+            {
                 Shake();
+            }
         }
 
         public void Shake() =>
@@ -87,7 +96,6 @@ namespace Core.UI
 
         private void PerformClick()
         {
-            HapticHelper.VibrateLight();
             if (_audioHandler != null && _playSound == true)
                 _audioHandler.PlaySound(AudioName.Button, true);
             
