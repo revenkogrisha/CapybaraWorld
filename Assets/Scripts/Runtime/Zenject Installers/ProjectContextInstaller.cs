@@ -1,24 +1,18 @@
-using Core.Game.Input;
 using Core.Mediation;
 using Core.Mediation.UnityAds;
 using Core.Saving;
-using UnityEngine;
 using Zenject;
 
 namespace Core.Installers
 {
     public class ProjectContextInstaller : MonoInstaller
     {
-        [SerializeField] private TouchInputCollection _touchInputCollection;
-
         public override void InstallBindings()
         {
             BindSaveSystem();
             BindCloudSaveSystem();
 
             BindSaveService();
-            
-            BindInputHandler();
 
             BindMediationService();
         }
@@ -55,17 +49,6 @@ namespace Core.Installers
                 .FromNew()
                 .AsSingle()
                 .Lazy();
-        }
-
-        private void BindInputHandler()
-        {
-            Container
-                .Bind<InputHandler>()
-                .To<TouchInputHandler>()
-                .FromNew()
-                .AsSingle()
-                .WithArguments(_touchInputCollection)
-                .NonLazy();
         }
 
         private void BindMediationService()

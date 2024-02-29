@@ -161,6 +161,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b126e68c45f4b4e10a4fc494389f4f4f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _touchInputCollection: {fileID: 11400000, guid: 5ed76028779ea48efafdd126612db3d4, type: 2}
 --- !u!114 &2695778730026187204
 MonoBehaviour:
   m_ObjectHideFlags: 0

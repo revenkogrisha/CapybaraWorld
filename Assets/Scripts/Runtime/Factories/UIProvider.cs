@@ -115,5 +115,15 @@ namespace Core.Factories
 
             return container;
         }
+
+        public ButtonsUI CreateButtonsUI()
+        {
+            ButtonsUI buttons = _diContainer
+                .InstantiatePrefabForComponent<ButtonsUI>(
+                    _collection.ButtonsUI,
+                    _root.RectTransform);
+
+            return buttons;
+        }
     }
 }

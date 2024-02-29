@@ -65,8 +65,6 @@ namespace Core.Infrastructure
             ClearDisposeLists();
             AddInjectedDisposables();
 
-            _inputHandler.Initialize();
-
             Hero hero = CreateHero();            
             Transform heroTransform = hero.transform;
 
@@ -84,6 +82,8 @@ namespace Core.Infrastructure
             _particlesHelper.Initialize();
 
             CreateUI(hero);
+
+            _inputHandler.Initialize();
 
             _audioHandler.PlaySound(AudioName.HeroSpawn);
         }
@@ -145,9 +145,13 @@ namespace Core.Infrastructure
             _disposables.Add(scoreCounter);
         }
 
-        // Supposed to add more UI, so methods are seperated
-        private void CreateUI(Hero hero) => 
+        private void CreateUI(Hero hero)
+        {
             CreateDashRecoveryDisplay(hero);
+            
+            if (_inputHandler is IInputUIHandler inputUIHandler)
+                inputUIHandler.CreateUI();
+        }
 
         private void CreateDashRecoveryDisplay(Hero hero)
         {
