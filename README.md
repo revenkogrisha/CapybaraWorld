@@ -8,7 +8,7 @@
    <img src="https://img.shields.io/badge/Engine-Unity%202022.3.20f1-blueviolet?style=&logo=unity" alt="Engine">
    <img src="https://img.shields.io/badge/Platform-Android 7+%20-brightgreen?style=&logo=android" alt="Platform">
    <img src="https://img.shields.io/badge/Play_Market-Available%20-brightgreen?style=&logo=google play" alt="Distribution">
-   <img src="https://img.shields.io/badge/Version-1.0.1-blue" alt="Game Version">
+   <img src="https://img.shields.io/badge/Version-1.1.0-blue" alt="Game Version">
    <img src="https://img.shields.io/badge/Release Date-3.12.2023-red" alt="Release Date">
    <img src="https://img.shields.io/badge/License-Apache--2.0%20-yellow?style=&logo=apache" alt="License">
 </p>
