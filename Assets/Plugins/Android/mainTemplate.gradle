@@ -6,11 +6,14 @@ dependencies {
 // Android Resolver Dependencies Start
     implementation 'androidx.activity:activity:1.6.0' // Assets/Editor/OverrideDependencies.xml:9
     implementation 'androidx.annotation:annotation:1.1.0' // Assets/Editor/OverrideDependencies.xml:8
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.4' // Assets/GoogleMobileAds/Editor/GoogleMobileAdsDependencies.xml:12
     implementation 'androidx.fragment:fragment:1.1.0' // Assets/Editor/OverrideDependencies.xml:7
+    implementation 'com.google.android.gms:play-services-ads:23.0.0' // Assets/GoogleMobileAds/Editor/GoogleMobileAdsDependencies.xml:7
     implementation 'com.google.android.gms:play-services-base:18.3.0' // Assets/Firebase/Editor/AppDependencies.xml:17
     implementation 'com.google.android.play:app-update:2.1.0' // Assets/GooglePlayPlugins/com.google.play.appupdate/Editor/Dependencies.xml:3
     implementation 'com.google.android.play:core-common:2.0.0' // Assets/GooglePlayPlugins/com.google.play.core/Editor/Dependencies.xml:3
     implementation 'com.google.android.play:review:2.0.0' // Assets/GooglePlayPlugins/com.google.play.review/Editor/Dependencies.xml:3
+    implementation 'com.google.android.ump:user-messaging-platform:2.2.0' // Assets/GoogleMobileAds/Editor/GoogleUmpDependencies.xml:7
     // implementation 'com.google.firebase:firebase-analytics:21.3.0' // Assets/Firebase/Editor/AnalyticsDependencies.xml:13
     implementation 'com.google.firebase:firebase-analytics:21.5.0' // Assets/Firebase/Editor/MessagingDependencies.xml:15
     implementation 'com.google.firebase:firebase-analytics-unity:11.7.0' // Assets/Firebase/Editor/AnalyticsDependencies.xml:18
