@@ -55,7 +55,7 @@ namespace Core.Installers
         {
             Container
                 .Bind<IMediationService>()
-                .To<UnityAdsService>()
+                .To<AdMobService>()
                 .FromNew()
                 .AsSingle()
                 .Lazy();

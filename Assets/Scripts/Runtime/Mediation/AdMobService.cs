@@ -34,6 +34,7 @@ namespace Core.Mediation
 
         public void ShowInterstitial()
         {
+            // should add load attemps & maximum load attemts
             const string log = nameof(AdMobService) + "::" + nameof(ShowInterstitial) + ":";
             
             if (_interstitialAd != null && _interstitialAd.CanShowAd() == true)
