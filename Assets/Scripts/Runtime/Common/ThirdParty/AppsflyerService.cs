@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using AppsFlyerSDK;
 using Core.Editor.Debugger;
 
@@ -44,5 +45,11 @@ namespace Core.Common.ThirdParty
                 RDebug.Error($"{nameof(AppsflyerService)}: Initialization failed: \n{ex.Message} \n{ex.StackTrace}");
             }
         }
+
+        public static void LogEvent(EventName eventName, Dictionary<string, string> parameters) =>
+            LogEvent(eventName.ToString(), parameters);
+
+        public static void LogEvent(string name, Dictionary<string, string> parameters) =>
+            AppsFlyer.sendEvent(name, parameters);
     }
 }
