@@ -54,7 +54,14 @@ namespace Core.Mediation
 
         public void ShowRewarded(IAdRewardWaiter waiter)
         {
-            
+            if (IsRewardedAvailable == true)
+            {
+                _rewardedAd.Show(_ =>
+                {
+                    waiter.OnRewardGranted();
+                    waiter = null;
+                });
+            }
         }
 
         private void LoadInterstitial()
