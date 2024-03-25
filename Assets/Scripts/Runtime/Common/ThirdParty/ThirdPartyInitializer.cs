@@ -49,7 +49,11 @@ namespace Core.Common.ThirdParty
             
 #if ANDROID_RUNTIME
             await SignInService.Authenticate();
+#endif
 
+            AppsflyerService.InitializeAndStart();
+
+#if ANDROID_RUNTIME
             ScheduleAndroidNotifications();
             await HandleAppUpdate();
 #endif
