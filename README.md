@@ -42,6 +42,7 @@ You have many capybaras in your team to achive any goals and find all hidden che
 * [Universal RP](https://unity.com/ru/srp/universal-render-pipeline) - scriptable render pipeline made by Unity
 * [Cinemachine](https://unity.com/unity/features/editor/art-and-design/cinemachine) - advanced camera for Unity
 * [Toolbar Extender](https://github.com/marijnz/unity-toolbar-extender) - tool for creating custom editor buttons on toolbar 
+* [Google AdMob](https://github.com/googleads/googleads-mobile-unity) -  implemented on separete [dev-admob](https://github.com/revenkogrisha/CapybaraWorld/tree/dev-admob) branch
 
 >[!NOTE]
 >Some of the systems implemented in the project may seem over-engineered for this project size - it's true, I was practicing my skills, don't worry :)  
