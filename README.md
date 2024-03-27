@@ -43,6 +43,10 @@ You have many capybaras in your team to achive any goals and find all hidden che
 * [Cinemachine](https://unity.com/unity/features/editor/art-and-design/cinemachine) - advanced camera for Unity
 * [Toolbar Extender](https://github.com/marijnz/unity-toolbar-extender) - tool for creating custom editor buttons on toolbar 
 
+**Other**
+* [Google AdMob](https://github.com/googleads/googleads-mobile-unity) -  Google ads plugin. Implemented on separete [dev-admob](https://github.com/revenkogrisha/CapybaraWorld/tree/dev-admob) branch
+* [Appsflyer](https://github.com/AppsFlyerSDK/appsflyer-unity-plugin) -  for Appsflyer analytics. Implemented on separete [dev-appsflyer](https://github.com/revenkogrisha/CapybaraWorld/tree/dev-appsflyer) branch
+
 >[!NOTE]
 >Some of the systems implemented in the project may seem over-engineered for this project size - it's true, I was practicing my skills, don't worry :)  
 >But I will be happy if you notice something strange like that and notify me, e.g. put it in the [issues](https://github.com/revenkogrisha/CapybaraWorld/issues)
