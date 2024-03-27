@@ -10,6 +10,8 @@ namespace Core.Common.ThirdParty
         private const bool IsAppsflyerEnabled = true;
         private const string DevKey = "sHyNHSKnMYYR4Zf5kAh3sP";
         private const bool EnableTCFDataCollection = true;
+
+        private static bool IsReady = false;
         
         public static void InitializeAndStart()
         {
@@ -18,7 +20,7 @@ namespace Core.Common.ThirdParty
 
             try
             {
-                // null because it's not for iOS (stated in method's summury)
+                // null because it's not for iOS (stated in AF's method summury)
                 AppsFlyer.initSDK(DevKey, null);
     
                 RDebug.Log($"{nameof(AppsflyerService)}: Init call complete!");
@@ -39,10 +41,13 @@ namespace Core.Common.ThirdParty
 #endif
 
                 AppsFlyer.startSDK();
-                RDebug.Log($"{nameof(AppsflyerService)}::{nameof(InitializeAndStart)} SDK start complete!");
+
+                IsReady = true;
+                RDebug.Info($"{nameof(AppsflyerService)}::{nameof(InitializeAndStart)} SDK start complete!");
             }
             catch (Exception ex)
             {
+                IsReady = false;
                 RDebug.Error($"{nameof(AppsflyerService)}: Initialization failed: \n{ex.Message} \n{ex.StackTrace}");
             }
         }
@@ -50,7 +55,18 @@ namespace Core.Common.ThirdParty
         public static void LogEvent(EventName eventName, Dictionary<string, string> parameters) =>
             LogEvent(eventName.ToString(), parameters);
 
-        public static void LogEvent(string name, Dictionary<string, string> parameters) =>
-            AppsFlyer.sendEvent(name, parameters);
+        public static void LogEvent(string name, Dictionary<string, string> parameters)
+        {
+            try
+            {
+                if (IsReady == true)
+                    AppsFlyer.sendEvent(name, parameters);
+            }
+            catch (Exception ex)
+            {
+                IsReady = false;
+                RDebug.Error($"{nameof(AppsflyerService)}::{nameof(LogEvent)} Logging failed: \n{ex.Message} \n{ex.StackTrace}");
+            }
+        }
     }
 }

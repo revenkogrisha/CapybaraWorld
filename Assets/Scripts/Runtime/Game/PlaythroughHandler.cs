@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using Core.Common.ThirdParty;
 using Core.Infrastructure;
 using Core.Level;
@@ -73,6 +74,15 @@ namespace Core.Game
                 new Parameter(ParameterName.LevelsFinished.ToString(), _playerData.LevelNumber),
                 new Parameter(ParameterName.LocationName.ToString(), _locationsHandler.CurrentLocation.Name)
             );
+
+            Dictionary<string, string> parameters = new()
+            {
+                { ParameterName.GameResult.ToString(), result.ToString()},
+                { ParameterName.LevelsFinished.ToString(), _playerData.LevelNumber.ToString()},
+                { ParameterName.LocationName.ToString(), _locationsHandler.CurrentLocation.Name }
+            };
+
+            AppsflyerService.LogEvent(EventName.GameFinished, parameters);
         }
 
         private void OnGameWon()
