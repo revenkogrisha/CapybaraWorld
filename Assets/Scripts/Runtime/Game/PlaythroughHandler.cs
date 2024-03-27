@@ -69,12 +69,6 @@ namespace Core.Game
                     throw new ArgumentException("Unknown GameResult value was gotten!");
             }
 
-            FirebaseService.LogEvent(EventName.GameFinished,
-                new Parameter(ParameterName.GameResult.ToString(), result.ToString()),
-                new Parameter(ParameterName.LevelsFinished.ToString(), _playerData.LevelNumber),
-                new Parameter(ParameterName.LocationName.ToString(), _locationsHandler.CurrentLocation.Name)
-            );
-
             Dictionary<string, string> parameters = new()
             {
                 { ParameterName.GameResult.ToString(), result.ToString()},
@@ -82,7 +76,7 @@ namespace Core.Game
                 { ParameterName.LocationName.ToString(), _locationsHandler.CurrentLocation.Name }
             };
 
-            AppsflyerService.LogEvent(EventName.GameFinished, parameters);
+            AnalyticsHandler.LogEvent(EventName.GameFinished, parameters);
         }
 
         private void OnGameWon()

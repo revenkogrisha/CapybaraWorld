@@ -61,6 +61,8 @@ namespace Core.Common.ThirdParty
             {
                 if (IsReady == true)
                     AppsFlyer.sendEvent(name, parameters);
+
+                RDebug.Info($"{nameof(AppsflyerService)}: Event '{name}' was successfully logged!");
             }
             catch (Exception ex)
             {

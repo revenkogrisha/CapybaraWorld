@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Core.Common.ThirdParty;
 using Core.Saving;
 using Firebase.Analytics;
@@ -78,9 +79,12 @@ namespace Core.Player
 
             UpgradeAllStats();
 
-            FirebaseService.LogEvent(EventName.HeroUpgrade,
-                new Parameter(ParameterName.HeroLevel.ToString(), HeroLevel)
-            );
+            Dictionary<string, string> parameters = new()
+            {
+                { ParameterName.HeroLevel.ToString(), HeroLevel.ToString() }
+            };
+
+            AnalyticsHandler.LogEvent(EventName.HeroUpgrade, parameters);
         }
 
         private void RestoreStats()
