@@ -7,7 +7,7 @@ namespace Core.Common.ThirdParty
 {
     public static class AppsflyerService
     {
-        private const string DevKey = "";
+        private const string DevKey = "sHyNHSKnMYYR4Zf5kAh3sP";
         private const bool EnableTCFDataCollection = true;
         
         public static void InitializeAndStart()
