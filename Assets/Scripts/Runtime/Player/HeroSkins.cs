@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Linq;
 using Core.Common.ThirdParty;
 using Core.Saving;
@@ -58,10 +59,13 @@ namespace Core.Player
 
             _saveService.Save();
 
-            FirebaseService.LogEvent(EventName.SkinBought,
-                new Parameter(ParameterName.Skin.ToString(), preset.Name.ToString()),
-                new Parameter(ParameterName.HaveSkins.ToString(), _boughtSkins.ToString())
-            );
+            Dictionary<string, string> parameters = new()
+            {
+                { ParameterName.Skin.ToString(), preset.Name.ToString() },
+                { ParameterName.HaveSkins.ToString(), _boughtSkins.ToString() }
+            };
+
+            AnalyticsHandler.LogEvent(EventName.SkinBought, parameters);
         }
 
         public SkinAvailability GetAvailability(SkinName skinName)

@@ -34,6 +34,7 @@ You have many capybaras in your team to achive any goals and find all hidden che
 * [Google Play Core](https://developer.android.com/reference/com/google/android/play/core/release-notes) - Google SDKs for Android & Unity to use Google Play API 
 * [Google Play Games](https://github.com/playgameservices/play-games-plugin-for-unity) - Google SDK for Unity to use Google Play Games API 
 * [Firebase](https://firebase.google.com/) - set of [Firebase Unity SDKs](https://github.com/firebase/firebase-unity-sdk): *Analytics*, *Crashlytics*, *Cloud Messaging*
+* [Appsflyer](https://github.com/AppsFlyerSDK/appsflyer-unity-plugin) -  for Appsflyer analytics & events logging
 * [Extenject](https://github.com/Mathijs-Bakker/Extenject) - dependency injection container for Unity
 * [UniTask](https://github.com/Cysharp/UniTask) - better async/await for Unity
 * [UniRx](https://github.com/neuecc/UniRx) - reactive extensions for Unity
@@ -42,6 +43,9 @@ You have many capybaras in your team to achive any goals and find all hidden che
 * [Universal RP](https://unity.com/ru/srp/universal-render-pipeline) - scriptable render pipeline made by Unity
 * [Cinemachine](https://unity.com/unity/features/editor/art-and-design/cinemachine) - advanced camera for Unity
 * [Toolbar Extender](https://github.com/marijnz/unity-toolbar-extender) - tool for creating custom editor buttons on toolbar 
+
+**Other**
+* [Google AdMob](https://github.com/googleads/googleads-mobile-unity) -  Google ads plugin. Implemented on separete [dev-admob](https://github.com/revenkogrisha/CapybaraWorld/tree/dev-admob) branch
 
 >[!NOTE]
 >Some of the systems implemented in the project may seem over-engineered for this project size - it's true, I was practicing my skills, don't worry :)  

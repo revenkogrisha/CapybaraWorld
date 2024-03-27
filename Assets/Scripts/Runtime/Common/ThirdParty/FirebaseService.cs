@@ -102,7 +102,7 @@ namespace Core.Common.ThirdParty
     
                 FirebaseAnalytics.LogEvent(name, parameters.ToArray());
 
-                RDebug.Info($"Event '{name}' was successfully logged!");
+                RDebug.Info($"{nameof(FirebaseService)}: Event '{name}' was successfully logged!");
             }
             catch (Exception ex)
             {
