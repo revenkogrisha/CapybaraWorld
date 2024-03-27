@@ -7,6 +7,7 @@
     <package>com.android.installreferrer:installreferrer:2.1</package>
     <package>com.appsflyer:af-android-sdk:6.13.0</package>
     <package>com.appsflyer:unity-wrapper:6.13.10</package>
+    <package>com.google.android.gms:play-services-ads:23.0.0</package>
     <package>com.google.android.gms:play-services-base:18.3.0</package>
     <package>com.google.android.play:app-update:2.1.0</package>
     <package>com.google.android.play:core-common:2.0.0</package>
