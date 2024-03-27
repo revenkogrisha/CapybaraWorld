@@ -7,12 +7,13 @@ namespace Core.Common.ThirdParty
 {
     public static class AppsflyerService
     {
+        private const bool IsAppsflyerEnabled = true;
         private const string DevKey = "sHyNHSKnMYYR4Zf5kAh3sP";
         private const bool EnableTCFDataCollection = true;
         
         public static void InitializeAndStart()
         {
-            if (string.IsNullOrEmpty(DevKey) == true)
+            if (string.IsNullOrEmpty(DevKey) == true || IsAppsflyerEnabled == false)
                 return;
 
             try
